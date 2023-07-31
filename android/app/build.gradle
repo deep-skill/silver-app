@@ -48,10 +48,12 @@ android {
         applicationId "com.example.silverapp"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        //minSdkVersion flutter.minSdkVersion
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders += [auth0Domain: "dev-4aecm50nap6pl2q5.us.auth0.com", auth0Scheme: "com.auth0.silverapp"]
     }
 
     buildTypes {

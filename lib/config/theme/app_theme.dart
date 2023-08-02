@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+const colorSeed = Color(0xff031329);
 
-const colorSeed = Color(0xff424CB8);
-const scaffoldBackgroundColor = Color(0xFFF8F7F7);
+//const scaffoldBackgroundColor = Colors.white;
 
 class AppTheme {
 
@@ -10,6 +10,8 @@ class AppTheme {
     ///* General
     useMaterial3: true,
     colorSchemeSeed: colorSeed,
+    fontFamily: 'Raleway',
+    
 
     ///* Texts
 /*     textTheme: TextTheme(
@@ -22,25 +24,25 @@ class AppTheme {
     ), */
 
     ///* Scaffold Background Color
-    scaffoldBackgroundColor: scaffoldBackgroundColor,
+    //scaffoldBackgroundColor: scaffoldBackgroundColor,
     
 
     ///* Buttons
-    filledButtonTheme: const FilledButtonThemeData(
+    /* filledButtonTheme: const FilledButtonThemeData(
       style: ButtonStyle(
         /* textStyle: MaterialStatePropertyAll(
           GoogleFonts.montserratAlternates()
             .copyWith(fontWeight: FontWeight.w700)
           ) */
       )
-    ),
+    ), */
 
     ///* AppBar
-    appBarTheme: const AppBarTheme(
+/*     appBarTheme: const AppBarTheme(
       color: scaffoldBackgroundColor,
       /* titleTextStyle: GoogleFonts.montserratAlternates()
         .copyWith( fontSize: 25, fontWeight: FontWeight.bold, color: Colors.black ), */
-    )
+    ) */
   );
 
 }

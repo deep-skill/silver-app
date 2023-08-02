@@ -19,28 +19,34 @@ class AuthNotifier extends StateNotifier<AuthState> {
     auth0Web =
         Auth0Web(dotenv.env['AUTH0_DOMAIN']!, dotenv.env['AUTH0_CLIENT_ID']!);
 
+    //Initializes Auth0 on Web and get stored credentials
     if (kIsWeb) {
-      auth0Web.onLoad().then((final credentials) {
+      auth0Web.onLoad(
+        audience: 'http://localhost:5000',
+        scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
+      ).then((final credentials) {
         if (credentials != null) {
-          // logged in!
           state = state.copyWith(
             user: credentials.user,
             authStatus: AuthStatus.authenticated,
             credentials: credentials,
           );
-        } 
+        }
       });
     }
+
     checkAuthStatus();
   }
 
   Future<void> checkAuthStatus() async {
+    state = state.copyWith(
+      authStatus: AuthStatus.checking,
+    );
+    await Future.delayed(const Duration(seconds: 1));
     try {
       if (kIsWeb) {
         final isLoggedIn = await auth0Web.hasValidCredentials();
-
         if (isLoggedIn) {
-          // Retrieve the credentials and redirect to the main flow
           final credentials = await auth0Web.credentials();
           state = state.copyWith(
             user: credentials.user,
@@ -48,7 +54,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
             credentials: credentials,
           );
         } else {
-          // No valid credentials exist, present the login page
+          state = state.copyWith(
+            authStatus: AuthStatus.notAuthenticated,
+          );
         }
       } else {
         final isLoggedIn = await auth0.credentialsManager.hasValidCredentials();
@@ -59,34 +67,53 @@ class AuthNotifier extends StateNotifier<AuthState> {
             authStatus: AuthStatus.authenticated,
             credentials: credentials,
           );
+        } else {
+          state = state.copyWith(
+            authStatus: AuthStatus.notAuthenticated,
+          );
         }
       }
     } catch (e) {
+      //Auth0 print recomendation
+      // ignore: avoid_print
       print(e);
     }
   }
 
   Future<void> login() async {
+/*      state = state.copyWith(
+      authStatus: AuthStatus.checking,
+    ); */
     try {
       if (kIsWeb) {
-        return auth0Web.loginWithRedirect(redirectUrl: 'http://localhost:3000');
+        return auth0Web.loginWithRedirect(
+          redirectUrl: 'http://localhost:3000',
+          audience: 'http://localhost:5000',
+          scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
+        );
       }
-
       var credentials = await auth0
           .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
-          .login();
-
+          .login(
+        audience: 'http://localhost:5000',
+        scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
+      );
       state = state.copyWith(
         user: credentials.user,
         authStatus: AuthStatus.authenticated,
         credentials: credentials,
       );
     } catch (e) {
+      //Auth0 print recomendation
+      // ignore: avoid_print
       print(e);
     }
   }
 
   Future<void> logout() async {
+    state = state.copyWith(
+      authStatus: AuthStatus.checking,
+    );
     try {
       if (kIsWeb) {
         await auth0Web.logout(returnToUrl: 'http://localhost:3000');
@@ -101,11 +128,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
         credentials: null,
       );
     } catch (e) {
+      //Auth0 print recomendation
+      // ignore: avoid_print
       print(e);
     }
   }
 }
 
+// Auth State
 enum AuthStatus { checking, authenticated, notAuthenticated }
 
 class AuthState {

@@ -7,9 +7,7 @@ import 'package:silverapp/config/theme/app_theme.dart';
 void main() async {
   await dotenv.load();
 
-  runApp(
-    const ProviderScope(child: MainApp())
-  );
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends ConsumerWidget {

@@ -1,3 +1,4 @@
+![Silver App Logo](/assets/images/silver-logo_white_font-color.png "Silver App Logo")
 # Silver Express App
 
 Silver Express is a taxicab company.
@@ -5,6 +6,8 @@ Silver Express is a taxicab company.
 ## Run the project
 
 To run the project:
+
+First, rename the file name ".env.example" to ".env". Then make sure you have the API working and fill in the data correctly in the ".env" file.
 
 ### 📱 Mobile
 
@@ -45,6 +48,10 @@ flutter run -d chrome --web-port 3000 --web-renderer html
 - Pubspect: Added
 - assets/images/
 - Logos
+
+### Dio Request:
+- .env your IP to call server
+- accessToken added to dio
 
 ### Fonts:
 - Pubspect: Added

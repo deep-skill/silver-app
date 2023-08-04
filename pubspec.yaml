@@ -30,6 +30,7 @@ environment:
 dependencies:
   auth0_flutter: ^1.2.1
   cupertino_icons: ^1.0.2
+  dio: ^5.3.2
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.1.0
@@ -75,6 +76,5 @@ flutter:
         - asset: assets/fonts/Montserrat-VariableFont_wght.ttf
         - asset: assets/fonts/Montserrat-Italic-VariableFont_wght.ttf
           style: italic
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

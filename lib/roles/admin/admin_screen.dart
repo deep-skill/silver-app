@@ -25,9 +25,6 @@ class AdminScreen extends ConsumerWidget {
                   try {
                     final Dio dio = Dio(
                       BaseOptions(
-
-                          ///vvvv router IP vvvv///
-                          ///Web Socket conection refused ///
                           baseUrl:
                               'http://${dotenv.env['YOUR_IP']}:${dotenv.env['SERVER_PORT']}/',
                           contentType: 'application/json',
@@ -52,9 +49,6 @@ class AdminScreen extends ConsumerWidget {
                 try {
                   final Dio dio = Dio(
                     BaseOptions(
-
-                        ///vvvv router IP vvvv///
-                        ///Web Socket conection refused ///
                         baseUrl:
                             'http://${dotenv.env['YOUR_IP']}:${dotenv.env['SERVER_PORT']}/',
                         contentType: 'application/json',

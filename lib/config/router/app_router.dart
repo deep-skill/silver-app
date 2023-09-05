@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:silverapp/auth0/auth0.dart';
 import 'package:silverapp/config/router/app_router_notifier.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
-import 'package:silverapp/roles/admin/admin_screen.dart';
+import 'package:silverapp/roles/admin/presentation/screens/admin_screen.dart';
 import 'package:silverapp/roles/driver/driver_screen.dart';
 import 'package:silverapp/roles/no_role/no_role_screen.dart';
 import 'package:silverapp/roles/user/user_screen.dart';
@@ -24,7 +24,7 @@ final goRouterProvider = Provider((ref) {
         ///* Product Routes
         GoRoute(
           path: '/admin',
-          builder: (context, state) => const AdminScreen(),
+          builder: (context, state) => AdminScreen(),
         ),
         GoRoute(
           path: '/driver',

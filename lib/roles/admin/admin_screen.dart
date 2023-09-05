@@ -85,3 +85,67 @@ class AdminScreen extends ConsumerWidget {
     );
   }
 }
+
+
+
+/* TextButton(
+  onPressed: () {
+    context.push('/details');
+    },
+  child: const Text('Test Acá')
+  ),
+  Text(
+    auth0Prov.authStatus.toString(),
+    style: const TextStyle(fontSize: 20),
+  ), */
+
+  /* 
+    auth0Prov.credentials != null
+                  /                 ? ElevatedButton(
+                                        onPressed: () {
+                                          ref
+                                              .read(authProvider.notifier)
+                                              .logout();
+                                        },
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  const Color(0xFFFFFFFF)),
+                                        ),
+                                        child: Text(
+                                          'Salir ${auth0Prov.credentials!.scopes}',
+                                          style: TextStyle(
+                                            color: colors.primary,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      )
+                                    : ElevatedButton(
+                                        onPressed: () {
+                                          ref
+                                              .read(authProvider.notifier)
+                                              .login();
+                                        },
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  const Color(0xFFFFFFFF)),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: size.width * .10,
+                                              vertical: size.height * .015),
+                                          child: Text(
+                                            'Ingresar',
+                                            style: TextStyle(
+                                              color: colors.onBackground,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+   */

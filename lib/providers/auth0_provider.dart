@@ -42,7 +42,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = state.copyWith(
       authStatus: AuthStatus.checking,
     );
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     try {
       if (kIsWeb) {
         final isLoggedIn = await auth0Web.hasValidCredentials();

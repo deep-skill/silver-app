@@ -86,48 +86,42 @@ class AppLoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
       SizedBox(
-        height: size.height * .15,
+        height: size.height * .14,
       ),
       SizedBox(
-        width: size.width * .70,
+        height: size.height * .12,
+        width: size.width * .60,
         child: Image.asset('assets/images/silver-logo_white_font-color.png'),
       ),
-      const SizedBox(
-        height: 10,
-      ),
-      Image.asset('assets/images/login-driving-car.png'),
-      const SizedBox(
-        height: 15,
-      ),
-      Text(
-        '¡Bienvenido a Silver!',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          color: colors.onPrimary,
-          fontSize: 31,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-      const SizedBox(
-        height: 15,
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 28.0),
-        child: Text(
-          'Gestiona los viajes corporativos de tus clientes y empleados con un solo clic.',
-          style: TextStyle(
-            color: colors.onPrimary,
-            fontSize: 19,
-            fontWeight: FontWeight.w500,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      const SizedBox(
-        height: 40,
+      SizedBox(
+        height: size.height * .01,
       ),
       SizedBox(
-        width: size.width * .7,
+        height: size.height * .30,
+        width: size.width * .9,
+        child: Image.asset('assets/images/login-driving-car.png'),
+      ),
+      SizedBox(
+        height: size.height * .03,
+      ),
+      SizedBox(
+        width: size.width * .9,
+        child: Text(
+          'Gestiona tus viajes corporativos con un solo clic',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: colors.onPrimary,
+            fontSize: 23,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+      SizedBox(
+        height: size.height * .05,
+      ),
+      SizedBox(
+        height: size.height * .06,
+        width: size.width * .8,
         child: ElevatedButton(
           onPressed: () {
             ref.read(authProvider.notifier).login();
@@ -136,7 +130,7 @@ class AppLoginView extends StatelessWidget {
             'Ingresar',
             style: TextStyle(
               color: colors.onBackground,
-              fontSize: 20,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -166,7 +160,7 @@ class WebLoginView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 60),
+              padding: const EdgeInsets.only(left: 80),
               child: Image.asset(
                 'assets/images/silver-logo_white_font-color.png',
                 width: size.width * .20,
@@ -178,43 +172,26 @@ class WebLoginView extends StatelessWidget {
             SizedBox(
               width: size.width * .50,
               child: Padding(
-                padding: const EdgeInsets.only(left: 80),
+                padding: const EdgeInsets.only(left: 100, right: 120),
                 child: Text(
-                  '¡Bienvenido a Silver!',
+                  'Gestiona tus viajes corporativos con un solo clic',
                   style: TextStyle(
                     height: 1.2,
                     color: colors.onPrimary,
-                    fontSize: 70,
+                    fontSize: 60,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
             const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              width: size.width * .50,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 80),
-                child: Text(
-                  'Gestiona los viajes corporativos de tus clientes y empleados con un solo clic.',
-                  style: TextStyle(
-                    color: colors.onPrimary,
-                    fontSize: 30,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
+              height: 70,
             ),
             SizedBox(
               width: size.width * .5,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 80,
+                  horizontal: 100,
                 ),
                 child: ElevatedButton(
                   onPressed: () {

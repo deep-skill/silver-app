@@ -22,76 +22,90 @@ class SideMenuState extends ConsumerState<SideMenu> {
   Widget build(BuildContext context) {
     final hasNotch = MediaQuery.of(context).viewPadding.top > 20;
     Credentials? credentials = ref.watch(authProvider).credentials;
+    final size = MediaQuery.of(context).size;
 
-    return NavigationDrawer(
-      onDestinationSelected: (value) {
-        setState(() {
-          navDrawerIndex = value;
-        });
-        final menuItem = appMenuItems[value];
-        context.push(menuItem.link);
-        widget.scaffoldKey.currentState?.closeDrawer();
-      },
-      selectedIndex: navDrawerIndex,
-      children: [
-        Padding(
-          padding: EdgeInsets.fromLTRB(20, hasNotch ? 20 : 10, 16, 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                  child: Image.asset(
-                "assets/images/app_logo.png",
-                width: 45,
-              )),
-              const Text('Silver Express',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              Text(credentials!.user.email.toString(),
-                  style: const TextStyle(
-                      color: Colors.grey,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold)),
-            ],
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
-          child: Divider(),
-        ),
-        ...appMenuItems.map(
-          (item) => NavigationDrawerDestination(
-            icon: Icon(item.icon),
-            label: Text(item.title),
-          ),
-        ),
-        const Padding(
-          padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
-          child: Divider(),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: ElevatedButton(
-            onPressed: () {
-              ref.read(authProvider.notifier).logout();
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.red),
+    return SizedBox(
+      width: size.width,
+      child: NavigationDrawer(
+        onDestinationSelected: (value) {
+          setState(() {
+            navDrawerIndex = value;
+          });
+          final menuItem = appMenuItems[value];
+          context.push(menuItem.link);
+          widget.scaffoldKey.currentState?.closeDrawer();
+        },
+        selectedIndex: navDrawerIndex,
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton(
+              onPressed: () {
+                widget.scaffoldKey.currentState?.closeDrawer();
+              },
+              child: const Icon(Icons.close, color: Colors.black),
             ),
-            child: const Row(
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20, hasNotch ? 20 : 10, 16, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(
-                  Icons.logout_rounded,
-                  color: Colors.white,
-                ),
-                Text('Cerrar sesión',
-                    style: TextStyle(
-                      color: Colors.white,
-                    )),
+                SizedBox(
+                    child: Image.asset(
+                  "assets/images/app_logo.png",
+                  width: size.width * .15,
+                )),
+                const Text('Silver Express',
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text(credentials!.user.email.toString(),
+                    style: const TextStyle(
+                        color: Colors.grey,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold)),
               ],
             ),
           ),
-        ),
-      ],
+          const Padding(
+            padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
+            child: Divider(),
+          ),
+          ...appMenuItems.map(
+            (item) => NavigationDrawerDestination(
+              icon: Icon(item.icon),
+              label: Text(item.title),
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
+            child: Divider(),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ElevatedButton(
+              onPressed: () {
+                ref.read(authProvider.notifier).logout();
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+              ),
+              child: const Row(
+                children: [
+                  Icon(
+                    Icons.logout_rounded,
+                    color: Colors.white,
+                  ),
+                  Text('Cerrar sesión',
+                      style: TextStyle(
+                        color: Colors.white,
+                      )),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

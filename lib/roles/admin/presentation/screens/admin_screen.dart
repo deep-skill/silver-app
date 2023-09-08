@@ -16,19 +16,7 @@ class AdminScreen extends ConsumerWidget {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-        toolbarHeight: 65,
-        flexibleSpace: Padding(
-          padding: const EdgeInsets.only(right: 20, top: 35),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SizedBox(
-                  child: Image.asset(
-                "assets/images/app_logo.png",
-              )),
-            ],
-          ),
-        ),
+        scrolledUnderElevation: 0,
       ),
       drawer: SideMenu(
         scaffoldKey: scaffoldKey,
@@ -56,6 +44,7 @@ class HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     const months = [
       'Enero',
       'Febrero',
@@ -76,60 +65,71 @@ class HomeViewState extends ConsumerState<HomeView> {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: [
-          Container(
-            alignment: Alignment.centerLeft,
-            child: const Text('¡Hola!',
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                )),
+          Row(
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                      child: Image.asset(
+                    "assets/images/app_logo.png",
+                    width: size.width * .2,
+                  )),
+                  SizedBox(
+                    width: size.width * .04,
+                  ),
+                  const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('¡Hola!',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        Text('Silver Express',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ])
+                ],
+              ),
+            ],
           ),
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: const EdgeInsets.only(bottom: 10),
-            child: const Text('Silver Express',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
+          SizedBox(
+            height: size.height * .01,
           ),
+          SizedBox(
+              width: size.width * .9,
+              child: Text(months[date],
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                      fontSize: 21, fontWeight: FontWeight.bold))),
+                      SizedBox( height: size.height * .01),
           Container(
               decoration: const BoxDecoration(
                 color: Color(0xff03132a),
                 borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
-              height: 90,
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              height: size.height * .1,
+              width: size.width * .9,
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('Ingresos del mes',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold)),
-                        Text(months[date],
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 15)),
-                      ],
-                    ),
+                  Column(),
+                  VerticalDivider(
+                    thickness: 4,
+                    indent: 15,
+                    endIndent: 15,
+                    color: Colors.white,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 15),
-                    child: Text('S/ 0,00',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold)),
+                  Column(),
+                  VerticalDivider(
+                    thickness: 4,
+                    indent: 15,
+                    endIndent: 15,
+                    color: Colors.white,
                   ),
+                  Column(),
                 ],
               )),
           const SizedBox(

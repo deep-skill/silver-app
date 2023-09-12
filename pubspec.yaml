@@ -68,7 +68,7 @@ flutter:
   fonts:
     - family: Raleway
       fonts:
-        - asset: assets/fonts/Raleway-VariableFont_wght.ttf
+        - asset: assets/fonts/Raleway-Bold.ttf
         - asset: assets/fonts/Raleway-Italic-VariableFont_wght.ttf
           style: italic
     - family: Montserrat

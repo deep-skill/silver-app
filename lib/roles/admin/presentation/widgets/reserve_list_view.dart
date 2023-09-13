@@ -74,9 +74,16 @@ class _Slide extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         height: 130,
-        decoration: const BoxDecoration(
-          color: Color(0xffF2F3F7),
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+        decoration:  BoxDecoration(
+          color: const Color(0xffF2F3F7),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
+          boxShadow: [
+            BoxShadow(
+              color:  Colors.grey.shade200,
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            )
+          ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -85,39 +92,42 @@ class _Slide extends StatelessWidget {
                 width: 90,
                 height: 110,
                 decoration: const BoxDecoration(
-                  color: Colors.grey,
+                  color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
-                child: Stack(alignment: AlignmentDirectional.center, children: [
-                  const Icon(
-                    Icons.account_circle,
-                    color: Color(0xffc4c5c9),
-                    size: 90,
+                child: const Center(
+                    child: Text(
+                  'Sin conductor',
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w700,
                   ),
-                  Positioned(
-                      bottom: 0,
-                      left: 0,
-                      child: Image.asset(
-                        "assets/images/vehiculo_home_admin.png",
-                      ))
-                ])),
+                ))),
             Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${reserve.name} ${reserve.lastName}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.hail,
+                        size: 20,
+                      ),
+                      Text(
+                        '${reserve.name} ${reserve.lastName}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   Row(
                     children: [
                       const Icon(
                         Icons.account_balance_outlined,
-                        size: 15,
+                        size: 20,
                       ),
                       Text(
                         ' ${reserve.entrepriseName}',
@@ -131,7 +141,7 @@ class _Slide extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.event_available_outlined,
-                        size: 15,
+                        size: 20,
                       ),
                       Text(
                         ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
@@ -145,7 +155,7 @@ class _Slide extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.timeline,
-                        size: 15,
+                        size: 20,
                       ),
                       Text(
                         ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',

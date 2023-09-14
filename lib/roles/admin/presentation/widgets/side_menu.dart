@@ -25,56 +25,61 @@ class SideMenuState extends ConsumerState<SideMenu> {
     final size = MediaQuery.of(context).size;
 
     return SizedBox(
-      width: size.width,
+      width: size.width * .85,
       child: NavigationDrawer(
+        backgroundColor: const Color(0xff031329),
+        indicatorColor: const Color(0xff23A5CD),
+        indicatorShape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
         onDestinationSelected: (value) {
           setState(() {
             navDrawerIndex = value;
           });
           final menuItem = appMenuItems[value];
-          context.push(menuItem.link);
+          menuItem.link == '/admin' ? null : context.push(menuItem.link);
           widget.scaffoldKey.currentState?.closeDrawer();
         },
         selectedIndex: navDrawerIndex,
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: TextButton(
-              onPressed: () {
-                widget.scaffoldKey.currentState?.closeDrawer();
-              },
-              child: const Icon(Icons.close, color: Colors.black),
-            ),
-          ),
           Padding(
             padding: EdgeInsets.fromLTRB(20, hasNotch ? 20 : 10, 16, 10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                IconButton(
+                  onPressed: () {
+                    widget.scaffoldKey.currentState?.closeDrawer();
+                  },
+                  icon: const Icon(Icons.close),
+                  color: Colors.white,
+                ),
                 SizedBox(
                     child: Image.asset(
                   "assets/images/app_logo.png",
                   width: size.width * .15,
                 )),
                 const Text('Silver Express',
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    style: TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    )),
                 Text(credentials!.user.email.toString(),
                     style: const TextStyle(
-                        color: Colors.grey,
+                        color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.bold)),
               ],
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
-            child: Divider(),
-          ),
           ...appMenuItems.map(
             (item) => NavigationDrawerDestination(
-              icon: Icon(item.icon),
-              label: Text(item.title),
+              icon: Icon(item.icon, color: Colors.white),
+              label:
+                  Text(item.title, style: const TextStyle(color: Colors.white)),
             ),
           ),
           const Padding(
@@ -83,12 +88,14 @@ class SideMenuState extends ConsumerState<SideMenu> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ElevatedButton(
+            child: TextButton(
               onPressed: () {
                 ref.read(authProvider.notifier).logout();
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.red),
+                overlayColor:
+                    MaterialStateProperty.all(const Color(0xff031329)),
+                shadowColor: MaterialStateProperty.all(Colors.transparent),
               ),
               child: const Row(
                 children: [
@@ -130,7 +137,7 @@ const appMenuItems = <MenuItem>[
   ),
   MenuItem(
     title: 'Lista de reservas',
-    link: '/admin/reserves',
+    link: '/reserves',
     icon: Icons.calendar_month,
   ),
   MenuItem(

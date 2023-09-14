@@ -20,13 +20,13 @@ final goRouterProvider = Provider((ref) {
           builder: (context, state) => const Auth0Screen(),
         ),
         GoRoute(
-            path: '/admin',
-            builder: (context, state) => AdminScreen(),
-           ),
-            GoRoute(
-                path: '/reserves',
-                builder: (context, state) => ReserveListScreen(),
-              ),
+          path: '/admin',
+          builder: (context, state) => AdminScreen(),
+        ),
+        GoRoute(
+          path: '/reserves',
+          builder: (context, state) => const ReserveListScreen(),
+        ),
         GoRoute(
           path: '/driver',
           builder: (context, state) => const DriverScreen(),
@@ -42,6 +42,7 @@ final goRouterProvider = Provider((ref) {
       ],
       redirect: (context, state) {
         final authState = goRouterNotifier.authStatus;
+        final isGoingTo = state.matchedLocation;
 
         if (authState.authStatus == AuthStatus.notAuthenticated) {
           return '/login';
@@ -54,6 +55,7 @@ final goRouterProvider = Provider((ref) {
         }
         if (authState.authStatus == AuthStatus.authenticated &&
             authState.credentials!.scopes.toString().contains('admin')) {
+          if (isGoingTo == '/reserves') return null;
           return '/admin';
         }
         if (authState.authStatus == AuthStatus.authenticated &&

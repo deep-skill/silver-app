@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/admin/entities/reserve_list.dart';
 
-class ReservesListView extends StatefulWidget {
-  const ReservesListView(
-      {super.key, required this.reserves, this.loadNextPage});
+class ReservesList extends StatefulWidget {
+  const ReservesList(
+      {super.key, required this.reserves, required this.loadNextPage});
 
   final List<ReserveList> reserves;
   final VoidCallback? loadNextPage;
 
   @override
-  State<ReservesListView> createState() => _ReservesListViewState();
+  State<ReservesList> createState() => _ReservesListState();
 }
 
-class _ReservesListViewState extends State<ReservesListView> {
+class _ReservesListState extends State<ReservesList> {
   final ScrollController scrollController = ScrollController();
 
   @override

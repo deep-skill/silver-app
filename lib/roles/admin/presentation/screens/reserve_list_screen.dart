@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/side_menu.dart';
-import 'package:silverapp/roles/admin/views/reserve_list_view.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/reserve_list.dart';
 
 class ReserveListScreen extends StatelessWidget {
-  ReserveListScreen({super.key});
+  const ReserveListScreen({super.key});
   static const name = 'reserves';
 
   @override
   Widget build(BuildContext context) {
-    return const ReserveListView();
+    return Scaffold(
+        appBar: AppBar(title: const Text('Lista de reservas')),
+        body: const ReserveListView());
   }
 }
 
@@ -32,23 +32,19 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
   @override
   Widget build(BuildContext context) {
     final reserves = ref.watch(reservesListProvider);
-      final scaffoldKey = GlobalKey<ScaffoldState>();
 
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lista de Reservas'),
-        
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      child: Column(
+        children: [
+          ReservesList(
+            reserves: reserves,
+            loadNextPage: () {
+              ref.read(reservesListProvider.notifier).loadNextPage();
+            },
+          ),
+        ],
       ),
-      body: Placeholder(),
     );
   }
 }
-
-
-/* ReservesListView(
-        reserves: reserves,
-        loadNextPage: () {
-          ref.read(reservesListProvider.notifier).loadNextPage();
-        },
-      ), */

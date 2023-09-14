@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/models/trip_summary_response.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_view_home.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/side_menu.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view.dart';
 
@@ -123,7 +123,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                   fontWeight: FontWeight.bold,
                 )),
           ),
-          ReservesListViewHome(
+          ReservesListHome(
             reserves: reserves,
             loadNextPage: () {
               ref.read(reservesHomeProvider.notifier).loadNextPage();

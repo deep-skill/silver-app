@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/admin/entities/reserves_home.dart';
+import 'package:silverapp/roles/admin/entities/reserve_home.dart';
 
-class ReservesListView extends StatefulWidget {
-  const ReservesListView(
+class ReservesListViewHome extends StatefulWidget {
+  const ReservesListViewHome(
       {super.key, required this.reserves, this.loadNextPage});
 
   final List<ReserveHome> reserves;
   final VoidCallback? loadNextPage;
 
   @override
-  State<ReservesListView> createState() => _ReservesListViewState();
+  State<ReservesListViewHome> createState() => _ReservesListViewHomeState();
 }
 
-class _ReservesListViewState extends State<ReservesListView> {
+class _ReservesListViewHomeState extends State<ReservesListViewHome> {
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -74,12 +74,12 @@ class _Slide extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         height: 130,
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           color: const Color(0xffF2F3F7),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
-              color:  Colors.grey.shade200,
+              color: Colors.grey.shade200,
               blurRadius: 10,
               offset: const Offset(0, 3),
             )

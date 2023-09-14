@@ -1,4 +1,4 @@
-import 'package:silverapp/roles/admin/entities/reserves_home.dart';
+import 'package:silverapp/roles/admin/entities/reserve_home.dart';
 
 class ReservesPaginatedResponse {
   ReservesPaginatedResponse({

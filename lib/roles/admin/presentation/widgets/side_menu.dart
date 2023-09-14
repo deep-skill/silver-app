@@ -114,14 +114,13 @@ class MenuItem {
   final String title;
   final String link;
   final IconData icon;
-  //constructor
   const MenuItem({required this.title, required this.link, required this.icon});
 }
 
 const appMenuItems = <MenuItem>[
   MenuItem(
     title: 'Inicio',
-    link: '/admin-home',
+    link: '/admin',
     icon: Icons.home_outlined,
   ),
   MenuItem(
@@ -131,7 +130,7 @@ const appMenuItems = <MenuItem>[
   ),
   MenuItem(
     title: 'Lista de reservas',
-    link: '/reservas',
+    link: '/admin/reserves',
     icon: Icons.calendar_month,
   ),
   MenuItem(

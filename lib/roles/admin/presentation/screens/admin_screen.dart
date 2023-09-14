@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/models/trip_summary_response.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserves.dart';
-import 'package:silverapp/roles/admin/presentation/providers/trip_summary.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_view.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_view_home.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/side_menu.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view.dart';
 
@@ -42,7 +42,7 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    ref.read(reservesProvider.notifier).loadNextPage();
+    ref.read(reservesHomeProvider.notifier).loadNextPage();
   }
 
   @override
@@ -62,7 +62,7 @@ class HomeViewState extends ConsumerState<HomeView> {
       'Noviembre',
       'Deciembre'
     ];
-    final reserves = ref.watch(reservesProvider);
+    final reserves = ref.watch(reservesHomeProvider);
     final date = DateTime.now().month - 1;
     AsyncValue<TripsSummaryResponse> tripsSummary =
         ref.watch(tripsSummaryProvider);
@@ -123,10 +123,10 @@ class HomeViewState extends ConsumerState<HomeView> {
                   fontWeight: FontWeight.bold,
                 )),
           ),
-          ReservesListView(
+          ReservesListViewHome(
             reserves: reserves,
             loadNextPage: () {
-              ref.read(reservesProvider.notifier).loadNextPage();
+              ref.read(reservesHomeProvider.notifier).loadNextPage();
             },
           ),
         ],

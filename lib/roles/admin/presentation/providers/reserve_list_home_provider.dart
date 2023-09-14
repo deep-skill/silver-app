@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/admin/entities/reserves_home.dart';
+import 'package:silverapp/roles/admin/entities/reserve_home.dart';
 import 'package:silverapp/roles/admin/models/reserves_paginated_response.dart';
 
 final dio = Dio(BaseOptions(
@@ -15,7 +15,7 @@ List<ReserveHome> _jsonToReserves(Map<String, dynamic> json) {
   return reserves;
 }
 
-final reservesProvider =
+final reservesHomeProvider =
     StateNotifierProvider<ReservesNotifier, List<ReserveHome>>((ref) {
   Future<List<ReserveHome>> getReserves({int page = 0}) async {
     final response = await dio.get('reserves/admin-home', queryParameters: {

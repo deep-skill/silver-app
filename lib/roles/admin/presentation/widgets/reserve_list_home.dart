@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/entities/reserve_home.dart';
 
 class ReservesListHome extends StatefulWidget {
@@ -56,6 +57,7 @@ class _Slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     const months = [
       'ene',
       'feb',
@@ -73,7 +75,7 @@ class _Slide extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: 130,
+        height: size.height * .15,
         decoration: BoxDecoration(
           color: const Color(0xffF2F3F7),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
@@ -104,7 +106,7 @@ class _Slide extends StatelessWidget {
                   ),
                 ))),
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -168,9 +170,12 @@ class _Slide extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 30,
+            GestureDetector(
+              onTap: () => context.push('/reserves/detail/${reserve.id}'),
+              child: const Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 30,
+              ),
             ),
           ],
         ),

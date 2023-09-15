@@ -24,8 +24,8 @@ final reservesHomeProvider =
     return _jsonToReserves(response.data);
   }
 
-  final fetchMoreMovies = getReserves;
-  return ReservesNotifier(fetchMoreReserves: fetchMoreMovies);
+  final fetchMoreReserves = getReserves;
+  return ReservesNotifier(fetchMoreReserves: fetchMoreReserves);
 });
 
 typedef ReserveCallback = Future<List<ReserveHome>> Function({int page});

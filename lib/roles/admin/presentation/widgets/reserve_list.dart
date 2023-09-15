@@ -56,6 +56,7 @@ class _Slide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     const months = [
       'ene',
       'feb',
@@ -73,7 +74,7 @@ class _Slide extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: 130,
+        height: size.height * .15,
         decoration: BoxDecoration(
           color: const Color(0xffF2F3F7),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
@@ -89,22 +90,47 @@ class _Slide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-                width: 90,
+                width: 100,
                 height: 110,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xff031329),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
-                child: const Center(
-                    child: Text(
-                  'Sin conductor',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ))),
+                child: reserve.driverName != ''
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              '${reserve.driverName} ${reserve.driverLastName}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Stack(children: [
+                            ClipOval(
+                                child: Image.asset(
+                                    'assets/images/driver_img_example.png')),
+                          ]),
+                        ],
+                      )
+                    : const Center(
+                        child: Text(
+                        'Sin conductor',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ))),
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -123,19 +149,26 @@ class _Slide extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.account_balance_outlined,
-                        size: 20,
-                      ),
-                      Text(
-                        ' ${reserve.entrepriseName}',
-                        style: const TextStyle(
-                          fontSize: 16,
+                  SizedBox(
+                    width: size.width * .5,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.account_balance_outlined,
+                          size: 20,
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Text(
+                            ' ${reserve.entrepriseName}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     children: [

@@ -81,9 +81,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> login() async {
-/*      state = state.copyWith(
-      authStatus: AuthStatus.checking,
-    ); */
     try {
       if (kIsWeb) {
         return auth0Web.loginWithRedirect(
@@ -92,12 +89,17 @@ class AuthNotifier extends StateNotifier<AuthState> {
           scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
         );
       }
+
       var credentials = await auth0
           .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
           .login(
         audience: 'http://localhost:5000',
         scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
       );
+      state = state.copyWith(
+        authStatus: AuthStatus.checking,
+      );
+      await Future.delayed(const Duration(seconds: 3));
       state = state.copyWith(
         user: credentials.user,
         authStatus: AuthStatus.authenticated,

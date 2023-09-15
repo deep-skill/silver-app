@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/entities/reserve_list.dart';
 
 class ReservesList extends StatefulWidget {
@@ -201,9 +202,12 @@ class _Slide extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 30,
+            GestureDetector(
+              onTap: () => context.push('/admin/reserves/detail/${reserve.id}'),
+              child: const Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 30,
+              ),
             ),
           ],
         ),

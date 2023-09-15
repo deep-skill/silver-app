@@ -23,33 +23,21 @@ final goRouterProvider = Provider((ref) {
         GoRoute(
           path: '/admin',
           builder: (context, state) => AdminScreen(),
-        ),
-        GoRoute(
-          path: '/reserves',
-          builder: (context, state) => const ReserveListScreen(),
-        ),
-        GoRoute(
-          path: '/reserves',
-          builder: (context, state) => const ReserveListScreen(),
           routes: [
-             GoRoute(
-          path: 'detail/:id',
-          builder: (context, state) {
-            final reserveId =
-                state.pathParameters['id'] ?? 'No params available';
-            return ReserveDetailScreen(reserveId: reserveId);
-          },
-        ),
-
-          ]
-        ),
-        GoRoute(
-          path: '/reserves/detail/:id',
-          builder: (context, state) {
-            final reserveId =
-                state.pathParameters['id'] ?? 'No params available';
-            return ReserveDetailScreen(reserveId: reserveId);
-          },
+            GoRoute(
+                path: 'reserves',
+                builder: (context, state) => const ReserveListScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'detail/:id',
+                    builder: (context, state) {
+                      final reserveId =
+                          state.pathParameters['id'] ?? 'No params available';
+                      return ReserveDetailScreen(reserveId: reserveId);
+                    },
+                  ),
+                ]),
+          ],
         ),
         GoRoute(
           path: '/driver',
@@ -79,7 +67,8 @@ final goRouterProvider = Provider((ref) {
         }
         if (authState.authStatus == AuthStatus.authenticated &&
             authState.credentials!.scopes.toString().contains('admin')) {
-          if (isGoingTo == '/reserves' || isGoingTo.contains('/detail')) return null;
+          if (isGoingTo == '/admin/reserves' ||
+              isGoingTo.contains('/admin/reserves')) return null;
           return '/admin';
         }
         if (authState.authStatus == AuthStatus.authenticated &&

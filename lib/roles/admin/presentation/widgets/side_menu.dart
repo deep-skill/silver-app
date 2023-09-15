@@ -137,7 +137,7 @@ const appMenuItems = <MenuItem>[
   ),
   MenuItem(
     title: 'Lista de reservas',
-    link: '/reserves',
+    link: '/admin/reserves',
     icon: Icons.calendar_month,
   ),
   MenuItem(

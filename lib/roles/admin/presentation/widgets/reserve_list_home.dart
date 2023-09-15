@@ -171,7 +171,7 @@ class _Slide extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => context.push('/reserves/detail/${reserve.id}'),
+              onTap: () => context.push('/admin/reserves/detail/${reserve.id}'),
               child: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 30,

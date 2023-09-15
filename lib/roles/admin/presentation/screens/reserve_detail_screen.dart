@@ -17,14 +17,15 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(reserveDetailProvider.notifier).getReserveDetail(widget.reserveId);
+    ref
+        .read(reserveDetailProvider.notifier)
+        .loadReserveDetail(widget.reserveId);
   }
 
   @override
   Widget build(BuildContext context) {
     final reserves = ref.watch(reserveDetailProvider);
     final ReserveDetail? reserve = reserves[widget.reserveId];
-    print(reserves);
     if (reserve == null) {
       return const Scaffold(
           body: Center(
@@ -33,7 +34,7 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
     }
 
     return Scaffold(
-        appBar: AppBar(title: const Text('Lista de reservas')),
+        appBar: AppBar(title: const Text('Detalle de reserva')),
         body: Padding(
             padding: EdgeInsets.all(12), child: ReserveInfo(reserve: reserve)));
   }
@@ -47,8 +48,20 @@ class ReserveInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [Text(reserve.name)]);
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Text(reserve.name),
+      Text(reserve.startTime.toString()),
+      Text(reserve.lastName),
+      Text(reserve.serviceType),
+      Text(reserve.entrepriseName),
+      Text(reserve.driverName),
+      Text(reserve.driverLastName),
+      Text(reserve.licensePlate),
+      Text(reserve.tripType),
+      Text(reserve.startAddress),
+      Text(reserve.endAddress),
+      Text(reserve.price),
+      Text(reserve.silverPercent),
+    ]);
   }
 }

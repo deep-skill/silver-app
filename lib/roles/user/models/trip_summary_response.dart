@@ -1,4 +1,3 @@
-
 class TripsSummaryResponse {
   TripsSummaryResponse({
     required this.trips,
@@ -13,7 +12,7 @@ class TripsSummaryResponse {
   factory TripsSummaryResponse.fromJson(Map<String, dynamic> json) =>
       TripsSummaryResponse(
         trips: json["trips"],
-        income: json["income"],
-        revenue: json["revenue"],
+        income: json["income"].toDouble(),
+        revenue: json["revenue"].toDouble(),
       );
 }

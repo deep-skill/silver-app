@@ -5,6 +5,7 @@ class ReserveHome {
   final String name;
   final String lastName;
   final String entrepriseName;
+  final String startAddress;
 
   ReserveHome({
     required this.id,
@@ -13,6 +14,7 @@ class ReserveHome {
     required this.name,
     required this.lastName,
     required this.entrepriseName,
+    required this.startAddress,
   });
   factory ReserveHome.fromJson(Map<String, dynamic> json) => ReserveHome(
         id: json['id'],
@@ -21,5 +23,6 @@ class ReserveHome {
         name: json['User']['name'],
         lastName: json['User']['lastName'],
         entrepriseName: json['Enterprise']['name'],
+        startAddress: json['startAddress'],
       );
 }

@@ -73,7 +73,7 @@ class _Slide extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: 130,
+        height: 120,
         decoration: const BoxDecoration(
           color: Color(0xffF2F3F7),
           borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -83,7 +83,7 @@ class _Slide extends StatelessWidget {
           children: [
             Container(
                 width: 90,
-                height: 110,
+                height: 100,
                 decoration: const BoxDecoration(
                   color: Colors.grey,
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -116,20 +116,6 @@ class _Slide extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(
-                        Icons.account_balance_outlined,
-                        size: 15,
-                      ),
-                      Text(
-                        ' ${reserve.entrepriseName}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
                         Icons.event_available_outlined,
                         size: 15,
                       ),
@@ -144,13 +130,13 @@ class _Slide extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(
-                        Icons.timeline,
+                        Icons.event_available_outlined,
                         size: 15,
                       ),
                       Text(
-                        ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
+                        ' ${reserve.startAddress}',
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 13,
                         ),
                       ),
                     ],

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/roles/user/models/trip_summary_response.dart';
 import 'package:silverapp/roles/user/presentation/providers/reserves.dart';
+import 'package:silverapp/roles/user/presentation/providers/trip_summary_provider.dart';
 import 'package:silverapp/roles/user/presentation/widgets/reserve_list_view.dart';
 import 'package:silverapp/roles/user/presentation/widgets/side_menu.dart';
+import 'package:silverapp/roles/user/presentation/widgets/trips_summary_view.dart';
 
 class UserScreen extends ConsumerWidget {
   static const name = 'user';
@@ -60,6 +63,8 @@ class HomeViewState extends ConsumerState<HomeView> {
     ];
     final reserves = ref.watch(reservesProvider);
     final date = DateTime.now().month - 1;
+    AsyncValue<TripsSummaryResponse> tripsSummary =
+        ref.watch(tripsSummaryProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: Column(
@@ -113,33 +118,7 @@ class HomeViewState extends ConsumerState<HomeView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 15,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(months[date],
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold)),
-                        const Text('Viajes realizados',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 15)),
-                      ],
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(right: 15),
-                    child: Text('S/ 0,00',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold)),
-                  ),
+                  TripsSummaryView(size: size, tripsSummary: tripsSummary),
                 ],
               )),
           Container(

@@ -106,12 +106,20 @@ class _Slide extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${reserve.name} ${reserve.lastName}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.hail,
+                        size: 19,
+                      ),
+                      Text(
+                        '${reserve.name} ${reserve.lastName}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   Row(
                     children: [
@@ -130,13 +138,13 @@ class _Slide extends StatelessWidget {
                   Row(
                     children: [
                       const Icon(
-                        Icons.event_available_outlined,
-                        size: 15,
+                        Icons.location_on_outlined,
+                        size: 19,
                       ),
                       Text(
-                        ' ${reserve.startAddress}',
+                        ' ${reserve.startAddress} - ${reserve.endAddress}',
                         style: const TextStyle(
-                          fontSize: 13,
+                          fontSize: 14,
                         ),
                       ),
                     ],

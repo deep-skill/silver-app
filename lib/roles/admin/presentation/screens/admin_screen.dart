@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/models/trip_summary_response.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
@@ -25,6 +26,14 @@ class AdminScreen extends ConsumerWidget {
         scaffoldKey: scaffoldKey,
       ),
       body: const HomeView(),
+      floatingActionButton: FloatingActionButton(
+        shape: const CircleBorder(),
+        backgroundColor: const Color(0xff031329),
+        onPressed: () {
+          context.push('/admin/reserves/create');
+        },
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
     );
   }
 }

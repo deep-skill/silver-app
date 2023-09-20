@@ -9,6 +9,9 @@ class ReserveDetailResponse {
       required this.driverName,
       required this.driverLastName,
       required this.licensePlate,
+      required this.brand,
+      required this.model,
+      required this.color,
       required this.tripType,
       required this.startAddress,
       required this.endAddress,
@@ -24,6 +27,9 @@ class ReserveDetailResponse {
   final String driverName;
   final String driverLastName;
   final String licensePlate;
+  final String brand;
+  final String model;
+  final String color;
   final String tripType;
   final String startAddress;
   final String endAddress;
@@ -41,6 +47,9 @@ class ReserveDetailResponse {
         driverName: json["driverName"],
         driverLastName: json["driverLastName"],
         licensePlate: json["licensePlate"],
+        brand: json["brand"],
+        model: json["model"],
+        color: json["color"],
         tripType: json["tripType"],
         startAddress: json["startAddress"],
         endAddress: json["endAddress"],

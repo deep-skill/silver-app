@@ -6,7 +6,6 @@ import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_prov
 class ReserveDetailScreen extends ConsumerStatefulWidget {
   const ReserveDetailScreen({super.key, required this.reserveId});
 
-  static const name = 'reserve-detail';
   final String reserveId;
 
   @override
@@ -57,6 +56,9 @@ class ReserveInfo extends StatelessWidget {
       Text(reserve.driverName),
       Text(reserve.driverLastName),
       Text(reserve.licensePlate),
+      Text(reserve.brand),
+      Text(reserve.model),
+      Text(reserve.color),
       Text(reserve.tripType),
       Text(reserve.startAddress),
       Text(reserve.endAddress),

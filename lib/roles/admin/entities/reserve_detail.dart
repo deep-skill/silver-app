@@ -8,6 +8,9 @@ class ReserveDetail {
   final String driverName;
   final String driverLastName;
   final String licensePlate;
+  final String brand;
+  final String model;
+  final String color;
   final String tripType;
   final String startAddress;
   final String endAddress;
@@ -24,6 +27,9 @@ class ReserveDetail {
       required this.driverName,
       required this.driverLastName,
       required this.licensePlate,
+      required this.brand,
+      required this.model,
+      required this.color,
       required this.tripType,
       required this.startAddress,
       required this.endAddress,
@@ -46,5 +52,8 @@ class ReserveDetail {
         driverLastName:
             json['Driver'] == null ? '' : json['Driver']['lastName'],
         licensePlate: json['Car'] == null ? '' : json['Car']['licensePlate'],
+        brand: json['Car'] == null ? '' : json['Car']['brand'],
+        model: json['Car'] == null ? '' : json['Car']['model'],
+        color: json['Car'] == null ? '' : json['Car']['color'],
       );
 }

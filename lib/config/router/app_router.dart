@@ -8,7 +8,7 @@ import 'package:silverapp/roles/admin/presentation/screens/reserve_detail_screen
 import 'package:silverapp/roles/admin/presentation/screens/reserve_list_screen.dart';
 import 'package:silverapp/roles/driver/driver_screen.dart';
 import 'package:silverapp/roles/no_role/no_role_screen.dart';
-import 'package:silverapp/roles/user/user_screen.dart';
+import 'package:silverapp/roles/user/presentation/screens/user_screen.dart';
 
 final goRouterProvider = Provider((ref) {
   final goRouterNotifier = ref.read(goRouterNotifierProvider);
@@ -45,7 +45,7 @@ final goRouterProvider = Provider((ref) {
         ),
         GoRoute(
           path: '/user',
-          builder: (context, state) => const UserScreen(),
+          builder: (context, state) => UserScreen(),
         ),
         GoRoute(
           path: '/no-role',

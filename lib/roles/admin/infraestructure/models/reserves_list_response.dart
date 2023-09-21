@@ -1,4 +1,4 @@
-import 'package:silverapp/roles/admin/entities/reserve_list.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 
 class ReservesListResponse {
   ReservesListResponse({

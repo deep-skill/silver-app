@@ -1,6 +1,10 @@
 class ReserveDetailResponse {
   ReserveDetailResponse(
       {required this.id,
+      required this.userId,
+      required this.enterpriseId,
+      required this.driverId,
+      required this.carId,
       required this.startTime,
       required this.name,
       required this.lastName,
@@ -19,6 +23,10 @@ class ReserveDetailResponse {
       required this.silverPercent});
 
   final int id;
+  final int userId;
+  final int enterpriseId;
+  final int driverId;
+  final int carId;
   final DateTime startTime;
   final String name;
   final String lastName;
@@ -39,6 +47,10 @@ class ReserveDetailResponse {
   factory ReserveDetailResponse.fromJson(Map<String, dynamic> json) =>
       ReserveDetailResponse(
         id: json["id"],
+        userId: json["userId"],
+        enterpriseId: json["enterpriseId"],
+        driverId: json["driverId"],
+        carId: json["carId"],
         startTime: json["startTime"],
         name: json["name"],
         lastName: json["lastName"],

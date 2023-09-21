@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/roles/admin/entities/reserve_list.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 
 class ReservesList extends StatefulWidget {
   const ReservesList(

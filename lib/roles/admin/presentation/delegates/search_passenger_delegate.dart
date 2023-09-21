@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/admin/entities/search_passenger.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/search_passenger.dart';
 
 typedef SearchPassengersCallback = Future<List<SearchPassenger>> Function(
     String query);

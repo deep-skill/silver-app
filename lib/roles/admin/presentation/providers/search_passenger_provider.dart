@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/config/dio/dio.dart';
-import 'package:silverapp/roles/admin/entities/search_passenger.dart';
-import 'package:silverapp/roles/admin/models/search_passenger_response.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/search_passenger.dart';
+import 'package:silverapp/roles/admin/infraestructure/models/search_passenger_response.dart';
 
 final searchPassengersProvider = StateProvider<String>((ref) {
   return '';

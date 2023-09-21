@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/admin/entities/reserve_home.dart';
-import 'package:silverapp/roles/admin/models/reserves_paginated_response.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/reserve_home.dart';
+import 'package:silverapp/roles/admin/infraestructure/models/reserves_paginated_response.dart';
 
 final dio = Dio(BaseOptions(
   baseUrl:

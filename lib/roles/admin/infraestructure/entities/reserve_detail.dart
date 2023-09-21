@@ -1,24 +1,32 @@
 class ReserveDetail {
   final int id;
+  final int userId;
+  final int enterpriseId;
+  final int? driverId;
+  final int? carId;
   final DateTime startTime;
   final String name;
   final String lastName;
   final String serviceType;
   final String entrepriseName;
-  final String driverName;
-  final String driverLastName;
-  final String licensePlate;
-  final String brand;
-  final String model;
-  final String color;
+  final String? driverName;
+  final String? driverLastName;
+  final String? licensePlate;
+  final String? brand;
+  final String? model;
+  final String? color;
   final String tripType;
   final String startAddress;
-  final String endAddress;
+  final String? endAddress;
   final String price;
   final String silverPercent;
 
   ReserveDetail(
       {required this.id,
+      required this.userId,
+      required this.enterpriseId,
+      required this.driverId,
+      required this.carId,
       required this.startTime,
       required this.name,
       required this.lastName,
@@ -38,6 +46,10 @@ class ReserveDetail {
 
   factory ReserveDetail.fromJson(Map<String, dynamic> json) => ReserveDetail(
         id: json['id'],
+        userId: json['User']['id'],
+        enterpriseId: json['Enterprise']['id'],
+        driverId: json['Driver'] == null ? null : json['Driver']['id'],
+        carId: json['Car'] == null ? null : json['Car']['id'],
         tripType: json['tripType'],
         serviceType: json['serviceType'],
         startAddress: json['startAddress'],

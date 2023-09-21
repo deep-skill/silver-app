@@ -1,4 +1,4 @@
-import 'package:silverapp/roles/admin/entities/search_passenger.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/search_passenger.dart';
 
 class SerchPassengerResponse {
   SerchPassengerResponse({

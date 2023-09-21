@@ -54,7 +54,7 @@ class ReserveInfo extends StatelessWidget {
       Text(reserve.serviceType),
       Text(reserve.entrepriseName),
       Text(reserve.driverName ?? ''),
-      Text(reserve.driverLastName ?? ''),
+      Text(reserve.driverLastName?? ''),
       Text(reserve.licensePlate ?? ''),
       Text(reserve.brand ?? ''),
       Text(reserve.model ?? ''),

@@ -108,9 +108,11 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     );
   }
 
-  void onUserIdChanged(int value) {
+  void onUserIdChanged(int value, String userName, String userLastName) {
     state = state.copyWith(
         userId: UserId.dirty(value),
+        userName: userName,
+        userLastName: userLastName,
         isFormValid: Formz.validate([
           UserId.dirty(value),
           EnterpriseId.dirty(state.enterpriseId.value),
@@ -248,6 +250,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
 class ReserveFormState {
   final bool isFormValid;
   final UserId userId;
+  final String userName;
+  final String userLastName;
   final EnterpriseId enterpriseId;
   final int? carId;
   final int? driverId;
@@ -263,6 +267,8 @@ class ReserveFormState {
   ReserveFormState({
     this.isFormValid = false,
     this.userId = const UserId.dirty(0),
+    this.userName = 'Ejem. Carla',
+    this.userLastName = 'Peña Ramirez',
     this.enterpriseId = const EnterpriseId.dirty(0),
     this.carId,
     this.driverId,
@@ -279,6 +285,8 @@ class ReserveFormState {
   ReserveFormState copyWith({
     final bool? isFormValid,
     final UserId? userId,
+    final String? userName,
+    final String? userLastName,
     final EnterpriseId? enterpriseId,
     final int? carId,
     final int? driverId,
@@ -294,6 +302,8 @@ class ReserveFormState {
       ReserveFormState(
         isFormValid: isFormValid ?? this.isFormValid,
         userId: userId ?? this.userId,
+        userName: userName ?? this.userName,
+        userLastName: userLastName ?? this.userLastName,
         enterpriseId: enterpriseId ?? this.enterpriseId,
         carId: carId ?? this.carId,
         driverId: driverId ?? this.driverId,

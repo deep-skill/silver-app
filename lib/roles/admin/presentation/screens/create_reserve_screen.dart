@@ -4,32 +4,46 @@ import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.da
 import 'package:silverapp/roles/admin/infraestructure/entities/search_passenger.dart';
 import 'package:silverapp/roles/admin/presentation/delegates/search_passenger_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/providers/forms/reserve_form_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_create_update_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/custom_form_field.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/full_screen_loader.dart';
 
-class CreateReserveScreen extends StatelessWidget {
-  const CreateReserveScreen({super.key});
+class CreateReserveScreen extends ConsumerWidget {
+  final String reserveId;
+
+  const CreateReserveScreen({super.key, required this.reserveId});
+
+  void showSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context)
+        .showSnackBar(const SnackBar(content: Text('Reserva Creada')));
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final reserveState = ref.watch(reserveCreateUpdateProvider(reserveId));
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: AppBar(title: const Text('Crear reserva')),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CreateReserveView(
-              size: size,
-              reserve: CreateReserve(
-                  userId: 1,
-                  enterpriseId: 1,
-                  carId: 1,
-                  tripType: "PUNTO A PUNTO",
-                  serviceType: "ENTERPRISE",
-                  startTime: "2023-09-21T15:30:00",
-                  startAddress: "Jr. Andahuaylas 5431, Lima, Peru",
-                  price: 87.23,
-                  driverPercent: 7,
-                  silverPercent: 3)),
-        ));
+      appBar: AppBar(title: const Text('Crear reserva')),
+      body: reserveState.isLoading
+          ? const FullScreenLoader()
+          : CreateReserveView(size: size, reserve: reserveState.reserve!),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (reserveState.reserve == null) return;
+
+          ref
+              .read(reserveFormProvider(reserveState.reserve!).notifier)
+              .onFormSubmit()
+              .then((value) {
+            if (!value) return;
+            showSnackbar(context);
+          });
+        },
+        child: const Icon(Icons.save_as_outlined),
+      ),
+    );
   }
 }
 
@@ -46,6 +60,7 @@ class CreateReserveView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reserveForm = ref.watch(reserveFormProvider(reserve));
+    final cyanColor = const Color(0xff23a5cd);
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xffF2F3F7),
@@ -53,53 +68,55 @@ class CreateReserveView extends ConsumerWidget {
       ),
       height: size.height,
       width: size.width,
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text('Datos del servicio'),
-        const Divider(),
-        TextFormField(
-          onTap: () {
-            final searchedPassengers = ref.read(searchedPassengersProvider);
-            final searchQuery = ref.read(searchPassengersProvider);
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('Datos del servicio', style: TextStyle(color: cyanColor)),
+          Divider(color: cyanColor),
+          GestureDetector(
+            child: Stack(children: [
+              CustomFormField(
+                label: 'Nombre del pasajero',
+                isTopField: true,
+                isBottomField: true,
+                errorMessage: reserveForm.userId.errorMessage,
+              ),
+              TextButton(
+                child: Text(
+                    '${reserveForm.userId.value.toString()} ${reserveForm.userName} ${reserveForm.userLastName}'),
+                onPressed: () async {
+                  final searchedPassengers =
+                      ref.read(searchedPassengersProvider);
+                  final searchQuery = ref.read(searchPassengersProvider);
+                  final changeCallback = ref
+                      .read(reserveFormProvider(reserve).notifier)
+                      .onUserIdChanged;
 
-            showSearch<SearchPassenger?>(
-                    query: searchQuery,
-                    context: context,
-                    delegate: SearchPassengerDelegate(
-                        initialPassengers: searchedPassengers,
-                        searchPassengers: ref
-                            .read(searchedPassengersProvider.notifier)
-                            .searchMoviesByQuery))
-                .then((passenger) {
-              if (passenger == null) return;
-
-              print('${passenger.id} acaa');
-
-              /* context.push('/home/0/movie/${passenger.id}'); */
-            });
-          },
-          style: const TextStyle(fontSize: 15, color: Colors.black54),
-          decoration: const InputDecoration(
-            floatingLabelStyle: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
-            isDense: true,
-            label: Text('Nombre del pasajero'),
-            hintText: 'Ejem. Carla Peña Ramirez',
+                  showSearch<SearchPassenger?>(
+                          query: searchQuery,
+                          context: context,
+                          delegate: SearchPassengerDelegate(
+                              callback: changeCallback,
+                              initialPassengers: searchedPassengers,
+                              searchPassengers: ref
+                                  .read(searchedPassengersProvider.notifier)
+                                  .searchMoviesByQuery))
+                      .then((passenger) {});
+                },
+              ),
+            ]),
           ),
-        ),
-        Center(
-            child: Text(
-          reserveForm.carId.toString(),
-        )),
-        CustomFormField(
-          isTopField: true,
-          label: '',
-          initialValue: reserveForm.startAddress.value,
-          onChanged: ref
-              .read(reserveFormProvider(reserve).notifier)
-              .onStartAddressChanged,
-          errorMessage: reserveForm.startAddress.errorMessage,
-        ),
-      ]),
+          CustomFormField(
+            isTopField: true,
+            label: 'Punto de recojo',
+            initialValue: reserveForm.startAddress.value,
+            onChanged: ref
+                .read(reserveFormProvider(reserve).notifier)
+                .onStartAddressChanged,
+            errorMessage: reserveForm.startAddress.errorMessage,
+          ),
+        ]),
+      ),
     );
   }
 }

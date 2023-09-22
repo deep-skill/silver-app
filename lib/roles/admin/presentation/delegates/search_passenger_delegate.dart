@@ -8,6 +8,7 @@ typedef SearchPassengersCallback = Future<List<SearchPassenger>> Function(
 
 class SearchPassengerDelegate extends SearchDelegate<SearchPassenger?> {
   final SearchPassengersCallback searchPassengers;
+  final Function callback;
   List<SearchPassenger> initialPassengers;
   StreamController<List<SearchPassenger>> debouncedPassengers =
       StreamController.broadcast();
@@ -16,23 +17,20 @@ class SearchPassengerDelegate extends SearchDelegate<SearchPassenger?> {
   Timer? _debouceTimer;
 
   SearchPassengerDelegate(
-      {required this.searchPassengers, required this.initialPassengers});
+      {required this.searchPassengers,
+      required this.initialPassengers,
+      required this.callback});
 
   void clearStreams() {
+    _debouceTimer!.cancel();
     debouncedPassengers.close();
   }
 
   void _onQueryChanged(String query) {
-    //print('query changed');
     isLoadingStream.add(true);
 
     if (_debouceTimer?.isActive ?? false) _debouceTimer!.cancel();
     _debouceTimer = Timer(const Duration(milliseconds: 800), () async {
-      //print('buscando pelis');
-/*       if (query.isEmpty) {
-        debouncedMovies.add([]);
-        return;
-      } */
       final passengers = await searchPassengers(query);
       initialPassengers = passengers;
       debouncedPassengers.add(passengers);
@@ -51,15 +49,13 @@ class SearchPassengerDelegate extends SearchDelegate<SearchPassenger?> {
           itemBuilder: (context, index) {
             final passenger = passengers[index];
             return _PassengerItem(
+              callback: callback,
               passenger: passenger,
               onPassengerSelected: (context, passenger) {
                 clearStreams();
                 close(context, passenger);
               },
             );
-            /* ListTile(
-              title: Text(movie.title), 
-            );*/
           },
         );
       },
@@ -106,6 +102,7 @@ class SearchPassengerDelegate extends SearchDelegate<SearchPassenger?> {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
       onPressed: () {
+        callback(0, 'Ejem. Carla', 'Peña Ramirez');
         clearStreams();
         close(context, null);
       },
@@ -127,18 +124,18 @@ class SearchPassengerDelegate extends SearchDelegate<SearchPassenger?> {
 
 class _PassengerItem extends StatelessWidget {
   const _PassengerItem(
-      {required this.passenger, required this.onPassengerSelected});
+      {required this.passenger,
+      required this.onPassengerSelected,
+      required this.callback});
   final SearchPassenger passenger;
   final Function onPassengerSelected;
-
+  final Function callback;
   @override
   Widget build(BuildContext context) {
-/*     final textStyles = Theme.of(context).textTheme;
-    final size = MediaQuery.of(context).size; */
-
     return GestureDetector(
       onTap: () {
         onPassengerSelected(context, passenger);
+        callback(passenger.id, passenger.name, passenger.lastName);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

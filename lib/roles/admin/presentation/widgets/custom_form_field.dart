@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomFormField extends StatelessWidget {
-  final bool isTopField; // La idea es que tenga bordes redondeados arriba
-  final bool isBottomField; // La idea es que tenga bordes redondeados abajo
+  final bool isTopField;
+  final bool isBottomField;
   final String? label;
   final String? hint;
   final String? errorMessage;
@@ -11,6 +11,7 @@ class CustomFormField extends StatelessWidget {
   final int maxLines;
   final String initialValue;
   final Function(String)? onChanged;
+  final Function()? onTap;
   final Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
 
@@ -26,6 +27,7 @@ class CustomFormField extends StatelessWidget {
     this.maxLines = 1,
     this.initialValue = '',
     this.onChanged,
+    this.onTap,
     this.onFieldSubmitted,
     this.validator,
   });
@@ -41,7 +43,6 @@ class CustomFormField extends StatelessWidget {
     const borderRadius = Radius.circular(15);
 
     return Container(
-      // padding: const EdgeInsets.only(bottom: 0, top: 15),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -59,6 +60,7 @@ class CustomFormField extends StatelessWidget {
           ]),
       child: TextFormField(
         onChanged: onChanged,
+        onTap: onTap,
         onFieldSubmitted: onFieldSubmitted,
         validator: validator,
         obscureText: obscureText,
@@ -69,7 +71,7 @@ class CustomFormField extends StatelessWidget {
         decoration: InputDecoration(
           floatingLabelBehavior: maxLines > 1
               ? FloatingLabelBehavior.always
-              : FloatingLabelBehavior.auto,
+              : FloatingLabelBehavior.always,
           floatingLabelStyle: const TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
           enabledBorder: border,
@@ -83,7 +85,6 @@ class CustomFormField extends StatelessWidget {
           hintText: hint,
           errorText: errorMessage,
           focusColor: colors.primary,
-          // icon: Icon( Icons.supervised_user_circle_outlined, color: colors.primary, )
         ),
       ),
     );

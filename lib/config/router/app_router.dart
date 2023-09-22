@@ -32,7 +32,9 @@ final goRouterProvider = Provider((ref) {
                   GoRoute(
                     path: 'create',
                     builder: (context, state) {
-                      return const CreateReserveScreen();
+                      return const CreateReserveScreen(
+                        reserveId: 'new',
+                      );
                     },
                   ),
                   GoRoute(

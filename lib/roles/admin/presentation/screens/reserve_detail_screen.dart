@@ -35,12 +35,12 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
     return Scaffold(
         appBar: AppBar(title: const Text('Detalle de reserva')),
         body: Padding(
-            padding: EdgeInsets.all(12), child: ReserveInfo(reserve: reserve)));
+            padding: const EdgeInsets.all(12), child: ReserveInfo(reserve: reserve)));
   }
 }
 
 class ReserveInfo extends StatelessWidget {
-  const ReserveInfo({
+  const ReserveInfo({super.key, 
     required this.reserve,
   });
   final ReserveDetail reserve;

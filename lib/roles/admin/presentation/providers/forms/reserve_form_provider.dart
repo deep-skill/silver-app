@@ -8,6 +8,7 @@ import 'package:silverapp/roles/admin/infraestructure/inputs/enterprise_id.dart'
 import 'package:silverapp/roles/admin/infraestructure/inputs/price.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/service_type.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/start_adress.dart';
+import 'package:silverapp/roles/admin/infraestructure/inputs/start_date.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/start_time.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/trip_type.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/user_id.dart';
@@ -50,13 +51,14 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     this.onSubmitCallback,
     required CreateReserve reserve,
   }) : super(ReserveFormState(
-          userId: UserId.dirty(reserve.userId),
+          userId: const UserId.pure(),
+          serviceType: const ServiceType.pure(),
+          startDate: const StartDate.pure(),
+          startTime: const StartTime.pure(),
+          tripType: const TripType.pure(),
           enterpriseId: EnterpriseId.dirty(reserve.enterpriseId),
           carId: reserve.carId,
           driverId: reserve.driverId,
-          tripType: TripType.dirty(reserve.tripType),
-          serviceType: ServiceType.dirty(reserve.serviceType),
-          startTime: StartTime.dirty(reserve.startTime),
           startAddress: StartAddress.dirty(reserve.startAddress),
           endAddress: reserve.endAddress,
           price: Price.dirty(reserve.price),
@@ -79,6 +81,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "trip_type": state.tripType.value,
       "service_type": state.serviceType.value,
       "start_time": state.startTime.value,
+      //TODO: implement w/ start date api call
       "start_address": state.startAddress.value,
       "end_address": state.endAddress,
       "price": state.price.value,
@@ -95,12 +98,18 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
 
   void _touchedEverything() {
     state = state.copyWith(
+      userId: UserId.dirty(state.userId.value),
+      serviceType: ServiceType.dirty(state.serviceType.value),
+      startDate: StartDate.dirty(state.startDate.value),
+      startTime: StartTime.dirty(state.startTime.value),
+      tripType: TripType.dirty(state.tripType.value),
       isFormValid: Formz.validate([
         UserId.dirty(state.userId.value),
         EnterpriseId.dirty(state.enterpriseId.value),
         TripType.dirty(state.tripType.value),
         ServiceType.dirty(state.serviceType.value),
         StartTime.dirty(state.startTime.value),
+        StartDate.dirty(state.startDate.value),
         StartAddress.dirty(state.startAddress.value),
         Price.dirty(state.price.value),
         DriverPercent.dirty(state.driverPercent.value),
@@ -119,6 +128,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
+          StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
           Price.dirty(state.price.value),
           DriverPercent.dirty(state.driverPercent.value),
@@ -134,6 +144,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
+          StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
           Price.dirty(state.price.value),
           DriverPercent.dirty(state.driverPercent.value),
@@ -149,6 +160,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           EnterpriseId.dirty(state.enterpriseId.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
+          StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
           Price.dirty(state.price.value),
           DriverPercent.dirty(state.driverPercent.value),
@@ -164,6 +176,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           EnterpriseId.dirty(state.enterpriseId.value),
           TripType.dirty(state.tripType.value),
           StartTime.dirty(state.startTime.value),
+          StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
           Price.dirty(state.price.value),
           DriverPercent.dirty(state.driverPercent.value),
@@ -175,6 +188,23 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         startTime: StartTime.dirty(value),
         isFormValid: Formz.validate([
           StartTime.dirty(value),
+          StartDate.dirty(state.startDate.value),
+          UserId.dirty(state.userId.value),
+          EnterpriseId.dirty(state.enterpriseId.value),
+          TripType.dirty(state.tripType.value),
+          ServiceType.dirty(state.serviceType.value),
+          StartAddress.dirty(state.startAddress.value),
+          Price.dirty(state.price.value),
+          DriverPercent.dirty(state.driverPercent.value),
+        ]));
+  }
+
+  void onStartDateChanged(String value) {
+    state = state.copyWith(
+        startDate: StartDate.dirty(value),
+        isFormValid: Formz.validate([
+          StartDate.dirty(value),
+          UserId.dirty(state.userId.value),
           UserId.dirty(state.userId.value),
           EnterpriseId.dirty(state.enterpriseId.value),
           TripType.dirty(state.tripType.value),
@@ -195,6 +225,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
+          StartDate.dirty(state.startDate.value),
           Price.dirty(state.price.value),
           DriverPercent.dirty(state.driverPercent.value),
         ]));
@@ -210,6 +241,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
+          StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
           DriverPercent.dirty(state.driverPercent.value),
         ]));
@@ -225,6 +257,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
+          StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
           Price.dirty(state.price.value),
         ]));
@@ -250,14 +283,15 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
 class ReserveFormState {
   final bool isFormValid;
   final UserId userId;
+  final ServiceType serviceType;
   final String userName;
   final String userLastName;
   final EnterpriseId enterpriseId;
   final int? carId;
   final int? driverId;
   final TripType tripType;
-  final ServiceType serviceType;
   final StartTime startTime;
+  final StartDate startDate;
   final StartAddress startAddress;
   final String? endAddress;
   final Price price;
@@ -266,15 +300,16 @@ class ReserveFormState {
 
   ReserveFormState({
     this.isFormValid = false,
-    this.userId = const UserId.dirty(0),
+    this.userId = const UserId.pure(),
+    this.serviceType = const ServiceType.pure(),
     this.userName = 'Ejem. Carla',
     this.userLastName = 'Peña Ramirez',
+    this.startDate = const StartDate.pure(),
+    this.startTime = const StartTime.pure(),
+    this.tripType = const TripType.pure(),
     this.enterpriseId = const EnterpriseId.dirty(0),
     this.carId,
     this.driverId,
-    this.tripType = const TripType.dirty(''),
-    this.serviceType = const ServiceType.dirty(''),
-    this.startTime = const StartTime.dirty(''),
     this.startAddress = const StartAddress.dirty(''),
     this.endAddress,
     this.price = const Price.dirty(0),
@@ -293,6 +328,7 @@ class ReserveFormState {
     final TripType? tripType,
     final ServiceType? serviceType,
     final StartTime? startTime,
+    final StartDate? startDate,
     final StartAddress? startAddress,
     final String? endAddress,
     final Price? price,
@@ -308,7 +344,9 @@ class ReserveFormState {
         carId: carId ?? this.carId,
         driverId: driverId ?? this.driverId,
         serviceType: serviceType ?? this.serviceType,
+        tripType: tripType ?? this.tripType,
         startTime: startTime ?? this.startTime,
+        startDate: startDate ?? this.startDate,
         startAddress: startAddress ?? this.startAddress,
         endAddress: endAddress ?? this.endAddress,
         price: price ?? this.price,

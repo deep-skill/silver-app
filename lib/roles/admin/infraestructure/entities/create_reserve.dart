@@ -12,6 +12,7 @@ class CreateReserve {
   String tripType;
   String serviceType;
   String startTime;
+  String startDate;
   String startAddress;
   String? endAddress;
   double price;
@@ -32,6 +33,7 @@ class CreateReserve {
     required this.tripType,
     required this.serviceType,
     required this.startTime,
+    required this.startDate,
     required this.startAddress,
     this.endAddress,
     required this.price,
@@ -59,5 +61,6 @@ class CreateReserve {
         silverPercent: json['silverPercent'],
         driverPercent: json['driverPercent'],
         startTime: json['startTime'],
+        startDate: json['startTime'],
       );
 }

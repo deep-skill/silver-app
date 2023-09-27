@@ -6,7 +6,7 @@ enum ServiceTypeError { empty }
 // Extend FormzInput and provide the input type and error type.
 class ServiceType extends FormzInput<String, ServiceTypeError> {
   // Call super.pure to represent an unmodified form input.
-  const ServiceType.pure() : super.pure('');
+  const ServiceType.pure() : super.pure('Seleccione el tipo de servicio');
 
   // Call super.dirty to represent a modified form input.
   const ServiceType.dirty(String value) : super.dirty(value);
@@ -22,7 +22,7 @@ class ServiceType extends FormzInput<String, ServiceTypeError> {
   // Override validator to handle validating a given input value.
   @override
   ServiceTypeError? validator(String value) {
-    if (value.isEmpty || value.trim().isEmpty) return ServiceTypeError.empty;
+    if (value.isEmpty || value.trim().isEmpty || value == 'Seleccione el tipo de servicio') return ServiceTypeError.empty;
 
     return null;
   }

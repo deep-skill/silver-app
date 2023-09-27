@@ -6,6 +6,7 @@ class CustomFormField extends StatelessWidget {
   final String? label;
   final String? hint;
   final String? errorMessage;
+  final bool? readOnly;
   final bool obscureText;
   final TextInputType? keyboardType;
   final int maxLines;
@@ -27,6 +28,7 @@ class CustomFormField extends StatelessWidget {
     this.maxLines = 1,
     this.initialValue = '',
     this.onChanged,
+    this.readOnly,
     this.onTap,
     this.onFieldSubmitted,
     this.validator,
@@ -37,10 +39,10 @@ class CustomFormField extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
 
     final border = OutlineInputBorder(
-        borderSide: const BorderSide(color: Colors.transparent),
-        borderRadius: BorderRadius.circular(40));
+        borderSide: const BorderSide(color: Colors.black),
+        borderRadius: BorderRadius.circular(10));
 
-    const borderRadius = Radius.circular(15);
+    const borderRadius = Radius.circular(10);
 
     return Container(
       decoration: BoxDecoration(
@@ -59,13 +61,14 @@ class CustomFormField extends StatelessWidget {
                   offset: const Offset(0, 3))
           ]),
       child: TextFormField(
+        readOnly: readOnly != null ? true : false,
         onChanged: onChanged,
         onTap: onTap,
         onFieldSubmitted: onFieldSubmitted,
         validator: validator,
         obscureText: obscureText,
         keyboardType: keyboardType,
-        style: const TextStyle(fontSize: 15, color: Colors.black54),
+        style: const TextStyle(fontSize: 15, color: Colors.black),
         maxLines: maxLines,
         initialValue: initialValue,
         decoration: InputDecoration(
@@ -76,10 +79,10 @@ class CustomFormField extends StatelessWidget {
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),
           enabledBorder: border,
           focusedBorder: border,
-          errorBorder: border.copyWith(
-              borderSide: const BorderSide(color: Colors.transparent)),
-          focusedErrorBorder: border.copyWith(
-              borderSide: const BorderSide(color: Colors.transparent)),
+          errorBorder:
+              border.copyWith(borderSide: const BorderSide(color: Colors.red)),
+          focusedErrorBorder:
+              border.copyWith(borderSide: const BorderSide(color: Colors.red)),
           isDense: true,
           label: label != null ? Text(label!) : null,
           hintText: hint,

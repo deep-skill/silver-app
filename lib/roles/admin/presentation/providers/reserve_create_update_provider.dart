@@ -41,6 +41,7 @@ class ReserveCreteUpdateNotifier
       tripType: '',
       serviceType: '',
       startTime: '',
+      startDate: '',
       startAddress: '',
       price: 0,
       driverPercent: 0,

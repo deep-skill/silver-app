@@ -1,28 +1,28 @@
 import 'package:formz/formz.dart';
 
 // Define input validation errors
-enum StartTimeError { empty }
+enum StartDateError { empty }
 
 // Extend FormzInput and provide the input type and error type.
-class StartTime extends FormzInput<String, StartTimeError> {
+class StartDate extends FormzInput<String, StartDateError> {
   // Call super.pure to represent an unmodified form input.
-  const StartTime.pure() : super.pure('00:00');
+  const StartDate.pure() : super.pure('2023-09-26');
 
   // Call super.dirty to represent a modified form input.
-  const StartTime.dirty(String value) : super.dirty(value);
+  const StartDate.dirty(String value) : super.dirty(value);
 
   String? get errorMessage {
     if (isValid || isPure) return null;
 
-    if (displayError == StartTimeError.empty) return 'El campo es requerido';
+    if (displayError == StartDateError.empty) return 'El campo es requerido';
 
     return null;
   }
 
   // Override validator to handle validating a given input value.
   @override
-  StartTimeError? validator(String value) {
-    if (value.isEmpty || value.trim().isEmpty || value.toString() == '00:00') return StartTimeError.empty;
+  StartDateError? validator(String value) {
+    if (value.isEmpty  || value.toString().trim().isEmpty || value.toString() == '2023-09-26') return StartDateError.empty;
 
     return null;
   }

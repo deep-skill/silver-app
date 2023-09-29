@@ -15,6 +15,7 @@ class CustomFormField extends StatelessWidget {
   final Function()? onTap;
   final Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
+  final Icon? prefixIcon;
 
   const CustomFormField({
     super.key,
@@ -30,6 +31,7 @@ class CustomFormField extends StatelessWidget {
     this.onChanged,
     this.readOnly,
     this.onTap,
+    this.prefixIcon,
     this.onFieldSubmitted,
     this.validator,
   });
@@ -88,6 +90,7 @@ class CustomFormField extends StatelessWidget {
           hintText: hint,
           errorText: errorMessage,
           focusColor: colors.primary,
+          prefixIcon: prefixIcon,
         ),
       ),
     );

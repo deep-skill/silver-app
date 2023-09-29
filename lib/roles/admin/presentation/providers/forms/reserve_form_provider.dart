@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/driver_id.dart';
-import 'package:silverapp/roles/admin/infraestructure/inputs/driver_percent.dart';
+import 'package:silverapp/roles/admin/infraestructure/inputs/silver_percent.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/end_address.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/enterprise_id.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/price.dart';
@@ -24,12 +26,12 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
       final String? reserveId = reserveLike['id'];
       final String method = (reserveId == null) ? 'POST' : 'PATCH';
       final String url =
-          (reserveId == null) ? '/products' : '/products/$reserveId';
+          (reserveId == null) ? '/reserves/' : '/products/$reserveId';
 
       reserveLike.remove('id');
 
-      final response = await dio.request(url,
-          data: reserveLike, options: Options(method: method));
+      final response = await dio.post(url,
+          data: jsonEncode(reserveLike), options: Options(method: method));
 
       //final product = ProductMapper.jsonToEntity(response.data);
       final product = response.data;
@@ -63,9 +65,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           enterpriseId: EnterpriseId.dirty(reserve.enterpriseId),
           carId: reserve.carId,
           driverId: const DriverId.pure(),
-          price: Price.dirty(reserve.price),
-          driverPercent: DriverPercent.dirty(reserve.driverPercent),
-          silverPercent: reserve.silverPercent,
+          price: const Price.pure(),
+          silverPercent: const SilverPercent.pure(),
         ));
 
   Future<bool> onFormSubmit() async {
@@ -75,20 +76,19 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     // TODO: regresar
     if (onSubmitCallback == null) return false;
 
-    final reserveLike = {
+    final Map<String, dynamic> reserveLike = {
       "user_id": state.userId.value,
-      "enterprise_id": state.enterpriseId.value,
-      "car_id": state.carId,
-      "driver_id": state.driverId,
-      "trip_type": state.tripType.value,
-      "service_type": state.serviceType.value,
-      "start_time": state.startTime.value,
-      //TODO: implement w/ start date api call
+      "driver_id": state.driverId?.value,
+      "trip_type": state.tripType.value.toUpperCase(),
+      "service_type": state.serviceType.value == 'Empresarial'
+          ? 'ENTERPRISE'
+          : state.serviceType.value.toUpperCase(),
+      "start_time": '${state.startDate.value}T${state.startTime.value}:00',
       "start_address": state.startAddress.value,
       "end_address": state.endAddress?.value,
       "price": state.price.value,
-      "driver_percent": state.driverPercent.value,
-      "silver_percent": state.silverPercent
+      "silver_percent": state.silverPercent.value,
+      "enterprise_id": 1,
     };
 
     try {
@@ -99,7 +99,15 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
   }
 
   void _touchedEverything() {
-    print(state.endAddress.toString());
+    print(state.userId.value.toString());
+    print(state.driverId?.value.toString());
+    print(state.tripType.value.toString());
+    print(state.serviceType.value.toString());
+    print(state.startTime.value.toString());
+    print(state.startDate.value.toString());
+    print(state.startAddress.value.toString());
+    print(state.price.value.toString());
+    print(state.silverPercent.value.toString());
     state = state.copyWith(
       userId: UserId.dirty(state.userId.value),
       serviceType: ServiceType.dirty(state.serviceType.value),
@@ -107,6 +115,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       startTime: StartTime.dirty(state.startTime.value),
       tripType: TripType.dirty(state.tripType.value),
       startAddress: StartAddress.dirty(state.startAddress.value),
+      price: Price.dirty(state.price.value),
+      silverPercent: SilverPercent.dirty(state.silverPercent.value),
       endAddress: state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
       isFormValid: Formz.validate([
         UserId.dirty(state.userId.value),
@@ -118,7 +128,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         StartAddress.dirty(state.startAddress.value),
         state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
         Price.dirty(state.price.value),
-        DriverPercent.dirty(state.driverPercent.value),
+        SilverPercent.dirty(state.silverPercent.value),
       ]),
     );
   }
@@ -138,9 +148,10 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartAddress.dirty(state.startAddress.value),
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
+
   void onDriverIdChanged(int value, String driverName, String driverLastName) {
     state = state.copyWith(
         driverId: DriverId.dirty(value),
@@ -157,7 +168,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartAddress.dirty(state.startAddress.value),
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
 
@@ -174,7 +185,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartAddress.dirty(state.startAddress.value),
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
 
@@ -191,7 +202,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartAddress.dirty(state.startAddress.value),
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
 
@@ -208,7 +219,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartAddress.dirty(state.startAddress.value),
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
 
@@ -225,7 +236,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartAddress.dirty(state.startAddress.value),
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
 
@@ -242,7 +253,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartAddress.dirty(state.startAddress.value),
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
 
@@ -259,9 +270,10 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           StartDate.dirty(state.startDate.value),
           Price.dirty(state.price.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
+
   void onEndAddressChanged(String value) {
     state = state.copyWith(
         endAddress: EndAddress.dirty(value),
@@ -275,11 +287,11 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
           Price.dirty(state.price.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
 
-  void onPriceChanged(double value) {
+  void onPriceChanged(String value) {
     state = state.copyWith(
         price: Price.dirty(value),
         isFormValid: Formz.validate([
@@ -292,15 +304,15 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
-          DriverPercent.dirty(state.driverPercent.value),
+          SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
 
-  void onDriverPercentChanged(int value) {
+  void onSilverPercentChanged(String value) {
     state = state.copyWith(
-        driverPercent: DriverPercent.dirty(value),
+        silverPercent: SilverPercent.dirty(value),
         isFormValid: Formz.validate([
-          DriverPercent.dirty(value),
+          SilverPercent.dirty(value),
           UserId.dirty(state.userId.value),
           EnterpriseId.dirty(state.enterpriseId.value),
           TripType.dirty(state.tripType.value),
@@ -311,15 +323,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
         ]));
-  }
-
-  void onCarIdChanged(int carId) {
-    state = state.copyWith(carId: carId);
-  }
-
-
-  void onSilverPercentChanged(int silverPercent) {
-    state = state.copyWith(silverPercent: silverPercent);
   }
 }
 
@@ -340,8 +343,7 @@ class ReserveFormState {
   final StartAddress startAddress;
   final EndAddress? endAddress;
   final Price price;
-  final DriverPercent driverPercent;
-  final int? silverPercent;
+  final SilverPercent silverPercent;
 
   ReserveFormState({
     this.isFormValid = false,
@@ -359,9 +361,8 @@ class ReserveFormState {
     this.enterpriseId = const EnterpriseId.dirty(0),
     this.carId,
     this.driverId = const DriverId.pure(),
-    this.price = const Price.dirty(0),
-    this.driverPercent = const DriverPercent.dirty(0),
-    this.silverPercent,
+    this.price = const Price.pure(),
+    this.silverPercent = const SilverPercent.pure(),
   });
 
   ReserveFormState copyWith({
@@ -381,8 +382,7 @@ class ReserveFormState {
     final StartAddress? startAddress,
     final EndAddress? endAddress,
     final Price? price,
-    final DriverPercent? driverPercent,
-    final int? silverPercent,
+    final SilverPercent? silverPercent,
   }) =>
       ReserveFormState(
         isFormValid: isFormValid ?? this.isFormValid,
@@ -401,7 +401,6 @@ class ReserveFormState {
         startAddress: startAddress ?? this.startAddress,
         endAddress: endAddress ?? this.endAddress,
         price: price ?? this.price,
-        driverPercent: driverPercent ?? this.driverPercent,
         silverPercent: silverPercent ?? this.silverPercent,
       );
 }

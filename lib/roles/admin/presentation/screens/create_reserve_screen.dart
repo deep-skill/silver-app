@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
+import 'package:silverapp/position/determine_position_helper.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/search_driver.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/search_passenger.dart';
+import 'package:silverapp/roles/admin/presentation/delegates/search_driver_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/delegates/search_passenger_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/providers/forms/reserve_form_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_create_update_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/custom_form_field.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/full_screen_loader.dart';
@@ -331,24 +337,215 @@ class CreateReserveView extends ConsumerWidget {
             ),
           ]),
           const SizedBox(height: 10),
-          CustomFormField(
-            isTopField: true,
-            isBottomField: true,
-            label: 'Punto de recojo',
-            hint: 'Selecciona el tipo de servicio',
-            initialValue: reserveForm.startAddress.value,
-            onChanged: ref
-                .read(reserveFormProvider(reserve).notifier)
-                .onStartAddressChanged,
-            errorMessage: reserveForm.startAddress.errorMessage,
+          Stack(
+            children: [
+              CustomFormField(
+                readOnly: true,
+                isTopField: true,
+                isBottomField: true,
+                label: 'Punto de recojo*',
+                errorMessage: reserveForm.startAddress.errorMessage,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.location_on_outlined),
+                    TextButton(
+                      style: ButtonStyle(
+                        overlayColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        shadowColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                      ),
+                      child: SizedBox(
+                        width: size.width * .75,
+                        child: Text(reserveForm.startAddress.value,
+                            overflow: TextOverflow.ellipsis,
+                            style: reserveForm.startAddress.value ==
+                                    'Seleccione el punto de recojo'
+                                ? const TextStyle(
+                                    color: Colors.grey, fontSize: 16)
+                                : const TextStyle(
+                                    color: Colors.black, fontSize: 16)),
+                      ),
+                      onPressed: () async {
+                        determinePosition().then((position) => {
+                              showModalBottomSheet<String>(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return OpenStreetMapSearchAndPick(
+                                        locationPinText: '',
+                                        center: LatLong(position.latitude,
+                                            position.longitude),
+                                        buttonColor: Colors.blue,
+                                        buttonText:
+                                            'Seleccionar punto de recojo',
+                                        onPicked: (pickedData) async {
+                                          ref
+                                              .read(reserveFormProvider(reserve)
+                                                  .notifier)
+                                              .onStartAddressChanged(
+                                                  '${pickedData.addressName}, Lat: ${pickedData.latLong.latitude}, Long: ${pickedData.latLong.longitude}');
+                                          context.pop();
+                                        });
+                                  })
+                            });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 10,
           ),
-          const SizedBox(
-            height: 10,
+          if (reserveForm.tripType.value == 'Punto a punto')
+            Stack(
+              children: [
+                CustomFormField(
+                  readOnly: true,
+                  isTopField: true,
+                  isBottomField: true,
+                  label: 'Punto de destino*',
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.trip_origin_outlined),
+                      TextButton(
+                        style: ButtonStyle(
+                          overlayColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                          shadowColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                        ),
+                        child: SizedBox(
+                          width: size.width * .75,
+                          child: Text(reserveForm.endAddress!.value,
+                              overflow: TextOverflow.ellipsis,
+                              style: reserveForm.endAddress!.value ==
+                                      'Seleccione el punto de destino'
+                                  ? const TextStyle(
+                                      color: Colors.grey, fontSize: 16)
+                                  : const TextStyle(
+                                      color: Colors.black, fontSize: 16)),
+                        ),
+                        onPressed: () async {
+                          determinePosition().then((position) => {
+                                showModalBottomSheet<String>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return OpenStreetMapSearchAndPick(
+                                          locationPinText: '',
+                                          center: LatLong(position.latitude,
+                                              position.longitude),
+                                          buttonColor: Colors.blue,
+                                          buttonText:
+                                              'Seleccionar punto de recojo',
+                                          onPicked: (pickedData) async {
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onEndAddressChanged(
+                                                    '${pickedData.addressName}, Lat: ${pickedData.latLong.latitude}, Long: ${pickedData.latLong.longitude}');
+                                            context.pop();
+                                          });
+                                    })
+                              });
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          const Text('Datos del conductor',
+              style: TextStyle(color: cyanColor)),
+          const Divider(color: cyanColor),
+          const SizedBox(height: 10),
+          Stack(children: [
+            const CustomFormField(
+              readOnly: true,
+              label: 'Nombre del conductor',
+              isTopField: true,
+              isBottomField: true,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  const Icon(Icons.car_rental),
+                  TextButton(
+                    style: ButtonStyle(
+                        overlayColor:
+                            MaterialStateProperty.all(Colors.transparent),
+                        shadowColor:
+                            MaterialStateProperty.all(Colors.transparent)),
+                    child: Text(
+                        '${reserveForm.driverName} ${reserveForm.driverLastName}',
+                        style: reserveForm.driverName == 'Ejem. Luis'
+                            ? const TextStyle(color: Colors.grey, fontSize: 16)
+                            : const TextStyle(
+                                color: Colors.black, fontSize: 16)),
+                    onPressed: () {
+                      final searchedDrivers = ref.read(searchedDriversProvider);
+                      final searchQuery = ref.read(searchDriversProvider);
+                      final changeCallback = ref
+                          .read(reserveFormProvider(reserve).notifier)
+                          .onDriverIdChanged;
+
+                      showSearch<SearchDriver?>(
+                              query: searchQuery,
+                              context: context,
+                              delegate: SearchDriverDelegate(
+                                  callback: changeCallback,
+                                  initialDrivers: searchedDrivers,
+                                  searchDrivers: ref
+                                      .read(searchedDriversProvider.notifier)
+                                      .searchMoviesByQuery))
+                          .then((driver) {});
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ]),
+          const Text('Datos del conductor',
+              style: TextStyle(color: cyanColor)),
+          const Divider(color: cyanColor),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                width: size.width * .45,
+                child: Stack(children: [
+                  CustomFormField(
+                    isTopField: true,
+                    isBottomField: true,
+                    label: 'Fecha de viaje*',
+                    readOnly: true,
+                    errorMessage: reserveForm.startDate.errorMessage,
+                  ),
+                  
+                ]),
+              ),
+              SizedBox(
+                width: size.width * .45,
+                child: CustomFormField(
+                  isTopField: true,
+                  isBottomField: true,
+                  label: 'Hora del viaje*',
+                  readOnly: true,
+                  errorMessage: reserveForm.startTime.errorMessage,
+                ),
+              ),
+            ],
           ),
-          const Divider(),
         ]),
       ),
     );

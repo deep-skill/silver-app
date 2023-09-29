@@ -22,7 +22,7 @@ class UserId extends FormzInput<int, UserIdError> {
   // Override validator to handle validating a given input value.
   @override
   UserIdError? validator(int value) {
-    if (value.toString().isEmpty || value.toString().trim().isEmpty || value.toString() == '0') return UserIdError.empty;
+    if (value.toString().isEmpty || value.toString().trim().isEmpty || value == 0) return UserIdError.empty;
 
     return null;
   }

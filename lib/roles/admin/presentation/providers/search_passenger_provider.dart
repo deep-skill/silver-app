@@ -8,7 +8,7 @@ final searchPassengersProvider = StateProvider<String>((ref) {
 });
 
 List<SearchPassenger> _jsonToPassenger(List json) {
-  final passengersResponse = SerchPassengerResponse.fromJson(json);
+  final passengersResponse = SearchPassengerResponse.fromJson(json);
   final List<SearchPassenger> passengers =
       passengersResponse.passengers.toList();
   return passengers;

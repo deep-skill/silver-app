@@ -35,6 +35,7 @@ class ReserveCreteUpdateNotifier
     return CreateReserve(
       id: 0,
       userId: 0,
+      driverId: 0,
       userName: '',
       userLastName: '',
       enterpriseId: 0,

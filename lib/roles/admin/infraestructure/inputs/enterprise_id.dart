@@ -22,8 +22,7 @@ class EnterpriseId extends FormzInput<int, EnterpriseIdError> {
   // Override validator to handle validating a given input value.
   @override
   EnterpriseIdError? validator(int value) {
-    if (value.toString().isEmpty || value.toString().trim().isEmpty) return EnterpriseIdError.empty;
-
+   // if (value.toString().isEmpty || value.toString().trim().isEmpty) return EnterpriseIdError.empty;
     return null;
   }
 }

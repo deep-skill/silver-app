@@ -22,7 +22,7 @@ class EndAddress extends FormzInput<String, EndAddressError> {
   // Override validator to handle validating a given input value.
   @override
   EndAddressError? validator(String value) {
-    if (value.isEmpty || value.trim().isEmpty ) return EndAddressError.empty;
+    if (value.isEmpty || value.trim().isEmpty || value == 'Seleccione el punto de destino') return EndAddressError.empty;
 
     return null;
   }

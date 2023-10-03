@@ -527,7 +527,9 @@ class CreateReserveView extends ConsumerWidget {
                           const TextInputType.numberWithOptions(decimal: true),
                       isTopField: true,
                       isBottomField: true,
-                      label: 'Tarifa base',
+                      label: reserveForm.tripType.value == 'Por hora'
+                          ? 'Tarifa base x hora'
+                          : 'Tarifa base',
                       hint: 'S/ 00.00',
                       errorMessage: reserveForm.price.errorMessage,
                       prefixIcon:
@@ -565,6 +567,7 @@ class CreateReserveView extends ConsumerWidget {
                       .then((value) {
                     if (!value) return;
                     showSnackbar(context);
+                    context.pop();
                   });
                 },
                 style: ButtonStyle(

@@ -1,13 +1,8 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/reserves_list_response.dart';
 
-final dio = Dio(BaseOptions(
-  baseUrl:
-      'http://${dotenv.env['YOUR_IP']}:${dotenv.env['SERVER_PORT']}/silver-api/',
-));
 
 List<ReserveList> _jsonToReserves(Map<String, dynamic> json) {
   final reserveListResponse = ReservesListResponse.fromJson(json);

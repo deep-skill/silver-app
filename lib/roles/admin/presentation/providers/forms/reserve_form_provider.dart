@@ -26,16 +26,14 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
       final String? reserveId = reserveLike['id'];
       final String method = (reserveId == null) ? 'POST' : 'PATCH';
       final String url =
-          (reserveId == null) ? '/reserves/' : '/products/$reserveId';
+          (reserveId == null) ? '/reserves/' : '/reserves/$reserveId';
 
       reserveLike.remove('id');
 
       final response = await dio.post(url,
           data: jsonEncode(reserveLike), options: Options(method: method));
-
-      //final product = ProductMapper.jsonToEntity(response.data);
-      final product = response.data;
-      return product;
+      final status = response.statusCode;
+      return status == 201 ? true : false;
     } catch (e) {
       throw Exception();
     }
@@ -62,7 +60,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           tripType: const TripType.pure(),
           startAddress: const StartAddress.pure(),
           endAddress: const EndAddress.pure(),
-          enterpriseId: EnterpriseId.dirty(reserve.enterpriseId),
+          enterpriseId: const EnterpriseId.pure(),
           carId: reserve.carId,
           driverId: const DriverId.pure(),
           price: const Price.pure(),
@@ -73,22 +71,29 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     _touchedEverything();
     if (!state.isFormValid) return false;
 
-    // TODO: regresar
     if (onSubmitCallback == null) return false;
 
     final Map<String, dynamic> reserveLike = {
+      "enterprise_id": state.enterpriseId?.value == 0 ||
+              state.serviceType.value != 'Empresarial'
+          ? null
+          : state.enterpriseId?.value,
       "user_id": state.userId.value,
-      "driver_id": state.driverId?.value,
       "trip_type": state.tripType.value.toUpperCase(),
       "service_type": state.serviceType.value == 'Empresarial'
           ? 'ENTERPRISE'
           : state.serviceType.value.toUpperCase(),
       "start_time": '${state.startDate.value}T${state.startTime.value}:00',
       "start_address": state.startAddress.value,
-      "end_address": state.endAddress?.value,
+      "end_address":
+          state.endAddress?.value == 'Seleccione el punto de destino' ||
+                  state.tripType.value != 'Punto a punto'
+              ? null
+              : state.endAddress?.value,
+      "driver_id": state.driverId?.value == 0 ? null : state.driverId?.value,
       "price": state.price.value,
-      "silver_percent": state.silverPercent.value,
-      "enterprise_id": 1,
+      if (state.silverPercent.value == '0')
+        "silver_percent": state.silverPercent.value,
     };
 
     try {
@@ -99,17 +104,9 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
   }
 
   void _touchedEverything() {
-    print(state.userId.value.toString());
-    print(state.driverId?.value.toString());
-    print(state.tripType.value.toString());
-    print(state.serviceType.value.toString());
-    print(state.startTime.value.toString());
-    print(state.startDate.value.toString());
-    print(state.startAddress.value.toString());
-    print(state.price.value.toString());
-    print(state.silverPercent.value.toString());
     state = state.copyWith(
       userId: UserId.dirty(state.userId.value),
+      enterpriseId: EnterpriseId.dirty(state.enterpriseId!.value),
       serviceType: ServiceType.dirty(state.serviceType.value),
       startDate: StartDate.dirty(state.startDate.value),
       startTime: StartTime.dirty(state.startTime.value),
@@ -117,30 +114,34 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       startAddress: StartAddress.dirty(state.startAddress.value),
       price: Price.dirty(state.price.value),
       silverPercent: SilverPercent.dirty(state.silverPercent.value),
-      endAddress: state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
+      endAddress: EndAddress.dirty(state.endAddress!.value),
       isFormValid: Formz.validate([
         UserId.dirty(state.userId.value),
-        EnterpriseId.dirty(state.enterpriseId.value),
+        EnterpriseId.dirty(state.enterpriseId!.value),
         TripType.dirty(state.tripType.value),
         ServiceType.dirty(state.serviceType.value),
         StartTime.dirty(state.startTime.value),
         StartDate.dirty(state.startDate.value),
         StartAddress.dirty(state.startAddress.value),
-        state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
         Price.dirty(state.price.value),
         SilverPercent.dirty(state.silverPercent.value),
+        if (state.tripType.value == 'Punto a punto')
+          EndAddress.dirty(state.endAddress!.value),
       ]),
     );
   }
 
-  void onUserIdChanged(int value, String userName, String userLastName) {
+  void onUserIdChanged(
+      int value, String userName, String userLastName, int? enterpriseId) {
     state = state.copyWith(
         userId: UserId.dirty(value),
+        enterpriseId:
+            enterpriseId == null ? null : EnterpriseId.dirty(enterpriseId),
         userName: userName,
         userLastName: userLastName,
         isFormValid: Formz.validate([
           UserId.dirty(value),
-          EnterpriseId.dirty(state.enterpriseId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
@@ -160,24 +161,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         isFormValid: Formz.validate([
           DriverId.dirty(value),
           UserId.dirty(state.userId.value),
-          EnterpriseId.dirty(state.enterpriseId.value),
-          TripType.dirty(state.tripType.value),
-          ServiceType.dirty(state.serviceType.value),
-          StartTime.dirty(state.startTime.value),
-          StartDate.dirty(state.startDate.value),
-          StartAddress.dirty(state.startAddress.value),
-          state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
-          Price.dirty(state.price.value),
-          SilverPercent.dirty(state.silverPercent.value),
-        ]));
-  }
-
-  void onEnterpriseIdChanged(int value) {
-    state = state.copyWith(
-        enterpriseId: EnterpriseId.dirty(value),
-        isFormValid: Formz.validate([
-          EnterpriseId.dirty(value),
-          UserId.dirty(state.userId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
@@ -195,12 +179,12 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         isFormValid: Formz.validate([
           TripType.dirty(value),
           UserId.dirty(state.userId.value),
-          EnterpriseId.dirty(state.enterpriseId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
           StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
-          state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
+          EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
           SilverPercent.dirty(state.silverPercent.value),
         ]));
@@ -212,7 +196,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         isFormValid: Formz.validate([
           ServiceType.dirty(value),
           UserId.dirty(state.userId.value),
-          EnterpriseId.dirty(state.enterpriseId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           TripType.dirty(state.tripType.value),
           StartTime.dirty(state.startTime.value),
           StartDate.dirty(state.startDate.value),
@@ -230,7 +214,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartTime.dirty(value),
           StartDate.dirty(state.startDate.value),
           UserId.dirty(state.userId.value),
-          EnterpriseId.dirty(state.enterpriseId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartAddress.dirty(state.startAddress.value),
@@ -246,8 +230,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         isFormValid: Formz.validate([
           StartDate.dirty(value),
           UserId.dirty(state.userId.value),
-          UserId.dirty(state.userId.value),
-          EnterpriseId.dirty(state.enterpriseId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartAddress.dirty(state.startAddress.value),
@@ -263,7 +246,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         isFormValid: Formz.validate([
           StartAddress.dirty(value),
           UserId.dirty(state.userId.value),
-          EnterpriseId.dirty(state.enterpriseId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
@@ -280,7 +263,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         isFormValid: Formz.validate([
           EndAddress.dirty(value),
           UserId.dirty(state.userId.value),
-          EnterpriseId.dirty(state.enterpriseId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
@@ -297,14 +280,15 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         isFormValid: Formz.validate([
           Price.dirty(value),
           UserId.dirty(state.userId.value),
-          EnterpriseId.dirty(state.enterpriseId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
           StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
-          state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           SilverPercent.dirty(state.silverPercent.value),
+          if (state.tripType.value == 'Punto a punto')
+            EndAddress.dirty(state.endAddress!.value),
         ]));
   }
 
@@ -314,13 +298,13 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         isFormValid: Formz.validate([
           SilverPercent.dirty(value),
           UserId.dirty(state.userId.value),
-          EnterpriseId.dirty(state.enterpriseId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
           TripType.dirty(state.tripType.value),
           ServiceType.dirty(state.serviceType.value),
           StartTime.dirty(state.startTime.value),
           StartDate.dirty(state.startDate.value),
           StartAddress.dirty(state.startAddress.value),
-          state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
+          EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),
         ]));
   }
@@ -335,7 +319,7 @@ class ReserveFormState {
   final DriverId? driverId;
   final String? driverName;
   final String? driverLastName;
-  final EnterpriseId enterpriseId;
+  final EnterpriseId? enterpriseId;
   final int? carId;
   final TripType tripType;
   final StartTime startTime;

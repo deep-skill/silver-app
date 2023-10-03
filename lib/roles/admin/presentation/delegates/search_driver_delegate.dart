@@ -33,6 +33,7 @@ class SearchDriverDelegate extends SearchDelegate<SearchDriver?> {
     _debouceTimer = Timer(const Duration(milliseconds: 800), () async {
       final drivers = await searchDrivers(query);
       initialDrivers = drivers;
+      if (debouncedDrivers.isClosed) return;
       debouncedDrivers.add(drivers);
       isLoadingStream.add(false);
     });

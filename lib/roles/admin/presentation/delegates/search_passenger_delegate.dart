@@ -33,6 +33,7 @@ class SearchPassengerDelegate extends SearchDelegate<SearchPassenger?> {
     _debouceTimer = Timer(const Duration(milliseconds: 800), () async {
       final passengers = await searchPassengers(query);
       initialPassengers = passengers;
+      if (debouncedPassengers.isClosed) return;
       debouncedPassengers.add(passengers);
       isLoadingStream.add(false);
     });
@@ -135,7 +136,8 @@ class _PassengerItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         onPassengerSelected(context, passenger);
-        callback(passenger.id, passenger.name, passenger.lastName);
+        callback(passenger.id, passenger.name, passenger.lastName,
+            passenger.enterpriseId);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

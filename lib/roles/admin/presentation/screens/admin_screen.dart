@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/roles/admin/infraestructure/models/trip_summary_response.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home.dart';
@@ -51,9 +50,7 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    //if (ref.read(reservesHomeProvider.notifier).currentPage == 0) ref.read(reservesHomeProvider.notifier).loadNextPage();
-    //ref.read(reservesHomeProvider.notifier).currentPage = 0;
-    ref.read(reservesHomeProvider.notifier).loadNextPage();
+    if (ref.read(reservesHomeProvider.notifier).currentPage == 0) ref.read(reservesHomeProvider.notifier).loadNextPage();
   }
 
   @override
@@ -75,72 +72,77 @@ class HomeViewState extends ConsumerState<HomeView> {
     ];
     final reserves = ref.watch(reservesHomeProvider);
     final date = DateTime.now().month - 1;
-    AsyncValue<TripsSummaryResponse> tripsSummary =
-        ref.watch(tripsSummaryProvider);
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Row(
-                children: [
-                  SizedBox(
-                      child: Image.asset(
-                    "assets/images/app_logo.png",
-                    width: size.width * .2,
+    final tripsSummary = ref.watch(tripsSummaryProvider);
+    return RefreshIndicator(
+      onRefresh: () {
+        ref.read(tripsSummaryProvider);
+        return ref.read(reservesHomeProvider.notifier).reloadData();
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                        child: Image.asset(
+                      "assets/images/app_logo.png",
+                      width: size.width * .2,
+                    )),
+                    SizedBox(
+                      width: size.width * .04,
+                    ),
+                    const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('¡Hola!',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              )),
+                          Text('Silver Express',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              )),
+                        ])
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(
+              height: size.height * .01,
+            ),
+            SizedBox(
+                width: size.width * .9,
+                child: Text(months[date],
+                    textAlign: TextAlign.start,
+                    style: const TextStyle(
+                        fontSize: 21, fontWeight: FontWeight.bold))),
+            SizedBox(height: size.height * .01),
+            TripsSummaryView(size: size, tripsSummary: tripsSummary),
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              alignment: Alignment.centerLeft,
+              child: const Text('Reservas por asignar',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   )),
-                  SizedBox(
-                    width: size.width * .04,
-                  ),
-                  const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('¡Hola!',
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            )),
-                        Text('Silver Express',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ])
-                ],
-              ),
-            ],
-          ),
-          SizedBox(
-            height: size.height * .01,
-          ),
-          SizedBox(
-              width: size.width * .9,
-              child: Text(months[date],
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                      fontSize: 21, fontWeight: FontWeight.bold))),
-          SizedBox(height: size.height * .01),
-          TripsSummaryView(size: size, tripsSummary: tripsSummary),
-          const SizedBox(
-            height: 15,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            alignment: Alignment.centerLeft,
-            child: const Text('Reservas por asignar',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                )),
-          ),
-          ReservesListHome(
-            reserves: reserves,
-            loadNextPage: () {
-              ref.read(reservesHomeProvider.notifier).loadNextPage();
-            },
-          ),
-        ],
+            ),
+            ReservesListHome(
+              reserves: reserves,
+              loadNextPage: () {
+                ref.read(reservesHomeProvider.notifier).loadNextPage();
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

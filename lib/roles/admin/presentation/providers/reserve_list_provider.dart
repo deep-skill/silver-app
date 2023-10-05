@@ -3,7 +3,6 @@ import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/reserves_list_response.dart';
 
-
 List<ReserveList> _jsonToReserves(Map<String, dynamic> json) {
   final reserveListResponse = ReservesListResponse.fromJson(json);
   final List<ReserveList> reserves = reserveListResponse.rows.toList();
@@ -42,6 +41,19 @@ class ReservesNotifier extends StateNotifier<List<ReserveList>> {
         await fetchMoreReserves(page: currentPage);
     currentPage++;
     state = [...state, ...reserves];
+    await Future.delayed(const Duration(milliseconds: 400));
+    isLoading = false;
+  }
+
+  Future<void> reloadData() async {
+    if (isLoading) return;
+    //print('Loading new pages');
+    currentPage = 0;
+    isLoading = true;
+    final List<ReserveList> reserves =
+        await fetchMoreReserves(page: currentPage);
+    currentPage++;
+    state = [...reserves];
     await Future.delayed(const Duration(milliseconds: 400));
     isLoading = false;
   }

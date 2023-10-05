@@ -44,4 +44,17 @@ class ReservesNotifier extends StateNotifier<List<ReserveHome>> {
     await Future.delayed(const Duration(milliseconds: 400));
     isLoading = false;
   }
+
+  Future<void> reloadData() async {
+    if (isLoading) return;
+    //print('Loading new pages');
+    currentPage = 0;
+    isLoading = true;
+    final List<ReserveHome> reserves =
+        await fetchMoreReserves(page: currentPage);
+    currentPage++;
+    state = [...reserves];
+    await Future.delayed(const Duration(milliseconds: 400));
+    isLoading = false;
+  }
 }

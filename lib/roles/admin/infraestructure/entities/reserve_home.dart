@@ -20,6 +20,6 @@ class ReserveHome {
         startTime: DateTime.parse(json['startTime']),
         name: json['User']['name'],
         lastName: json['User']['lastName'],
-        entrepriseName: json['Enterprise']['name'],
+        entrepriseName: json['Enterprise'] == null ? 'Viaje personal' : json['Enterprise']['name'],
       );
 }

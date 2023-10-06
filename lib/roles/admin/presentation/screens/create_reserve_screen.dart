@@ -136,45 +136,53 @@ class CreateReserveView extends ConsumerWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const Icon(Icons.business_center_outlined),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    DropdownButton<String>(
-                      value: reserveForm.serviceType.value,
-                      style: reserveForm.serviceType.value ==
-                              'Seleccione el tipo de servicio'
-                          ? const TextStyle(color: Colors.grey, fontSize: 16)
-                          : const TextStyle(color: Colors.black, fontSize: 16),
-                      items: [
-                        'Empresarial',
-                        'Personal',
-                        'Seleccione el tipo de servicio'
-                      ]
-                          .map((option) => DropdownMenuItem(
-                                value: option,
-                                child: Text(
-                                  option,
-                                  style:
-                                      option == 'Seleccione el tipo de servicio'
-                                          ? const TextStyle(
-                                              color: Colors.grey, fontSize: 16)
-                                          : const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16),
-                                ),
-                              ))
-                          .toList(),
-                      onChanged: (newValue) {
-                        ref
-                            .read(reserveFormProvider(reserve).notifier)
-                            .onServiceTypeChanged(newValue!);
-                      },
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                    ),
-                  ],
+                child: SizedBox(
+                  width: size.width * .9,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.business_center_outlined),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: size.width * .75,
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          iconSize: 40,
+                          value: reserveForm.serviceType.value,
+                          style: reserveForm.serviceType.value ==
+                                  'Seleccione el tipo de servicio'
+                              ? const TextStyle(color: Colors.grey, fontSize: 16)
+                              : const TextStyle(color: Colors.black, fontSize: 16),
+                          items: [
+                            'Empresarial',
+                            'Personal',
+                            'Seleccione el tipo de servicio'
+                          ]
+                              .map((option) => DropdownMenuItem(
+                                    value: option,
+                                    child: Text(
+                                      option,
+                                      style:
+                                          option == 'Seleccione el tipo de servicio'
+                                              ? const TextStyle(
+                                                  color: Colors.grey, fontSize: 16)
+                                              : const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16),
+                                    ),
+                                  ))
+                              .toList(),
+                          onChanged: (newValue) {
+                            ref
+                                .read(reserveFormProvider(reserve).notifier)
+                                .onServiceTypeChanged(newValue!);
+                          },
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ]),
@@ -290,44 +298,52 @@ class CreateReserveView extends ConsumerWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const Icon(Icons.timeline_outlined),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    DropdownButton<String>(
-                      value: reserveForm.tripType.value,
-                      style: reserveForm.tripType.value ==
-                              'Seleccione el tipo de viaje'
-                          ? const TextStyle(color: Colors.grey, fontSize: 16)
-                          : const TextStyle(color: Colors.black, fontSize: 16),
-                      items: [
-                        'Por punto',
-                        'Por hora',
-                        'Punto a punto',
-                        'Seleccione el tipo de viaje'
-                      ]
-                          .map((option) => DropdownMenuItem(
-                                value: option,
-                                child: Text(
-                                  option,
-                                  style: option == 'Seleccione el tipo de viaje'
-                                      ? const TextStyle(
-                                          color: Colors.grey, fontSize: 16)
-                                      : const TextStyle(
-                                          color: Colors.black, fontSize: 16),
-                                ),
-                              ))
-                          .toList(),
-                      onChanged: (newValue) {
-                        ref
-                            .read(reserveFormProvider(reserve).notifier)
-                            .onTripTypeChanged(newValue!);
-                      },
-                      icon: const Icon(Icons.keyboard_arrow_down),
-                    ),
-                  ],
+                child: SizedBox(
+                    width: size.width * .9,
+                  child: Row(
+                    children: [
+                      const Icon(Icons.timeline_outlined),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: size.width * .75,
+                        child: DropdownButton<String>(
+                          iconSize: 40,
+                          isExpanded: true,
+                          value: reserveForm.tripType.value,
+                          style: reserveForm.tripType.value ==
+                                  'Seleccione el tipo de viaje'
+                              ? const TextStyle(color: Colors.grey, fontSize: 16)
+                              : const TextStyle(color: Colors.black, fontSize: 16),
+                          items: [
+                            'Por punto',
+                            'Por hora',
+                            'Punto a punto',
+                            'Seleccione el tipo de viaje'
+                          ]
+                              .map((option) => DropdownMenuItem(
+                                    value: option,
+                                    child: Text(
+                                      option,
+                                      style: option == 'Seleccione el tipo de viaje'
+                                          ? const TextStyle(
+                                              color: Colors.grey, fontSize: 16)
+                                          : const TextStyle(
+                                              color: Colors.black, fontSize: 16),
+                                    ),
+                                  ))
+                              .toList(),
+                          onChanged: (newValue) {
+                            ref
+                                .read(reserveFormProvider(reserve).notifier)
+                                .onTripTypeChanged(newValue!);
+                          },
+                          icon: const Icon(Icons.keyboard_arrow_down),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ]),
@@ -547,7 +563,7 @@ class CreateReserveView extends ConsumerWidget {
                     isTopField: true,
                     isBottomField: true,
                     label: '% Silver',
-                    hint: '00%',
+                    hint: '20%',
                     errorMessage: reserveForm.silverPercent.errorMessage,
                     prefixIcon: const Icon(Icons.percent, size: 25),
                     onChanged: ref

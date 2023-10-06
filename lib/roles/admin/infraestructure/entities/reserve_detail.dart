@@ -1,7 +1,7 @@
 class ReserveDetail {
   final int id;
   final int userId;
-  final int enterpriseId;
+  final int? enterpriseId;
   final int? driverId;
   final int? carId;
   final DateTime startTime;
@@ -47,7 +47,7 @@ class ReserveDetail {
   factory ReserveDetail.fromJson(Map<String, dynamic> json) => ReserveDetail(
         id: json['id'],
         userId: json['User']['id'],
-        enterpriseId: json['Enterprise']['id'],
+        enterpriseId: json['Enterprise'] == null ? null : json['Enterprise']['id'],
         driverId: json['Driver'] == null ? null : json['Driver']['id'],
         carId: json['Car'] == null ? null : json['Car']['id'],
         tripType: json['tripType'],
@@ -59,7 +59,7 @@ class ReserveDetail {
         startTime: DateTime.parse(json['startTime']),
         name: json['User']['name'],
         lastName: json['User']['lastName'],
-        entrepriseName: json['Enterprise']['name'],
+        entrepriseName: json['Enterprise'] == null ? 'Viaje personal' : json['Enterprise']['name'],
         driverName: json['Driver'] == null ? '' : json['Driver']['name'],
         driverLastName:
             json['Driver'] == null ? '' : json['Driver']['lastName'],

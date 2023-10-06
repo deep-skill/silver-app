@@ -3,6 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
 
 typedef SearchReservesCallback = Future<List<ReserveList>> Function(
     String query);
@@ -135,17 +136,7 @@ class _ReserveItem extends StatelessWidget {
         onReserveSelected(context, reserve);
         context.push('/admin/reserves/detail/${reserve.id}');
       },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Column(
-          children: [
-            Text('Id: ${reserve.id}'),
-            Text('Pasajero ${reserve.name} ${reserve.lastName}'),
-            Text('Conductor ${reserve.driverName} ${reserve.driverLastName}'),
-            Text('Inicio: ${reserve.startTime}'),
-          ],
-        ),
-      ),
+      child: Slide(reserve: reserve),
     );
   }
 }

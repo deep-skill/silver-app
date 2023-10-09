@@ -4,6 +4,7 @@ import 'package:silverapp/auth0/auth0.dart';
 import 'package:silverapp/config/router/app_router_notifier.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/presentation/screens/admin_screen.dart';
+import 'package:silverapp/roles/admin/presentation/screens/create_reserve_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/reserve_detail_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/reserve_list_screen.dart';
 import 'package:silverapp/roles/driver/driver_screen.dart';
@@ -28,6 +29,14 @@ final goRouterProvider = Provider((ref) {
                 path: 'reserves',
                 builder: (context, state) => const ReserveListScreen(),
                 routes: [
+                  GoRoute(
+                    path: 'create',
+                    builder: (context, state) {
+                      return const CreateReserveScreen(
+                        reserveId: 'new',
+                      );
+                    },
+                  ),
                   GoRoute(
                     path: 'detail/:id',
                     builder: (context, state) {
@@ -67,8 +76,7 @@ final goRouterProvider = Provider((ref) {
         }
         if (authState.authStatus == AuthStatus.authenticated &&
             authState.credentials!.scopes.toString().contains('admin')) {
-          if (isGoingTo == '/admin/reserves' ||
-              isGoingTo.contains('/admin/reserves')) return null;
+          if (isGoingTo.contains('/admin/')) return null;
           return '/admin';
         }
         if (authState.authStatus == AuthStatus.authenticated &&

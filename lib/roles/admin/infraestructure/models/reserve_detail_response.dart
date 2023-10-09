@@ -1,6 +1,10 @@
 class ReserveDetailResponse {
   ReserveDetailResponse(
       {required this.id,
+      required this.userId,
+      required this.enterpriseId,
+      required this.driverId,
+      required this.carId,
       required this.startTime,
       required this.name,
       required this.lastName,
@@ -9,6 +13,9 @@ class ReserveDetailResponse {
       required this.driverName,
       required this.driverLastName,
       required this.licensePlate,
+      required this.brand,
+      required this.model,
+      required this.color,
       required this.tripType,
       required this.startAddress,
       required this.endAddress,
@@ -16,6 +23,10 @@ class ReserveDetailResponse {
       required this.silverPercent});
 
   final int id;
+  final int userId;
+  final int enterpriseId;
+  final int driverId;
+  final int carId;
   final DateTime startTime;
   final String name;
   final String lastName;
@@ -24,6 +35,9 @@ class ReserveDetailResponse {
   final String driverName;
   final String driverLastName;
   final String licensePlate;
+  final String brand;
+  final String model;
+  final String color;
   final String tripType;
   final String startAddress;
   final String endAddress;
@@ -33,6 +47,10 @@ class ReserveDetailResponse {
   factory ReserveDetailResponse.fromJson(Map<String, dynamic> json) =>
       ReserveDetailResponse(
         id: json["id"],
+        userId: json["userId"],
+        enterpriseId: json["enterpriseId"],
+        driverId: json["driverId"],
+        carId: json["carId"],
         startTime: json["startTime"],
         name: json["name"],
         lastName: json["lastName"],
@@ -41,6 +59,9 @@ class ReserveDetailResponse {
         driverName: json["driverName"],
         driverLastName: json["driverLastName"],
         licensePlate: json["licensePlate"],
+        brand: json["brand"],
+        model: json["model"],
+        color: json["color"],
         tripType: json["tripType"],
         startAddress: json["startAddress"],
         endAddress: json["endAddress"],

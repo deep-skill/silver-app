@@ -1,59 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/roles/admin/infraestructure/entities/reserve_home.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 
-class ReservesListHome extends StatefulWidget {
-  const ReservesListHome(
-      {super.key, required this.reserves, required this.loadNextPage});
-
-  final List<ReserveHome> reserves;
-  final VoidCallback? loadNextPage;
-
-  @override
-  State<ReservesListHome> createState() => _ReservesListHomeState();
-}
-
-class _ReservesListHomeState extends State<ReservesListHome> {
-  final ScrollController scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController.addListener(() {
-      if (widget.loadNextPage == null) return;
-      if (scrollController.position.pixels + 1 >=
-          scrollController.position.maxScrollExtent) {
-        widget.loadNextPage!();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    // isMounted = false;
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        controller: scrollController,
-        itemCount: widget.reserves.length,
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (contex, index) {
-          return _Slide(reserve: widget.reserves[index]);
-        },
-      ),
-    );
-  }
-}
-
-class _Slide extends StatelessWidget {
-  final ReserveHome reserve;
-  const _Slide({required this.reserve});
+class Slide extends StatelessWidget {
+  final ReserveList reserve;
+  const Slide({super.key, required this.reserve});
 
   @override
   Widget build(BuildContext context) {
@@ -91,20 +42,45 @@ class _Slide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-                width: 90,
+                width: 100,
                 height: 110,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: Color(0xff031329),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
-                child: const Center(
-                    child: Text(
-                  'Sin conductor',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ))),
+                child: reserve.driverName != ''
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Text(
+                              '${reserve.driverName} ${reserve.driverLastName}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                          Stack(children: [
+                            ClipOval(
+                                child: Image.asset(
+                                    'assets/images/driver_img_example.png')),
+                          ]),
+                        ],
+                      )
+                    : const Center(
+                        child: Text(
+                        'Sin conductor',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ))),
             Padding(
               padding: const EdgeInsets.all(10),
               child: Column(
@@ -125,19 +101,26 @@ class _Slide extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.account_balance_outlined,
-                        size: 20,
-                      ),
-                      Text(
-                        ' ${reserve.entrepriseName}',
-                        style: const TextStyle(
-                          fontSize: 16,
+                  SizedBox(
+                    width: size.width * .5,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.account_balance_outlined,
+                          size: 20,
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Text(
+                            ' ${reserve.entrepriseName}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Row(
                     children: [

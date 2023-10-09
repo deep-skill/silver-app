@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/admin/entities/reserve_detail.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
 
 class ReserveDetailScreen extends ConsumerStatefulWidget {
   const ReserveDetailScreen({super.key, required this.reserveId});
 
-  static const name = 'reserve-detail';
   final String reserveId;
 
   @override
@@ -36,12 +35,12 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
     return Scaffold(
         appBar: AppBar(title: const Text('Detalle de reserva')),
         body: Padding(
-            padding: EdgeInsets.all(12), child: ReserveInfo(reserve: reserve)));
+            padding: const EdgeInsets.all(12), child: ReserveInfo(reserve: reserve)));
   }
 }
 
 class ReserveInfo extends StatelessWidget {
-  const ReserveInfo({
+  const ReserveInfo({super.key, 
     required this.reserve,
   });
   final ReserveDetail reserve;
@@ -54,12 +53,15 @@ class ReserveInfo extends StatelessWidget {
       Text(reserve.lastName),
       Text(reserve.serviceType),
       Text(reserve.entrepriseName),
-      Text(reserve.driverName),
-      Text(reserve.driverLastName),
-      Text(reserve.licensePlate),
+      Text(reserve.driverName ?? ''),
+      Text(reserve.driverLastName ?? ''),
+      Text(reserve.licensePlate ?? ''),
+      Text(reserve.brand ?? ''),
+      Text(reserve.model ?? ''),
+      Text(reserve.color ?? ''),
       Text(reserve.tripType),
       Text(reserve.startAddress),
-      Text(reserve.endAddress),
+      Text(reserve.endAddress ?? ''),
       Text(reserve.price),
       Text(reserve.silverPercent),
     ]);

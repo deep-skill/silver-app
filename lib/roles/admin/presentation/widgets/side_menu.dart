@@ -132,7 +132,7 @@ const appMenuItems = <MenuItem>[
   ),
   MenuItem(
     title: 'Crear reserva',
-    link: '/crear-reserva',
+    link: '/admin/reserves/create',
     icon: Icons.add_card_rounded,
   ),
   MenuItem(

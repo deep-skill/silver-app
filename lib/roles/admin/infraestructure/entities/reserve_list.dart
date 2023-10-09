@@ -26,7 +26,7 @@ class ReserveList {
         startTime: DateTime.parse(json['startTime']),
         name: json['User']['name'],
         lastName: json['User']['lastName'],
-        entrepriseName: json['Enterprise']['name'],
+        entrepriseName: json['Enterprise'] == null ? 'Viaje personal' : json['Enterprise']['name'],
         driverName: json['Driver'] == null ? '' : json['Driver']['name'],
         driverLastName:
             json['Driver'] == null ? '' : json['Driver']['lastName'],

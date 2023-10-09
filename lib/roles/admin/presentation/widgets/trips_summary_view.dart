@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/admin/models/trip_summary_response.dart';
+import 'package:silverapp/roles/admin/infraestructure/models/trip_summary_response.dart';
 
 class TripsSummaryView extends StatelessWidget {
   const TripsSummaryView({

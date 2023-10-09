@@ -1,13 +1,7 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/admin/entities/reserve_list.dart';
-import 'package:silverapp/roles/admin/models/reserves_list_response.dart';
-
-final dio = Dio(BaseOptions(
-  baseUrl:
-      'http://${dotenv.env['YOUR_IP']}:${dotenv.env['SERVER_PORT']}/silver-api/',
-));
+import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
+import 'package:silverapp/roles/admin/infraestructure/models/reserves_list_response.dart';
 
 List<ReserveList> _jsonToReserves(Map<String, dynamic> json) {
   final reserveListResponse = ReservesListResponse.fromJson(json);
@@ -47,6 +41,19 @@ class ReservesNotifier extends StateNotifier<List<ReserveList>> {
         await fetchMoreReserves(page: currentPage);
     currentPage++;
     state = [...state, ...reserves];
+    await Future.delayed(const Duration(milliseconds: 400));
+    isLoading = false;
+  }
+
+  Future<void> reloadData() async {
+    if (isLoading) return;
+    //print('Loading new pages');
+    currentPage = 0;
+    isLoading = true;
+    final List<ReserveList> reserves =
+        await fetchMoreReserves(page: currentPage);
+    currentPage++;
+    state = [...reserves];
     await Future.delayed(const Duration(milliseconds: 400));
     isLoading = false;
   }

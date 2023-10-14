@@ -9,9 +9,11 @@ import 'package:silverapp/roles/admin/presentation/widgets/side_menu.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view.dart';
 import 'package:silverapp/roles/driver/infraestructure/models/driver_info_response.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
+import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/custom_driver_name.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/trips_summary_driver_view.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_custom_slide.dart';
 
 class DriverScreen extends ConsumerWidget {
   static const name = 'admin';
@@ -69,18 +71,15 @@ class HomeViewState extends ConsumerState<HomeView> {
       'Noviembre',
       'Deciembre'
     ];
-    Credentials? credential = ref.watch(authProvider).credentials;
-    final driverInfo = ref.watch(driverInfoProvider(credential?.user.email));
+    final driverInfo = ref.watch(driverInfoProvider);
+    final tripsSummaryDriver = ref.watch(tripsSummaryDriverProvider);
+    final nearestReserve = ref.watch(nearestReserveProvider);
     final date = DateTime.now().month - 1;
-    final tripsSummaryDriver = ref.watch(tripsSummaryDriverProvider(8));
-
-    final tripsSummary = ref.watch(tripsSummaryProvider);
-    
     final reserves = ref.watch(reservesHomeProvider);
     return RefreshIndicator(
       onRefresh: () {
-       ref.invalidate(tripsSummaryProvider);
-       return ref.read(reservesHomeProvider.notifier).reloadData();
+        ref.invalidate(driverInfoProvider);
+        return ref.read(reservesHomeProvider.notifier).reloadData();
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -106,7 +105,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
                               )),
-                          CustomDriverName(driverInfo: driverInfo),
+                              CustomDriverName(driverInfo: driverInfo),
                         ])
                   ],
                 ),
@@ -122,9 +121,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                     style: const TextStyle(
                         fontSize: 21, fontWeight: FontWeight.bold))),
             SizedBox(height: size.height * .01),
-
-            TripsSummaryDriverView(size: size, tripsSummary: tripsSummaryDriver),
-            TripsSummaryView(size: size, tripsSummary: tripsSummary),
+             TripsSummaryDriverView( size: size, tripsSummary: tripsSummaryDriver),
             const SizedBox(
               height: 15,
             ),
@@ -137,6 +134,15 @@ class HomeViewState extends ConsumerState<HomeView> {
                     fontWeight: FontWeight.bold,
                   )),
             ),
+             nearestReserve.when(
+              loading: () => SizedBox(height: size.height * .15 , child: const Center(child: CircularProgressIndicator())),
+              error: (err, stack) => Text('Error: $err'),
+              data: (nearestReserve) {
+                return nearestReserve != null
+                ? DriverCustomSlide(reserve: nearestReserve)
+                : const CircularProgressIndicator();
+              },
+            ), 
             ReservesListHome(
               reserves: reserves,
               loadNextPage: () {

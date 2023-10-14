@@ -10,7 +10,7 @@ class TripsSummaryDriverView extends StatelessWidget {
   });
 
   final Size size;
-  final AsyncValue<TripsSummaryDriverResponse> tripsSummary;
+  final AsyncValue<TripsSummaryDriverResponse?> tripsSummary;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +31,14 @@ class TripsSummaryDriverView extends StatelessWidget {
                   loading: () => const CircularProgressIndicator(),
                   error: (err, stack) => Text('Error: $err'),
                   data: (tripsSummary) {
-                    return Text('${tripsSummary.trips}',
+                    return tripsSummary != null
+                    ? Text('${tripsSummary.trips}',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 25,
                           fontWeight: FontWeight.w700,
-                        ));
+                        ))
+                        : const CircularProgressIndicator();
                   },
                 ),
                 const Text('Viajes',
@@ -59,12 +61,14 @@ class TripsSummaryDriverView extends StatelessWidget {
                     loading: () => const CircularProgressIndicator(),
                     error: (err, stack) => Text('Error: $err'),
                     data: (tripsSummary) {
-                      return Text('S/ ${tripsSummary.revenue.toDouble()}',
+                      return tripsSummary!= null
+                      ? Text('S/ ${tripsSummary.revenue.toDouble()}',
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
-                          ));
+                          ))
+                          : const CircularProgressIndicator();
                     }),
                 const Text('Ganancia',
                     style: TextStyle(

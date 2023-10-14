@@ -24,7 +24,7 @@ class ReserveList {
         id: json['id'],
         tripType: json['tripType'],
         startTime: DateTime.parse(json['startTime']),
-        name: json['User']['name'],
+        name: json['User'] == null ? '' : json['User']['name'],
         lastName: json['User']['lastName'],
         entrepriseName: json['Enterprise'] == null ? 'Viaje personal' : json['Enterprise']['name'],
         driverName: json['Driver'] == null ? '' : json['Driver']['name'],

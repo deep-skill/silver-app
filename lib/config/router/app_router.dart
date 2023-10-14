@@ -81,6 +81,7 @@ final goRouterProvider = Provider((ref) {
         }
         if (authState.authStatus == AuthStatus.authenticated &&
             authState.credentials!.scopes.toString().contains('driver')) {
+          if (isGoingTo.contains('/driver/')) return null;
           return '/driver';
         }
         if (authState.authStatus == AuthStatus.authenticated &&

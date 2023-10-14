@@ -7,7 +7,7 @@ class CustomDriverName extends StatelessWidget {
     super.key,
     required this.driverInfo,
   });
-  final AsyncValue<DriverInfoResponse> driverInfo;
+  final AsyncValue<DriverInfoResponse?> driverInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,8 @@ class CustomDriverName extends StatelessWidget {
                   loading: () => const CircularProgressIndicator(),
                   error: (err, stack) => Text('Error: $err'),
                   data: (driverInfo) {
-                    return SizedBox(
+                    return driverInfo != null 
+                    ? SizedBox(
                       width: size.width * .65,
                       child: Text('${driverInfo.name} ${driverInfo.lastName}',
                           style: const TextStyle(
@@ -25,7 +26,8 @@ class CustomDriverName extends StatelessWidget {
                             fontSize: 20,
                                   fontWeight: FontWeight.bold,
                           )),
-                    );
+                    )
+                    : const CircularProgressIndicator();
                   },
                 );
   }

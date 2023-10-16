@@ -1,40 +1,31 @@
-class ReserveList {
+class DriverReserveList {
   final int id;
-  final String tripType;
   final DateTime startTime;
+  final String startAddress;
   final String name;
   final String lastName;
-  final String entrepriseName;
-  final String driverName;
-  final String driverLastName;
-  final String carType;
+  final String? entrepriseName;
   final int? tripId;
 
-  ReserveList({
+  DriverReserveList({
     required this.id,
-    required this.tripType,
     required this.startTime,
+    required this.startAddress,
     required this.name,
     required this.lastName,
     required this.entrepriseName,
-    required this.driverName,
-    required this.driverLastName,
-    required this.carType,
     this.tripId,
   });
-  factory ReserveList.fromJson(Map<String, dynamic> json) => ReserveList(
+  factory DriverReserveList.fromJson(Map<String, dynamic> json) =>
+      DriverReserveList(
         id: json['id'],
-        tripType: json['tripType'],
+        startAddress: json['startAddress'],
         startTime: DateTime.parse(json['startTime']),
         name: json['User'] == null ? '' : json['User']['name'],
         lastName: json['User']['lastName'],
         entrepriseName: json['Enterprise'] == null
             ? 'Viaje personal'
             : json['Enterprise']['name'],
-        driverName: json['Driver'] == null ? '' : json['Driver']['name'],
-        driverLastName:
-            json['Driver'] == null ? '' : json['Driver']['lastName'],
-        carType: json['Car'] == null ? '' : json['Car']['type'],
         tripId: json['Trip'] == null ? null : json['Trip']['id'],
       );
 }

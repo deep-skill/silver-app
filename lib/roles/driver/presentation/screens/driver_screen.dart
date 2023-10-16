@@ -22,7 +22,6 @@ class DriverScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
 //    AuthState? authState = ref.watch(authProvider);
     return Scaffold(
       key: scaffoldKey,
@@ -33,7 +32,6 @@ class DriverScreen extends ConsumerWidget {
         scaffoldKey: scaffoldKey,
       ),
       body: const HomeView(),
-
     );
   }
 }
@@ -105,7 +103,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
                               )),
-                              CustomDriverName(driverInfo: driverInfo),
+                          CustomDriverName(driverInfo: driverInfo),
                         ])
                   ],
                 ),
@@ -121,28 +119,76 @@ class HomeViewState extends ConsumerState<HomeView> {
                     style: const TextStyle(
                         fontSize: 21, fontWeight: FontWeight.bold))),
             SizedBox(height: size.height * .01),
-             TripsSummaryDriverView( size: size, tripsSummary: tripsSummaryDriver),
+            TripsSummaryDriverView(
+                size: size, tripsSummary: tripsSummaryDriver),
             const SizedBox(
               height: 15,
             ),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
               alignment: Alignment.centerLeft,
-              child: const Text('Reservas por asignar',
+              child: nearestReserve.when(
+                loading: () => const Text('Cargando...',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    )),
+                error: (err, stack) => Text('Error: $err'),
+                data: (nearestReserve) {
+                  return nearestReserve?.id != null
+                      ? const Text('Viaje en curso',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ))
+                      : const Text('Reserva mas próxima',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ));
+                },
+              ),
+            ),
+            nearestReserve.when(
+              loading: () => SizedBox(
+                  height: size.height * .15,
+                  child: const Center(child: CircularProgressIndicator())),
+              error: (err, stack) => Text('Error: $err'),
+              data: (nearestReserve) {
+                return nearestReserve != null
+                    ? DriverCustomSlide(reserve: nearestReserve)
+                    : const Center(child: Text('No hay reserva próxima'));
+              },
+            ),
+            Center(
+              child: TextButton(
+                onPressed: () {},
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  )),
+                  fixedSize: MaterialStateProperty.all(
+                      Size(size.width * .8, size.height * .06)),
+                  backgroundColor:
+                      MaterialStateProperty.all(const Color(0xFF23A5CD)),
+                ),
+                child: const Text('Voy en camino',
+                    style: TextStyle(
+                      color: Colors.white,
+                    )),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: const Text('Reservas del día',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   )),
             ),
-             nearestReserve.when(
-              loading: () => SizedBox(height: size.height * .15 , child: const Center(child: CircularProgressIndicator())),
-              error: (err, stack) => Text('Error: $err'),
-              data: (nearestReserve) {
-                return nearestReserve != null
-                ? DriverCustomSlide(reserve: nearestReserve)
-                : const CircularProgressIndicator();
-              },
-            ), 
             ReservesListHome(
               reserves: reserves,
               loadNextPage: () {

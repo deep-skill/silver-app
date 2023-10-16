@@ -9,10 +9,11 @@ final tripsSummaryDriverProvider = FutureProvider((ref) async {
     final response = await dio.get('trips/driver-summary', queryParameters: {
       'id': driverInfo.id,
     });
-    final TripsSummaryDriverResponse tripsSummary =
-        TripsSummaryDriverResponse.fromJson(response.data);
-
-    return tripsSummary;
+    if (response.data != null) {
+      final TripsSummaryDriverResponse tripsSummary =
+          TripsSummaryDriverResponse.fromJson(response.data);
+      return tripsSummary;
+    }
   }
   return null;
 });

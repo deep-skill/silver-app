@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_list.dart';
 
 class DriverCustomSlide extends StatelessWidget {
-  final ReserveList reserve;
+  final DriverReserveList reserve;
   const DriverCustomSlide({super.key, required this.reserve});
 
   @override
@@ -47,34 +47,42 @@ class DriverCustomSlide extends StatelessWidget {
                 decoration: const BoxDecoration(
                   color: Color(0xff031329),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
+                  image: DecorationImage(
+                    opacity: 50,
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/images/enterprise_logo.png'),
+                  ),
                 ),
-                child: reserve.driverName != ''
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Text(
-                              '${reserve.driverName} ${reserve.driverLastName}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          Stack(children: [
-                            ClipOval(
-                                child: Image.asset(
-                                    'assets/images/driver_img_example.png')),
-                          ]),
-                        ],
-                      )
+                child: reserve.entrepriseName != ''
+                    ? Stack(children: [
+                        Center(
+                            child: reserve.entrepriseName != null
+                                ? Text(
+                                    reserve.entrepriseName!,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                : const Text(
+                                    'Viaje Personal',
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white,
+                                    ),
+                                  )),
+                      ])
                     : const Center(
                         child: Text(
-                        'Sin conductor',
+                        'Viaje Personal',
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
@@ -85,6 +93,7 @@ class DriverCustomSlide extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Row(
                     children: [
@@ -106,12 +115,12 @@ class DriverCustomSlide extends StatelessWidget {
                     child: Row(
                       children: [
                         const Icon(
-                          Icons.account_balance_outlined,
+                          Icons.location_on_outlined,
                           size: 20,
                         ),
                         Expanded(
                           child: Text(
-                            ' ${reserve.entrepriseName}',
+                            ' ${reserve.startAddress}',
                             style: const TextStyle(
                               fontSize: 16,
                             ),
@@ -136,25 +145,12 @@ class DriverCustomSlide extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.timeline,
-                        size: 20,
-                      ),
-                      Text(
-                        ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
             GestureDetector(
-              onTap: () => context.push('/admin/reserves/detail/${reserve.id}'),
+              onTap: () =>
+                  context.push('/driver/reserves/detail/${reserve.id}'),
               child: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 30,

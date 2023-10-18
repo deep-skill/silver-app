@@ -138,7 +138,7 @@ class DriverCustomSlide extends StatelessWidget {
                         size: 20,
                       ),
                       Text(
-                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
+                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute} hs.',
                         style: const TextStyle(
                           fontSize: 16,
                         ),

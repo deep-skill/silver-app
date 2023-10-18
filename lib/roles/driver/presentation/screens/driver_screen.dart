@@ -1,6 +1,7 @@
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
@@ -49,7 +50,8 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(reservesHomeProvider.notifier).currentPage == 0) ref.read(reservesHomeProvider.notifier).loadNextPage();
+    if (ref.read(reservesHomeProvider.notifier).currentPage == 0)
+      ref.read(reservesHomeProvider.notifier).loadNextPage();
   }
 
   @override
@@ -72,7 +74,7 @@ class HomeViewState extends ConsumerState<HomeView> {
     final driverInfo = ref.watch(driverInfoProvider);
     final tripsSummaryDriver = ref.watch(tripsSummaryDriverProvider);
     final nearestReserve = ref.watch(nearestReserveProvider);
-    final date = DateTime.now().month - 1;
+    final date = DateTime.now();
     final reserves = ref.watch(reservesHomeProvider);
     return RefreshIndicator(
       onRefresh: () {
@@ -114,7 +116,7 @@ class HomeViewState extends ConsumerState<HomeView> {
             ),
             SizedBox(
                 width: size.width * .9,
-                child: Text(months[date],
+                child: Text(months[date.month - 1],
                     textAlign: TextAlign.start,
                     style: const TextStyle(
                         fontSize: 21, fontWeight: FontWeight.bold))),
@@ -155,28 +157,47 @@ class HomeViewState extends ConsumerState<HomeView> {
               error: (err, stack) => Text('Error: $err'),
               data: (nearestReserve) {
                 return nearestReserve != null
-                    ? DriverCustomSlide(reserve: nearestReserve)
+                    ? Column(
+                        children: [
+                          DriverCustomSlide(reserve: nearestReserve),
+                          Center(
+                            child: TextButton(
+                              onPressed: () async {
+                                 if (nearestReserve.startTime.difference(date.subtract(const Duration(hours: 3))).inHours < 2) {
+                                  print('inicio viaje');
+                                  print(nearestReserve.tripId);
+                                  print(date.subtract(const Duration(hours: 3)).toIso8601String());
+                                   final response = await dio.post('/trips', data: {
+                                    "reserve_id": nearestReserve.id,
+                                    "on_way_driver": date.subtract(const Duration(hours: 3)).toIso8601String()});
+                                    final status = response.statusCode;
+                                    print(status); 
+                                } 
+                              },
+                              style: ButtonStyle(
+                                shape: MaterialStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                )),
+                                fixedSize: MaterialStateProperty.all(
+                                    Size(size.width * .8, size.height * .06)),
+                                backgroundColor: nearestReserve.startTime.difference(date.subtract(const Duration(hours: 3))).inHours < 2
+                                    ? MaterialStateProperty.all(
+                                        const Color(0xFF23A5CD))
+                                    : MaterialStateProperty.all(
+                                        const Color(0xFF9E9E9E)),
+                              ),
+                              child: const Text('Voy en camino',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  )),
+                            ),
+                          ),
+                        ],
+                      )
                     : const Center(child: Text('No hay reserva próxima'));
               },
-            ),
-            Center(
-              child: TextButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  )),
-                  fixedSize: MaterialStateProperty.all(
-                      Size(size.width * .8, size.height * .06)),
-                  backgroundColor:
-                      MaterialStateProperty.all(const Color(0xFF23A5CD)),
-                ),
-                child: const Text('Voy en camino',
-                    style: TextStyle(
-                      color: Colors.white,
-                    )),
-              ),
             ),
             const SizedBox(
               height: 15,

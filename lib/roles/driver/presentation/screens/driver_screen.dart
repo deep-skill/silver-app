@@ -1,14 +1,10 @@
-import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
-import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
-import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/side_menu.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view.dart';
-import 'package:silverapp/roles/driver/infraestructure/models/driver_info_response.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
@@ -50,8 +46,7 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(reservesHomeProvider.notifier).currentPage == 0)
-      ref.read(reservesHomeProvider.notifier).loadNextPage();
+    if (ref.read(reservesHomeProvider.notifier).currentPage == 0) ref.read(reservesHomeProvider.notifier).loadNextPage();
   }
 
   @override
@@ -136,7 +131,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                     )),
                 error: (err, stack) => Text('Error: $err'),
                 data: (nearestReserve) {
-                  return nearestReserve?.id != null
+                  return nearestReserve?.tripId != null
                       ? const Text('Viaje en curso',
                           style: TextStyle(
                             fontSize: 20,
@@ -163,16 +158,76 @@ class HomeViewState extends ConsumerState<HomeView> {
                           Center(
                             child: TextButton(
                               onPressed: () async {
-                                 if (nearestReserve.startTime.difference(date.subtract(const Duration(hours: 3))).inHours < 2) {
-                                  print('inicio viaje');
-                                  print(nearestReserve.tripId);
-                                  print(date.subtract(const Duration(hours: 3)).toIso8601String());
-                                   final response = await dio.post('/trips', data: {
+                                if (nearestReserve.startTime
+                                            .difference(date.subtract(
+                                                const Duration(hours: 3)))
+                                            .inHours <
+                                        2 &&
+                                    nearestReserve.tripId == null) {
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text(
+                                            '¿Estás seguro de que vas en camino?',
+                                            textAlign: TextAlign.center),
+                                        content: const Text(
+                                          'Marca esta opción solo si ya vas a aproximarte hasta el punto de origen.',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            style: ButtonStyle(
+                                              foregroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(Colors.white),
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(const Color(0xff23A5CD)),
+                                              shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                            ),
+                                            child: const Text('Confirmar'),
+                                            onPressed: () {
+                                              dio.post('/trips', data: {
+                                                "reserve_id": nearestReserve.id,
+                                                "on_way_driver": date
+                                                    .subtract(const Duration(
+                                                        hours: 3))
+                                                    .toIso8601String()
+                                              });
+                                              ref.invalidate(
+                                                  driverInfoProvider);
+                                              context.pop();
+                                            },
+                                          ),
+                                          TextButton(
+                                            style: TextButton.styleFrom(
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .labelLarge,
+                                            ),
+                                            child: const Text('Cancelar'),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+
+                                  /* final response = await dio.post('/trips', data: {
                                     "reserve_id": nearestReserve.id,
-                                    "on_way_driver": date.subtract(const Duration(hours: 3)).toIso8601String()});
-                                    final status = response.statusCode;
-                                    print(status); 
-                                } 
+                                    "on_way_driver": date.subtract(const Duration(hours: 3)).toIso8601String()
+                                  });
+                                  ref.invalidate(driverInfoProvider); */
+                                }
                               },
                               style: ButtonStyle(
                                 shape: MaterialStateProperty.all<
@@ -182,7 +237,12 @@ class HomeViewState extends ConsumerState<HomeView> {
                                 )),
                                 fixedSize: MaterialStateProperty.all(
                                     Size(size.width * .8, size.height * .06)),
-                                backgroundColor: nearestReserve.startTime.difference(date.subtract(const Duration(hours: 3))).inHours < 2
+                                backgroundColor: nearestReserve.startTime
+                                                .difference(date.subtract(
+                                                    const Duration(hours: 3)))
+                                                .inHours <
+                                            2 &&
+                                        nearestReserve.tripId == null
                                     ? MaterialStateProperty.all(
                                         const Color(0xFF23A5CD))
                                     : MaterialStateProperty.all(

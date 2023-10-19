@@ -54,32 +54,30 @@ class DriverCustomSlide extends StatelessWidget {
                   ),
                 ),
                 child: reserve.entrepriseName != ''
-                    ? Stack(children: [
-                        Center(
-                            child: reserve.entrepriseName != null
-                                ? Text(
-                                    reserve.entrepriseName!,
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                    ),
-                                  )
-                                : const Text(
-                                    'Viaje Personal',
-                                    maxLines: 2,
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white,
-                                    ),
-                                  )),
-                      ])
+                    ? Center(
+                        child: reserve.entrepriseName != null
+                            ? Text(
+                                reserve.entrepriseName!,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text(
+                                'Viaje Personal',
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              ))
                     : const Center(
                         child: Text(
                         'Viaje Personal',
@@ -95,20 +93,25 @@ class DriverCustomSlide extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.hail,
-                        size: 20,
-                      ),
-                      Text(
-                        '${reserve.name} ${reserve.lastName}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                  SizedBox(
+                    width: size.width * .5,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.hail,
+                          size: 20,
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Text(
+                            '${reserve.name} ${reserve.lastName}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     width: size.width * .5,
@@ -131,19 +134,25 @@ class DriverCustomSlide extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.event_available_outlined,
-                        size: 20,
-                      ),
-                      Text(
-                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute} hs.',
-                        style: const TextStyle(
-                          fontSize: 16,
+                  SizedBox(
+                    width: size.width * .5,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.event_available_outlined,
+                          size: 20,
                         ),
-                      ),
-                    ],
+                        Expanded(
+                          child: Text(
+                            ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute} hs.',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

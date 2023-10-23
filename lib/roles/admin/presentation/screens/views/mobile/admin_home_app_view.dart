@@ -1,84 +1,35 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/reserve_home.dart';
+import 'package:silverapp/roles/admin/infraestructure/models/trip_summary_response.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
-import 'package:silverapp/roles/admin/presentation/screens/views/mobile/admin_home_app_view.dart';
-import 'package:silverapp/roles/admin/presentation/screens/views/web/admin_home_web_view.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/side_menu.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view.dart';
 
-class AdminScreen extends ConsumerWidget {
-  static const name = 'admin';
-  AdminScreen({super.key});
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-//    Credentials? credentials = ref.watch(authProvider).credentials;
-//    AuthState? authState = ref.watch(authProvider);
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-      ),
-      drawer: SideMenu(
-        scaffoldKey: scaffoldKey,
-      ),
-      body: const HomeView(),
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: const Color(0xff031329),
-        onPressed: () {
-          context.push('/admin/reserves/create');
-        },
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-    );
-  }
-}
-
-class HomeView extends ConsumerStatefulWidget {
-  const HomeView({
+class AdminHomeAppView extends StatelessWidget {
+  const AdminHomeAppView({
     super.key,
+    required this.ref,
+    required this.size,
+    required this.months,
+    required this.date,
+    required this.tripsSummary,
+    required this.reserves,
   });
 
-  @override
-  HomeViewState createState() => HomeViewState();
-}
-
-class HomeViewState extends ConsumerState<HomeView> {
-  @override
-  void initState() {
-    super.initState();
-    if (ref.read(reservesHomeProvider.notifier).currentPage == 0)
-      ref.read(reservesHomeProvider.notifier).loadNextPage();
-  }
+  final WidgetRef ref;
+  final Size size;
+  final List<String> months;
+  final int date;
+  final AsyncValue<TripsSummaryResponse> tripsSummary;
+  final List<ReserveHome> reserves;
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    const months = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Deciembre'
-    ];
-    final reserves = ref.watch(reservesHomeProvider);
-    final date = DateTime.now().month - 1;
-    final tripsSummary = ref.watch(tripsSummaryProvider);
-<<<<<<< HEAD
     return RefreshIndicator(
       onRefresh: () {
-        ref.invalidate(tripsSummaryProvider);
+        ref.read(tripsSummaryProvider);
         return ref.read(reservesHomeProvider.notifier).reloadData();
       },
       child: Padding(
@@ -148,22 +99,5 @@ class HomeViewState extends ConsumerState<HomeView> {
         ),
       ),
     );
-=======
-    return kIsWeb
-        ? AdminHomeWebView(
-            ref: ref,
-            size: size,
-            months: months,
-            date: date,
-            tripsSummary: tripsSummary,
-            reserves: reserves)
-        : AdminHomeAppView(
-            ref: ref,
-            size: size,
-            months: months,
-            date: date,
-            tripsSummary: tripsSummary,
-            reserves: reserves);
->>>>>>> 5ee184c (creation and configuration of folders to separate web and app views.)
   }
 }

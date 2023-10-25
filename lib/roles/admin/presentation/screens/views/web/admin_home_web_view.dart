@@ -4,8 +4,8 @@ import 'package:silverapp/roles/admin/infraestructure/entities/reserve_home.dart
 import 'package:silverapp/roles/admin/infraestructure/models/trip_summary_response.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home_web.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view_web.dart';
 
 class AdminHomeWebView extends StatelessWidget {
   const AdminHomeWebView({
@@ -29,58 +29,28 @@ class AdminHomeWebView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () {
-        ref.read(tripsSummaryProvider);
+        ref.invalidate(tripsSummaryProvider);
         return ref.read(reservesHomeProvider.notifier).reloadData();
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 150),
         child: Column(
           children: [
-            Row(
-              children: [
-                Row(
-                  children: [
-                    SizedBox(
-                        child: Image.asset(
-                      "assets/images/app_logo.png",
-                      width: size.width * .2,
-                    )),
-                    SizedBox(
-                      width: size.width * .04,
-                    ),
-                    const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('¡Hola Web!',
-                              style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                              )),
-                          Text('Silver Express',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              )),
-                        ])
-                  ],
-                ),
-              ],
+            // SizedBox(
+            //     width: size.width * .9,
+            //     child: Text(months[date],
+            //         textAlign: TextAlign.start,
+            //         style: const TextStyle(
+            //             fontSize: 21, fontWeight: FontWeight.bold))),
+            TripsSummaryViewWeb(
+              size: size,
+              tripsSummary: tripsSummary,
             ),
-            SizedBox(
-              height: size.height * .01,
-            ),
-            SizedBox(
-                width: size.width * .9,
-                child: Text(months[date],
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(
-                        fontSize: 21, fontWeight: FontWeight.bold))),
-            SizedBox(height: size.height * .01),
-            TripsSummaryView(size: size, tripsSummary: tripsSummary),
             const SizedBox(
               height: 15,
             ),
             Container(
+              width: size.width * .8,
               padding: const EdgeInsets.symmetric(vertical: 10),
               alignment: Alignment.centerLeft,
               child: const Text('Reservas por asignar',
@@ -89,7 +59,8 @@ class AdminHomeWebView extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   )),
             ),
-            ReservesListHome(
+
+            ReservesListHomeWeb(
               reserves: reserves,
               loadNextPage: () {
                 ref.read(reservesHomeProvider.notifier).loadNextPage();

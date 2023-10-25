@@ -29,7 +29,7 @@ class AdminHomeAppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () {
-        ref.read(tripsSummaryProvider);
+        ref.invalidate(tripsSummaryProvider);
         return ref.read(reservesHomeProvider.notifier).reloadData();
       },
       child: Padding(

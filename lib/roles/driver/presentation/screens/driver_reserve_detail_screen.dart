@@ -68,7 +68,7 @@ class ReserveInfo extends StatelessWidget {
           text: reserve.entrepriseName.toString(),
         ),
         BoxReserveDetail(
-            icon: Icons.propane_tank_outlined,
+            icon: Icons.business_center_outlined,
             label: "Tipo de servicio",
             text: reserve.serviceType.toString()),
         const TitleReserveDetail(text: "Datos del viaje"),
@@ -108,15 +108,22 @@ class ReserveInfo extends StatelessWidget {
           )
         ]),
         BoxReserveDetail(
-          icon: Icons.location_on,
+          icon: Icons.location_on_outlined,
           label: "Punto de origen",
           text: reserve.startAddress.toString(),
         ),
-        Container(
-          width: 2.0, // Ancho de la línea
-          height: 29.0, // Altura de la línea vertical
-          color: Colors.black,
-          padding: const EdgeInsets.all(2.0), // Color de la línea
+        Row(
+          children: [
+            Container(
+              width: 11.0,
+            ),
+            Container(
+              width: 2.0,
+              height: 29.0,
+              color: Colors.black,
+              padding: const EdgeInsets.all(2.0),
+            ),
+          ],
         ),
         BoxReserveDetail(
           icon: Icons.trip_origin,

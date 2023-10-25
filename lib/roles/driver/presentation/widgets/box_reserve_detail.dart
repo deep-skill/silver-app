@@ -18,9 +18,9 @@ class BoxReserveDetail extends StatelessWidget {
     return Row(
       children: [
         Icon(
-          icon, // Color azul para el icono
+          icon,
         ),
-        const SizedBox(width: 8.0), // Espacio entre el icono y el label
+        const SizedBox(width: 8.0),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -30,7 +30,7 @@ class BoxReserveDetail extends StatelessWidget {
                 color: Color(0xFF23A5CD),
                 fontFamily: "Monserrat",
                 fontSize: 12,
-                fontWeight: FontWeight.bold, // Color azul para el label
+                fontWeight: FontWeight.bold,
               ),
             ),
             AutoSizeText(text,

@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class TitleReserveDetail extends StatelessWidget {
@@ -11,7 +10,7 @@ class TitleReserveDetail extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        AutoSizeText(
+        Text(
           text,
           style: const TextStyle(
             color: Color(0xFF23A5CD),

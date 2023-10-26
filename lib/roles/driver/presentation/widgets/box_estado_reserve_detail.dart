@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class BoxEstadoReserveDetail extends StatelessWidget {
@@ -23,32 +22,40 @@ class BoxEstadoReserveDetail extends StatelessWidget {
           icon,
         ),
         const SizedBox(width: 8.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AutoSizeText(
-              label,
-              style: const TextStyle(
-                color: Color(0xFF23A5CD),
-                fontFamily: "Monserrat",
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
+        SizedBox(
+          width: MediaQuery.of(context).size.width * .35,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(
+                  color: Color(0xFF23A5CD),
+                  fontFamily: "Monserrat",
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow
+                    .ellipsis, // Muestra "..." cuando el texto se desborda
+                maxLines: 1,
               ),
-            ),
-            AutoSizeText(
-              estado ? textFinal : textPendiente,
-              style: TextStyle(
-                color: estado ? Colors.green : Colors.red,
-                fontFamily: "Monserrat",
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
+              Text(
+                estado ? textFinal : textPendiente,
+                style: TextStyle(
+                  color: estado ? Colors.green : Colors.red,
+                  fontFamily: "Monserrat",
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+                overflow: TextOverflow
+                    .ellipsis, // Muestra "..." cuando el texto se desborda
+                maxLines: 1,
               ),
-              group: AutoSizeGroup(),
-            ),
-            Container(
-              height: 2.0,
-            ),
-          ],
+              Container(
+                height: 2.0,
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -18,15 +18,15 @@ class BoxReservePayment extends StatelessWidget {
                 label,
                 maxLines: 2,
                 style: TextStyle(
-                  fontWeight: FontWeight.w400, // Peso de fuente 400
-                  fontSize: 12, // Tamaño de fuente 12px
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
                 ),
               ),
               Text(
                 text,
                 style: TextStyle(
-                  fontWeight: FontWeight.w700, // Peso de fuente 700
-                  fontSize: 16, // Tamaño de fuente 16px
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16,
                 ),
               ),
             ],
@@ -36,7 +36,6 @@ class BoxReservePayment extends StatelessWidget {
           width: 2.0,
           height: 50.0,
           color: Colors.black,
-          // padding: const EdgeInsets.all(2.0),
         ),
       ],
     );

@@ -10,7 +10,6 @@ class ReserveDetailScreen extends ConsumerStatefulWidget {
   const ReserveDetailScreen({super.key, required this.reserveId});
 
   final String reserveId;
-  // final double silverPayment;
   @override
   ReserveDetailScreenState createState() => ReserveDetailScreenState();
 }
@@ -147,7 +146,7 @@ class ReserveInfo extends StatelessWidget {
                                 label: 'Conductor',
                                 text: reserve.driverName != null
                                     ? '${reserve.driverName} ${reserve.lastName}'
-                                    : '-'), //driverName es == ''
+                                    : '-'),
                             BoxReserveDetail(
                                 icon: Icons.drive_eta_rounded,
                                 label: 'Marca/ modelo/ color',
@@ -164,12 +163,11 @@ class ReserveInfo extends StatelessWidget {
                         child: Stack(
                           children: [
                             Center(
-                              // Posición desde la izquierda
                               child: ClipOval(
                                   child: Image.asset(
                                 'assets/images/driver_img_example.png',
                                 scale: 0.5,
-                              )), // Widget que quieres mostrar en esta posición
+                              )),
                             ),
                             Positioned(
                               bottom: 0,
@@ -177,7 +175,7 @@ class ReserveInfo extends StatelessWidget {
                               child: Image.asset(
                                 'assets/images/vehiculo_home_admin.png',
                                 scale: 0.7,
-                              ), // Puedes usar cualquier widget aquí
+                              ),
                             ),
                           ],
                         ),

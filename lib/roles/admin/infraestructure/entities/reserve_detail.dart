@@ -20,6 +20,7 @@ class ReserveDetail {
   final String? endAddress;
   final String price;
   final String silverPercent;
+  final String? tripStatus;
 
   ReserveDetail(
       {required this.id,
@@ -42,30 +43,33 @@ class ReserveDetail {
       required this.startAddress,
       required this.endAddress,
       required this.price,
-      required this.silverPercent});
+      required this.silverPercent,
+      required this.tripStatus});
 
   factory ReserveDetail.fromJson(Map<String, dynamic> json) => ReserveDetail(
-        id: json['id'],
-        userId: json['User']['id'],
-        enterpriseId: json['Enterprise'] == null ? null : json['Enterprise']['id'],
-        driverId: json['Driver'] == null ? null : json['Driver']['id'],
-        carId: json['Car'] == null ? null : json['Car']['id'],
-        tripType: json['tripType'],
-        serviceType: json['serviceType'],
-        startAddress: json['startAddress'],
-        endAddress: json['endAddress'],
-        price: json['price'].toString(),
-        silverPercent: json['silverPercent'].toString(),
-        startTime: DateTime.parse(json['startTime']),
-        name: json['User']['name'],
-        lastName: json['User']['lastName'],
-        entrepriseName: json['Enterprise'] == null ? 'Viaje personal' : json['Enterprise']['name'],
-        driverName: json['Driver'] == null ? '' : json['Driver']['name'],
-        driverLastName:
-            json['Driver'] == null ? '' : json['Driver']['lastName'],
-        licensePlate: json['Car'] == null ? '' : json['Car']['licensePlate'],
-        brand: json['Car'] == null ? '' : json['Car']['brand'],
-        model: json['Car'] == null ? '' : json['Car']['model'],
-        color: json['Car'] == null ? '' : json['Car']['color'],
-      );
+      id: json['id'],
+      userId: json['User']['id'],
+      enterpriseId:
+          json['Enterprise'] == null ? null : json['Enterprise']['id'],
+      driverId: json['Driver'] == null ? null : json['Driver']['id'],
+      carId: json['Car'] == null ? null : json['Car']['id'],
+      tripType: json['tripType'],
+      serviceType: json['serviceType'],
+      startAddress: json['startAddress'],
+      endAddress: json['endAddress'],
+      price: json['price'].toString(),
+      silverPercent: json['silverPercent'].toString(),
+      startTime: DateTime.parse(json['startTime']),
+      name: json['User']['name'],
+      lastName: json['User']['lastName'],
+      entrepriseName: json['Enterprise'] == null
+          ? 'Viaje personal'
+          : json['Enterprise']['name'],
+      driverName: json['Driver'] == null ? '' : json['Driver']['name'],
+      driverLastName: json['Driver'] == null ? '' : json['Driver']['lastName'],
+      licensePlate: json['Car'] == null ? '' : json['Car']['licensePlate'],
+      brand: json['Car'] == null ? '' : json['Car']['brand'],
+      model: json['Car'] == null ? '' : json['Car']['model'],
+      color: json['Car'] == null ? '' : json['Car']['color'],
+      tripStatus: json['Trip'] == null ? null : json['Trip']['status']);
 }

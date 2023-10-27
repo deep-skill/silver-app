@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/silver_percent.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/box_estado_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_payment.dart';
 
@@ -120,8 +121,11 @@ class ReserveInfo extends StatelessWidget {
                             text: '${reserve.tripType}'),
                       ),
                       Expanded(
-                        child: BoxReserveDetail(label: 'Estado', text: '-'),
-                      ), //falta traer del back el estado de la reserva,la relacion reserva, viaje, cuenta con el estado,solamnete hay que traerlo
+                        child: BoxEstadoReserveDetail(
+                          label: "Estado",
+                          tripStatus: reserve.tripStatus,
+                        ),
+                      ),
                     ],
                   ),
                   BoxReserveDetail(
@@ -150,12 +154,17 @@ class ReserveInfo extends StatelessWidget {
                             BoxReserveDetail(
                                 icon: Icons.drive_eta_rounded,
                                 label: 'Marca/ modelo/ color',
-                                text:
-                                    '${reserve.brand}/ ${reserve.model}/ ${reserve.color}'),
+                                text: (reserve.brand != '' &&
+                                        reserve.model != '' &&
+                                        reserve.color != '')
+                                    ? '${reserve.brand}/ ${reserve.model}/ ${reserve.color}'
+                                    : ' - '),
                             BoxReserveDetail(
                                 icon: Icons.money,
                                 label: 'Placa',
-                                text: '${reserve.licensePlate}'),
+                                text: (reserve.licensePlate != ''
+                                    ? '${reserve.licensePlate}'
+                                    : ' - ')),
                           ],
                         ),
                       ),
@@ -287,7 +296,7 @@ class ReserveInfo extends StatelessWidget {
                             )),
                       )
                     ],
-                  )
+                  ),
                 ],
               ),
             ),

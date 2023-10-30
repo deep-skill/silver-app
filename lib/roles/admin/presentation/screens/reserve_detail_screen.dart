@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/silver_percent.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
@@ -209,10 +212,12 @@ class ReserveInfo extends StatelessWidget {
                     height: 5,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push('/reserves/create');
+                        },
                         style: ButtonStyle(
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -220,11 +225,11 @@ class ReserveInfo extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           )),
                           fixedSize: MaterialStateProperty.all(
-                              Size(size.width * .45, size.height * .06)),
+                              Size(size.width * .4, size.height * .06)),
                           backgroundColor: MaterialStateProperty.all(
                               const Color(0xFF23A5CD)),
                         ),
-                        child: const Text('Editar Información',
+                        child: const Text('Editar',
                             style: TextStyle(
                               color: Colors.white,
                             )),
@@ -290,7 +295,7 @@ class ReserveInfo extends StatelessWidget {
                           backgroundColor:
                               MaterialStateProperty.all(const Color(0xFFFFFF)),
                         ),
-                        child: const Text('Cancelar viaje',
+                        child: const Text('Cancelar',
                             style: TextStyle(
                               color: Colors.black,
                             )),

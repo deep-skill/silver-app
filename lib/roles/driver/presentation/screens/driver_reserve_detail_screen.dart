@@ -153,7 +153,11 @@ class ReserveInfo extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   )),
               Text("conductor",
-                  style: TextStyle(fontFamily: "Raleway", fontSize: 20.0)),
+                  style: TextStyle(
+                    fontFamily: "Raleway",
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  )),
             ],
           )),
           Expanded(

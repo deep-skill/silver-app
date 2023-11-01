@@ -7,6 +7,20 @@ class TripSlide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const months = [
+      'ene',
+      'feb',
+      'mar',
+      'abr',
+      'may',
+      'jun',
+      'jul',
+      'ago',
+      'sep',
+      'oct',
+      'nov',
+      'dec'
+    ];
     final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -33,14 +47,14 @@ class TripSlide extends StatelessWidget {
                   color: Color(0xff031329),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
-                child: trip.driverName != ''
+                child: trip.driverName != '' || trip.driverName != null
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Text(
-                              '${reserve.driverName} ${reserve.driverLastName}',
+                              '${trip.driverName} ${trip.driverLastName}',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -116,7 +130,7 @@ class TripSlide extends StatelessWidget {
                         size: 20,
                       ),
                       Text(
-                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
+                        ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
                         style: const TextStyle(
                           fontSize: 16,
                         ),
@@ -124,24 +138,25 @@ class TripSlide extends StatelessWidget {
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Icon(
-                        Icons.timeline,
-                        size: 20,
-                      ),
+                      const Text('Tarifa Total'),
                       Text(
-                        ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
+                        'S/ ${trip.totalPrice}',
                         style: const TextStyle(
                           fontSize: 16,
                         ),
                       ),
                     ],
                   ),
+                  Row(
+                    children: [Text(trip.status)],
+                  )
                 ],
               ),
             ),
             GestureDetector(
-              onTap: () => context.push('/admin/reserves/detail/${reserve.id}'),
+              // onTap: () => context.push('/admin/reserves/detail/${reserve.id}'),
               child: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 30,

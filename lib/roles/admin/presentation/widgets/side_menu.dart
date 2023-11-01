@@ -147,7 +147,7 @@ const appMenuItems = <MenuItem>[
   ),
   MenuItem(
     title: 'Historial de viajes',
-    link: '/trips',
+    link: '/admin/trips',
     icon: Icons.emoji_transportation_rounded,
   ),
   MenuItem(

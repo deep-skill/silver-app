@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
+
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
+
+import 'package:silverapp/roles/admin/presentation/widgets/trip_slide.dart';
 
 class TripsList extends StatefulWidget {
   const TripsList({super.key, required this.trips, required this.loadNextPage});
@@ -44,7 +45,7 @@ class _TripsListState extends State<TripsList> {
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (contex, index) {
-          return Slide(reserve: widget.trips[index]);
+          return TripSlide(trip: widget.trips[index]);
         },
       ),
     );

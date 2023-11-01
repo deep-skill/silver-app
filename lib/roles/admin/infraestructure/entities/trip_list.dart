@@ -48,7 +48,7 @@ class TripList {
         userLastname: json['Reserve']['User']['lastName'],
         //from driver
         driverId: json['Reserve']['Driver'] == null
-            ? 'no-driver'
+            ? null
             : json['Reserve']['Driver']['id'],
         driverName: json['Reserve']['Driver'] == null
             ? 'no-driver-name'

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/delegates/search_trip_list_delegate.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/trip_list.dart';
 
 class TripsListScreen extends StatelessWidget {
   const TripsListScreen({super.key});
@@ -11,11 +12,12 @@ class TripsListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Historial de viajes'),
-          scrolledUnderElevation: 0,
-        ),
-        body: const TripListView());
+      appBar: AppBar(
+        title: const Text('Historial de viajes'),
+        scrolledUnderElevation: 0,
+      ),
+      body: const TripListView(),
+    );
   }
 }
 
@@ -30,8 +32,9 @@ class TripListViewState extends ConsumerState<TripListView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(tripsListProvider.notifier).currentPage == 0)
+    if (ref.read(tripsListProvider.notifier).currentPage == 0) {
       ref.read(tripsListProvider.notifier).loadNextPage();
+    }
   }
 
   @override
@@ -104,10 +107,10 @@ class TripListViewState extends ConsumerState<TripListView> {
             //       )),
             // ),
             const SizedBox(height: 15),
-            ReservesList(
-              reserves: reserves,
+            TripsList(
+              trips: trips,
               loadNextPage: () {
-                ref.read(reservesListProvider.notifier).loadNextPage();
+                ref.read(tripsListProvider.notifier).loadNextPage();
               },
             ),
           ],

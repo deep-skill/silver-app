@@ -158,8 +158,11 @@ class DriverCustomSlide extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () =>
-                  context.push('/driver/reserves/detail/${reserve.id}'),
+              onTap: () {
+                reserve.tripId != null
+                ? context.push('/driver/trips/on-trip/${reserve.tripId}')
+                : context.push('/driver/reserves/detail/${reserve.id}');
+              },
               child: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 30,

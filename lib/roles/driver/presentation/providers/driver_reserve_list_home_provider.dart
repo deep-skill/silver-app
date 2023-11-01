@@ -14,6 +14,11 @@ final driverReservesHomeProvider =
     StateNotifierProvider<ReservesNotifier, List<DriverReserveHome>>((ref) {
   Future<List<DriverReserveHome>> getReserves({int page = 0}) async {
     final driverInfo = await ref.watch(driverInfoProvider.future);
+    if(driverInfo?.id == null) {
+      return _jsonToReserves({
+        "count": 0,
+        "rows": []
+        });}
     final response = await dio.get('reserves/driver-home', queryParameters: {
       'id': driverInfo!.id,
       'page': page,

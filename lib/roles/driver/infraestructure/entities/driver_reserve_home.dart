@@ -14,7 +14,7 @@ class DriverReserveHome {
   });
   factory DriverReserveHome.fromJson(Map<String, dynamic> json) => DriverReserveHome(
         id: json['id'],
-        startTime: DateTime.parse(json['startTime']),
+        startTime: DateTime.parse(json['startTime']).toLocal(),
         name: json['User']['name'],
         lastName: json['User']['lastName'],
         entrepriseName: json['Enterprise'] == null ? 'Viaje personal' : json['Enterprise']['name'],

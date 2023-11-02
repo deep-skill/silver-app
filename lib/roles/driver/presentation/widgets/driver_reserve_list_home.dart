@@ -38,7 +38,10 @@ class _DriverReservesListHomeState extends State<DriverReservesListHome> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
+      child: 
+      widget.reserves.isEmpty
+      ? const Text('No hay reservas del día')
+      : ListView.builder(
         controller: scrollController,
         itemCount: widget.reserves.length,
         scrollDirection: Axis.vertical,
@@ -158,7 +161,7 @@ class _Slide extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              onTap: () => context.push('/admin/reserves/detail/${reserve.id}'),
+              onTap: () => context.push('/driver/reserves/detail/${reserve.id}'),
               child: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 30,

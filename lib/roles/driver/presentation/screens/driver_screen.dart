@@ -6,6 +6,7 @@ import 'package:silverapp/roles/driver/presentation/providers/driver_info_provid
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_home_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
+import 'package:silverapp/roles/driver/presentation/screens/driver_screen_on_the_way.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/custom_driver_name.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_reserve_list_home.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_side_menu.dart';
@@ -46,7 +47,8 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(driverReservesHomeProvider.notifier).currentPage == 0) ref.read(driverReservesHomeProvider.notifier).loadNextPage();
+    if (ref.read(driverReservesHomeProvider.notifier).currentPage == 0)
+      ref.read(driverReservesHomeProvider.notifier).loadNextPage();
   }
 
   @override
@@ -72,6 +74,7 @@ class HomeViewState extends ConsumerState<HomeView> {
     final date = DateTime.now();
     final reserves = ref.watch(driverReservesHomeProvider);
     Future createTrip(id) async {
+       driver_reserve_detail
         await dio.post('/trips', data: {
           "reserve_id": id,
           "on_way_driver":
@@ -84,8 +87,9 @@ class HomeViewState extends ConsumerState<HomeView> {
         ref.invalidate(driverInfoProvider);
         return ref.read(driverReservesHomeProvider.notifier).reloadData();
       },
-      child: Stack(
-        children: <Widget> [ListView(), Padding(
+      child: Stack(children: <Widget>[
+        ListView(),
+        Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
             children: [
@@ -190,14 +194,16 @@ class HomeViewState extends ConsumerState<HomeView> {
                                                     MaterialStateProperty.all<
                                                         Color>(Colors.white),
                                                 backgroundColor:
+                                                    MaterialStateProperty
+                                                        .all<Color>(const Color(
+                                                            0xff23A5CD)),
+                                                shape:
                                                     MaterialStateProperty.all<
-                                                            Color>(
-                                                        const Color(0xff23A5CD)),
-                                                shape: MaterialStateProperty.all<
-                                                    RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder>(
                                                   RoundedRectangleBorder(
                                                     borderRadius:
-                                                        BorderRadius.circular(10),
+                                                        BorderRadius.circular(
+                                                            10),
                                                   ),
                                                 ),
                                               ),
@@ -206,7 +212,12 @@ class HomeViewState extends ConsumerState<HomeView> {
                                                 createTrip(nearestReserve.id);
                                                 ref.invalidate(
                                                     driverInfoProvider);
-                                                context.pop();
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const ScreenOnTheWay()),
+                                                );
                                               },
                                             ),
                                             TextButton(
@@ -274,8 +285,8 @@ class HomeViewState extends ConsumerState<HomeView> {
               ),
             ],
           ),
-        )]
-      ),
+        )
+      ]),
     );
   }
 }

@@ -20,7 +20,7 @@ class DriverReserveList {
       DriverReserveList(
         id: json['id'],
         startAddress: json['startAddress'],
-        startTime: DateTime.parse(json['startTime']),
+        startTime: DateTime.parse(json['startTime']).toLocal(),
         name: json['User'] == null ? '' : json['User']['name'],
         lastName: json['User']['lastName'],
         entrepriseName: json['Enterprise'] == null

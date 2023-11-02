@@ -8,8 +8,8 @@ import 'package:silverapp/roles/driver/presentation/widgets/box_trip_status.dart
 import 'package:silverapp/roles/driver/presentation/widgets/box_trip_status_text.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/title_reserve.dart';
 
-class ScreenOnTheWay extends StatelessWidget {
-  const ScreenOnTheWay({super.key});
+class DriverOnTrip extends StatelessWidget {
+  const DriverOnTrip({super.key});
 
   @override
   Widget build(BuildContext context) {

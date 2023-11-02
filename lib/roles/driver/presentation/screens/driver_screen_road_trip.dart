@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/driver/presentation/screens/driver_screen_on_the_way.dart';
+import 'package:silverapp/roles/driver/presentation/screens/drive_on_trip_screen.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_see_map_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_trip_status.dart';
@@ -64,7 +64,7 @@ class RoadTrip extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ScreenOnTheWay()),
+              MaterialPageRoute(builder: (context) => const DriverOnTrip()),
             );
           },
           style: ButtonStyle(

@@ -14,6 +14,31 @@ class BoxStateReserveDetail extends StatelessWidget {
     required this.estado,
   });
 
+/*   values: ['COMPLETED', 'CANCELED', 'INPROGRESS'],
+      defaultValue: 'INPROGRESS' */
+
+  String getState(String estado) {
+    switch (estado) {
+      case 'COMPLETED':
+        return 'Finalizado';
+      case 'CANCELED':
+        return 'Cancelado';
+      default:
+        return 'En progreso';
+    }
+  }
+
+  Object getColor(String estado) {
+    switch (estado) {
+      case 'COMPLETED':
+        return Colors.green;
+      case 'CANCELED':
+        return Colors.red;
+      default:
+        return Colors.cyan;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -40,7 +65,7 @@ class BoxStateReserveDetail extends StatelessWidget {
                 maxLines: 1,
               ),
               Text(
-                estado ? textFinal : textPendiente,
+                getState(estado.toString()),
                 style: TextStyle(
                   color: estado ? Colors.green : Colors.red,
                   fontFamily: "Monserrat",

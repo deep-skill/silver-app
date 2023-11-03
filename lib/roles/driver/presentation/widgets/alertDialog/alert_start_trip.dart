@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class AlertTripStart extends StatefulWidget {
   const AlertTripStart({super.key});
 
@@ -26,7 +27,9 @@ class _AlertTripStartState extends State<AlertTripStart> {
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFF23A5CD),
                 ),
+
                 onPressed: () {},
+
                 child: const Text(
                   "Confirmar",
                   style: TextStyle(

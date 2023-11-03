@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/side_menu.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_home_provider.dart';
@@ -10,6 +9,7 @@ import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driv
 import 'package:silverapp/roles/driver/presentation/screens/driver_screen_on_the_way.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/custom_driver_name.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_reserve_list_home.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_side_menu.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/trips_summary_driver_view.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_custom_slide.dart';
 
@@ -26,7 +26,7 @@ class DriverScreen extends ConsumerWidget {
       appBar: AppBar(
         scrolledUnderElevation: 0,
       ),
-      drawer: SideMenu(
+      drawer: DriverSideMenu(
         scaffoldKey: scaffoldKey,
       ),
       body: const HomeView(),
@@ -74,12 +74,14 @@ class HomeViewState extends ConsumerState<HomeView> {
     final date = DateTime.now();
     final reserves = ref.watch(driverReservesHomeProvider);
     Future createTrip(id) async {
-      await dio.post('/trips', data: {
-        "reserve_id": id,
-        "on_way_driver":
-            date.subtract(const Duration(hours: 3)).toIso8601String()
-      });
-    }
+
+        await dio.post('/trips', data: {
+          "reserve_id": id,
+          "on_way_driver":
+              date.toIso8601String()
+        });
+    } 
+
 
     return RefreshIndicator(
       onRefresh: () {
@@ -171,8 +173,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                               child: TextButton(
                                 onPressed: () async {
                                   if (nearestReserve.startTime
-                                              .difference(date.subtract(
-                                                  const Duration(hours: 3)))
+                                              .difference(date)
                                               .inHours <
                                           2 &&
                                       nearestReserve.tripId == null) {
@@ -246,8 +247,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                                   fixedSize: MaterialStateProperty.all(
                                       Size(size.width * .8, size.height * .06)),
                                   backgroundColor: nearestReserve.startTime
-                                                  .difference(date.subtract(
-                                                      const Duration(hours: 3)))
+                                                  .difference(date)
                                                   .inHours <
                                               2 &&
                                           nearestReserve.tripId == null

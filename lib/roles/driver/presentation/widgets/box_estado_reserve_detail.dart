@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class BoxEstadoReserveDetail extends StatelessWidget {
   final IconData icon;
   final String label;
+
   final String estado;
+
 
   const BoxEstadoReserveDetail({
     super.key,
@@ -11,6 +13,7 @@ class BoxEstadoReserveDetail extends StatelessWidget {
     required this.label,
     required this.estado,
   });
+
 
   Color color() {
     switch (estado) {
@@ -33,6 +36,7 @@ class BoxEstadoReserveDetail extends StatelessWidget {
         return 'En progreso';
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +64,11 @@ class BoxEstadoReserveDetail extends StatelessWidget {
                 maxLines: 1,
               ),
               Text(
+
                 textState(),
                 style: TextStyle(
                   color: color(),
+
                   fontFamily: "Monserrat",
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

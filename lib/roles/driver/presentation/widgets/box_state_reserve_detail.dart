@@ -14,6 +14,7 @@ class BoxStateReserveDetail extends StatelessWidget {
     required this.estado,
   });
 
+
 /*   values: ['COMPLETED', 'CANCELED', 'INPROGRESS'],
       defaultValue: 'INPROGRESS' */
 
@@ -38,6 +39,7 @@ class BoxStateReserveDetail extends StatelessWidget {
         return Colors.cyan;
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,9 @@ class BoxStateReserveDetail extends StatelessWidget {
                 maxLines: 1,
               ),
               Text(
+
                 getState(estado.toString()),
+
                 style: TextStyle(
                   color: estado ? Colors.green : Colors.red,
                   fontFamily: "Monserrat",

@@ -111,7 +111,9 @@ class ReserveInfo extends StatelessWidget {
             child: BoxEstadoReserveDetail(
               icon: Icons.cached,
               label: "Estado",
+
               estado: "COMPLETED",
+
             ),
           )
         ]),

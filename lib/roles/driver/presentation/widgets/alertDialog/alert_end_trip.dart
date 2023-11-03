@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/driver/presentation/screens/driver_screen_trip_end.dart';
+
+
 
 class AlertTripEnd extends StatefulWidget {
   const AlertTripEnd({super.key});
@@ -27,13 +28,9 @@ class _AlertTripEndState extends State<AlertTripEnd> {
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFF23A5CD),
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ScreemTripEnd()),
-                  );
-                },
+
+                onPressed: () {},
+
                 child: const Text(
                   "Confirmar",
                   style: TextStyle(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/driver/presentation/screens/driver_screen_trip_started.dart';
+
 
 class AlertTripStart extends StatefulWidget {
   const AlertTripStart({super.key});
@@ -27,13 +27,9 @@ class _AlertTripStartState extends State<AlertTripStart> {
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFF23A5CD),
                 ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ScreenTripStarted()),
-                  );
-                },
+
+                onPressed: () {},
+
                 child: const Text(
                   "Confirmar",
                   style: TextStyle(

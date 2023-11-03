@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class BoxEstadoReserveDetail extends StatelessWidget {
   final IconData icon;
   final String label;
-  final bool estado;
-  final String textFinal = "Finalizado";
-  final String textPendiente = "Pendiente";
+
+  final String estado;
+
 
   const BoxEstadoReserveDetail({
     super.key,
@@ -13,6 +13,30 @@ class BoxEstadoReserveDetail extends StatelessWidget {
     required this.label,
     required this.estado,
   });
+
+
+  Color color() {
+    switch (estado) {
+      case 'COMPLETED':
+        return const Color(0xFF2FCF5C);
+      case 'CANCELED':
+        return const Color(0xFFFD3B3B);
+      default:
+        return const Color(0xFF23A5CD);
+    }
+  }
+
+  String textState() {
+    switch (estado) {
+      case 'COMPLETED':
+        return 'Finalizado';
+      case 'CANCELED':
+        return 'Cancelado';
+      default:
+        return 'En progreso';
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +64,11 @@ class BoxEstadoReserveDetail extends StatelessWidget {
                 maxLines: 1,
               ),
               Text(
-                estado ? textFinal : textPendiente,
+
+                textState(),
                 style: TextStyle(
-                  color: estado ? Colors.green : Colors.red,
+                  color: color(),
+
                   fontFamily: "Monserrat",
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

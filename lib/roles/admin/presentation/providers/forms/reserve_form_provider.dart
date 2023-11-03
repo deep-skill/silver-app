@@ -83,7 +83,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "service_type": state.serviceType.value == 'Empresarial'
           ? 'ENTERPRISE'
           : state.serviceType.value.toUpperCase(),
-      "start_time": '${state.startDate.value}T${state.startTime.value}:00Z',
+      "start_time": '${state.startDate.value}T${state.startTime.value}:00-05:00',
       "start_address": state.startAddress.value,
       "end_address":
           state.endAddress?.value == 'Seleccione el punto de destino' ||

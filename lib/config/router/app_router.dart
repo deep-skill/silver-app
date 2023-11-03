@@ -8,6 +8,7 @@ import 'package:silverapp/roles/admin/presentation/screens/create_reserve_screen
 import 'package:silverapp/roles/admin/presentation/screens/reserve_detail_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/reserve_list_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_on_trip_screen.dart';
+import 'package:silverapp/roles/admin/presentation/screens/trips_list_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_detail_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/trip_list_screen.dart';
@@ -49,6 +50,10 @@ final goRouterProvider = Provider((ref) {
                     },
                   ),
                 ]),
+            GoRoute(
+              path: 'trips',
+              builder: (context, state) => const TripsListScreen(),
+            ),
           ],
         ),
         GoRoute(

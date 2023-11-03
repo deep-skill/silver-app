@@ -33,25 +33,27 @@ class AdminHomeWebView extends StatelessWidget {
         return ref.read(reservesHomeProvider.notifier).reloadData();
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 150),
+        padding: const EdgeInsets.symmetric(horizontal: 250),
         child: Column(
           children: [
             // SizedBox(
-            //     width: size.width * .9,
-            //     child: Text(months[date],
-            //         textAlign: TextAlign.start,
-            //         style: const TextStyle(
-            //             fontSize: 21, fontWeight: FontWeight.bold))),
+            // width: size.width * .9,
+            // child: Text(months[date],
+            // textAlign: TextAlign.start,
+            // style: const TextStyle(
+            // fontSize: 21, fontWeight: FontWeight.bold))),
             TripsSummaryViewWeb(
               size: size,
               tripsSummary: tripsSummary,
+              months: months,
+              date: date,
             ),
             const SizedBox(
               height: 15,
             ),
             Container(
               width: size.width * .8,
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.all(15),
               alignment: Alignment.centerLeft,
               child: const Text('Reservas por asignar',
                   style: TextStyle(
@@ -59,7 +61,6 @@ class AdminHomeWebView extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   )),
             ),
-
             ReservesListHomeWeb(
               reserves: reserves,
               loadNextPage: () {

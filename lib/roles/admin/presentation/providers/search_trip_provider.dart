@@ -19,7 +19,7 @@ final searchedTripsProvider =
     StateNotifierProvider<SearchedTripsNotifier, List<TripList>>((ref) {
   Future<List<TripList>> searchTrip(query) async {
     if (query.isEmpty) return [];
-    final response = await dio.get('/trips/search/', queryParameters: {
+    final response = await dio.get('/trips/trip-search/', queryParameters: {
       'query': query,
     });
     return _jsonToTrip(response.data);

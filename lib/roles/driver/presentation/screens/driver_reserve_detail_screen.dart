@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_detail.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_id_detail.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_detail_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_estado_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_reserve_detail.dart';
@@ -28,23 +28,27 @@ class ReserveDetailScreenState
   @override
   Widget build(BuildContext context) {
     final reserves = ref.watch(driverReserveDetailProvider);
-    final DriverReserveDetail? reserve = reserves[widget.reserveId];
+    final DriverReserveById? reserve = reserves[widget.reserveId];
     if (reserve == null) {
-      return const Scaffold(
-          backgroundColor: Colors.grey,
-          body: Center(
+      return Scaffold(
+          backgroundColor: Colors.grey[200],
+          body: const Center(
             child: CircularProgressIndicator(),
           ));
     }
 
     return Scaffold(
-        appBar: AppBar(title: const Text('Detalles')),
+        appBar: AppBar(
+            title: const Text(
+          'Detalles',
+          textAlign: TextAlign.center,
+        )),
         body: Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.all(7.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: const Color.fromARGB(255, 231, 230, 230),
+              color: Colors.grey[200],
             ),
             padding: const EdgeInsets.all(3),
             child: ReserveInfo(reserve: reserve)));
@@ -56,7 +60,7 @@ class ReserveInfo extends StatelessWidget {
     super.key,
     required this.reserve,
   });
-  final DriverReserveDetail reserve;
+  final DriverReserveById reserve;
 
   @override
   Widget build(BuildContext context) {
@@ -67,17 +71,17 @@ class ReserveInfo extends StatelessWidget {
         BoxReserveDetail(
             icon: Icons.hail,
             label: "Pasajero",
-            text: "${reserve.name.toString()} ${reserve.lastName.toString()}",
+            text: reserve.user,
             row: false),
         BoxReserveDetail(
             icon: Icons.domain,
             label: "Empresa",
-            text: reserve.entrepriseName.toString(),
+            text: reserve.enterprise,
             row: false),
         BoxReserveDetail(
             icon: Icons.business_center_outlined,
             label: "Tipo de servicio",
-            text: reserve.serviceType.toString(),
+            text: reserve.serviceType,
             row: false),
         const TitleReserveDetail(text: "Datos del viaje"),
         Row(
@@ -107,20 +111,18 @@ class ReserveInfo extends StatelessWidget {
                 text: reserve.tripType,
                 row: true),
           ),
-          const Expanded(
+          Expanded(
             child: BoxEstadoReserveDetail(
               icon: Icons.cached,
               label: "Estado",
-
-              estado: "COMPLETED",
-
+              estado: reserve.status,
             ),
           )
         ]),
         BoxReserveDetail(
             icon: Icons.location_on_outlined,
             label: "Punto de origen",
-            text: reserve.startAddress.toString(),
+            text: reserve.startAddress,
             row: false),
         Row(
           children: [
@@ -138,7 +140,7 @@ class ReserveInfo extends StatelessWidget {
         BoxReserveDetail(
             icon: Icons.trip_origin,
             label: "Punto de destino",
-            text: reserve.endAddress.toString(),
+            text: reserve.endAddress,
             row: false),
         Container(
           height: 10.0,
@@ -163,7 +165,7 @@ class ReserveInfo extends StatelessWidget {
             ],
           )),
           Expanded(
-              child: Text("S/  ${reserve.price.toString()}",
+              child: Text("S/  ${reserve.price}",
                   style: const TextStyle(
                     fontFamily: "Raleway",
                     fontSize: 32.0,

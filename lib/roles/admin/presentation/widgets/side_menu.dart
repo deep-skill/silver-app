@@ -141,13 +141,6 @@ class SideMenuState extends ConsumerState<SideMenu> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          widget.scaffoldKey.currentState?.closeDrawer();
-                        },
-                        icon: const Icon(Icons.close),
-                        color: Colors.white,
-                      ),
                       SizedBox(
                           child: Image.asset(
                         "assets/images/app_logo.png",
@@ -167,6 +160,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                     ],
                   ),
                 ),
+                const SizedBox(height: 35),
                 ...appMenuItems.map(
                   (item) => NavigationDrawerDestination(
                     icon: Icon(item.icon, color: Colors.white),
@@ -174,6 +168,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                         style: const TextStyle(color: Colors.white)),
                   ),
                 ),
+                const SizedBox(height: 250),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
                   child: Divider(),
@@ -234,28 +229,8 @@ const appMenuItems = <MenuItem>[
     icon: Icons.calendar_month,
   ),
   MenuItem(
-    title: 'Mi cuenta',
-    link: '/cuenta',
-    icon: Icons.person_outline,
-  ),
-  MenuItem(
     title: 'Historial de viajes',
     link: '/admin/trips',
     icon: Icons.emoji_transportation_rounded,
-  ),
-  MenuItem(
-    title: 'Notificaciones',
-    link: '/notificaciones',
-    icon: Icons.notifications_none_rounded,
-  ),
-  MenuItem(
-    title: 'Ayuda y soporte',
-    link: '/ayuda',
-    icon: Icons.help_outline_rounded,
-  ),
-  MenuItem(
-    title: 'Libro de reclamaciones',
-    link: '/reclamaciones',
-    icon: Icons.menu_book_rounded,
-  ),
+  )
 ];

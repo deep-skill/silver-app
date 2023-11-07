@@ -9,7 +9,7 @@ class AppTheme {
         ///* General
         useMaterial3: true,
         colorSchemeSeed: colorSeed,
-        fontFamily: 'Raleway',
+        fontFamily: 'Raleway-Bold',
 
         ///* Texts
 /*     textTheme: TextTheme(

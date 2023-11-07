@@ -4,12 +4,15 @@ import 'package:go_router/go_router.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 import 'package:silverapp/position/determine_position_helper.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/search_car.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/search_driver.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/search_passenger.dart';
+import 'package:silverapp/roles/admin/presentation/delegates/search_car_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/delegates/search_driver_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/delegates/search_passenger_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/providers/forms/reserve_form_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_create_update_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/search_car_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/custom_form_field.dart';
@@ -476,7 +479,7 @@ class CreateReserveView extends ConsumerWidget {
                   ),
                 ],
               ),
-            const Text('Datos del conductor',
+            const Text('Datos del conductor y vehículo',
                 style: TextStyle(color: cyanColor)),
             const Divider(color: cyanColor),
             const SizedBox(height: 10),
@@ -512,7 +515,6 @@ class CreateReserveView extends ConsumerWidget {
                         final changeCallback = ref
                             .read(reserveFormProvider(reserve).notifier)
                             .onDriverIdChanged;
-
                         showSearch<SearchDriver?>(
                                 query: searchQuery,
                                 context: context,
@@ -521,7 +523,58 @@ class CreateReserveView extends ConsumerWidget {
                                     initialDrivers: searchedDrivers,
                                     searchDrivers: ref
                                         .read(searchedDriversProvider.notifier)
-                                        .searchMoviesByQuery))
+                                        .searchDriversByQuery))
+                            .then((driver) {});
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ]),
+            const SizedBox(height: 10),
+            Stack(children: [
+              const CustomFormField(
+                readOnly: true,
+                label: 'Vehículo (Marca, Modelo, Color, Placa)',
+                isTopField: true,
+                isBottomField: true,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    const Icon(Icons.local_taxi_outlined),
+                    TextButton(
+                      style: ButtonStyle(
+                          overlayColor:
+                              MaterialStateProperty.all(Colors.transparent),
+                          shadowColor:
+                              MaterialStateProperty.all(Colors.transparent)),
+                      child: Text(
+                          '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
+                          style: reserveForm.brand == 'Ejem. Toyota'
+                              ? const TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                  color: Colors.grey, fontSize: 16)
+                              : const TextStyle(
+                                  color: Colors.black, fontSize: 16)),
+                      onPressed: () {
+                        final searchedCars =
+                            ref.read(searchedCarsProvider);
+                        final searchQuery = ref.read(searchCarsProvider);
+                        final changeCallback = ref
+                            .read(reserveFormProvider(reserve).notifier)
+                            .onCarIdChanged;
+
+                        showSearch<SearchCar?>(
+                                query: searchQuery,
+                                context: context,
+                                delegate: SearchCarDelegate(
+                                    callback: changeCallback,
+                                    initialCars: searchedCars,
+                                    searchCars: ref
+                                        .read(searchedCarsProvider.notifier)
+                                        .searchCarsByQuery))
                             .then((driver) {});
                       },
                     ),

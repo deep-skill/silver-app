@@ -1,29 +1,29 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/admin/infraestructure/entities/search_driver.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/search_car.dart';
 
-typedef SearchDriversCallback = Future<List<SearchDriver>> Function(
+typedef SearchCarsCallback = Future<List<SearchCar>> Function(
     String query);
 
-class SearchDriverDelegate extends SearchDelegate<SearchDriver?> {
-  final SearchDriversCallback searchDrivers;
+class SearchCarDelegate extends SearchDelegate<SearchCar?> {
+  final SearchCarsCallback searchCars;
   final Function callback;
-  List<SearchDriver> initialDrivers;
-  StreamController<List<SearchDriver>> debouncedDrivers =
+  List<SearchCar> initialCars;
+  StreamController<List<SearchCar>> debouncedCars =
       StreamController.broadcast();
   StreamController<bool> isLoadingStream = StreamController.broadcast();
   //Timeout
   Timer? _debouceTimer;
 
-  SearchDriverDelegate(
-      {required this.searchDrivers,
-      required this.initialDrivers,
+  SearchCarDelegate(
+      {required this.searchCars,
+      required this.initialCars,
       required this.callback});
 
   void clearStreams() {
     _debouceTimer!.cancel();
-    debouncedDrivers.close();
+    debouncedCars.close();
   }
 
   void _onQueryChanged(String query) {
@@ -31,30 +31,30 @@ class SearchDriverDelegate extends SearchDelegate<SearchDriver?> {
 
     if (_debouceTimer?.isActive ?? false) _debouceTimer!.cancel();
     _debouceTimer = Timer(const Duration(milliseconds: 800), () async {
-      final drivers = await searchDrivers(query);
-      initialDrivers = drivers;
-      if (debouncedDrivers.isClosed) return;
-      debouncedDrivers.add(drivers);
+      final cars = await searchCars(query);
+      initialCars = cars;
+      if (debouncedCars.isClosed) return;
+      debouncedCars.add(cars);
       isLoadingStream.add(false);
     });
   }
 
   Widget buildResultsAndSuggestions() {
     return StreamBuilder(
-      initialData: initialDrivers,
-      stream: debouncedDrivers.stream,
+      initialData: initialCars,
+      stream: debouncedCars.stream,
       builder: (context, snapshot) {
-        final drivers = snapshot.data ?? [];
+        final cars = snapshot.data ?? [];
         return ListView.builder(
-          itemCount: drivers.length,
+          itemCount: cars.length,
           itemBuilder: (context, index) {
-            final driver = drivers[index];
-            return _DriverItem(
+            final car = cars[index];
+            return _CarItem(
               callback: callback,
-              driver: driver,
-              onDriverSelected: (context, driver) {
+              car: car,
+              onCarSelected: (context, car) {
                 clearStreams();
-                close(context, driver);
+                close(context, car);
               },
             );
           },
@@ -103,7 +103,7 @@ class SearchDriverDelegate extends SearchDelegate<SearchDriver?> {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
       onPressed: () {
-        callback(0, 'Ejem. Luis', 'Perez');
+        callback(0, 'Ejem. Toyota', 'Corolla', 'Gris', 'A1R610');
         clearStreams();
         close(context, null);
       },
@@ -123,24 +123,24 @@ class SearchDriverDelegate extends SearchDelegate<SearchDriver?> {
   }
 }
 
-class _DriverItem extends StatelessWidget {
-  const _DriverItem(
-      {required this.driver,
-      required this.onDriverSelected,
+class _CarItem extends StatelessWidget {
+  const _CarItem(
+      {required this.car,
+      required this.onCarSelected,
       required this.callback});
-  final SearchDriver driver;
-  final Function onDriverSelected;
+  final SearchCar car;
+  final Function onCarSelected;
   final Function callback;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onDriverSelected(context, driver);
-        callback(driver.id, driver.name, driver.lastName, driver.carId, driver.brand, driver.model, driver.color, driver.licensePlate);
+        onCarSelected(context, car);
+        callback(car.id, car.brand, car.model, car.color, car.licensePlate,);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Text('${driver.name} ${driver.lastName}'),
+        child: Text('${car.licensePlate} ${car.brand} ${car.model} ${car.color}'),
       ),
     );
   }

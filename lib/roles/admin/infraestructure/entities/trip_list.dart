@@ -9,7 +9,7 @@ class TripList {
   //from user
   final int userId;
   final String userName;
-  final String userLastname;
+  final String userLastName;
   //from driver
   final int? driverId;
   final String? driverName;
@@ -27,7 +27,7 @@ class TripList {
     required this.startAddress,
     required this.userId,
     required this.userName,
-    required this.userLastname,
+    required this.userLastName,
     this.driverId,
     this.driverName,
     this.driverLastName,
@@ -45,7 +45,7 @@ class TripList {
         //from user
         userId: json['Reserve']['User']['id'],
         userName: json['Reserve']['User']['name'],
-        userLastname: json['Reserve']['User']['lastName'],
+        userLastName: json['Reserve']['User']['lastName'],
         //from driver
         driverId: json['Reserve']['Driver'] == null
             ? null

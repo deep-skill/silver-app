@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/trip_slide.dart';
 
 typedef SearchTripsCallback = Future<List<TripList>> Function(String query);
 
@@ -137,7 +138,7 @@ class _TripItem extends StatelessWidget {
         //falta hacer endpoint de single trip
         // context.push('/admin/reserves/detail/${trip.id}');
       },
-      // child: Slide(trip: trip),
+       child: TripSlide(trip: trip),
     );
   }
 }

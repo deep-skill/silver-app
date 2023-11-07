@@ -26,22 +26,22 @@ class TripSlide extends StatelessWidget {
     if (trip.status == "INPROGRESS") {
       tripStatus = const Text(
         'En progreso',
-        style: TextStyle(color: Colors.blue, fontSize: 17),
+        style: TextStyle(color: Colors.blue, fontSize: 13),
       );
     } else if (trip.status == "CANCELED") {
       tripStatus = const Text(
         'Cancelado',
-        style: TextStyle(color: Colors.red, fontSize: 17),
+        style: TextStyle(color: Colors.red, fontSize: 13),
       );
     } else if (trip.status == "COMPLETED") {
       tripStatus = const Text(
         'Finalizado',
-        style: TextStyle(color: Colors.green, fontSize: 17),
+        style: TextStyle(color: Colors.green, fontSize: 13),
       );
     } else {
       tripStatus = const Text(
         'no info status',
-        style: TextStyle(color: Colors.red, fontSize: 17),
+        style: TextStyle(color: Colors.red, fontSize: 13),
       );
     }
     return Padding(
@@ -60,14 +60,16 @@ class TripSlide extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
                 width: 130,
                 // height: 110,
                 decoration: const BoxDecoration(
                   color: Color(0xff031329),
-                  borderRadius: BorderRadius.all(Radius.circular(0)),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      topLeft: Radius.circular(8)),
                 ),
                 child: trip.driverName != '' || trip.driverName != null
                     ? Column(
@@ -80,7 +82,7 @@ class TripSlide extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 15,
+                                fontSize: 10,
                                 fontWeight: FontWeight.w700,
                                 color: Colors.white,
                               ),
@@ -123,9 +125,11 @@ class TripSlide extends StatelessWidget {
                           fontWeight: FontWeight.w700,
                           color: Colors.white,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ))),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -137,31 +141,35 @@ class TripSlide extends StatelessWidget {
                         size: 20,
                       ),
                       Text(
-                        '${trip.userName} ${trip.userLastname}',
+                        '${trip.userName} ${trip.userLastName}',
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
                   SizedBox(
-                    width: size.width * .5,
+                    width: size.width * .4,
                     child: Row(
                       children: [
                         const Icon(
                           Icons.account_balance_outlined,
                           size: 20,
                         ),
-                        Text(
-                          trip.enterpriseName != null
-                              ? ' ${trip.enterpriseName}'
-                              : 'No enterprise name',
-                          style: const TextStyle(
-                            fontSize: 14,
+                        Expanded(
+                          child: Text(
+                            trip.enterpriseName != null
+                                ? ' ${trip.enterpriseName}'
+                                : 'No enterprise name',
+                            style: const TextStyle(
+                              fontSize: 14,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -175,21 +183,22 @@ class TripSlide extends StatelessWidget {
                       Text(
                         ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                         ),
                       ),
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       const Text('Tarifa Total'),
                       SizedBox(
-                        width: 100,
+                        width: size.width * .06,
                       ),
                       Text(
                         'S/ \$${trip.totalPrice}',
                         style: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                         ),
                       ),
                     ],

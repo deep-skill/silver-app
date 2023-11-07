@@ -146,17 +146,19 @@ class SideMenuState extends ConsumerState<SideMenu> {
                         "assets/images/app_logo.png",
                         width: size.width * .15,
                       )),
+                      const SizedBox(height: 10),
                       const Text('Silver Express',
                           style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 26,
+                            // fontWeight: FontWeight.bold,
                             color: Colors.white,
                           )),
                       Text(credentials!.user.email.toString(),
                           style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold)),
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontFamily: 'Raleway-Semi-Bold',
+                          )),
                     ],
                   ),
                 ),
@@ -165,7 +167,9 @@ class SideMenuState extends ConsumerState<SideMenu> {
                   (item) => NavigationDrawerDestination(
                     icon: Icon(item.icon, color: Colors.white),
                     label: Text(item.title,
-                        style: const TextStyle(color: Colors.white)),
+                        style: const TextStyle(
+                            fontFamily: 'Raleway-Semi-Bold',
+                            color: Colors.white)),
                   ),
                 ),
                 const SizedBox(height: 250),
@@ -193,6 +197,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                         ),
                         Text('Cerrar sesión',
                             style: TextStyle(
+                              fontFamily: 'Raleway-Semi-Bold',
                               color: Colors.white,
                             )),
                       ],

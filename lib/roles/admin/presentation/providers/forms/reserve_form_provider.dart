@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
+import 'package:silverapp/roles/admin/infraestructure/inputs/car_id.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/driver_id.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/silver_percent.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/end_address.dart';
@@ -61,7 +62,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           startAddress: const StartAddress.pure(),
           endAddress: const EndAddress.pure(),
           enterpriseId: const EnterpriseId.pure(),
-          carId: reserve.carId,
+          carId: const CarId.pure(),
           driverId: const DriverId.pure(),
           price: const Price.pure(),
           silverPercent: const SilverPercent.pure(),
@@ -91,6 +92,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
               ? null
               : state.endAddress?.value,
       "driver_id": state.driverId?.value == 0 ? null : state.driverId?.value,
+      "car_id": state.carId?.value == 0 ? null : state.carId?.value,
       "price": state.price.value,
       if (state.silverPercent.value == '0')
         "silver_percent": state.silverPercent.value,
@@ -153,11 +155,35 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         ]));
   }
 
-  void onDriverIdChanged(int value, String driverName, String driverLastName) {
+  void onDriverIdChanged(int value, String driverName, String driverLastName, int? carId, String? brand, String? model, String? color, String? licensePlate) {
+    if (carId != null) {
+      onCarIdChanged(carId, brand!, model!, color!, licensePlate!);
+    }
     state = state.copyWith(
         driverId: DriverId.dirty(value),
         driverName: driverName,
         driverLastName: driverLastName,
+        isFormValid: Formz.validate([
+          DriverId.dirty(value),
+          UserId.dirty(state.userId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
+          TripType.dirty(state.tripType.value),
+          ServiceType.dirty(state.serviceType.value),
+          StartTime.dirty(state.startTime.value),
+          StartDate.dirty(state.startDate.value),
+          StartAddress.dirty(state.startAddress.value),
+          state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
+          Price.dirty(state.price.value),
+          SilverPercent.dirty(state.silverPercent.value),
+        ]));
+  }
+  void onCarIdChanged(int value, String brand, String model, String color, String licensePlate) {
+    state = state.copyWith(
+        carId: CarId.dirty(value),
+        licensePlate: licensePlate,
+        brand: brand,
+        model: model,
+        color: color,
         isFormValid: Formz.validate([
           DriverId.dirty(value),
           UserId.dirty(state.userId.value),
@@ -320,7 +346,11 @@ class ReserveFormState {
   final String? driverName;
   final String? driverLastName;
   final EnterpriseId? enterpriseId;
-  final int? carId;
+  final CarId? carId;
+  final String? licensePlate;
+  final String? brand;
+  final String? model;
+  final String? color;
   final TripType tripType;
   final StartTime startTime;
   final StartDate startDate;
@@ -343,7 +373,11 @@ class ReserveFormState {
     this.startAddress = const StartAddress.pure(),
     this.endAddress = const EndAddress.pure(),
     this.enterpriseId = const EnterpriseId.dirty(0),
-    this.carId,
+    this.carId  = const CarId.dirty(0),
+    this.licensePlate = 'A1R610',
+    this.brand = 'Ejem. Toyota',
+    this.model = 'Corolla',
+    this.color = 'Gris',
     this.driverId = const DriverId.pure(),
     this.price = const Price.pure(),
     this.silverPercent = const SilverPercent.pure(),
@@ -355,7 +389,11 @@ class ReserveFormState {
     final String? userName,
     final String? userLastName,
     final EnterpriseId? enterpriseId,
-    final int? carId,
+    final CarId? carId,
+    final String? licensePlate,
+    final String? brand,
+    final String? model,
+    final String? color,
     final DriverId? driverId,
     final String? driverName,
     final String? driverLastName,
@@ -377,6 +415,10 @@ class ReserveFormState {
         driverLastName: driverLastName ?? this.driverLastName,
         enterpriseId: enterpriseId ?? this.enterpriseId,
         carId: carId ?? this.carId,
+        licensePlate: licensePlate ?? this.licensePlate,
+        brand: brand ?? this.brand,
+        model: model ?? this.model,
+        color: color ?? this.color,
         driverId: driverId ?? this.driverId,
         serviceType: serviceType ?? this.serviceType,
         tripType: tripType ?? this.tripType,

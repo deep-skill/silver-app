@@ -26,7 +26,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
     final size = MediaQuery.of(context).size;
     return kIsWeb
         ? SizedBox(
-            width: size.width * .22,
+            width: size.width * .20,
             child: NavigationDrawer(
               backgroundColor: const Color(0xff031329),
               indicatorColor: const Color(0xff23A5CD),
@@ -83,6 +83,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                         style: const TextStyle(color: Colors.white)),
                   ),
                 ),
+                const SizedBox(height: 220),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
                   child: Divider(),
@@ -100,6 +101,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                           MaterialStateProperty.all(Colors.transparent),
                     ),
                     child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.logout_rounded,

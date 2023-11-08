@@ -44,7 +44,7 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
 
     return kIsWeb
         ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 180),
             child: RefreshIndicator(
               onRefresh: () =>
                   ref.read(reservesListProvider.notifier).reloadData(),

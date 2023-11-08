@@ -3,7 +3,7 @@ import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/search_reserve_response.dart';
 
-final searchReservesProvider = StateProvider<String>((ref) {
+final searchNoDriverReservesProvider = StateProvider<String>((ref) {
   return '';
 });
 
@@ -13,11 +13,12 @@ List<ReserveList> _jsonToReserve(List json) {
   return reserves;
 }
 
-final searchedReservesProvider =
+final searchedNoDriverReservesProvider =
     StateNotifierProvider<SearchedReservesNotifier, List<ReserveList>>((ref) {
   Future<List<ReserveList>> searchReserve(query) async {
     if (query.isEmpty) return [];
-    final response = await dio.get('/reserves/search/', queryParameters: {
+    final response =
+        await dio.get('/reserves/admin-search-home/', queryParameters: {
       'query': query,
     });
     return _jsonToReserve(response.data);
@@ -43,7 +44,7 @@ class SearchedReservesNotifier extends StateNotifier<List<ReserveList>> {
 
   Future<List<ReserveList>> searchReservesByQuery(String query) async {
     final List<ReserveList> reserves = await searchReserves(query);
-    ref.read(searchReservesProvider.notifier).update((state) => query);
+    ref.read(searchNoDriverReservesProvider.notifier).update((state) => query);
     state = reserves;
     return reserves;
   }

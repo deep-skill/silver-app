@@ -27,7 +27,7 @@ class SlideWeb extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xffF2F3F7),
+          color: const Color(0xffFFFFFF),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
@@ -43,7 +43,7 @@ class SlideWeb extends StatelessWidget {
             Container(
                 width: size.width * .12,
                 decoration: const BoxDecoration(
-                  color: Color(0xff031329),
+                  color: Color(0xff020B19),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
                 child: reserve.driverName != ''
@@ -57,12 +57,13 @@ class SlideWeb extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Bold',
                                 color: Colors.white,
                               ),
                             ),
                           ),
+                          const SizedBox(height: 8),
                           Stack(children: [
                             ClipOval(
                                 child: Image.asset(
@@ -74,13 +75,13 @@ class SlideWeb extends StatelessWidget {
                         child: Text(
                         'Sin conductor',
                         style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
+                          fontFamily: 'Montserrat-Regular',
+                          fontSize: 12,
                           color: Colors.white,
                         ),
                       ))),
             Padding(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.all(7),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -93,12 +94,14 @@ class SlideWeb extends StatelessWidget {
                       Text(
                         '${reserve.name} ${reserve.lastName}',
                         style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          fontFamily: 'Montserrat-Bold',
+                          // fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 9),
                   SizedBox(
                     width: size.width * .1,
                     child: Row(
@@ -111,8 +114,9 @@ class SlideWeb extends StatelessWidget {
                           child: Text(
                             ' ${reserve.entrepriseName}',
                             style: const TextStyle(
-                              fontSize: 16,
-                            ),
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Medium',
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -120,6 +124,7 @@ class SlideWeb extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
                       const Icon(
@@ -129,11 +134,13 @@ class SlideWeb extends StatelessWidget {
                       Text(
                         ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
                         style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
                       const Icon(
@@ -143,8 +150,9 @@ class SlideWeb extends StatelessWidget {
                       Text(
                         ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
                         style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),

@@ -43,8 +43,8 @@ class _ReservesListState extends State<ReservesList> {
         ? Expanded(
             child: GridView.count(
             mainAxisSpacing: 5,
-            crossAxisSpacing: 20,
-            childAspectRatio: 4,
+            crossAxisSpacing: 40,
+            childAspectRatio: 3.3,
             shrinkWrap: true,
             crossAxisCount: 2,
             controller: scrollController,

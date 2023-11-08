@@ -44,7 +44,7 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
 
     return kIsWeb
         ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 180),
+            padding: const EdgeInsets.symmetric(horizontal: 220),
             child: RefreshIndicator(
               onRefresh: () =>
                   ref.read(reservesListProvider.notifier).reloadData(),
@@ -71,7 +71,7 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                         height: size.height * .07,
                         child: const DecoratedBox(
                           decoration: BoxDecoration(
-                            color: Color(0xffF2F3F7),
+                            color: Color(0xffFFFFFF),
                             borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
                           child: Row(
@@ -82,8 +82,9 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                                 child: Text(
                                   'Búsqueda de reservas',
                                   style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
+                                    fontFamily: 'Raleway-Semi-Bold',
+                                    color: Color(0xFF636d77),
+                                    fontSize: 15,
                                   ),
                                 ),
                               ),

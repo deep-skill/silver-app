@@ -6,7 +6,7 @@ import 'package:silverapp/roles/driver/presentation/providers/driver_info_provid
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_home_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
-import 'package:silverapp/roles/driver/presentation/screens/driver_screen_on_the_way.dart';
+import 'package:silverapp/roles/driver/presentation/screens/driver_trip_screen.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/custom_driver_name.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_reserve_list_home.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_side_menu.dart';
@@ -74,14 +74,9 @@ class HomeViewState extends ConsumerState<HomeView> {
     final date = DateTime.now();
     final reserves = ref.watch(driverReservesHomeProvider);
     Future createTrip(id) async {
-
-        await dio.post('/trips', data: {
-          "reserve_id": id,
-          "on_way_driver":
-              date.toIso8601String()
-        });
-    } 
-
+      await dio.post('/trips',
+          data: {"reserve_id": id, "on_way_driver": date.toIso8601String()});
+    }
 
     return RefreshIndicator(
       onRefresh: () {
@@ -217,7 +212,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const ScreenOnTheWay()),
+                                                          const TripsDriver()),
                                                 );
                                               },
                                             ),

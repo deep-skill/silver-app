@@ -1,11 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_detail.dart';
+// Importa la nueva entidad
 
 final driverReserveDetailProvider = StateNotifierProvider<ReserveDetailNotifier,
     Map<String, DriverReserveDetail>>((ref) {
   Future<DriverReserveDetail> getReserveDetail(id) async {
-    final response = await dio.get('reserves/admin-reserves/$id');
+    final response = await dio.get('reserves/driver-reserves/$id');
     return DriverReserveDetail.fromJson(response.data);
   }
 

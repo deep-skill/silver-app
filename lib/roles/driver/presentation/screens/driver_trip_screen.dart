@@ -36,7 +36,7 @@ class _TripsDriverState extends State<TripsDriver> {
       SizedBox(
         height: 5,
       ),
-      AdditionalInformacion(boolValue: true)
+      AdditionalInformation(boolValue: true)
     ]);
   }
 }

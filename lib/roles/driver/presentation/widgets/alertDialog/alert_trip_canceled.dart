@@ -16,7 +16,6 @@ class _AlertTripCanceledState extends State<AlertTripCanceled> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text("El pasajero no se presento."),
-          // Agrega más widgets según tus necesidades
         ],
       ),
       actions: <Widget>[

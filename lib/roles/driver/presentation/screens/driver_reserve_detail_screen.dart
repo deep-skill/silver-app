@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_detail_provider.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/box_estado_reserve_detail.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/box_state_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/title_reserve_detail.dart';
 
@@ -30,9 +30,9 @@ class ReserveDetailScreenState
     final reserves = ref.watch(driverReserveDetailProvider);
     final DriverReserveDetail? reserve = reserves[widget.reserveId];
     if (reserve == null) {
-      return const Scaffold(
-          backgroundColor: Colors.grey,
-          body: Center(
+      return Scaffold(
+          backgroundColor: Colors.grey[200],
+          body: const Center(
             child: CircularProgressIndicator(),
           ));
     }
@@ -72,7 +72,7 @@ class ReserveInfo extends StatelessWidget {
         BoxReserveDetail(
             icon: Icons.domain,
             label: "Empresa",
-            text: reserve.entrepriseName.toString(),
+            text: reserve.enterpriseName.toString(),
             row: false),
         BoxReserveDetail(
             icon: Icons.business_center_outlined,
@@ -107,20 +107,18 @@ class ReserveInfo extends StatelessWidget {
                 text: reserve.tripType,
                 row: true),
           ),
-          const Expanded(
-            child: BoxEstadoReserveDetail(
+          Expanded(
+            child: BoxStateReserveDetail(
               icon: Icons.cached,
               label: "Estado",
-
-              estado: "COMPLETED",
-
+              state: reserve.state,
             ),
           )
         ]),
         BoxReserveDetail(
             icon: Icons.location_on_outlined,
             label: "Punto de origen",
-            text: reserve.startAddress.toString(),
+            text: reserve.startAddress,
             row: false),
         Row(
           children: [
@@ -138,7 +136,7 @@ class ReserveInfo extends StatelessWidget {
         BoxReserveDetail(
             icon: Icons.trip_origin,
             label: "Punto de destino",
-            text: reserve.endAddress.toString(),
+            text: reserve.endAddress,
             row: false),
         Container(
           height: 10.0,

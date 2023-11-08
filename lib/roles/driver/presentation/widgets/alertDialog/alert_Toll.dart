@@ -3,21 +3,20 @@ import 'package:flutter/material.dart';
 class AletToll extends StatefulWidget {
   final Function(String) onTextoAgregado;
 
-  AletToll(this.onTextoAgregado);
+  const AletToll(this.onTextoAgregado, {super.key});
 
   @override
-  State<AletToll> createState() => _AletPeajeState();
+  State<AletToll> createState() => _AlertPeajeState();
 }
 
-class _AletPeajeState extends State<AletToll> {
+class _AlertPeajeState extends State<AletToll> {
   final TextEditingController _controller = TextEditingController();
 
   final InputDecoration _inputDecoration = const InputDecoration(
       labelText: 'Ingresar Peaje',
       contentPadding: EdgeInsets.all(5),
       focusedBorder: OutlineInputBorder(
-        borderSide:
-            BorderSide(color: Colors.black), // Borde negro al enfocar el campo
+        borderSide: BorderSide(color: Colors.black),
         borderRadius: BorderRadius.all(
           Radius.circular(5),
         ),

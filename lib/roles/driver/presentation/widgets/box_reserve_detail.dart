@@ -56,10 +56,3 @@ class BoxReserveDetail extends StatelessWidget {
     );
   }
 }
-//maxLines: 1,
-/*                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ), */

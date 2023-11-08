@@ -4,7 +4,7 @@ class BoxStateReserveDetail extends StatelessWidget {
   final IconData icon;
   final String label;
 
-  final String state;
+  final String? state;
 
   const BoxStateReserveDetail({
     super.key,

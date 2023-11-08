@@ -38,13 +38,16 @@ class ReserveDetailScreenState
     }
 
     return Scaffold(
-        appBar: AppBar(title: const Text('Detalles')),
+        appBar: AppBar(
+          title: const Text('Detalles'),
+          centerTitle: true,
+        ),
         body: Container(
             width: MediaQuery.of(context).size.width,
             margin: const EdgeInsets.all(7.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: const Color.fromARGB(255, 231, 230, 230),
+              color: Colors.grey[200],
             ),
             padding: const EdgeInsets.all(3),
             child: ReserveInfo(reserve: reserve)));
@@ -64,6 +67,9 @@ class ReserveInfo extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const TitleReserveDetail(text: "Datos del servicio"),
+        const SizedBox(
+          height: 10,
+        ),
         BoxReserveDetail(
             icon: Icons.hail,
             label: "Pasajero",
@@ -80,6 +86,9 @@ class ReserveInfo extends StatelessWidget {
             text: reserve.serviceType.toString(),
             row: false),
         const TitleReserveDetail(text: "Datos del viaje"),
+        const SizedBox(
+          height: 10,
+        ),
         Row(
           children: [
             Expanded(

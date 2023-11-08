@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 
-class Slide extends StatelessWidget {
+class CustomSlide extends StatelessWidget {
   final ReserveList reserve;
-  const Slide({super.key, required this.reserve});
+  const CustomSlide({super.key, required this.reserve});
 
   @override
   Widget build(BuildContext context) {

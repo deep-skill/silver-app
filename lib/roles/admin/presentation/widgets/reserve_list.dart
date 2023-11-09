@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/custom_slide_web.dart';
 
 class ReservesList extends StatefulWidget {
   const ReservesList(
@@ -37,16 +39,31 @@ class _ReservesListState extends State<ReservesList> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        controller: scrollController,
-        itemCount: widget.reserves.length,
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (contex, index) {
-          return CustomSlide(reserve: widget.reserves[index]);
-        },
-      ),
-    );
+    return kIsWeb
+        ? Expanded(
+            child: GridView.count(
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 40,
+            childAspectRatio: 3.2,
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            controller: scrollController,
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+            children: List.generate(widget.reserves.length, (index) {
+              return SlideWeb(reserve: widget.reserves[index]);
+            }),
+          ))
+        : Expanded(
+            child: ListView.builder(
+              controller: scrollController,
+              itemCount: widget.reserves.length,
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (contex, index) {
+                return Slide(reserve: widget.reserves[index]);
+              },
+            ),
+          );
   }
 }

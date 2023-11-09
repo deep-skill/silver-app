@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 
-class CustomSlide extends StatelessWidget {
+class SlideWeb extends StatelessWidget {
   final ReserveList reserve;
-  const CustomSlide({super.key, required this.reserve});
+  const SlideWeb({super.key, required this.reserve});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +26,8 @@ class CustomSlide extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: size.height * .15,
         decoration: BoxDecoration(
-          color: const Color(0xffF2F3F7),
+          color: const Color(0xffFFFFFF),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
@@ -39,11 +38,10 @@ class CustomSlide extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: 100,
-                height: 110,
+                width: size.width * .12,
                 decoration: BoxDecoration(
                   color: reserve.driverName != ''
                   ? const Color(0xff020B19)
@@ -61,12 +59,13 @@ class CustomSlide extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Bold',
                                 color: Colors.white,
                               ),
                             ),
                           ),
+                          const SizedBox(height: 8),
                           Stack(children: [
                             ClipOval(
                                 child: Image.asset(
@@ -78,13 +77,13 @@ class CustomSlide extends StatelessWidget {
                         child: Text(
                         'Sin conductor',
                         style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
+                          fontFamily: 'Montserrat-Regular',
+                          fontSize: 12,
                           color: Colors.black,
                         ),
                       ))),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(7),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -97,14 +96,16 @@ class CustomSlide extends StatelessWidget {
                       Text(
                         '${reserve.name} ${reserve.lastName}',
                         style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          fontFamily: 'Montserrat-Bold',
+                          // fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 9),
                   SizedBox(
-                    width: size.width * .5,
+                    width: size.width * .1,
                     child: Row(
                       children: [
                         const Icon(
@@ -115,8 +116,9 @@ class CustomSlide extends StatelessWidget {
                           child: Text(
                             ' ${reserve.entrepriseName}',
                             style: const TextStyle(
-                              fontSize: 16,
-                            ),
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Medium',
+                                fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -124,6 +126,7 @@ class CustomSlide extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
                       const Icon(
@@ -133,11 +136,13 @@ class CustomSlide extends StatelessWidget {
                       Text(
                         ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
                         style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 6),
                   Row(
                     children: [
                       const Icon(
@@ -147,8 +152,9 @@ class CustomSlide extends StatelessWidget {
                       Text(
                         ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
                         style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),

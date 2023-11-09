@@ -44,9 +44,11 @@ class Slide extends StatelessWidget {
             Container(
                 width: 100,
                 height: 110,
-                decoration: const BoxDecoration(
-                  color: Color(0xff031329),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                decoration: BoxDecoration(
+                  color: reserve.driverName != ''
+                  ? const Color(0xff020B19)
+                  : Colors.grey.shade200,
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
                 ),
                 child: reserve.driverName != ''
                     ? Column(
@@ -78,7 +80,7 @@ class Slide extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ))),
             Padding(

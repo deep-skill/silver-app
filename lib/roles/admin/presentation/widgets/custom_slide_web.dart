@@ -42,9 +42,11 @@ class SlideWeb extends StatelessWidget {
           children: [
             Container(
                 width: size.width * .12,
-                decoration: const BoxDecoration(
-                  color: Color(0xff020B19),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                decoration: BoxDecoration(
+                  color: reserve.driverName != ''
+                  ? const Color(0xff020B19)
+                  : Colors.grey.shade200,
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
                 ),
                 child: reserve.driverName != ''
                     ? Column(
@@ -77,7 +79,7 @@ class SlideWeb extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'Montserrat-Regular',
                           fontSize: 12,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                       ))),
             Padding(

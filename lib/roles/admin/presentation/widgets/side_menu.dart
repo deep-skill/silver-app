@@ -26,7 +26,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
     final size = MediaQuery.of(context).size;
     return kIsWeb
         ? SizedBox(
-            width: size.width * .22,
+            width: size.width * .20,
             child: NavigationDrawer(
               backgroundColor: const Color(0xff031329),
               indicatorColor: const Color(0xff23A5CD),
@@ -68,8 +68,8 @@ class SideMenuState extends ConsumerState<SideMenu> {
                       Text(credentials!.user.email.toString(),
                           style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold)),
+                              fontSize: 11,
+                              fontFamily: 'Montserrat-Bold')),
                     ],
                   ),
                 ),
@@ -83,6 +83,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                         style: const TextStyle(color: Colors.white)),
                   ),
                 ),
+                SizedBox(height: size.height * .2),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
                   child: Divider(),
@@ -100,6 +101,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                           MaterialStateProperty.all(Colors.transparent),
                     ),
                     child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
                           Icons.logout_rounded,
@@ -141,39 +143,37 @@ class SideMenuState extends ConsumerState<SideMenu> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          widget.scaffoldKey.currentState?.closeDrawer();
-                        },
-                        icon: const Icon(Icons.close),
-                        color: Colors.white,
-                      ),
                       SizedBox(
                           child: Image.asset(
                         "assets/images/app_logo.png",
                         width: size.width * .15,
                       )),
+                      const SizedBox(height: 10),
                       const Text('Silver Express',
                           style: TextStyle(
-                            fontSize: 21,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 26,
                             color: Colors.white,
                           )),
                       Text(credentials!.user.email.toString(),
                           style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold)),
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontFamily: 'Raleway-Semi-Bold',
+                          )),
                     ],
                   ),
                 ),
+                const SizedBox(height: 35),
                 ...appMenuItems.map(
                   (item) => NavigationDrawerDestination(
                     icon: Icon(item.icon, color: Colors.white),
                     label: Text(item.title,
-                        style: const TextStyle(color: Colors.white)),
+                        style: const TextStyle(
+                            fontFamily: 'Raleway-Semi-Bold',
+                            color: Colors.white)),
                   ),
                 ),
+                const SizedBox(height: 250),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
                   child: Divider(),
@@ -198,6 +198,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                         ),
                         Text('Cerrar sesión',
                             style: TextStyle(
+                              fontFamily: 'Raleway-Semi-Bold',
                               color: Colors.white,
                             )),
                       ],
@@ -234,28 +235,8 @@ const appMenuItems = <MenuItem>[
     icon: Icons.calendar_month,
   ),
   MenuItem(
-    title: 'Mi cuenta',
-    link: '/cuenta',
-    icon: Icons.person_outline,
-  ),
-  MenuItem(
     title: 'Historial de viajes',
     link: '/admin/trips',
     icon: Icons.emoji_transportation_rounded,
-  ),
-  MenuItem(
-    title: 'Notificaciones',
-    link: '/notificaciones',
-    icon: Icons.notifications_none_rounded,
-  ),
-  MenuItem(
-    title: 'Ayuda y soporte',
-    link: '/ayuda',
-    icon: Icons.help_outline_rounded,
-  ),
-  MenuItem(
-    title: 'Libro de reclamaciones',
-    link: '/reclamaciones',
-    icon: Icons.menu_book_rounded,
-  ),
+  )
 ];

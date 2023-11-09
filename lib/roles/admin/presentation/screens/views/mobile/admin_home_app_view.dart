@@ -57,16 +57,11 @@ class AdminHomeAppView extends StatelessWidget {
                       const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('¡Hola!',
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            Text('¡Hola!', style: TextStyle(fontSize: 32)),
                             Text('Silver Express',
                                 style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                )),
+                                    fontSize: 20,
+                                    fontFamily: 'Raleway-Semi-Bold')),
                           ])
                     ],
                   ),
@@ -80,7 +75,9 @@ class AdminHomeAppView extends StatelessWidget {
                   child: Text(months[date],
                       textAlign: TextAlign.start,
                       style: const TextStyle(
-                          fontSize: 21, fontWeight: FontWeight.bold))),
+                          fontSize: 20,
+                          fontFamily: 'Roboto-Bold',
+                          color: Color(0xff364356)))),
               SizedBox(height: size.height * .01),
               TripsSummaryView(size: size, tripsSummary: tripsSummary),
               const SizedBox(
@@ -92,7 +89,7 @@ class AdminHomeAppView extends StatelessWidget {
                 child: const Text('Reservas por asignar',
                     style: TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      color: Color(0xff364356),
                     )),
               ),
               GestureDetector(
@@ -116,7 +113,7 @@ class AdminHomeAppView extends StatelessWidget {
                     height: size.height * .07,
                     child: const DecoratedBox(
                       decoration: BoxDecoration(
-                        color: Color(0xffF2F3F7),
+                        color: Color(0xffFFFFFF),
                         borderRadius: BorderRadius.all(Radius.circular(12)),
                       ),
                       child: Row(
@@ -127,7 +124,8 @@ class AdminHomeAppView extends StatelessWidget {
                             child: Text(
                               'Búsqueda de reservas',
                               style: TextStyle(
-                                color: Colors.grey,
+                                fontFamily: 'Montserrat-Regular',
+                                color: Color(0xFF636D77),
                                 fontSize: 16,
                               ),
                             ),
@@ -139,7 +137,7 @@ class AdminHomeAppView extends StatelessWidget {
                               width: 45,
                               child: DecoratedBox(
                                 decoration: BoxDecoration(
-                                  color: Color(0xff031329),
+                                  color: Color(0xff03132A),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(12)),
                                 ),

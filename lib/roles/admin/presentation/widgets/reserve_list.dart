@@ -61,7 +61,7 @@ class _ReservesListState extends State<ReservesList> {
               scrollDirection: Axis.vertical,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (contex, index) {
-                return Slide(reserve: widget.reserves[index]);
+                return CustomSlide(reserve: widget.reserves[index]);
               },
             ),
           );

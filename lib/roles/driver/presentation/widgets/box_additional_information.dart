@@ -7,15 +7,15 @@ import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_st
 import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/title_additional_information.dart';
 
-class AdditionalInformacion extends StatefulWidget {
+class AdditionalInformation extends StatefulWidget {
   final bool boolValue;
-  const AdditionalInformacion({super.key, required this.boolValue});
+  const AdditionalInformation({super.key, required this.boolValue});
 
   @override
-  State<AdditionalInformacion> createState() => _AdditionalInformacionState();
+  State<AdditionalInformation> createState() => _AdditionalInformationState();
 }
 
-class _AdditionalInformacionState extends State<AdditionalInformacion> {
+class _AdditionalInformationState extends State<AdditionalInformation> {
   String selectedOption = 'Seleccionar item'; // Opción predeterminada
   List<String> stops = [];
   List<String> observations = [];
@@ -86,11 +86,11 @@ class _AdditionalInformacionState extends State<AdditionalInformacion> {
           case 'Peaje':
             return AletToll(addTools);
           case 'Paradas':
-            return AletStops(addStops);
+            return AlertStops(addStops);
           case "Observaciones":
-            return AletObservations(addObservations);
+            return AlertObservations(addObservations);
           case "Estacionamiento":
-            return AletParking(addParkingLot);
+            return AlertParking(addParkingLot);
           default:
             return const AlertDefaul();
         }

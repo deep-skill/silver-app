@@ -3,43 +3,41 @@ import 'package:flutter/material.dart';
 class BoxStateReserveDetail extends StatelessWidget {
   final IconData icon;
   final String label;
-  final bool estado;
-  final String textFinal = "Finalizado";
-  final String textPendiente = "Pendiente";
+
+  final String? state;
 
   const BoxStateReserveDetail({
     super.key,
     required this.icon,
     required this.label,
-    required this.estado,
+    required this.state,
   });
 
+  Color color() {
+    switch (state) {
+      case 'COMPLETED':
+        return const Color(0xFF2FCF5C);
+      case 'CANCELED':
+        return const Color(0xFFFD3B3B);
+      case "IN_PROGRESS":
+        return const Color(0xFF23A5CD);
+      default:
+        return const Color.fromARGB(255, 12, 12, 12);
+    }
+  }
 
-/*   values: ['COMPLETED', 'CANCELED', 'INPROGRESS'],
-      defaultValue: 'INPROGRESS' */
-
-  String getState(String estado) {
-    switch (estado) {
+  String textState() {
+    switch (state) {
       case 'COMPLETED':
         return 'Finalizado';
       case 'CANCELED':
         return 'Cancelado';
-      default:
+      case "IN_PROGRESS":
         return 'En progreso';
-    }
-  }
-
-  Object getColor(String estado) {
-    switch (estado) {
-      case 'COMPLETED':
-        return Colors.green;
-      case 'CANCELED':
-        return Colors.red;
       default:
-        return Colors.cyan;
+        return "----";
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,22 +60,18 @@ class BoxStateReserveDetail extends StatelessWidget {
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
-                overflow: TextOverflow
-                    .ellipsis, // Muestra "..." cuando el texto se desborda
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
               Text(
-
-                getState(estado.toString()),
-
+                textState(),
                 style: TextStyle(
-                  color: estado ? Colors.green : Colors.red,
+                  color: color(),
                   fontFamily: "Monserrat",
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
-                overflow: TextOverflow
-                    .ellipsis, // Muestra "..." cuando el texto se desborda
+                overflow: TextOverflow.ellipsis,
                 maxLines: 1,
               ),
               Container(

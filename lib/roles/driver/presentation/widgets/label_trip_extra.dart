@@ -4,7 +4,7 @@ class CustomCard extends StatelessWidget {
   final String text;
   final Function()? onPressed;
 
-  CustomCard({required this.text, this.onPressed});
+  const CustomCard({super.key, required this.text, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

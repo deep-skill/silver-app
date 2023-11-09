@@ -18,8 +18,7 @@ class TitleReserve extends StatelessWidget {
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
-          overflow: TextOverflow
-              .ellipsis, // Muestra "..." cuando el texto se desborda
+          overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
         Container(

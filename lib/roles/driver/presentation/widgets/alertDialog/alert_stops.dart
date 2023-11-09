@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AletStops extends StatefulWidget {
+class AlertStops extends StatefulWidget {
   final Function(String) onTextoAgregado;
 
-  AletStops(this.onTextoAgregado);
+  const AlertStops(this.onTextoAgregado, {super.key});
 
   @override
-  State<AletStops> createState() => _AletParadasState();
+  State<AlertStops> createState() => _AlertParadasState();
 }
 
-class _AletParadasState extends State<AletStops> {
+class _AlertParadasState extends State<AlertStops> {
   final TextEditingController _controller = TextEditingController();
 
   final InputDecoration _inputDecoration = const InputDecoration(

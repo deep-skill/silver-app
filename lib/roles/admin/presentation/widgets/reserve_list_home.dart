@@ -38,18 +38,17 @@ class _ReservesListHomeState extends State<ReservesListHome> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child:
-      widget.reserves.isEmpty
-      ? const Text('No hay reservas')
-      : ListView.builder(
-        controller: scrollController,
-        itemCount: widget.reserves.length,
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (contex, index) {
-          return _Slide(reserve: widget.reserves[index]);
-        },
-      ),
+      child: widget.reserves.isEmpty
+          ? const Text('No hay reservas')
+          : ListView.builder(
+              controller: scrollController,
+              itemCount: widget.reserves.length,
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (contex, index) {
+                return _Slide(reserve: widget.reserves[index]);
+              },
+            ),
     );
   }
 }
@@ -78,9 +77,9 @@ class _Slide extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: size.height * .15,
+        height: size.height * .16,
         decoration: BoxDecoration(
-          color: const Color(0xffF2F3F7),
+          color: const Color(0xffFFFFFF),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
@@ -91,22 +90,19 @@ class _Slide extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: 90,
-                height: 110,
+                width: 120,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color: Color(0xffF2F3F7),
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
                 ),
                 child: const Center(
                     child: Text(
                   'Sin conductor',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style:
+                      TextStyle(fontSize: 12, fontFamily: 'Montserrat-Regular'),
                 ))),
             Padding(
               padding: const EdgeInsets.all(10),
@@ -122,12 +118,11 @@ class _Slide extends StatelessWidget {
                       Text(
                         '${reserve.name} ${reserve.lastName}',
                         style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 17, fontFamily: 'Montserrat-Bold'),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 9),
                   Row(
                     children: [
                       const Icon(
@@ -137,11 +132,13 @@ class _Slide extends StatelessWidget {
                       Text(
                         ' ${reserve.entrepriseName}',
                         style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 5),
                   Row(
                     children: [
                       const Icon(
@@ -151,11 +148,13 @@ class _Slide extends StatelessWidget {
                       Text(
                         ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
                         style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 5),
                   Row(
                     children: [
                       const Icon(
@@ -165,8 +164,9 @@ class _Slide extends StatelessWidget {
                       Text(
                         ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
                         style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),

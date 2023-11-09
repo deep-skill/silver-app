@@ -136,7 +136,7 @@ class _DriverItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         onDriverSelected(context, driver);
-        callback(driver.id, driver.name, driver.lastName);
+        callback(driver.id, driver.name, driver.lastName, driver.carId, driver.brand, driver.model, driver.color, driver.licensePlate);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

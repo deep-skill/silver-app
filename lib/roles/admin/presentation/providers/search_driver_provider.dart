@@ -43,7 +43,7 @@ class SearchedDriversNotifier extends StateNotifier<List<SearchDriver>> {
   final SearchedDriversCallback searchDrivers;
   final Ref ref;
 
-  Future<List<SearchDriver>> searchMoviesByQuery(String query) async {
+  Future<List<SearchDriver>> searchDriversByQuery(String query) async {
     final List<SearchDriver> drivers = await searchDrivers(query);
     ref.read(searchDriversProvider.notifier).update((state) => query);
     state = drivers;

@@ -38,7 +38,10 @@ class _ReservesListHomeState extends State<ReservesListHome> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
+      child:
+      widget.reserves.isEmpty
+      ? const Text('No hay reservas')
+      : ListView.builder(
         controller: scrollController,
         itemCount: widget.reserves.length,
         scrollDirection: Axis.vertical,

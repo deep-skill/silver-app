@@ -1,30 +1,29 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/search_car.dart';
 
-typedef SearchReservesCallback = Future<List<ReserveList>> Function(
+typedef SearchCarsCallback = Future<List<SearchCar>> Function(
     String query);
 
-class SearchReserveDelegate extends SearchDelegate<ReserveList?> {
-  final SearchReservesCallback searchReserves;
-  List<ReserveList> initialReserves;
-  StreamController<List<ReserveList>> debouncedReserves =
+class SearchCarDelegate extends SearchDelegate<SearchCar?> {
+  final SearchCarsCallback searchCars;
+  final Function callback;
+  List<SearchCar> initialCars;
+  StreamController<List<SearchCar>> debouncedCars =
       StreamController.broadcast();
   StreamController<bool> isLoadingStream = StreamController.broadcast();
   //Timeout
   Timer? _debouceTimer;
 
-  SearchReserveDelegate({
-    required this.searchReserves,
-    required this.initialReserves,
-  });
+  SearchCarDelegate(
+      {required this.searchCars,
+      required this.initialCars,
+      required this.callback});
 
   void clearStreams() {
     _debouceTimer!.cancel();
-    debouncedReserves.close();
+    debouncedCars.close();
   }
 
   void _onQueryChanged(String query) {
@@ -32,29 +31,30 @@ class SearchReserveDelegate extends SearchDelegate<ReserveList?> {
 
     if (_debouceTimer?.isActive ?? false) _debouceTimer!.cancel();
     _debouceTimer = Timer(const Duration(milliseconds: 800), () async {
-      final reserves = await searchReserves(query);
-      initialReserves = reserves;
-      if (debouncedReserves.isClosed) return;
-      debouncedReserves.add(reserves);
+      final cars = await searchCars(query);
+      initialCars = cars;
+      if (debouncedCars.isClosed) return;
+      debouncedCars.add(cars);
       isLoadingStream.add(false);
     });
   }
 
   Widget buildResultsAndSuggestions() {
     return StreamBuilder(
-      initialData: initialReserves,
-      stream: debouncedReserves.stream,
+      initialData: initialCars,
+      stream: debouncedCars.stream,
       builder: (context, snapshot) {
-        final reserves = snapshot.data ?? [];
+        final cars = snapshot.data ?? [];
         return ListView.builder(
-          itemCount: reserves.length,
+          itemCount: cars.length,
           itemBuilder: (context, index) {
-            final reserve = reserves[index];
-            return _ReserveItem(
-              reserve: reserve,
-              onReserveSelected: (context, reserve) {
+            final car = cars[index];
+            return _CarItem(
+              callback: callback,
+              car: car,
+              onCarSelected: (context, car) {
                 clearStreams();
-                close(context, reserve);
+                close(context, car);
               },
             );
           },
@@ -64,7 +64,7 @@ class SearchReserveDelegate extends SearchDelegate<ReserveList?> {
   }
 
   @override
-  String get searchFieldLabel => 'Buscar Reserva';
+  String get searchFieldLabel => 'Buscar Conductor';
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -103,6 +103,7 @@ class SearchReserveDelegate extends SearchDelegate<ReserveList?> {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
       onPressed: () {
+        callback(0, 'Ejem. Toyota', 'Corolla', 'Gris', 'A1R610');
         clearStreams();
         close(context, null);
       },
@@ -122,21 +123,25 @@ class SearchReserveDelegate extends SearchDelegate<ReserveList?> {
   }
 }
 
-class _ReserveItem extends StatelessWidget {
-  const _ReserveItem({
-    required this.reserve,
-    required this.onReserveSelected,
-  });
-  final ReserveList reserve;
-  final Function onReserveSelected;
+class _CarItem extends StatelessWidget {
+  const _CarItem(
+      {required this.car,
+      required this.onCarSelected,
+      required this.callback});
+  final SearchCar car;
+  final Function onCarSelected;
+  final Function callback;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onReserveSelected(context, reserve);
-        context.push('/admin/reserves/detail/${reserve.id}');
+        onCarSelected(context, car);
+        callback(car.id, car.brand, car.model, car.color, car.licensePlate,);
       },
-      child: CustomSlide(reserve: reserve),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        child: Text('${car.licensePlate} ${car.brand} ${car.model} ${car.color}'),
+      ),
     );
   }
 }

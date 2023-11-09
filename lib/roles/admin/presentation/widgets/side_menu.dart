@@ -83,7 +83,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                         style: const TextStyle(color: Colors.white)),
                   ),
                 ),
-                const SizedBox(height: 220),
+                SizedBox(height: size.height * .2),
                 const Padding(
                   padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
                   child: Divider(),
@@ -152,7 +152,6 @@ class SideMenuState extends ConsumerState<SideMenu> {
                       const Text('Silver Express',
                           style: TextStyle(
                             fontSize: 26,
-                            // fontWeight: FontWeight.bold,
                             color: Colors.white,
                           )),
                       Text(credentials!.user.email.toString(),

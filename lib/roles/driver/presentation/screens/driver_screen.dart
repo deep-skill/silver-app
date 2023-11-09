@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +8,6 @@ import 'package:silverapp/roles/driver/presentation/providers/driver_info_provid
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_home_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
-import 'package:silverapp/roles/driver/presentation/screens/driver_trip_screen.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/custom_driver_name.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_reserve_list_home.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_side_menu.dart';
@@ -47,8 +48,7 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(driverReservesHomeProvider.notifier).currentPage == 0)
-      ref.read(driverReservesHomeProvider.notifier).loadNextPage();
+    if (ref.read(driverReservesHomeProvider.notifier).currentPage == 0) ref.read(driverReservesHomeProvider.notifier).loadNextPage();
   }
 
   @override
@@ -74,8 +74,13 @@ class HomeViewState extends ConsumerState<HomeView> {
     final date = DateTime.now();
     final reserves = ref.watch(driverReservesHomeProvider);
     Future createTrip(id) async {
-      await dio.post('/trips',
+      final trip = await dio.post('/trips',
           data: {"reserve_id": id, "on_way_driver": date.toIso8601String()});
+      return trip.data['id'];
+    }
+    void nav(id) {
+      context.pop();
+      context.push('/driver/trips/on-trip/$id');
     }
 
     return RefreshIndicator(
@@ -204,16 +209,12 @@ class HomeViewState extends ConsumerState<HomeView> {
                                                 ),
                                               ),
                                               child: const Text('Confirmar'),
-                                              onPressed: () {
-                                                createTrip(nearestReserve.id);
+                                              onPressed: () async {
+                                                final tripId = await createTrip(
+                                                    nearestReserve.id);
                                                 ref.invalidate(
                                                     driverInfoProvider);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const TripsDriver()),
-                                                );
+                                                nav(tripId);
                                               },
                                             ),
                                             TextButton(
@@ -224,7 +225,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                                               ),
                                               child: const Text('Cancelar'),
                                               onPressed: () {
-                                                Navigator.of(context).pop();
+                                                context.pop();
                                               },
                                             ),
                                           ],

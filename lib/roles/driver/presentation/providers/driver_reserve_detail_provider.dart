@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_detail.dart';
-// Importa la nueva entidad
 
 final driverReserveDetailProvider = StateNotifierProvider<ReserveDetailNotifier,
     Map<String, DriverReserveDetail>>((ref) {

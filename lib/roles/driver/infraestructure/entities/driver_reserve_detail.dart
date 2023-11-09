@@ -33,7 +33,7 @@ class DriverReserveDetail {
         tripType: json["tripType"],
         startAddress: json["startAddress"],
         endAddress: json["endAddress"],
-        price: json["price"]?.toDouble(),
+        price: json["price"],
         name: json["User"]["name"],
         lastName: json["User"]["lastName"],
         state: (json["Trip"] == null) ? null : json["Trip"]["state"],

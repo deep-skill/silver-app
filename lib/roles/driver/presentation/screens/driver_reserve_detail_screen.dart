@@ -73,17 +73,17 @@ class ReserveInfo extends StatelessWidget {
         BoxReserveDetail(
             icon: Icons.hail,
             label: "Pasajero",
-            text: "${reserve.name.toString()} ${reserve.lastName.toString()}",
+            text: "${reserve.name} ${reserve.lastName}",
             row: false),
         BoxReserveDetail(
             icon: Icons.domain,
             label: "Empresa",
-            text: reserve.enterpriseName.toString(),
+            text: reserve.enterpriseName,
             row: false),
         BoxReserveDetail(
             icon: Icons.business_center_outlined,
             label: "Tipo de servicio",
-            text: reserve.serviceType.toString(),
+            text: reserve.serviceType,
             row: false),
         const TitleReserveDetail(text: "Datos del viaje"),
         const SizedBox(
@@ -95,8 +95,7 @@ class ReserveInfo extends StatelessWidget {
               child: BoxReserveDetail(
                   icon: Icons.today,
                   label: "Fecha de reserva",
-                  text:
-                      '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}',
+                  text: '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}',
                   row: true),
             ),
             Expanded(
@@ -170,7 +169,7 @@ class ReserveInfo extends StatelessWidget {
             ],
           )),
           Expanded(
-              child: Text("S/  ${reserve.price.toString()}",
+              child: Text("S/  ${reserve.price}",
                   style: const TextStyle(
                     fontFamily: "Raleway",
                     fontSize: 32.0,

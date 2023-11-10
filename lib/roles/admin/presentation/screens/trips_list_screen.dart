@@ -14,10 +14,12 @@ class TripsListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xffF2F3F7),
         title: const Text('Historial de viajes'),
         scrolledUnderElevation: 0,
       ),
       body: const TripListView(),
+      backgroundColor: const Color(0xffF2F3F7),
     );
   }
 }
@@ -69,7 +71,7 @@ class TripListViewState extends ConsumerState<TripListView> {
                   height: size.height * .07,
                   child: const DecoratedBox(
                     decoration: BoxDecoration(
-                      color: Color(0xffF2F3F7),
+                      color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                     ),
                     child: Row(
@@ -78,11 +80,11 @@ class TripListViewState extends ConsumerState<TripListView> {
                         Padding(
                           padding: EdgeInsets.only(left: 20),
                           child: Text(
-                            'Búsqueda de viajes',
+                            'Búsqueda de reservas',
                             style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16,
-                            ),
+                                color: Color(0xFF636D77),
+                                fontSize: 15,
+                                fontFamily: 'Raleway-Semi-Bold'),
                           ),
                         ),
                         Padding(

@@ -40,7 +40,7 @@ class _ReservesListHomeWebState extends State<ReservesListHomeWeb> {
     return Expanded(
         child: GridView.count(
       mainAxisSpacing: 5,
-      crossAxisSpacing: 15,
+      crossAxisSpacing: 30,
       childAspectRatio: 3.2,
       shrinkWrap: true,
       crossAxisCount: 2,
@@ -77,14 +77,14 @@ class _Slide extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 7.0),
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xffFFFFFF),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade200,
+              color: Colors.grey.shade300,
               blurRadius: 10,
               offset: const Offset(0, 3),
             )
@@ -94,7 +94,7 @@ class _Slide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: size.width * .12,
+                width: size.width * .11,
                 decoration: const BoxDecoration(
                   color: Color(0xffF2F3F7),
                   borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -103,12 +103,12 @@ class _Slide extends StatelessWidget {
                     child: Text(
                   'Sin conductor',
                   style: TextStyle(
-                    fontFamily: 'Montserrat',
-                    fontSize: 12,
+                    fontFamily: 'Montserrat-Regular',
+                    fontSize: 14,
                   ),
                 ))),
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(9),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -122,10 +122,7 @@ class _Slide extends StatelessWidget {
                       Text(
                         '${reserve.name} ${reserve.lastName}',
                         style: const TextStyle(
-                          fontSize: 15,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontSize: 17, fontFamily: 'Montserrat-Bold'),
                       ),
                     ],
                   ),
@@ -140,9 +137,9 @@ class _Slide extends StatelessWidget {
                       Text(
                         ' ${reserve.entrepriseName}',
                         style: const TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 12,
-                        ),
+                            fontFamily: 'Montserrat-Medium',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -157,9 +154,9 @@ class _Slide extends StatelessWidget {
                       Text(
                         ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
                         style: const TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 12,
-                        ),
+                            fontFamily: 'Montserrat-Medium',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -174,9 +171,9 @@ class _Slide extends StatelessWidget {
                       Text(
                         ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
                         style: const TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontSize: 12,
-                        ),
+                            fontFamily: 'Montserrat-Medium',
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),

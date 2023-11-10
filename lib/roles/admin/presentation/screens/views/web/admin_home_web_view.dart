@@ -36,7 +36,7 @@ class AdminHomeWebView extends StatelessWidget {
         return ref.read(reservesHomeProvider.notifier).reloadData();
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 250),
+        padding: const EdgeInsets.fromLTRB(230, 50, 230, 0),
         child: Column(
           children: [
             TripsSummaryViewWeb(
@@ -46,7 +46,7 @@ class AdminHomeWebView extends StatelessWidget {
               date: date,
             ),
             const SizedBox(
-              height: 15,
+              height: 10,
             ),
             Container(
               width: size.width * .8,
@@ -55,6 +55,7 @@ class AdminHomeWebView extends StatelessWidget {
               child: const Text('Reservas por asignar',
                   style: TextStyle(
                     fontSize: 20,
+                    color: Color(0xff364356),
                     fontWeight: FontWeight.bold,
                   )),
             ),
@@ -89,9 +90,9 @@ class AdminHomeWebView extends StatelessWidget {
                           child: Text(
                             'Búsqueda de reservas',
                             style: TextStyle(
-                              fontFamily: 'Montserrat-Regular',
+                              fontFamily: 'Raleway-Semi-Bold',
                               color: Color(0xFF636D77),
-                              fontSize: 16,
+                              fontSize: 15,
                             ),
                           ),
                         ),

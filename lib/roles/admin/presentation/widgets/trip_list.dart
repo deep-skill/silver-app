@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
-
 import 'package:silverapp/roles/admin/presentation/widgets/trip_slide.dart';
 
 class TripsList extends StatefulWidget {

@@ -26,31 +26,37 @@ class TripSlide extends StatelessWidget {
     if (trip.status == "INPROGRESS") {
       tripStatus = const Text(
         'En progreso',
-        style: TextStyle(color: Colors.blue, fontSize: 13),
+        style: TextStyle(
+            color: Color(0xff23A5CD),
+            fontSize: 10,
+            fontFamily: 'Montserrat-Bold'),
       );
     } else if (trip.status == "CANCELED") {
       tripStatus = const Text(
         'Cancelado',
-        style: TextStyle(color: Colors.red, fontSize: 13),
+        style: TextStyle(
+            color: Colors.red, fontSize: 10, fontFamily: 'Montserrat-Bold'),
       );
     } else if (trip.status == "COMPLETED") {
       tripStatus = const Text(
         'Finalizado',
-        style: TextStyle(color: Colors.green, fontSize: 13),
+        style: TextStyle(
+            color: Colors.green, fontSize: 10, fontFamily: 'Montserrat-Bold'),
       );
     } else {
       tripStatus = const Text(
         'no info status',
-        style: TextStyle(color: Colors.red, fontSize: 13),
+        style: TextStyle(
+            color: Colors.red, fontSize: 10, fontFamily: 'Montserrat-Bold'),
       );
     }
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: size.height * .15,
-        decoration: BoxDecoration(
-          color: const Color(0xffF2F3F7),
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
+        height: size.height * .18,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(8)),
           boxShadow: [
             BoxShadow(
               color: Color.fromRGBO(0, 0, 0, 0.25),
@@ -64,9 +70,8 @@ class TripSlide extends StatelessWidget {
           children: [
             Container(
                 width: 130,
-                // height: 110,
                 decoration: const BoxDecoration(
-                  color: Color(0xff031329),
+                  color: Color(0xff03132A),
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(8),
                       topLeft: Radius.circular(8)),
@@ -82,13 +87,13 @@ class TripSlide extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Bold',
                                 color: Colors.white,
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           Stack(children: [
@@ -143,8 +148,8 @@ class TripSlide extends StatelessWidget {
                       Text(
                         '${trip.userName} ${trip.userLastName}',
                         style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          fontFamily: 'Montserrat-Bold',
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -165,8 +170,9 @@ class TripSlide extends StatelessWidget {
                                 ? ' ${trip.enterpriseName}'
                                 : 'No enterprise name',
                             style: const TextStyle(
-                              fontSize: 14,
-                            ),
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Medium',
+                                fontWeight: FontWeight.w700),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -183,23 +189,31 @@ class TripSlide extends StatelessWidget {
                       Text(
                         ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
                         style: const TextStyle(
-                          fontSize: 13,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      const Text('Tarifa Total'),
+                      const Text(
+                        'Tarifa Total',
+                        style: TextStyle(
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Bold',
+                            color: Color(0xff03132A)),
+                      ),
                       SizedBox(
                         width: size.width * .06,
                       ),
                       Text(
                         'S/ \$${trip.totalPrice}',
                         style: const TextStyle(
-                          fontSize: 13,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Bold',
+                            color: Color(0xff03132A)),
                       ),
                     ],
                   ),

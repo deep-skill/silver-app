@@ -17,24 +17,46 @@ class AdminScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 //    Credentials? credentials = ref.watch(authProvider).credentials;
 //    AuthState? authState = ref.watch(authProvider);
-    return Scaffold(
-      key: scaffoldKey,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-      ),
-      drawer: SideMenu(
-        scaffoldKey: scaffoldKey,
-      ),
-      body: const HomeView(),
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: const Color(0xff031329),
-        onPressed: () {
-          context.push('/admin/reserves/create');
-        },
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-    );
+    return kIsWeb
+        ? Scaffold(
+            backgroundColor: const Color(0xffF2F3F7),
+            key: scaffoldKey,
+            appBar: AppBar(
+              backgroundColor: const Color(0xff164772),
+              scrolledUnderElevation: 0,
+            ),
+            drawer: SideMenu(
+              scaffoldKey: scaffoldKey,
+            ),
+            body: const HomeView(),
+            floatingActionButton: FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: const Color(0xff031329),
+              onPressed: () {
+                context.push('/admin/reserves/create');
+              },
+              child: const Icon(Icons.add, color: Colors.white),
+            ),
+          )
+        : Scaffold(
+            backgroundColor: const Color(0xffF2F3F7),
+            key: scaffoldKey,
+            appBar: AppBar(
+              scrolledUnderElevation: 0,
+            ),
+            drawer: SideMenu(
+              scaffoldKey: scaffoldKey,
+            ),
+            body: const HomeView(),
+            floatingActionButton: FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: const Color(0xff031329),
+              onPressed: () {
+                context.push('/admin/reserves/create');
+              },
+              child: const Icon(Icons.add, color: Colors.white),
+            ),
+          );
   }
 }
 

@@ -28,27 +28,26 @@ class CustomSlide extends StatelessWidget {
       child: Container(
         height: size.height * .15,
         decoration: BoxDecoration(
-          color: const Color(0xffF2F3F7),
+          color: const Color(0xffFFFFFF),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade200,
+              color: Colors.grey.shade400,
               blurRadius: 10,
               offset: const Offset(0, 3),
             )
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: 100,
-                height: 110,
+                width: size.width * .28,
                 decoration: BoxDecoration(
                   color: reserve.driverName != ''
-                  ? const Color(0xff020B19)
-                  : Colors.grey.shade200,
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      ? const Color(0xff020B19)
+                      : const Color(0xFFF2F3F7),
+                  borderRadius: const BorderRadius.all(Radius.circular(5)),
                 ),
                 child: reserve.driverName != ''
                     ? Column(
@@ -61,12 +60,13 @@ class CustomSlide extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 10,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 11,
+                                fontFamily: 'Montserrat-Bold',
                                 color: Colors.white,
                               ),
                             ),
                           ),
+                          const SizedBox(height: 8),
                           Stack(children: [
                             ClipOval(
                                 child: Image.asset(
@@ -78,8 +78,8 @@ class CustomSlide extends StatelessWidget {
                         child: Text(
                         'Sin conductor',
                         style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                          fontFamily: 'Montserrat-Regular',
                           color: Colors.black,
                         ),
                       ))),
@@ -97,14 +97,15 @@ class CustomSlide extends StatelessWidget {
                       Text(
                         '${reserve.name} ${reserve.lastName}',
                         style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                          fontFamily: 'Montserrat-Bold',
                         ),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 7),
                   SizedBox(
-                    width: size.width * .5,
+                    width: size.width * .4,
                     child: Row(
                       children: [
                         const Icon(
@@ -115,8 +116,9 @@ class CustomSlide extends StatelessWidget {
                           child: Text(
                             ' ${reserve.entrepriseName}',
                             style: const TextStyle(
-                              fontSize: 16,
-                            ),
+                                fontSize: 12,
+                                fontFamily: 'Montserrat-Medium',
+                                fontWeight: FontWeight.w700),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -124,6 +126,7 @@ class CustomSlide extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 4),
                   Row(
                     children: [
                       const Icon(
@@ -133,11 +136,13 @@ class CustomSlide extends StatelessWidget {
                       Text(
                         ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
                         style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
+                  const SizedBox(height: 4),
                   Row(
                     children: [
                       const Icon(
@@ -147,8 +152,9 @@ class CustomSlide extends StatelessWidget {
                       Text(
                         ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
                         style: const TextStyle(
-                          fontSize: 16,
-                        ),
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium',
+                            fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),

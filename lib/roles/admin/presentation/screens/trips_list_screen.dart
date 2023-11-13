@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
@@ -45,80 +46,158 @@ class TripListViewState extends ConsumerState<TripListView> {
     final trips = ref.watch(tripsListProvider);
     final size = MediaQuery.of(context).size;
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: RefreshIndicator(
-        onRefresh: () => ref.read(tripsListProvider.notifier).reloadData(),
-        child: Column(
-          children: [
-            const SizedBox(height: 15),
-            GestureDetector(
-              onTap: () {
-                final searchedTrips = ref.read(searchedTripsProvider);
-                final searchQuery = ref.read(searchTripsProvider);
+    return kIsWeb
+        ? Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 220),
+            child: RefreshIndicator(
+              onRefresh: () =>
+                  ref.read(tripsListProvider.notifier).reloadData(),
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  GestureDetector(
+                    onTap: () {
+                      final searchedTrips = ref.read(searchedTripsProvider);
+                      final searchQuery = ref.read(searchTripsProvider);
 
-                showSearch<TripList?>(
-                        query: searchQuery,
-                        context: context,
-                        delegate: SearchTripDelegate(
-                            initialTrips: searchedTrips,
-                            searchTrips: ref
-                                .read(searchedTripsProvider.notifier)
-                                .searchTripsByQuery))
-                    .then((trip) {});
-              },
-              child: SizedBox(
-                  height: size.height * .07,
-                  child: const DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: Text(
-                            'Búsqueda de reservas',
-                            style: TextStyle(
-                                color: Color(0xFF636D77),
-                                fontSize: 15,
-                                fontFamily: 'Raleway-Semi-Bold'),
+                      showSearch<TripList?>(
+                              query: searchQuery,
+                              context: context,
+                              delegate: SearchTripDelegate(
+                                  initialTrips: searchedTrips,
+                                  searchTrips: ref
+                                      .read(searchedTripsProvider.notifier)
+                                      .searchTripsByQuery))
+                          .then((trip) {});
+                    },
+                    child: SizedBox(
+                        height: size.height * .07,
+                        child: const DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: SizedBox(
-                            height: 45,
-                            width: 45,
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                color: Color(0xff031329),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Text(
+                                  'Búsqueda de reservas',
+                                  style: TextStyle(
+                                      color: Color(0xFF636D77),
+                                      fontSize: 15,
+                                      fontFamily: 'Raleway-Semi-Bold'),
+                                ),
                               ),
-                              child: Icon(
-                                Icons.search,
-                                color: Colors.white,
-                              ),
-                            ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: SizedBox(
+                                  height: 45,
+                                  width: 45,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff031329),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
+                                    ),
+                                    child: Icon(
+                                      Icons.search,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                  )),
+                        )),
+                  ),
+                  const SizedBox(height: 15),
+                  TripsList(
+                    trips: trips,
+                    loadNextPage: () {
+                      ref.read(tripsListProvider.notifier).loadNextPage();
+                    },
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 15),
-            TripsList(
-              trips: trips,
-              loadNextPage: () {
-                ref.read(tripsListProvider.notifier).loadNextPage();
-              },
+          )
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: RefreshIndicator(
+              onRefresh: () =>
+                  ref.read(tripsListProvider.notifier).reloadData(),
+              child: Column(
+                children: [
+                  const SizedBox(height: 15),
+                  GestureDetector(
+                    onTap: () {
+                      final searchedTrips = ref.read(searchedTripsProvider);
+                      final searchQuery = ref.read(searchTripsProvider);
+
+                      showSearch<TripList?>(
+                              query: searchQuery,
+                              context: context,
+                              delegate: SearchTripDelegate(
+                                  initialTrips: searchedTrips,
+                                  searchTrips: ref
+                                      .read(searchedTripsProvider.notifier)
+                                      .searchTripsByQuery))
+                          .then((trip) {});
+                    },
+                    child: SizedBox(
+                        height: size.height * .07,
+                        child: const DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(12)),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(left: 20),
+                                child: Text(
+                                  'Búsqueda de reservas',
+                                  style: TextStyle(
+                                      color: Color(0xFF636D77),
+                                      fontSize: 15,
+                                      fontFamily: 'Raleway-Semi-Bold'),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(right: 20),
+                                child: SizedBox(
+                                  height: 45,
+                                  width: 45,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff031329),
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
+                                    ),
+                                    child: Icon(
+                                      Icons.search,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        )),
+                  ),
+                  const SizedBox(height: 15),
+                  TripsList(
+                    trips: trips,
+                    loadNextPage: () {
+                      ref.read(tripsListProvider.notifier).loadNextPage();
+                    },
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

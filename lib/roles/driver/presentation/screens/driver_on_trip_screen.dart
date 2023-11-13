@@ -35,7 +35,7 @@ class ReserveDetailScreenState extends ConsumerState<DriverOnTripScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Detalles'),
+          title: const Text('Viaje en curso'),
           centerTitle: true,
         ),
         body: Container(

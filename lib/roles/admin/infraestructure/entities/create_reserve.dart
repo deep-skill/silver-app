@@ -3,9 +3,12 @@ class CreateReserve {
   int userId;
   String userName;
   String userLastName;
-  int enterpriseId;
+  int? enterpriseId;
   int? carId;
-  int? licensePlate;
+  String? licensePlate;
+  String? brand;
+  String? model;
+  String? color;
   int? driverId;
   String? driverName;
   String? driverLastName;
@@ -30,6 +33,9 @@ class CreateReserve {
     this.driverLastName,
     this.carId,
     this.licensePlate,
+    this.brand,
+    this.model,
+    this.color,
     required this.tripType,
     required this.serviceType,
     required this.startTime,
@@ -43,9 +49,9 @@ class CreateReserve {
 
   factory CreateReserve.fromJson(Map<String, dynamic> json) => CreateReserve(
         id: json['id'],
-        userId: json['User']['id'],
-        userName: json['User']['name'],
-        userLastName: json['User']['lastName'],
+        userId: json['User'] == null ? null : json['User']['id'],
+        userName: json['User'] == null ? null : json['User']['name'],
+        userLastName: json['User'] == null ? null : json['User']['lastName'],
         enterpriseId: json['Enterprise'] == null ? null : json['Enterprise']['id'],
         driverId: json['Driver'] == null ? null : json['Driver']['id'],
         driverName: json['Driver'] == null ? null : json['Driver']['name'],
@@ -53,14 +59,17 @@ class CreateReserve {
             json['Driver'] == null ? null : json['Driver']['lastName'],
         carId: json['Car'] == null ? null : json['Car']['id'],
         licensePlate: json['Car'] == null ? null : json['Car']['licensePlate'],
+        brand: json['Car'] == null ? null : json['Car']['brand'],
+        model: json['Car'] == null ? null : json['Car']['model'],
+        color: json['Car'] == null ? null : json['Car']['color'],
         tripType: json['tripType'],
         serviceType: json['serviceType'],
         startAddress: json['startAddress'],
         endAddress: json['endAddress'],
-        price: json['price'],
+        price: json['price'].toDouble(),
+        driverPercent: 0,
         silverPercent: json['silverPercent'],
-        driverPercent: json['driverPercent'],
-        startTime: json['startTime'],
-        startDate: json['startTime'],
+        startTime: json['startTime'].substring(11, 16),
+        startDate: json['startTime'].substring(0, 10),
       );
 }

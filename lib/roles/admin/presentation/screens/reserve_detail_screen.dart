@@ -212,7 +212,7 @@ class ReserveInfo extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
-                        context.push('/reserves/create');
+                        context.push('/admin/reserves/create/${reserve.id}');
                       },
                       style: ButtonStyle(
                         shape:

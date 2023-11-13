@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
@@ -21,7 +20,7 @@ import 'package:silverapp/roles/admin/infraestructure/inputs/user_id.dart';
 final reserveFormProvider = StateNotifierProvider.autoDispose
     .family<ReserveFormNotifier, ReserveFormState, CreateReserve>(
         (ref, reserve) {
-  // final createUpdateCallback = ref.watch( productsRepositoryProvider ).createUpdateProduct;
+           // final createUpdateCallback = ref.watch( productsRepositoryProvider ).createUpdateProduct;
   Future<bool> createCallback(Map<String, dynamic> reserveLike) async {
     try {
       final String? reserveId = reserveLike['id'];
@@ -54,18 +53,26 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     this.onSubmitCallback,
     required CreateReserve reserve,
   }) : super(ReserveFormState(
-          userId: const UserId.pure(),
-          serviceType: const ServiceType.pure(),
-          startDate: const StartDate.pure(),
-          startTime: const StartTime.pure(),
-          tripType: const TripType.pure(),
-          startAddress: const StartAddress.pure(),
-          endAddress: const EndAddress.pure(),
-          enterpriseId: const EnterpriseId.pure(),
-          carId: const CarId.pure(),
-          driverId: const DriverId.pure(),
-          price: const Price.pure(),
-          silverPercent: const SilverPercent.pure(),
+          userId: reserve.userId == 0 ? const UserId.pure() :  UserId.dirty(reserve.userId),
+          userName: reserve.userId == 0 ? 'Ejem. Carla' : reserve.userName,
+          userLastName: reserve.userId == 0 ? 'Peña Ramirez' : reserve.userLastName,
+          serviceType: reserve.serviceType ==  ''  ? const ServiceType.pure() : ServiceType.dirty(reserve.serviceType[0].toUpperCase() + reserve.serviceType.substring(1).toLowerCase()),
+          startDate: reserve.startDate == '' ? const StartDate.pure() : StartDate.dirty(reserve.startDate),
+          startTime: reserve.startTime == '' ? const StartTime.pure() : StartTime.dirty(reserve.startTime),
+          tripType: reserve.tripType == '' ? const TripType.pure(): TripType.dirty(reserve.tripType[0].toUpperCase() + reserve.tripType.substring(1).toLowerCase()),
+          startAddress: reserve.startAddress == '' ? const StartAddress.pure() : StartAddress.dirty(reserve.startAddress),
+          endAddress: reserve.endAddress == '' ? const EndAddress.pure() : EndAddress.dirty(reserve.endAddress!),
+          enterpriseId: reserve.enterpriseId == null ? const EnterpriseId.pure() : EnterpriseId.dirty(reserve.enterpriseId!),
+          driverId: reserve.driverId == null ? const DriverId.pure() : DriverId.dirty(reserve.driverId!),
+          driverName: reserve.driverId == null ? 'Ejem. Luis' : reserve.driverName!,
+          driverLastName: reserve.driverId == null ? 'Perez' : reserve.driverLastName!,
+          carId: reserve.carId == null ? const CarId.pure() : CarId.dirty(reserve.carId!),
+          licensePlate: reserve.carId == null ? 'A1R610' : reserve.licensePlate!,
+          brand: reserve.carId == null ? 'Ejem. Toyota' : reserve.brand!,
+          model: reserve.carId == null ? 'Corolla' : reserve.model!,
+          color: reserve.carId == null ? 'Gris' : reserve.color!,
+          price: reserve.price == 0 ? const Price.pure() : Price.dirty(reserve.price.toString()),
+          silverPercent: reserve.silverPercent == 0 ? const SilverPercent.pure() : SilverPercent.dirty(reserve.silverPercent.toString()),
         ));
 
   Future<bool> onFormSubmit() async {

@@ -12,7 +12,7 @@ String tripDriverStatusToJson(TripDriverStatus data) =>
 
 class TripDriverStatus {
   int id;
-  int totalPrice;
+  int? totalPrice;
   DateTime? onWayDriver;
   DateTime? arrivedDriver;
   DateTime? startTime;
@@ -54,7 +54,7 @@ class TripDriverStatus {
   factory TripDriverStatus.fromJson(Map<String, dynamic> json) =>
       TripDriverStatus(
         id: json["id"],
-        totalPrice: json["totalPrice"],
+        totalPrice: json["totalPrice"] ?? 0,
         onWayDriver: json["onWayDriver"] == null
             ? null
             : DateTime.parse(json["onWayDriver"]),
@@ -74,13 +74,14 @@ class TripDriverStatus {
         reserveId: json["reserveId"],
         startAddress: json["Reserve"]["startAddress"],
         endAddress: json["Reserve"]["endAddress"],
-        stops: List<Stop>.from(json["Stops"].map((x) => Stop.fromJson(x))),
-        detours:
-            List<Detour>.from(json["Detours"].map((x) => Detour.fromJson(x))),
+        stops:
+            List<Stop>.from(json["Stops"]?.map((x) => Stop.fromJson(x)) ?? []),
+        detours: List<Detour>.from(
+            json["Detours"]?.map((x) => Detour.fromJson(x)) ?? []),
         parkings: List<Parking>.from(
-            json["Parkings"].map((x) => Parking.fromJson(x))),
+            json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
         tollMaps: List<TollMap>.from(
-            json["TollMaps"].map((x) => TollMap.fromJson(x))),
+            json["TollMaps"]?.map((x) => TollMap.fromJson(x)) ?? []),
       );
 
   Map<String, dynamic> toJson() => {

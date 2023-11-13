@@ -25,7 +25,7 @@ class TripDriverStatusNotifier
 
   Future<void> loadTripState(String tripStatusId) async {
     if (state[tripStatusId] != null) return;
-    final tripState = await getTripDriverStatus(tripStatusId);
-    state[tripStatusId] = tripState;
+    final tripStatus = await getTripDriverStatus(tripStatusId);
+    state = {...state, tripStatusId: tripStatus};
   }
 }

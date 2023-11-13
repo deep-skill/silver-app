@@ -17,6 +17,7 @@ class ReserveDetailScreenState extends ConsumerState<DriverOnTripScreen> {
   @override
   void initState() {
     super.initState();
+
     ref.read(tripDriverStatusProvider.notifier).loadTripState(widget.tripId);
   }
 
@@ -31,6 +32,7 @@ class ReserveDetailScreenState extends ConsumerState<DriverOnTripScreen> {
             child: CircularProgressIndicator(),
           ));
     }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Detalles'),
@@ -57,6 +59,17 @@ class TripInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(trip.toString());
+    return ListView(
+      children: [
+        Column(
+          children: [
+            Text(trip.id.toString()),
+            Text(trip.endAddress),
+            Text(trip.startAddress),
+            Text(trip.totalPrice.toString()),
+          ],
+        ),
+      ],
+    );
   }
 }

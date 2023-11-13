@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-
-class AlertTripStart extends StatefulWidget {
-  const AlertTripStart({super.key});
+class AlertArrivedDriver extends StatefulWidget {
+  final tripId;
+  const AlertArrivedDriver({super.key, required this.tripId});
 
   @override
-  State<AlertTripStart> createState() => _AlertTripStartState();
+  State<AlertArrivedDriver> createState() => _AlertTripStartState();
 }
 
-class _AlertTripStartState extends State<AlertTripStart> {
+class _AlertTripStartState extends State<AlertArrivedDriver> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -27,9 +27,7 @@ class _AlertTripStartState extends State<AlertTripStart> {
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFF23A5CD),
                 ),
-
                 onPressed: () {},
-
                 child: const Text(
                   "Confirmar",
                   style: TextStyle(
@@ -46,9 +44,7 @@ class _AlertTripStartState extends State<AlertTripStart> {
               style: ButtonStyle(
                   side: MaterialStateProperty.all(
                       const BorderSide(color: Color(0xFF23A5CD)))),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => Navigator.of(context).pop(),
               child: const Text('Cerrar'),
             ),
           ),

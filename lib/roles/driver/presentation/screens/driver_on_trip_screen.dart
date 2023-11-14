@@ -13,6 +13,8 @@ import 'package:silverapp/roles/driver/presentation/widgets/buttons/button_drive
 import 'package:silverapp/roles/driver/presentation/widgets/driver_screen/address_info.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/title_reserve.dart';
 
+import '../widgets/buttons/button_back_home.dart';
+
 class DriverOnTripScreen extends ConsumerStatefulWidget {
   const DriverOnTripScreen({super.key, required this.tripId});
 
@@ -74,11 +76,6 @@ class TripInfo extends ConsumerWidget {
   final TripDriverStatus trip;
 
   Widget getAlertWidget() {
-    if (trip.startTime != null) {
-      return TripButton(
-          buttonText: "Finalizar viaje",
-          alertWidget: AlertTripEnd(tripId: trip.id, reload: reload));
-    }
     if (trip.arrivedDriver != null) {
       return TripButton(
           buttonText: "Iniciar viaje",
@@ -100,7 +97,9 @@ class TripInfo extends ConsumerWidget {
           startTime: trip.startTime,
           endTime: trip.endTime),
       const TripStatusText(),
-      getAlertWidget(),
+      trip.startTime == null && trip.endTime == null
+          ? getAlertWidget()
+          : const SizedBox(),
       const SizedBox(
         height: 10,
       ),
@@ -115,7 +114,15 @@ class TripInfo extends ConsumerWidget {
       ),
       trip.arrivedDriver == null
           ? const SizedBox()
-          : const AdditionalInformation(boolValue: true)
+          : const AdditionalInformation(boolValue: true),
+      trip.startTime != null && trip.endTime == null
+          ? TripButton(
+              buttonText: "Finalizar viaje",
+              alertWidget: AlertTripEnd(tripId: trip.id, reload: reload))
+          : const SizedBox(),
+      trip.endTime == null
+          ? const SizedBox()
+          : const BackHomeButton(buttonText: "Volver al inicio")
     ]);
   }
 }

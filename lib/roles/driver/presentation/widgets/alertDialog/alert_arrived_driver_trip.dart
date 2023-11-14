@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/driver/presentation/providers/driver_state_provider.dart';
 import '../../../../../config/dio/dio.dart';
 
 class AlertArrivedDriver extends StatefulWidget {
   final int tripId;
-
+  final VoidCallback reload;
   const AlertArrivedDriver({
-    super.key,
+    Key? key,
     required this.tripId,
-  });
+    required this.reload,
+  }) : super(key: key);
 
   @override
   State<AlertArrivedDriver> createState() => _AlertTripStartState();
@@ -18,15 +17,12 @@ class AlertArrivedDriver extends StatefulWidget {
 class _AlertTripStartState extends State<AlertArrivedDriver> {
   void patchArrivedDrive(BuildContext context, int tripId) async {
     try {
-      final BuildContext currentContext = context;
-      print(tripId);
       await dio.patch('trips/$tripId',
           data: {"arrivedDriver": DateTime.now().toIso8601String()});
-      /*  ref
-          .read(tripDriverStatusProvider.notifier)
-          .loadTripState(widget.tripId.toString()); */
-      Navigator.of(currentContext).pop();
+      widget.reload();
+      Navigator.of(context).pop();
     } catch (e) {
+      // ignore: avoid_print
       print(e);
     }
   }

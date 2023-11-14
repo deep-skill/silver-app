@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 
-class AlertArrivedDriver extends StatefulWidget {
-  final tripId;
-  const AlertArrivedDriver({super.key, required this.tripId});
+class AlertStartTimeDriver extends StatefulWidget {
+  final int tripId;
+  final VoidCallback reload;
+  const AlertStartTimeDriver({
+    Key? key,
+    required this.tripId,
+    required this.reload,
+  }) : super(key: key);
 
   @override
-  State<AlertArrivedDriver> createState() => _AlertTripStartState();
+  State<AlertStartTimeDriver> createState() => _AlertTripStartState();
 }
 
-class _AlertTripStartState extends State<AlertArrivedDriver> {
+class _AlertTripStartState extends State<AlertStartTimeDriver> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

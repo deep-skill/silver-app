@@ -114,7 +114,15 @@ class TripInfo extends ConsumerWidget {
       ),
       trip.arrivedDriver == null
           ? const SizedBox()
-          : const AdditionalInformation(boolValue: true),
+          : AdditionalInformation(
+              boolValue: trip.endTime == null ? true : false,
+              reload: reload,
+              tripId: trip.id,
+              stops: trip.stops,
+              observations: trip.observations,
+              parkings: trip.parkings,
+              tollMaps: trip.tollMaps,
+            ),
       trip.startTime != null && trip.endTime == null
           ? TripButton(
               buttonText: "Finalizar viaje",

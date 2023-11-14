@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AlertStops extends StatefulWidget {
-  final Function(String) onTextoAgregado;
+  final Function(String) addStops;
 
-  const AlertStops(this.onTextoAgregado, {super.key});
+  const AlertStops(this.addStops, {super.key});
 
   @override
   State<AlertStops> createState() => _AlertParadasState();
@@ -45,7 +45,6 @@ class _AlertParadasState extends State<AlertStops> {
             controller: _controller,
             decoration: _inputDecoration,
           ),
-          // Agrega más widgets según tus necesidades
         ],
       ),
       actions: <Widget>[
@@ -60,7 +59,7 @@ class _AlertParadasState extends State<AlertStops> {
                     backgroundColor: const Color(0xFF23A5CD),
                   ),
                   onPressed: () {
-                    widget.onTextoAgregado(_controller.text);
+                    widget.addStops(_controller.text);
                     _controller.clear();
                     Navigator.of(context).pop();
                   },
@@ -90,7 +89,6 @@ class _AlertParadasState extends State<AlertStops> {
             ],
           ),
         ),
-        // Agrega más botones o acciones según tus necesidades
       ],
     );
   }

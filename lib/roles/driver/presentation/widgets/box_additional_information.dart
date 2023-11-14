@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_Toll.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_defaut.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_observations.dart';
@@ -9,18 +11,44 @@ import 'package:silverapp/roles/driver/presentation/widgets/title_additional_inf
 
 class AdditionalInformation extends StatefulWidget {
   final bool boolValue;
-  const AdditionalInformation({super.key, required this.boolValue});
+  final int tripId;
+  final VoidCallback reload;
+  final List<Stop> stops;
+  final List<Observations> observations;
+  final List<Parking> parkings;
+  final List<TollMap> tollMaps;
+
+  const AdditionalInformation({
+    Key? key,
+    required this.boolValue,
+    required this.tripId,
+    required this.reload,
+    required this.stops,
+    required this.observations,
+    required this.parkings,
+    required this.tollMaps,
+  }) : super(key: key);
 
   @override
   State<AdditionalInformation> createState() => _AdditionalInformationState();
 }
 
 class _AdditionalInformationState extends State<AdditionalInformation> {
-  String selectedOption = 'Seleccionar item'; // Opción predeterminada
-  List<String> stops = [];
-  List<String> observations = [];
-  List<String> parkingLot = [];
-  List<String> tolls = [];
+  String selectedOption = 'Seleccionar item';
+  late List<Stop> stops;
+  late List<Observations> observations;
+  late List<Parking> parkings;
+  late List<TollMap> tolls;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedOption = 'Seleccionar item';
+    stops = List<Stop>.from(widget.stops);
+    observations = List<Observations>.from(widget.observations);
+    parkings = List<Parking>.from(widget.parkings);
+    tolls = List<TollMap>.from(widget.tollMaps);
+  }
 
   List<String> options = [
     'Seleccionar item',
@@ -30,52 +58,83 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     'Observaciones'
   ];
 
-  void removeStop(int index) {
-    setState(() {
-      stops.removeAt(index);
-    });
+  void addStops(String stop) async {
+    try {
+      await dio
+          .post('stops', data: {"location": stop, "tripId": widget.tripId});
+      widget.reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
-  void remObservations(int index) {
-    setState(() {
-      observations.removeAt(index);
-    });
+  void removeStop(int index) async {
+    try {
+      await dio.delete(
+        'stops/$index',
+      );
+      widget.reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
-  void remParkingLot(int index) {
-    setState(() {
-      parkingLot.removeAt(index);
-    });
+  void addObservations(String observation) async {
+    try {
+      await dio.post('observations',
+          data: {"observation": observation, "tripId": widget.tripId});
+      widget.reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
-  void remTolls(int index) {
-    setState(() {
-      tolls.removeAt(index);
-    });
+  void remObservations(int index) async {
+    try {
+      await dio.delete(
+        'observations/$index',
+      );
+      widget.reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  void addParking(String parking, String amount) async {
+    double? amoutDouble = double.tryParse(amount);
+    try {
+      await dio.post('parkings', data: {
+        "name": parking,
+        "tripId": widget.tripId,
+        "amount": amoutDouble
+      });
+      widget.reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
+  void remParkingLot(int index) async {
+    try {
+      await dio.delete('parkings/$index');
+      widget.reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
   void addTools(String toll) {
-    setState(() {
-      tolls.add(toll);
-    });
+    print(toll);
   }
 
-  void addParkingLot(String parking) {
-    setState(() {
-      parkingLot.add(parking);
-    });
-  }
-
-  void addObservations(String observation) {
-    setState(() {
-      observations.add(observation);
-    });
-  }
-
-  void addStops(String stop) {
-    setState(() {
-      stops.add(stop);
-    });
+  void remTolls(int index) {
+    print(index);
   }
 
   void _showCustomDialog(String option) {
@@ -90,7 +149,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           case "Observaciones":
             return AlertObservations(addObservations);
           case "Estacionamiento":
-            return AlertParking(addParkingLot);
+            return AlertParking(addParking);
           default:
             return const AlertDefaul();
         }
@@ -136,7 +195,6 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedOption = newValue ?? '';
-                        // Llama al método para mostrar el diálogo
                         if (selectedOption != 'Seleccionar item') {
                           _showCustomDialog(selectedOption);
                         }
@@ -151,13 +209,11 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           ),
           Column(
             children: stops.asMap().entries.map((entry) {
-              final index = entry.key;
               final stop = entry.value;
-
               return CustomCard(
-                text: stop,
+                text: stop.location,
                 onPressed: () {
-                  removeStop(index);
+                  removeStop(stop.id);
                 },
               );
             }).toList(),
@@ -170,9 +226,8 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
             children: tolls.asMap().entries.map((entry) {
               final index = entry.key;
               final tolls = entry.value;
-
               return CustomCard(
-                text: tolls,
+                text: tolls.location,
                 onPressed: () {
                   remTolls(index);
                 },
@@ -184,14 +239,12 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
             label: "Estacionamiento",
           ),
           Column(
-            children: parkingLot.asMap().entries.map((entry) {
-              final index = entry.key;
-              final parkingLot = entry.value;
-
+            children: parkings.asMap().entries.map((entry) {
+              final parking = entry.value;
               return CustomCard(
-                text: parkingLot,
+                text: parking.name,
                 onPressed: () {
-                  remParkingLot(index);
+                  remParkingLot(parking.id);
                 },
               );
             }).toList(),
@@ -202,13 +255,11 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           ),
           Column(
               children: observations.asMap().entries.map((entry) {
-            final index = entry.key;
-            final observations = entry.value;
-
+            final observation = entry.value;
             return CustomCard(
-              text: observations,
+              text: observation.observation,
               onPressed: () {
-                remObservations(index);
+                remObservations(observation.id);
               },
             );
           }).toList())

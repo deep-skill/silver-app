@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AlertParking extends StatefulWidget {
-  final Function(String) onTextoAgregado;
+  final Function(String, String) addParking;
 
-  const AlertParking(this.onTextoAgregado, {super.key});
+  const AlertParking(this.addParking, {super.key});
 
   @override
   State<AlertParking> createState() => _AlertParadasState();
@@ -11,13 +11,29 @@ class AlertParking extends StatefulWidget {
 
 class _AlertParadasState extends State<AlertParking> {
   final TextEditingController _controller = TextEditingController();
+  final TextEditingController _controllerInput = TextEditingController();
 
   final InputDecoration _inputDecoration = const InputDecoration(
       labelText: 'Ingresar Estacionamiento',
       contentPadding: EdgeInsets.all(5),
       focusedBorder: OutlineInputBorder(
-        borderSide:
-            BorderSide(color: Colors.black), // Borde negro al enfocar el campo
+        borderSide: BorderSide(color: Colors.black),
+        borderRadius: BorderRadius.all(
+          Radius.circular(5),
+        ),
+      ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.black),
+        borderRadius: BorderRadius.all(
+          Radius.circular(5),
+        ),
+      ));
+
+  final InputDecoration _inputDecorationAmout = const InputDecoration(
+      labelText: 'S/ 00.00',
+      contentPadding: EdgeInsets.all(5),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: Colors.black),
         borderRadius: BorderRadius.all(
           Radius.circular(5),
         ),
@@ -42,10 +58,16 @@ class _AlertParadasState extends State<AlertParking> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
+            controller: _controllerInput,
+            decoration: _inputDecorationAmout,
+          ),
+          const SizedBox(
+            height: 2,
+          ),
+          TextField(
             controller: _controller,
             decoration: _inputDecoration,
           ),
-          // Agrega más widgets según tus necesidades
         ],
       ),
       actions: <Widget>[
@@ -60,7 +82,7 @@ class _AlertParadasState extends State<AlertParking> {
                     backgroundColor: const Color(0xFF23A5CD),
                   ),
                   onPressed: () {
-                    widget.onTextoAgregado(_controller.text);
+                    widget.addParking(_controller.text, _controllerInput.text);
                     _controller.clear();
                     Navigator.of(context).pop();
                   },
@@ -90,7 +112,6 @@ class _AlertParadasState extends State<AlertParking> {
             ],
           ),
         ),
-        // Agrega más botones o acciones según tus necesidades
       ],
     );
   }

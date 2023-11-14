@@ -22,7 +22,7 @@ class TripDriverStatus {
   String startAddress;
   String endAddress;
   List<Stop> stops;
-  List<Detour> detours;
+  List<Observations> observations;
   List<Parking> parkings;
   List<TollMap> tollMaps;
 
@@ -36,7 +36,7 @@ class TripDriverStatus {
     required this.status,
     required this.reserveId,
     required this.stops,
-    required this.detours,
+    required this.observations,
     required this.parkings,
     required this.tollMaps,
     required this.startAddress,
@@ -62,8 +62,8 @@ class TripDriverStatus {
         endAddress: json["Reserve"]["endAddress"],
         stops:
             List<Stop>.from(json["Stops"]?.map((x) => Stop.fromJson(x)) ?? []),
-        detours: List<Detour>.from(
-            json["Detours"]?.map((x) => Detour.fromJson(x)) ?? []),
+        observations: List<Observations>.from(
+            json["Observations"]?.map((x) => Observations.fromJson(x)) ?? []),
         parkings: List<Parking>.from(
             json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
         tollMaps: List<TollMap>.from(
@@ -80,109 +80,85 @@ class TripDriverStatus {
         "status": status,
         "reserveId": reserveId,
         "Stops": List<dynamic>.from(stops.map((x) => x.toJson())),
-        "Detours": List<dynamic>.from(detours.map((x) => x.toJson())),
+        "Observations": List<dynamic>.from(observations.map((x) => x.toJson())),
         "Parkings": List<dynamic>.from(parkings.map((x) => x.toJson())),
         "TollMaps": List<dynamic>.from(tollMaps.map((x) => x.toJson())),
       };
 }
 
-class Detour {
-  String id;
-  int amount;
+class Observations {
+  int id;
   String observation;
   int tripId;
 
-  Detour({
+  Observations({
     required this.id,
-    required this.amount,
     required this.observation,
     required this.tripId,
   });
 
-  factory Detour.fromJson(Map<String, dynamic> json) => Detour(
+  factory Observations.fromJson(Map<String, dynamic> json) => Observations(
         id: json["id"],
-        amount: json["amount"],
         observation: json["observation"],
-        tripId: json["trip_id"],
+        tripId: json["tripId"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "amount": amount,
         "observation": observation,
-        "trip_id": tripId,
+        "tripId": tripId,
       };
 }
 
 class Parking {
-  String id;
+  int id;
   int amount;
-  int duration;
   String name;
-  String location;
-  String observation;
   int tripId;
 
   Parking({
     required this.id,
     required this.amount,
-    required this.duration,
     required this.name,
-    required this.location,
-    required this.observation,
     required this.tripId,
   });
 
   factory Parking.fromJson(Map<String, dynamic> json) => Parking(
         id: json["id"],
         amount: json["amount"],
-        duration: json["duration"],
         name: json["name"],
-        location: json["location"],
-        observation: json["observation"],
-        tripId: json["trip_id"],
+        tripId: json["tripId"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "amount": amount,
-        "duration": duration,
         "name": name,
-        "location": location,
-        "observation": observation,
-        "trip_id": tripId,
+        "tripId": tripId,
       };
 }
 
 class Stop {
-  String id;
-  String location;
-  int hours;
-  int minutes;
   int tripId;
+  int id;
+  String location;
 
   Stop({
     required this.id,
     required this.location,
-    required this.hours,
-    required this.minutes,
     required this.tripId,
   });
 
   factory Stop.fromJson(Map<String, dynamic> json) => Stop(
         id: json["id"],
         location: json["location"],
-        hours: json["hours"],
-        minutes: json["minutes"],
-        tripId: json["trip_id"],
+        tripId: json["tripId"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "location": location,
-        "hours": hours,
-        "minutes": minutes,
-        "trip_id": tripId,
+        "tripId": tripId,
       };
 }
 

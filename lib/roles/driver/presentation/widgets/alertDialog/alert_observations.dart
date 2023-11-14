@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AlertObservations extends StatefulWidget {
-  final Function(String) onTextoAgregado;
+  final Function(String) addObservations;
 
-  const AlertObservations(this.onTextoAgregado, {super.key});
+  const AlertObservations(this.addObservations, {super.key});
 
   @override
   State<AlertObservations> createState() => _AlertParadasState();
@@ -16,8 +16,7 @@ class _AlertParadasState extends State<AlertObservations> {
       labelText: 'Ingresar observacion',
       contentPadding: EdgeInsets.all(5),
       focusedBorder: OutlineInputBorder(
-        borderSide:
-            BorderSide(color: Colors.black), // Borde negro al enfocar el campo
+        borderSide: BorderSide(color: Colors.black),
         borderRadius: BorderRadius.all(
           Radius.circular(5),
         ),
@@ -45,7 +44,6 @@ class _AlertParadasState extends State<AlertObservations> {
             controller: _controller,
             decoration: _inputDecoration,
           ),
-          // Agrega más widgets según tus necesidades
         ],
       ),
       actions: <Widget>[
@@ -60,7 +58,7 @@ class _AlertParadasState extends State<AlertObservations> {
                     backgroundColor: const Color(0xFF23A5CD),
                   ),
                   onPressed: () {
-                    widget.onTextoAgregado(_controller.text);
+                    widget.addObservations(_controller.text);
                     _controller.clear();
                     Navigator.of(context).pop();
                   },
@@ -90,7 +88,6 @@ class _AlertParadasState extends State<AlertObservations> {
             ],
           ),
         ),
-        // Agrega más botones o acciones según tus necesidades
       ],
     );
   }

@@ -13,15 +13,11 @@ String tripDriverStatusToJson(TripDriverStatus data) =>
 class TripDriverStatus {
   int id;
   int? totalPrice;
-  DateTime? onWayDriver;
+  DateTime onWayDriver;
   DateTime? arrivedDriver;
   DateTime? startTime;
   DateTime? endTime;
   String? status;
-  dynamic driverRating;
-  dynamic passengerRating;
-  DateTime createdAt;
-  DateTime updatedAt;
   int reserveId;
   String startAddress;
   String endAddress;
@@ -38,10 +34,6 @@ class TripDriverStatus {
     required this.startTime,
     required this.endTime,
     required this.status,
-    required this.driverRating,
-    required this.passengerRating,
-    required this.createdAt,
-    required this.updatedAt,
     required this.reserveId,
     required this.stops,
     required this.detours,
@@ -55,9 +47,7 @@ class TripDriverStatus {
       TripDriverStatus(
         id: json["id"],
         totalPrice: json["totalPrice"] ?? 0,
-        onWayDriver: json["onWayDriver"] == null
-            ? null
-            : DateTime.parse(json["onWayDriver"]),
+        onWayDriver: DateTime.parse(json["onWayDriver"]),
         arrivedDriver: json["arrivedDriver"] == null
             ? null
             : DateTime.parse(json["arrivedDriver"]),
@@ -67,10 +57,6 @@ class TripDriverStatus {
         endTime:
             json["endTime"] == null ? null : DateTime.parse(json["endTime"]),
         status: json["status"] ?? '',
-        driverRating: json["driverRating"],
-        passengerRating: json["passengerRating"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
         reserveId: json["reserveId"],
         startAddress: json["Reserve"]["startAddress"],
         endAddress: json["Reserve"]["endAddress"],
@@ -87,15 +73,11 @@ class TripDriverStatus {
   Map<String, dynamic> toJson() => {
         "id": id,
         "totalPrice": totalPrice,
-        "onWayDriver": onWayDriver?.toIso8601String(),
+        "onWayDriver": onWayDriver.toIso8601String(),
         "arrivedDriver": arrivedDriver?.toIso8601String(),
         "startTime": startTime?.toIso8601String(),
         "endTime": endTime?.toIso8601String(),
         "status": status,
-        "driverRating": driverRating,
-        "passengerRating": passengerRating,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
         "reserveId": reserveId,
         "Stops": List<dynamic>.from(stops.map((x) => x.toJson())),
         "Detours": List<dynamic>.from(detours.map((x) => x.toJson())),

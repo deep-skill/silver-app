@@ -18,9 +18,9 @@ class CreateReserve {
   String startDate;
   String startAddress;
   String? endAddress;
-  double price;
+  String price;
   int driverPercent;
-  int silverPercent;
+  String silverPercent;
 
   CreateReserve({
     required this.id,
@@ -66,9 +66,9 @@ class CreateReserve {
         serviceType: json['serviceType'],
         startAddress: json['startAddress'],
         endAddress: json['endAddress'],
-        price: json['price'].toDouble(),
+        price: json['price'].toString(),
         driverPercent: 0,
-        silverPercent: json['silverPercent'],
+        silverPercent: json['silverPercent'].toString(),
         startTime: json['startTime'].substring(11, 16),
         startDate: json['startTime'].substring(0, 10),
       );

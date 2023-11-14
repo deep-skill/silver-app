@@ -6,7 +6,7 @@ enum SilverPercentError { empty, value, format }
 // Extend FormzInput and provide the input type and error type.
 class SilverPercent extends FormzInput<String, SilverPercentError> {
   // Call super.pure to represent an unmodified form input.
-  const SilverPercent.pure() : super.pure('0');
+  const SilverPercent.pure() : super.pure('');
 
   // Call super.dirty to represent a modified form input.
   const SilverPercent.dirty(String value) : super.dirty(value);

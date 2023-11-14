@@ -592,6 +592,7 @@ class CreateReserveView extends ConsumerWidget {
                   width: size.width * .45,
                   child: Stack(children: [
                     CustomFormField(
+                      initialValue: reserveForm.price.value,
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       isTopField: true,
@@ -612,6 +613,7 @@ class CreateReserveView extends ConsumerWidget {
                 SizedBox(
                   width: size.width * .45,
                   child: CustomFormField(
+                    initialValue: reserveForm.silverPercent.value == 0 ? '' : reserveForm.silverPercent.value ,
                     keyboardType: const TextInputType.numberWithOptions(),
                     isTopField: true,
                     isBottomField: true,

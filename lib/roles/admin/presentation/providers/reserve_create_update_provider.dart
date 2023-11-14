@@ -45,9 +45,9 @@ class ReserveCreteUpdateNotifier
       startDate: '',
       startAddress: '',
       endAddress: '',
-      price: 0,
+      price: '',
       driverPercent: 0,
-      silverPercent: 0,
+      silverPercent: '',
     );
   }
 

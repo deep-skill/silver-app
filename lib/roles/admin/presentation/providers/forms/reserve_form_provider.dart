@@ -56,23 +56,28 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           userId: reserve.userId == 0 ? const UserId.pure() :  UserId.dirty(reserve.userId),
           userName: reserve.userId == 0 ? 'Ejem. Carla' : reserve.userName,
           userLastName: reserve.userId == 0 ? 'Peña Ramirez' : reserve.userLastName,
-          serviceType: reserve.serviceType ==  ''  ? const ServiceType.pure() : ServiceType.dirty(reserve.serviceType[0].toUpperCase() + reserve.serviceType.substring(1).toLowerCase()),
           startDate: reserve.startDate == '' ? const StartDate.pure() : StartDate.dirty(reserve.startDate),
           startTime: reserve.startTime == '' ? const StartTime.pure() : StartTime.dirty(reserve.startTime),
           tripType: reserve.tripType == '' ? const TripType.pure(): TripType.dirty(reserve.tripType[0].toUpperCase() + reserve.tripType.substring(1).toLowerCase()),
+          //serviceType: reserve.serviceType ==  ''  ? const ServiceType.pure() : ServiceType.dirty(reserve.serviceType[0].toUpperCase() + reserve.serviceType.substring(1).toLowerCase()),
+          serviceType: (reserve.serviceType == ''
+          ? const ServiceType.pure()
+          : reserve.serviceType == 'ENTERPRISE'
+          ? const ServiceType.dirty('Empresarial')
+          : const ServiceType.dirty('Personal')),
           startAddress: reserve.startAddress == '' ? const StartAddress.pure() : StartAddress.dirty(reserve.startAddress),
           endAddress: reserve.endAddress == '' ? const EndAddress.pure() : EndAddress.dirty(reserve.endAddress!),
           enterpriseId: reserve.enterpriseId == null ? const EnterpriseId.pure() : EnterpriseId.dirty(reserve.enterpriseId!),
-          driverId: reserve.driverId == null ? const DriverId.pure() : DriverId.dirty(reserve.driverId!),
-          driverName: reserve.driverId == null ? 'Ejem. Luis' : reserve.driverName!,
-          driverLastName: reserve.driverId == null ? 'Perez' : reserve.driverLastName!,
-          carId: reserve.carId == null ? const CarId.pure() : CarId.dirty(reserve.carId!),
-          licensePlate: reserve.carId == null ? 'A1R610' : reserve.licensePlate!,
-          brand: reserve.carId == null ? 'Ejem. Toyota' : reserve.brand!,
-          model: reserve.carId == null ? 'Corolla' : reserve.model!,
-          color: reserve.carId == null ? 'Gris' : reserve.color!,
-          price: reserve.price == 0 ? const Price.pure() : Price.dirty(reserve.price.toString()),
-          silverPercent: reserve.silverPercent == 0 ? const SilverPercent.pure() : SilverPercent.dirty(reserve.silverPercent.toString()),
+          driverId: reserve.driverId == 0 ? const DriverId.pure() : DriverId.dirty(reserve.driverId!),
+          driverName: reserve.driverId == 0 ? 'Ejem. Luis' : reserve.driverName!,
+          driverLastName: reserve.driverId == 0 ? 'Perez' : reserve.driverLastName!,
+          carId: reserve.carId == 0 ? const CarId.pure() : CarId.dirty(reserve.carId!),
+          licensePlate: reserve.carId == 0 ? 'A1R610' : reserve.licensePlate!,
+          brand: reserve.carId == 0 ? 'Ejem. Toyota' : reserve.brand!,
+          model: reserve.carId == 0 ? 'Corolla' : reserve.model!,
+          color: reserve.carId == 0 ? 'Gris' : reserve.color!,
+          price: reserve.price == '' ? const Price.pure() : Price.dirty(reserve.price.toString()),
+          silverPercent: reserve.silverPercent == '' ? const SilverPercent.pure() : SilverPercent.dirty(reserve.silverPercent.toString()),
         ));
 
   Future<bool> onFormSubmit() async {

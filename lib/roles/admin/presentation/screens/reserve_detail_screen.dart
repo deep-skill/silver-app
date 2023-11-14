@@ -85,7 +85,7 @@ class ReserveInfo extends StatelessWidget {
                 BoxReserveDetail(
                     icon: Icons.domain,
                     label: 'Empresa',
-                    text: '${reserve.brand}'),
+                    text: reserve.enterpriseName),
                 BoxReserveDetail(
                     icon: Icons.business_center_outlined,
                     label: 'Tipo de Servicio',
@@ -131,10 +131,11 @@ class ReserveInfo extends StatelessWidget {
                     icon: Icons.location_on,
                     label: 'Punto de recojo',
                     text: '${reserve.startAddress}'),
-                BoxReserveDetail(
-                    icon: Icons.trip_origin_outlined,
-                    label: 'Punto de destino',
-                    text: '${reserve.endAddress}'),
+                if (reserve.endAddress != null)
+                  BoxReserveDetail(
+                      icon: Icons.trip_origin_outlined,
+                      label: 'Punto de destino',
+                      text: '${reserve.endAddress}'),
                 const Text('Datos del conductor y vehículo',
                     style: TextStyle(color: cyanColor)),
                 const Divider(color: cyanColor),
@@ -148,7 +149,7 @@ class ReserveInfo extends StatelessWidget {
                               icon: Icons.person_2_outlined,
                               label: 'Conductor',
                               text: reserve.driverName != null
-                                  ? '${reserve.driverName} ${reserve.lastName}'
+                                  ? '${reserve.driverName} ${reserve.driverLastName}'
                                   : '-'),
                           BoxReserveDetail(
                               icon: Icons.drive_eta_rounded,
@@ -212,6 +213,10 @@ class ReserveInfo extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
+                        print('reserver driver name ${reserve.driverName}');
+                        print(
+                            'reserver driver last name${reserve.driverLastName}');
+
                         context.push('/admin/reserves/create/${reserve.id}');
                       },
                       style: ButtonStyle(
@@ -222,8 +227,8 @@ class ReserveInfo extends StatelessWidget {
                         )),
                         fixedSize: MaterialStateProperty.all(
                             Size(size.width * .4, size.height * .06)),
-                        backgroundColor: MaterialStateProperty.all(
-                            const Color(0xFF23A5CD)),
+                        backgroundColor:
+                            MaterialStateProperty.all(const Color(0xFF23A5CD)),
                       ),
                       child: const Text('Editar',
                           style: TextStyle(
@@ -255,8 +260,7 @@ class ReserveInfo extends StatelessWidget {
                                     shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                       RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                   ),
@@ -265,9 +269,8 @@ class ReserveInfo extends StatelessWidget {
                                 ),
                                 TextButton(
                                   style: TextButton.styleFrom(
-                                    textStyle: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge,
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
                                   ),
                                   child: const Text('Cancelar'),
                                   onPressed: () {

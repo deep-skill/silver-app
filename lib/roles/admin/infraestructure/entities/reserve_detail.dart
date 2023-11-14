@@ -8,7 +8,7 @@ class ReserveDetail {
   final String name;
   final String lastName;
   final String serviceType;
-  final String entrepriseName;
+  final String enterpriseName;
   final String? driverName;
   final String? driverLastName;
   final String? licensePlate;
@@ -32,7 +32,7 @@ class ReserveDetail {
       required this.name,
       required this.lastName,
       required this.serviceType,
-      required this.entrepriseName,
+      required this.enterpriseName,
       required this.driverName,
       required this.driverLastName,
       required this.licensePlate,
@@ -62,11 +62,12 @@ class ReserveDetail {
       startTime: DateTime.parse(json['startTime']),
       name: json['User']['name'],
       lastName: json['User']['lastName'],
-      entrepriseName: json['Enterprise'] == null
+      enterpriseName: json['Enterprise'] == null
           ? 'Viaje personal'
           : json['Enterprise']['name'],
-      driverName: json['Driver'] == null ? '' : json['Driver']['name'],
-      driverLastName: json['Driver'] == null ? '' : json['Driver']['lastName'],
+      driverName: json['Driver'] == null ? null : json['Driver']['name'],
+      driverLastName:
+          json['Driver'] == null ? null : json['Driver']['lastName'],
       licensePlate: json['Car'] == null ? '' : json['Car']['licensePlate'],
       brand: json['Car'] == null ? '' : json['Car']['brand'],
       model: json['Car'] == null ? '' : json['Car']['model'],

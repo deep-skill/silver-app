@@ -20,7 +20,16 @@ import 'package:silverapp/roles/admin/infraestructure/inputs/user_id.dart';
 final reserveFormProvider = StateNotifierProvider.autoDispose
     .family<ReserveFormNotifier, ReserveFormState, CreateReserve>(
         (ref, reserve) {
-           // final createUpdateCallback = ref.watch( productsRepositoryProvider ).createUpdateProduct;
+  // final createUpdateCallback = ref.watch( productsRepositoryProvider ).createUpdateProduct;
+  print('brand ${reserve.brand}');
+  print('car id ${reserve.carId}');
+  print('color ${reserve.color}');
+  print('enterprise id ${reserve.enterpriseId}');
+  print('licenseplate ${reserve.licensePlate}');
+  print('model ${reserve.model}');
+  print('serviceType ${reserve.serviceType}');
+  print('tripType${reserve.tripType}');
+
   Future<bool> createCallback(Map<String, dynamic> reserveLike) async {
     try {
       final String? reserveId = reserveLike['id'];
@@ -53,31 +62,67 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     this.onSubmitCallback,
     required CreateReserve reserve,
   }) : super(ReserveFormState(
-          userId: reserve.userId == 0 ? const UserId.pure() :  UserId.dirty(reserve.userId),
+          userId: reserve.userId == 0
+              ? const UserId.pure()
+              : UserId.dirty(reserve.userId),
           userName: reserve.userId == 0 ? 'Ejem. Carla' : reserve.userName,
-          userLastName: reserve.userId == 0 ? 'Peña Ramirez' : reserve.userLastName,
-          startDate: reserve.startDate == '' ? const StartDate.pure() : StartDate.dirty(reserve.startDate),
-          startTime: reserve.startTime == '' ? const StartTime.pure() : StartTime.dirty(reserve.startTime),
-          tripType: reserve.tripType == '' ? const TripType.pure(): TripType.dirty(reserve.tripType[0].toUpperCase() + reserve.tripType.substring(1).toLowerCase()),
+          userLastName:
+              reserve.userId == 0 ? 'Peña Ramirez' : reserve.userLastName,
+          startDate: reserve.startDate == ''
+              ? const StartDate.pure()
+              : StartDate.dirty(reserve.startDate),
+          startTime: reserve.startTime == ''
+              ? const StartTime.pure()
+              : StartTime.dirty(reserve.startTime),
+          tripType: reserve.tripType == ''
+              ? const TripType.pure()
+              : TripType.dirty(reserve.tripType[0].toUpperCase() +
+                  reserve.tripType.substring(1).toLowerCase()),
           //serviceType: reserve.serviceType ==  ''  ? const ServiceType.pure() : ServiceType.dirty(reserve.serviceType[0].toUpperCase() + reserve.serviceType.substring(1).toLowerCase()),
           serviceType: (reserve.serviceType == ''
-          ? const ServiceType.pure()
-          : reserve.serviceType == 'ENTERPRISE'
-          ? const ServiceType.dirty('Empresarial')
-          : const ServiceType.dirty('Personal')),
-          startAddress: reserve.startAddress == '' ? const StartAddress.pure() : StartAddress.dirty(reserve.startAddress),
-          endAddress: reserve.endAddress == '' ? const EndAddress.pure() : EndAddress.dirty(reserve.endAddress!),
-          enterpriseId: reserve.enterpriseId == null ? const EnterpriseId.pure() : EnterpriseId.dirty(reserve.enterpriseId!),
-          driverId: reserve.driverId == 0 ? const DriverId.pure() : DriverId.dirty(reserve.driverId!),
-          driverName: reserve.driverId == 0 ? 'Ejem. Luis' : reserve.driverName!,
-          driverLastName: reserve.driverId == 0 ? 'Perez' : reserve.driverLastName!,
-          carId: reserve.carId == 0 ? const CarId.pure() : CarId.dirty(reserve.carId!),
-          licensePlate: reserve.carId == 0 ? 'A1R610' : reserve.licensePlate!,
-          brand: reserve.carId == 0 ? 'Ejem. Toyota' : reserve.brand!,
-          model: reserve.carId == 0 ? 'Corolla' : reserve.model!,
-          color: reserve.carId == 0 ? 'Gris' : reserve.color!,
-          price: reserve.price == '' ? const Price.pure() : Price.dirty(reserve.price.toString()),
-          silverPercent: reserve.silverPercent == '' ? const SilverPercent.pure() : SilverPercent.dirty(reserve.silverPercent.toString()),
+              ? const ServiceType.pure()
+              : reserve.serviceType == 'ENTERPRISE'
+                  ? const ServiceType.dirty('Empresarial')
+                  : const ServiceType.dirty('Personal')),
+          startAddress: reserve.startAddress == ''
+              ? const StartAddress.pure()
+              : StartAddress.dirty(reserve.startAddress),
+          endAddress: (reserve.endAddress == '' || reserve.endAddress == null)
+              ? const EndAddress.pure()
+              : EndAddress.dirty(reserve.endAddress!),
+          enterpriseId: reserve.enterpriseId == null
+              ? const EnterpriseId.pure()
+              : EnterpriseId.dirty(reserve.enterpriseId!),
+          driverId: reserve.driverId == null
+              ? const DriverId.pure()
+              : DriverId.dirty(reserve.driverId!),
+          driverName: (reserve.driverId == 0 || reserve.driverId == null)
+              ? 'Ejem. Luis'
+              : reserve.driverName!,
+          driverLastName: (reserve.driverId == 0 || reserve.driverId == null)
+              ? 'Perez'
+              : reserve.driverLastName!,
+          carId: (reserve.carId == 0 || reserve.carId == null)
+              ? const CarId.pure()
+              : CarId.dirty(reserve.carId!),
+          licensePlate: (reserve.carId == 0 || reserve.carId == null)
+              ? 'A1R610'
+              : reserve.licensePlate!,
+          brand: (reserve.carId == 0 || reserve.carId == null)
+              ? 'Ejem. Toyota'
+              : reserve.brand!,
+          model: (reserve.carId == 0 || reserve.carId == null)
+              ? 'Corolla'
+              : reserve.model!,
+          color: (reserve.carId == 0 || reserve.carId == null)
+              ? 'Gris'
+              : reserve.color!,
+          price: reserve.price == ''
+              ? const Price.pure()
+              : Price.dirty(reserve.price.toString()),
+          silverPercent: reserve.silverPercent == ''
+              ? const SilverPercent.pure()
+              : SilverPercent.dirty(reserve.silverPercent.toString()),
         ));
 
   Future<bool> onFormSubmit() async {
@@ -96,7 +141,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "service_type": state.serviceType.value == 'Empresarial'
           ? 'ENTERPRISE'
           : state.serviceType.value.toUpperCase(),
-      "start_time": '${state.startDate.value}T${state.startTime.value}:00-05:00',
+      "start_time":
+          '${state.startDate.value}T${state.startTime.value}:00-05:00',
       "start_address": state.startAddress.value,
       "end_address":
           state.endAddress?.value == 'Seleccione el punto de destino' ||
@@ -109,6 +155,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       if (state.silverPercent.value == '0')
         "silver_percent": state.silverPercent.value,
     };
+    print('reserveLike ${reserveLike.toString()}}');
 
     try {
       return await onSubmitCallback!(reserveLike);
@@ -167,7 +214,15 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         ]));
   }
 
-  void onDriverIdChanged(int value, String driverName, String driverLastName, int? carId, String? brand, String? model, String? color, String? licensePlate) {
+  void onDriverIdChanged(
+      int value,
+      String driverName,
+      String driverLastName,
+      int? carId,
+      String? brand,
+      String? model,
+      String? color,
+      String? licensePlate) {
     if (carId != null) {
       onCarIdChanged(carId, brand!, model!, color!, licensePlate!);
     }
@@ -189,7 +244,9 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
-  void onCarIdChanged(int value, String brand, String model, String color, String licensePlate) {
+
+  void onCarIdChanged(int value, String brand, String model, String color,
+      String licensePlate) {
     state = state.copyWith(
         carId: CarId.dirty(value),
         licensePlate: licensePlate,
@@ -385,7 +442,7 @@ class ReserveFormState {
     this.startAddress = const StartAddress.pure(),
     this.endAddress = const EndAddress.pure(),
     this.enterpriseId = const EnterpriseId.dirty(0),
-    this.carId  = const CarId.dirty(0),
+    this.carId = const CarId.dirty(0),
     this.licensePlate = 'A1R610',
     this.brand = 'Ejem. Toyota',
     this.model = 'Corolla',

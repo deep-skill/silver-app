@@ -155,8 +155,10 @@ class CreateReserveView extends ConsumerWidget {
                           value: reserveForm.serviceType.value,
                           style: reserveForm.serviceType.value ==
                                   'Seleccione el tipo de servicio'
-                              ? const TextStyle(color: Colors.grey, fontSize: 16)
-                              : const TextStyle(color: Colors.black, fontSize: 16),
+                              ? const TextStyle(
+                                  color: Colors.grey, fontSize: 16)
+                              : const TextStyle(
+                                  color: Colors.black, fontSize: 16),
                           items: [
                             'Empresarial',
                             'Personal',
@@ -166,13 +168,13 @@ class CreateReserveView extends ConsumerWidget {
                                     value: option,
                                     child: Text(
                                       option,
-                                      style:
-                                          option == 'Seleccione el tipo de servicio'
-                                              ? const TextStyle(
-                                                  color: Colors.grey, fontSize: 16)
-                                              : const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16),
+                                      style: option ==
+                                              'Seleccione el tipo de servicio'
+                                          ? const TextStyle(
+                                              color: Colors.grey, fontSize: 16)
+                                          : const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16),
                                     ),
                                   ))
                               .toList(),
@@ -302,7 +304,7 @@ class CreateReserveView extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                    width: size.width * .9,
+                  width: size.width * .9,
                   child: Row(
                     children: [
                       const Icon(Icons.timeline_outlined),
@@ -317,8 +319,10 @@ class CreateReserveView extends ConsumerWidget {
                           value: reserveForm.tripType.value,
                           style: reserveForm.tripType.value ==
                                   'Seleccione el tipo de viaje'
-                              ? const TextStyle(color: Colors.grey, fontSize: 16)
-                              : const TextStyle(color: Colors.black, fontSize: 16),
+                              ? const TextStyle(
+                                  color: Colors.grey, fontSize: 16)
+                              : const TextStyle(
+                                  color: Colors.black, fontSize: 16),
                           items: [
                             'Por punto',
                             'Por hora',
@@ -329,11 +333,13 @@ class CreateReserveView extends ConsumerWidget {
                                     value: option,
                                     child: Text(
                                       option,
-                                      style: option == 'Seleccione el tipo de viaje'
+                                      style: option ==
+                                              'Seleccione el tipo de viaje'
                                           ? const TextStyle(
                                               color: Colors.grey, fontSize: 16)
                                           : const TextStyle(
-                                              color: Colors.black, fontSize: 16),
+                                              color: Colors.black,
+                                              fontSize: 16),
                                     ),
                                   ))
                               .toList(),
@@ -554,13 +560,13 @@ class CreateReserveView extends ConsumerWidget {
                           '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
                           style: reserveForm.brand == 'Ejem. Toyota'
                               ? const TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                  color: Colors.grey, fontSize: 16)
+                                  overflow: TextOverflow.ellipsis,
+                                  color: Colors.grey,
+                                  fontSize: 16)
                               : const TextStyle(
                                   color: Colors.black, fontSize: 16)),
                       onPressed: () {
-                        final searchedCars =
-                            ref.read(searchedCarsProvider);
+                        final searchedCars = ref.read(searchedCarsProvider);
                         final searchQuery = ref.read(searchCarsProvider);
                         final changeCallback = ref
                             .read(reserveFormProvider(reserve).notifier)
@@ -613,7 +619,9 @@ class CreateReserveView extends ConsumerWidget {
                 SizedBox(
                   width: size.width * .45,
                   child: CustomFormField(
-                    initialValue: reserveForm.silverPercent.value == 0 ? '' : reserveForm.silverPercent.value ,
+                    initialValue: reserveForm.silverPercent.value == 0
+                        ? ''
+                        : reserveForm.silverPercent.value,
                     keyboardType: const TextInputType.numberWithOptions(),
                     isTopField: true,
                     isBottomField: true,
@@ -632,6 +640,7 @@ class CreateReserveView extends ConsumerWidget {
             Center(
               child: TextButton(
                 onPressed: () {
+                  print('on pressed crear ${reserve.toString()}');
                   ref
                       .read(reserveFormProvider(reserve).notifier)
                       .onFormSubmit()

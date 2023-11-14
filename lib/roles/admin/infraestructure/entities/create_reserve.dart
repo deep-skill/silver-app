@@ -52,7 +52,8 @@ class CreateReserve {
         userId: json['User'] == null ? null : json['User']['id'],
         userName: json['User'] == null ? null : json['User']['name'],
         userLastName: json['User'] == null ? null : json['User']['lastName'],
-        enterpriseId: json['Enterprise'] == null ? null : json['Enterprise']['id'],
+        enterpriseId:
+            json['Enterprise'] == null ? null : json['Enterprise']['id'],
         driverId: json['Driver'] == null ? null : json['Driver']['id'],
         driverName: json['Driver'] == null ? null : json['Driver']['name'],
         driverLastName:

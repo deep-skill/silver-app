@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
-
-
+import 'package:silverapp/config/dio/dio.dart';
 
 class AlertTripEnd extends StatefulWidget {
-  const AlertTripEnd({super.key});
-
+  final int tripId;
+  final VoidCallback reload;
+  const AlertTripEnd({
+    Key? key,
+    required this.tripId,
+    required this.reload,
+  }) : super(key: key);
   @override
   State<AlertTripEnd> createState() => _AlertTripEndState();
 }
 
 class _AlertTripEndState extends State<AlertTripEnd> {
+  void patchEndTripDrive(BuildContext context, int tripId) async {
+    try {
+      await dio.patch('trips/$tripId', data: {
+        "endTime": DateTime.now().toIso8601String(),
+        "status": "COMPLETED"
+      });
+      widget.reload();
+      Navigator.of(context).pop();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -18,7 +36,6 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text("Luego no podras volver a editar datos"),
-          // Agrega más widgets según tus necesidades
         ],
       ),
       actions: <Widget>[
@@ -28,9 +45,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFF23A5CD),
                 ),
-
-                onPressed: () {},
-
+                onPressed: () => patchEndTripDrive(context, widget.tripId),
                 child: const Text(
                   "Confirmar",
                   style: TextStyle(

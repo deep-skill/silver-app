@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:silverapp/config/dio/dio.dart';
 
 class AlertStartTimeDriver extends StatefulWidget {
   final int tripId;
@@ -14,6 +15,18 @@ class AlertStartTimeDriver extends StatefulWidget {
 }
 
 class _AlertTripStartState extends State<AlertStartTimeDriver> {
+  void patchStartTripDrive(BuildContext context, int tripId) async {
+    try {
+      await dio.patch('trips/$tripId',
+          data: {"startTime": DateTime.now().toIso8601String()});
+      widget.reload();
+      Navigator.of(context).pop();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -22,7 +35,6 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text("Marcar esta opcion solo si ya vas a iniciar el viaje"),
-          // Agrega más widgets según tus necesidades
         ],
       ),
       actions: <Widget>[
@@ -32,7 +44,7 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xFF23A5CD),
                 ),
-                onPressed: () {},
+                onPressed: () => patchStartTripDrive(context, widget.tripId),
                 child: const Text(
                   "Confirmar",
                   style: TextStyle(

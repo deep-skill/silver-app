@@ -17,7 +17,7 @@ class AlertTripEnd extends StatefulWidget {
 class _AlertTripEndState extends State<AlertTripEnd> {
   void patchEndTripDrive(BuildContext context, int tripId) async {
     try {
-      await dio.patch('trips/$tripId', data: {
+      await dio.patch('trips/driver-trip/$tripId', data: {
         "endTime": DateTime.now().toIso8601String(),
         "status": "COMPLETED"
       });

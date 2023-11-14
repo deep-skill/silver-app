@@ -18,7 +18,7 @@ class AlertArrivedDriver extends StatefulWidget {
 class _AlertTripStartState extends State<AlertArrivedDriver> {
   void patchArrivedDrive(BuildContext context, int tripId) async {
     try {
-      await dio.patch('trips/$tripId',
+      await dio.patch('trips/driver-trip/$tripId',
           data: {"arrivedDriver": DateTime.now().toIso8601String()});
       widget.reload();
       // ignore: use_build_context_synchronously

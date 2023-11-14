@@ -5,7 +5,7 @@ import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_stat
 final tripDriverStatusProvider = StateNotifierProvider<TripDriverStatusNotifier,
     Map<String, TripDriverStatus>>((ref) {
   Future<TripDriverStatus> getTripDriverStatus(id) async {
-    final response = await dio.get('trips/$id');
+    final response = await dio.get('trips/driver-trip/$id');
     return TripDriverStatus.fromJson(response.data);
   }
 

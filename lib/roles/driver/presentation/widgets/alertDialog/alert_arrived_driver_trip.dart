@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../config/dio/dio.dart';
 
 class AlertArrivedDriver extends StatefulWidget {
@@ -20,7 +21,8 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
       await dio.patch('trips/$tripId',
           data: {"arrivedDriver": DateTime.now().toIso8601String()});
       widget.reload();
-      Navigator.of(context).pop();
+      // ignore: use_build_context_synchronously
+      context.pop();
     } catch (e) {
       // ignore: avoid_print
       print(e);
@@ -63,7 +65,7 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
               style: ButtonStyle(
                   side: MaterialStateProperty.all(
                       const BorderSide(color: Color(0xFF23A5CD)))),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => context.pop(),
               child: const Text('Cerrar'),
             ),
           ),

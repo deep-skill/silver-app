@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
 
 class AlertStartTimeDriver extends StatefulWidget {
@@ -20,7 +21,7 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
       await dio.patch('trips/$tripId',
           data: {"startTime": DateTime.now().toIso8601String()});
       widget.reload();
-      Navigator.of(context).pop();
+      context.pop();
     } catch (e) {
       // ignore: avoid_print
       print(e);
@@ -61,7 +62,7 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
               style: ButtonStyle(
                   side: MaterialStateProperty.all(
                       const BorderSide(color: Color(0xFF23A5CD)))),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => context.pop(),
               child: const Text('Cerrar'),
             ),
           ),

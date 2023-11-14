@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
 
 class AlertTripEnd extends StatefulWidget {
@@ -21,7 +22,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         "status": "COMPLETED"
       });
       widget.reload();
-      Navigator.of(context).pop();
+      context.pop();
     } catch (e) {
       // ignore: avoid_print
       print(e);
@@ -62,9 +63,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
               style: ButtonStyle(
                   side: MaterialStateProperty.all(
                       const BorderSide(color: Color(0xFF23A5CD)))),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => context.pop(),
               child: const Text('Cerrar'),
             ),
           ),

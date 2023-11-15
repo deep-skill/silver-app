@@ -21,19 +21,10 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
     .family<ReserveFormNotifier, ReserveFormState, CreateReserve>(
         (ref, reserve) {
   // final createUpdateCallback = ref.watch( productsRepositoryProvider ).createUpdateProduct;
-  print('brand ${reserve.brand}');
-  print('car id ${reserve.carId}');
-  print('color ${reserve.color}');
-  print('enterprise id ${reserve.enterpriseId}');
-  print('licenseplate ${reserve.licensePlate}');
-  print('model ${reserve.model}');
-  print('serviceType ${reserve.serviceType}');
-  print('tripType${reserve.tripType}');
 
   Future<bool> createCallback(Map<String, dynamic> reserveLike) async {
     try {
       final String? reserveId = reserveLike['id'];
-      print('reserve id in createCallback $reserveId');
       final String method = (reserveId == null) ? 'POST' : 'PATCH';
       final String url =
           (reserveId == null) ? '/reserves/' : '/reserves/$reserveId';
@@ -53,7 +44,6 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
       //   status = response.statusCode;
       // }
 
-      print('reserve method: $method, status: $status');
       return status == 201 ? true : false;
     } catch (e) {
       throw Exception();
@@ -114,7 +104,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           driverLastName: (reserve.driverId == 0 || reserve.driverId == null)
               ? 'Perez'
               : reserve.driverLastName!,
-          carId: (reserve.carId == 0 || reserve.carId == null)
+          carId: (reserve.carId == 0)
               ? const CarId.pure()
               : CarId.dirty(reserve.carId!),
           licensePlate: (reserve.carId == 0 || reserve.carId == null)
@@ -142,7 +132,10 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     if (!state.isFormValid) return false;
 
     if (onSubmitCallback == null) return false;
-    print('car id on reserve like ${state.carId?.value}');
+    print('car id value on reserve like ${state.carId?.value}');
+    print('car color on reserve like ${state.color}');
+    print('car id on reserve like ${state.carId}');
+
     final Map<String, dynamic> reserveLike = {
       "enterprise_id": state.enterpriseId?.value == 0 ||
               state.serviceType.value != 'Empresarial'
@@ -164,9 +157,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "driver_id": state.driverId?.value == 0 || state.driverId?.value == null
           ? null
           : state.driverId?.value,
-      "car_id": state.carId?.value == 0 || state.carId?.value == null
-          ? null
-          : state.carId?.value,
+      "car_id": state.carId?.value == 0 ? null : state.carId?.value,
       "price": state.price.value,
       if (state.silverPercent.value == '0')
         "silver_percent": state.silverPercent.value,
@@ -264,6 +255,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
 
   void onCarIdChanged(int value, String brand, String model, String color,
       String licensePlate) {
+    print('on caridChanged car id: $value');
     state = state.copyWith(
         carId: CarId.dirty(value),
         licensePlate: licensePlate,

@@ -59,8 +59,7 @@ class CreateReserveView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reserveForm = ref.watch(reserveFormProvider(reserve));
-    print(
-        'reserve car : ${reserve.carId}, ${reserve.color},${reserve.licensePlate}');
+
     const cyanColor = Color(0xff23a5cd);
     return SingleChildScrollView(
       child: Container(
@@ -104,9 +103,6 @@ class CreateReserveView extends ConsumerWidget {
                               : const TextStyle(
                                   color: Colors.black, fontSize: 16)),
                       onPressed: () {
-                        print('reserve id');
-                        print(reserve.id);
-
                         final searchedPassengers =
                             ref.read(searchedPassengersProvider);
                         final searchQuery = ref.read(searchPassengersProvider);
@@ -645,9 +641,6 @@ class CreateReserveView extends ConsumerWidget {
             Center(
               child: TextButton(
                 onPressed: () {
-                  print('on pressed crear ${reserve.toString()}');
-                  print('on pressed crear id ${reserve.id}');
-
                   ref
                       .read(reserveFormProvider(reserve).notifier)
                       .onFormSubmit(reserve.id!)

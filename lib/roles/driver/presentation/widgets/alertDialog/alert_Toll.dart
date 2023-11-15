@@ -17,24 +17,7 @@ class _AlertPeajeState extends State<AlertToll> {
   List<String> dropdownItems = ["Seleccionar peaje"];
   List<TollMap> tollMapItems = [];
 
-  String? selectedDropdownValue;
-
-/* 
-  final InputDecoration _inputDecoration = const InputDecoration(
-      labelText: 'Ingresar Peaje',
-      contentPadding: EdgeInsets.all(5),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
-      ),
-      border: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
-      )); */
+  String? selectedDropdownValue = "Seleccionar peaje";
 
   @override
   void initState() {
@@ -51,15 +34,24 @@ class _AlertPeajeState extends State<AlertToll> {
           data.map((item) => TollMap.fromJson(item)).toList();
       List<String> tollsName = tollsMap.map((item) => item.name).toList();
       setState(() {
-        dropdownItems = [...tollsName];
+        dropdownItems = ["Seleccionar peaje", ...tollsName];
         tollMapItems = [...tollsMap];
       });
     } catch (e) {
+      setState(() {
+        dropdownItems = ["Seleccionar peaje", "Error al obtener datos"];
+      });
       print('Error al obtener datos: $e');
     }
   }
 
   TollMap getTollMap(String? tollName) {
+    if (tollName == "Seleccionar peaje") {
+      context.pop();
+    }
+    if (tollName == "Error al obtener datos") {
+      context.pop();
+    }
     return tollMapItems.firstWhere((toll) => toll.name == tollName);
   }
 
@@ -75,19 +67,41 @@ class _AlertPeajeState extends State<AlertToll> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          DropdownButton<String>(
-            value: selectedDropdownValue,
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedDropdownValue = newValue;
-              });
-            },
-            items: dropdownItems.map((String toll) {
-              return DropdownMenuItem<String>(
-                value: toll,
-                child: Text(toll),
-              );
-            }).toList(),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            child: DropdownButton<String>(
+              underline: const SizedBox(),
+              dropdownColor: Colors.grey[200],
+              focusColor: Colors.grey[200],
+              isExpanded: true,
+              isDense: false,
+              style: const TextStyle(
+                color: Colors.black,
+              ),
+              menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
+              value: selectedDropdownValue,
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedDropdownValue = newValue;
+                });
+              },
+              items: dropdownItems.map((String toll) {
+                return DropdownMenuItem<String>(
+                  value: toll,
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 3,
+                      ),
+                      Text(toll),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
           ),
         ],
       ),

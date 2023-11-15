@@ -129,7 +129,6 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
-// int tripId, String name, double amount, double lat, double lon
   void addTools(String name, double amount, double lat, double lon) async {
     try {
       await dio.post('tolls', data: {
@@ -162,7 +161,9 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
       builder: (context) {
         switch (option) {
           case 'Peaje':
-            return AlertToll(addTools);
+            return AlertToll(
+              addTools,
+            );
           case 'Paradas':
             return AlertStops(addStops);
           case "Observaciones":

@@ -165,7 +165,7 @@ class Stop {
 class Toll {
   int id;
   String name;
-  int amount;
+  double amount;
   double lat;
   double lon;
   int tripId;
@@ -195,5 +195,37 @@ class Toll {
         "lat": lat,
         "lon": lon,
         "tripId": tripId,
+      };
+}
+
+class TollMap {
+  double amount;
+  String id;
+  double lat;
+  double lon;
+  String name;
+
+  TollMap({
+    required this.amount,
+    required this.id,
+    required this.lat,
+    required this.lon,
+    required this.name,
+  });
+
+  factory TollMap.fromJson(Map<String, dynamic> json) => TollMap(
+        amount: json["amount"]?.toDouble(),
+        id: json["id"],
+        lat: json["location"]["lat"]?.toDouble(),
+        lon: json["location"]["lon"]?.toDouble(),
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "amount": amount,
+        "id": id,
+        "lat": lat,
+        "lon": lon,
+        "name": name,
       };
 }

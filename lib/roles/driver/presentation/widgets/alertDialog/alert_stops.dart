@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AlertStops extends StatefulWidget {
   final Function(String) addStops;
@@ -80,9 +81,7 @@ class _AlertParadasState extends State<AlertStops> {
                   style: ButtonStyle(
                       side: MaterialStateProperty.all(
                           const BorderSide(color: Color(0xFF23A5CD)))),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => context.pop(),
                   child: const Text('Cerrar'),
                 ),
               ),

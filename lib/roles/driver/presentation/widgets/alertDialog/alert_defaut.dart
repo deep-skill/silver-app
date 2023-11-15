@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AlertDefaul extends StatefulWidget {
   const AlertDefaul({super.key});
@@ -20,9 +21,7 @@ class _AlertDefaulState extends State<AlertDefaul> {
       ),
       actions: <Widget>[
         TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () => context.pop(),
           child: const Text('Cerrar'),
         ),
       ],

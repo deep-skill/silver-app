@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_Toll.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_toll.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_defaut.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_observations.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_parkin_lot.dart';
@@ -129,8 +129,21 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
-  void addTools(String toll) {
-    print(toll);
+// int tripId, String name, double amount, double lat, double lon
+  void addTools(String name, double amount, double lat, double lon) async {
+    try {
+      await dio.post('tolls', data: {
+        "tripId": widget.tripId,
+        "name": name,
+        "amount": amount,
+        "lat": lat,
+        "lon": lon
+      });
+      widget.reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
   void remTolls(int tollId) async {
@@ -149,7 +162,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
       builder: (context) {
         switch (option) {
           case 'Peaje':
-            return AletToll(addTools);
+            return AlertToll(addTools);
           case 'Paradas':
             return AlertStops(addStops);
           case "Observaciones":

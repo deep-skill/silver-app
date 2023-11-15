@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AlertTripCanceled extends StatefulWidget {
   const AlertTripCanceled({super.key});
@@ -42,9 +43,7 @@ class _AlertTripCanceledState extends State<AlertTripCanceled> {
               style: ButtonStyle(
                   side: MaterialStateProperty.all(
                       const BorderSide(color: Color(0xFF23A5CD)))),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => context.pop(),
               child: const Text('Cerrar'),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AlertObservations extends StatefulWidget {
   final Function(String) addObservations;
@@ -60,7 +61,7 @@ class _AlertParadasState extends State<AlertObservations> {
                   onPressed: () {
                     widget.addObservations(_controller.text);
                     _controller.clear();
-                    Navigator.of(context).pop();
+                    context.pop();
                   },
                   child: const Text(
                     'Agregar',
@@ -79,9 +80,7 @@ class _AlertParadasState extends State<AlertObservations> {
                   style: ButtonStyle(
                       side: MaterialStateProperty.all(
                           const BorderSide(color: Color(0xFF23A5CD)))),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => context.pop(),
                   child: const Text('Cerrar'),
                 ),
               ),

@@ -28,7 +28,8 @@ class CreateReserveScreen extends ConsumerWidget {
     final reserveState = ref.watch(reserveCreateUpdateProvider(reserveId));
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(title: const Text('Crear reserva')),
+      appBar: AppBar(
+          title: Text(reserveId == 'new' ? "Crear Reserva" : "Editar Reserva")),
       body: reserveState.isLoading
           ? const FullScreenLoader()
           : Padding(
@@ -48,9 +49,11 @@ class CreateReserveView extends ConsumerWidget {
   });
 
   void showSnackbar(BuildContext context) {
+    final String snackBarText =
+        reserve.id == 0 ? "Reserva Creada" : "Reserva Editada";
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Reserva Creada')));
+        .showSnackBar(SnackBar(content: Text(snackBarText)));
   }
 
   final Size size;
@@ -660,7 +663,7 @@ class CreateReserveView extends ConsumerWidget {
                   backgroundColor:
                       MaterialStateProperty.all(const Color(0xFF23A5CD)),
                 ),
-                child: const Text('Crear',
+                child: Text(reserve.id == 0 ? "Crear" : "Editar",
                     style: TextStyle(
                       color: Colors.white,
                     )),

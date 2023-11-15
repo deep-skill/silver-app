@@ -8,33 +8,34 @@ class BoxReservePayment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width * .20,
+          width: MediaQuery.of(context).size.width * .21,
           child: Column(
             children: [
               Text(
                 label,
+                textAlign: TextAlign.center,
                 maxLines: 2,
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontFamily: 'Montserrat-Regular',
                   fontSize: 12,
                 ),
               ),
+              const SizedBox(height: 17),
               Text(
                 text,
-                style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
-                ),
+                style: const TextStyle(
+                    fontSize: 16, fontFamily: 'Montserrat-Bold'),
               ),
             ],
           ),
         ),
         Container(
-          width: 2.0,
-          height: 50.0,
+          width: 1.5,
+          height: 60.0,
           color: Colors.black,
         ),
       ],

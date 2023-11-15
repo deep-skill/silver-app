@@ -33,15 +33,27 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
   Future<bool> createCallback(Map<String, dynamic> reserveLike) async {
     try {
       final String? reserveId = reserveLike['id'];
+      print('reserve id in createCallback $reserveId');
       final String method = (reserveId == null) ? 'POST' : 'PATCH';
       final String url =
           (reserveId == null) ? '/reserves/' : '/reserves/$reserveId';
 
       reserveLike.remove('id');
-
-      final response = await dio.post(url,
+      // final Response<dynamic> response;
+      // final int? status;
+      final response = await dio.request(url,
           data: jsonEncode(reserveLike), options: Options(method: method));
       final status = response.statusCode;
+
+      // if (reserveId == null) {
+      //   response = await dio.post(url, data: jsonEncode(reserveLike));
+      //   status = response.statusCode;
+      // } else {
+      //   response = await dio.patch(url, data: jsonEncode(reserveLike));
+      //   status = response.statusCode;
+      // }
+
+      print('reserve method: $method, status: $status');
       return status == 201 ? true : false;
     } catch (e) {
       throw Exception();
@@ -125,12 +137,12 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
               : SilverPercent.dirty(reserve.silverPercent.toString()),
         ));
 
-  Future<bool> onFormSubmit() async {
+  Future<bool> onFormSubmit(int id) async {
     _touchedEverything();
     if (!state.isFormValid) return false;
 
     if (onSubmitCallback == null) return false;
-
+    print('car id on reserve like ${state.carId?.value}');
     final Map<String, dynamic> reserveLike = {
       "enterprise_id": state.enterpriseId?.value == 0 ||
               state.serviceType.value != 'Empresarial'
@@ -149,11 +161,16 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
                   state.tripType.value != 'Punto a punto'
               ? null
               : state.endAddress?.value,
-      "driver_id": state.driverId?.value == 0 ? null : state.driverId?.value,
-      "car_id": state.carId?.value == 0 ? null : state.carId?.value,
+      "driver_id": state.driverId?.value == 0 || state.driverId?.value == null
+          ? null
+          : state.driverId?.value,
+      "car_id": state.carId?.value == 0 || state.carId?.value == null
+          ? null
+          : state.carId?.value,
       "price": state.price.value,
       if (state.silverPercent.value == '0')
         "silver_percent": state.silverPercent.value,
+      if (id != 0) "id": id.toString()
     };
     print('reserveLike ${reserveLike.toString()}}');
 

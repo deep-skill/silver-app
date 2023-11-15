@@ -121,7 +121,7 @@ class TripInfo extends ConsumerWidget {
               stops: trip.stops,
               observations: trip.observations,
               parkings: trip.parkings,
-              tollMaps: trip.tollMaps,
+              tolls: trip.tolls,
             ),
       trip.startTime != null && trip.endTime == null
           ? TripButton(

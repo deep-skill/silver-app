@@ -24,7 +24,7 @@ class TripDriverStatus {
   List<Stop> stops;
   List<Observations> observations;
   List<Parking> parkings;
-  List<TollMap> tollMaps;
+  List<Toll> tolls;
 
   TripDriverStatus({
     required this.id,
@@ -38,7 +38,7 @@ class TripDriverStatus {
     required this.stops,
     required this.observations,
     required this.parkings,
-    required this.tollMaps,
+    required this.tolls,
     required this.startAddress,
     required this.endAddress,
   });
@@ -66,8 +66,8 @@ class TripDriverStatus {
             json["Observations"]?.map((x) => Observations.fromJson(x)) ?? []),
         parkings: List<Parking>.from(
             json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
-        tollMaps: List<TollMap>.from(
-            json["TollMaps"]?.map((x) => TollMap.fromJson(x)) ?? []),
+        tolls:
+            List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
       );
 
   Map<String, dynamic> toJson() => {
@@ -82,7 +82,7 @@ class TripDriverStatus {
         "Stops": List<dynamic>.from(stops.map((x) => x.toJson())),
         "Observations": List<dynamic>.from(observations.map((x) => x.toJson())),
         "Parkings": List<dynamic>.from(parkings.map((x) => x.toJson())),
-        "TollMaps": List<dynamic>.from(tollMaps.map((x) => x.toJson())),
+        "Tolls": List<dynamic>.from(tolls.map((x) => x.toJson())),
       };
 }
 
@@ -162,58 +162,38 @@ class Stop {
       };
 }
 
-class TollMap {
-  String id;
-  String location;
+class Toll {
+  int id;
   String name;
   int amount;
-  Toll toll;
-
-  TollMap({
-    required this.id,
-    required this.location,
-    required this.name,
-    required this.amount,
-    required this.toll,
-  });
-
-  factory TollMap.fromJson(Map<String, dynamic> json) => TollMap(
-        id: json["id"],
-        location: json["location"],
-        name: json["name"],
-        amount: json["amount"],
-        toll: Toll.fromJson(json["Toll"]),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "location": location,
-        "name": name,
-        "amount": amount,
-        "Toll": toll.toJson(),
-      };
-}
-
-class Toll {
-  String id;
+  double lat;
+  double lon;
   int tripId;
-  String tollMapId;
 
   Toll({
     required this.id,
+    required this.name,
+    required this.amount,
+    required this.lat,
+    required this.lon,
     required this.tripId,
-    required this.tollMapId,
   });
 
   factory Toll.fromJson(Map<String, dynamic> json) => Toll(
         id: json["id"],
-        tripId: json["trip_id"],
-        tollMapId: json["toll_map_id"],
+        name: json["name"],
+        amount: json["amount"],
+        lat: json["lat"]?.toDouble(),
+        lon: json["lon"]?.toDouble(),
+        tripId: json["tripId"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "trip_id": tripId,
-        "toll_map_id": tollMapId,
+        "name": name,
+        "amount": amount,
+        "lat": lat,
+        "lon": lon,
+        "tripId": tripId,
       };
 }

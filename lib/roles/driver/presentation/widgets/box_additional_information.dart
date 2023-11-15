@@ -16,7 +16,7 @@ class AdditionalInformation extends StatefulWidget {
   final List<Stop> stops;
   final List<Observations> observations;
   final List<Parking> parkings;
-  final List<TollMap> tollMaps;
+  final List<Toll> tolls;
 
   const AdditionalInformation({
     Key? key,
@@ -26,7 +26,7 @@ class AdditionalInformation extends StatefulWidget {
     required this.stops,
     required this.observations,
     required this.parkings,
-    required this.tollMaps,
+    required this.tolls,
   }) : super(key: key);
 
   @override
@@ -38,7 +38,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
   late List<Stop> stops;
   late List<Observations> observations;
   late List<Parking> parkings;
-  late List<TollMap> tolls;
+  late List<Toll> tolls;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     stops = List<Stop>.from(widget.stops);
     observations = List<Observations>.from(widget.observations);
     parkings = List<Parking>.from(widget.parkings);
-    tolls = List<TollMap>.from(widget.tollMaps);
+    tolls = List<Toll>.from(widget.tolls);
   }
 
   List<String> options = [
@@ -69,10 +69,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
-  void removeStop(int index) async {
+  void removeStop(int stopId) async {
     try {
       await dio.delete(
-        'stops/$index',
+        'stops/$stopId',
       );
       widget.reload();
     } catch (e) {
@@ -92,10 +92,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
-  void remObservations(int index) async {
+  void remObservations(int observationId) async {
     try {
       await dio.delete(
-        'observations/$index',
+        'observations/$observationId',
       );
       widget.reload();
     } catch (e) {
@@ -119,9 +119,9 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
-  void remParkingLot(int index) async {
+  void remParking(int parkingId) async {
     try {
-      await dio.delete('parkings/$index');
+      await dio.delete('parkings/$parkingId');
       widget.reload();
     } catch (e) {
       // ignore: avoid_print
@@ -133,8 +133,14 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     print(toll);
   }
 
-  void remTolls(int index) {
-    print(index);
+  void remTolls(int tollId) async {
+    try {
+      await dio.delete('tolls/$tollId');
+      widget.reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
   }
 
   void _showCustomDialog(String option) {
@@ -224,12 +230,11 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           ),
           Column(
             children: tolls.asMap().entries.map((entry) {
-              final index = entry.key;
-              final tolls = entry.value;
+              final toll = entry.value;
               return CustomCard(
-                text: tolls.location,
+                text: toll.name,
                 onPressed: () {
-                  remTolls(index);
+                  remTolls(toll.id);
                 },
               );
             }).toList(),
@@ -244,7 +249,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
               return CustomCard(
                 text: parking.name,
                 onPressed: () {
-                  remParkingLot(parking.id);
+                  remParking(parking.id);
                 },
               );
             }).toList(),

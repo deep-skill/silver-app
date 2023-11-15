@@ -16,7 +16,6 @@ class _AlertDefaulState extends State<AlertDefaul> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text("Error al ingresar dato"),
-          // Agrega más widgets según tus necesidades
         ],
       ),
       actions: <Widget>[
@@ -26,7 +25,6 @@ class _AlertDefaulState extends State<AlertDefaul> {
           },
           child: const Text('Cerrar'),
         ),
-        // Agrega más botones o acciones según tus necesidades
       ],
     );
   }

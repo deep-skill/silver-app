@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_state_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_arrived_driver_trip.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_delete_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_end_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_start_time_driver.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_additional_information.dart';
@@ -103,6 +104,27 @@ class TripInfo extends ConsumerWidget {
       const SizedBox(
         height: 10,
       ),
+      trip.arrivedDriver != null &&
+              trip.startTime == null &&
+              trip.endTime == null
+          ? TextButton(
+              onPressed: () => showDialog(
+                  context: context,
+                  builder: (context) => AlertTripDeleted(
+                        tripId: trip.id,
+                        reload: reload,
+                      )),
+              child: const Text(
+                "El pasajero no se presento",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                  fontFamily: "Monserrat",
+                  fontWeight: FontWeight.bold,
+                  decoration: TextDecoration.underline,
+                ),
+              ))
+          : const SizedBox(),
       const SizedBox(
         height: 10,
       ),

@@ -89,7 +89,7 @@ class ReserveInfo extends StatelessWidget {
                 BoxReserveDetail(
                     icon: Icons.business_center_outlined,
                     label: 'Tipo de Servicio',
-                    text: '${reserve.serviceType}'),
+                    text: reserve.serviceType),
                 const Text('Datos Del Viaje',
                     style: TextStyle(color: cyanColor)),
                 const Divider(color: cyanColor),
@@ -117,7 +117,7 @@ class ReserveInfo extends StatelessWidget {
                       child: BoxReserveDetail(
                           icon: Icons.timeline,
                           label: 'Tipo de viaje',
-                          text: '${reserve.tripType}'),
+                          text: reserve.tripType),
                     ),
                     Expanded(
                       child: BoxEstadoReserveDetail(
@@ -130,7 +130,7 @@ class ReserveInfo extends StatelessWidget {
                 BoxReserveDetail(
                     icon: Icons.location_on,
                     label: 'Punto de recojo',
-                    text: '${reserve.startAddress}'),
+                    text: reserve.startAddress),
                 if (reserve.endAddress != null)
                   BoxReserveDetail(
                       icon: Icons.trip_origin_outlined,
@@ -197,15 +197,15 @@ class ReserveInfo extends StatelessWidget {
                     BoxReservePayment(
                         label: 'Tarifa base', text: 'S/${reserve.price}'),
                     BoxReservePayment(
-                        label: 'Pago Silver', text: 'S/${silverPercent}'),
+                        label: 'Pago Silver', text: 'S/$silverPercent'),
                     BoxReservePayment(
-                        label: 'Pago conductor', text: 'S/${driverPayment}'),
+                        label: 'Pago conductor', text: 'S/$driverPayment'),
                     BoxReservePayment(
                         label: 'Porcentaje Silver',
                         text: '${reserve.silverPercent}%'),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 5,
                 ),
                 Row(
@@ -213,10 +213,6 @@ class ReserveInfo extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
-                        print('reserver driver name ${reserve.driverName}');
-                        print(
-                            'reserver driver last name${reserve.driverLastName}');
-
                         context.push('/admin/reserves/create/${reserve.id}');
                       },
                       style: ButtonStyle(
@@ -287,12 +283,12 @@ class ReserveInfo extends StatelessWidget {
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                         color: Colors.black, width: 2))),
                         fixedSize: MaterialStateProperty.all(
                             Size(size.width * .4, size.height * .06)),
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFFFFFF)),
+                            MaterialStateProperty.all(const Color(0x00ffffff)),
                       ),
                       child: const Text('Cancelar',
                           style: TextStyle(

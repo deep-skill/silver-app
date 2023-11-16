@@ -31,8 +31,7 @@ class ReserveDetailNotifier extends StateNotifier<Map<String, ReserveDetail>> {
   }
 
   Future<void> updateReserveDetail(String reserveDetailId) async {
-    if (state[reserveDetailId] != null) return;
     final reserveDetail = await getReserveDetail(reserveDetailId);
-    state = {...state, reserveDetailId: reserveDetail};
+    state = {...state, reserveDetail.id.toString(): reserveDetail};
   }
 }

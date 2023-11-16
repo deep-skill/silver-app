@@ -13,8 +13,6 @@ import 'package:silverapp/roles/admin/presentation/delegates/search_passenger_de
 import 'package:silverapp/roles/admin/presentation/providers/forms/reserve_form_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_create_update_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_car_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
@@ -330,7 +328,6 @@ class CreateReserveView extends ConsumerWidget {
                               : const TextStyle(
                                   color: Colors.black, fontSize: 16),
                           items: [
-                            'Por punto',
                             'Por hora',
                             'Punto a punto',
                             'Seleccione el tipo de viaje'
@@ -610,8 +607,8 @@ class CreateReserveView extends ConsumerWidget {
                       isTopField: true,
                       isBottomField: true,
                       label: reserveForm.tripType.value == 'Por hora'
-                          ? 'Tarifa base x hora'
-                          : 'Tarifa base',
+                          ? 'Tarifa base x hora*'
+                          : 'Tarifa base*',
                       hint: 'S/ 00.00',
                       errorMessage: reserveForm.price.errorMessage,
                       prefixIcon:
@@ -625,7 +622,7 @@ class CreateReserveView extends ConsumerWidget {
                 SizedBox(
                   width: size.width * .45,
                   child: CustomFormField(
-                    initialValue: reserveForm.silverPercent.value == 0
+                    initialValue: reserveForm.silverPercent.value == '0'
                         ? ''
                         : reserveForm.silverPercent.value,
                     keyboardType: const TextInputType.numberWithOptions(),
@@ -646,14 +643,16 @@ class CreateReserveView extends ConsumerWidget {
             Center(
               child: TextButton(
                 onPressed: () async {
-                  final reserveDetailRef = ref.read(reserveDetailProvider);
                   ref
                       .read(reserveFormProvider(reserve).notifier)
                       .onFormSubmit(reserve.id!)
                       .then((value) {
-                    print('value on pressed $value');
-
                     if (!value) return;
+                    if(reserve.id! != 0) {
+                    ref
+                        .read(reserveDetailProvider.notifier)
+                        .updateReserveDetail(reserve.id!.toString());
+                    }
                     showSnackbar(context, reserve.id!);
 
                     context.pop();
@@ -670,7 +669,7 @@ class CreateReserveView extends ConsumerWidget {
                       MaterialStateProperty.all(const Color(0xFF23A5CD)),
                 ),
                 child: Text(reserve.id == 0 ? "Crear" : "Editar",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                     )),
               ),

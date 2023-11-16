@@ -16,12 +16,10 @@ import 'package:silverapp/roles/admin/infraestructure/inputs/start_date.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/start_time.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/trip_type.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/user_id.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
 
 final reserveFormProvider = StateNotifierProvider.autoDispose
     .family<ReserveFormNotifier, ReserveFormState, CreateReserve>(
         (ref, reserve) {
-  // final createUpdateCallback = ref.watch( productsRepositoryProvider ).createUpdateProduct;
 
   Future<bool> createCallback(Map<String, dynamic> reserveLike) async {
     try {
@@ -31,20 +29,9 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
           (reserveId == null) ? '/reserves/' : '/reserves/$reserveId';
 
       reserveLike.remove('id');
-      // final Response<dynamic> response;
-      // final int? status;
       final response = await dio.request(url,
           data: jsonEncode(reserveLike), options: Options(method: method));
       final status = response.statusCode;
-
-      // if (reserveId == null) {
-      //   response = await dio.post(url, data: jsonEncode(reserveLike));
-      //   status = response.statusCode;
-      // } else {
-      //   response = await dio.patch(url, data: jsonEncode(reserveLike));
-      //   status = response.statusCode;
-      // }
-      // if (status == 200) ref.invalidate(reserveDetailProvider);
       return status == 201 || status == 200 ? true : false;
     } catch (e) {
       throw Exception();
@@ -133,9 +120,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     if (!state.isFormValid) return false;
 
     if (onSubmitCallback == null) return false;
-    print('car id value on reserve like ${state.carId?.value}');
-    print('car color on reserve like ${state.color}');
-    print('car id on reserve like ${state.carId}');
 
     final Map<String, dynamic> reserveLike = {
       "enterprise_id": state.enterpriseId?.value == 0 ||
@@ -164,7 +148,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         "silver_percent": state.silverPercent.value,
       if (id != 0) "id": id.toString()
     };
-    print('reserveLike ${reserveLike.toString()}}');
 
     try {
       return await onSubmitCallback!(reserveLike);
@@ -256,7 +239,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
 
   void onCarIdChanged(int value, String brand, String model, String color,
       String licensePlate) {
-    print('on caridChanged car id: $value');
     state = state.copyWith(
         carId: CarId.dirty(value),
         licensePlate: licensePlate,

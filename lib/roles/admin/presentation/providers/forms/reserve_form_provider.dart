@@ -144,8 +144,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           : state.driverId?.value,
       "car_id": state.carId?.value == 0 ? null : state.carId?.value,
       "price": state.price.value,
-      if (state.silverPercent.value == '0')
-        "silver_percent": state.silverPercent.value,
+      "silver_percent": state.silverPercent.value,
       if (id != 0) "id": id.toString()
     };
 

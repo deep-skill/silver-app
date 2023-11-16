@@ -686,8 +686,8 @@ class CreateReserveView extends ConsumerWidget {
                   backgroundColor:
                       MaterialStateProperty.all(const Color(0xFF23A5CD)),
                 ),
-                child: const Text(reserve.id == 0 ? "Crear" : "Editar",
-                    style: TextStyle(
+                child: Text(reserve.id == 0 ? "Crear" : "Editar",
+                    style: const TextStyle(
                         color: Colors.white,
                         fontFamily: 'Montserrat-Bold',
                         fontSize: 16)),

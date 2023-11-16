@@ -5,10 +5,9 @@ import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.da
 final reserveCreateUpdateProvider = StateNotifierProvider.autoDispose
     .family<ReserveCreteUpdateNotifier, ReserveCreteUpdateState, String>(
         (ref, reserveId) {
-  //TODO: update reserve
   Future<CreateReserve> getReserveById(String id) async {
     try {
-      final response = await dio.get('/$id');
+      final response = await dio.get('reserves/admin-reserves/$id');
       final createReserve = CreateReserve.fromJson(response.data);
       return createReserve;
     } catch (e) {
@@ -36,6 +35,7 @@ class ReserveCreteUpdateNotifier
       id: 0,
       userId: 0,
       driverId: 0,
+      carId: 0,
       userName: '',
       userLastName: '',
       enterpriseId: 0,
@@ -44,9 +44,10 @@ class ReserveCreteUpdateNotifier
       startTime: '',
       startDate: '',
       startAddress: '',
-      price: 0,
+      endAddress: '',
+      price: '',
       driverPercent: 0,
-      silverPercent: 0,
+      silverPercent: '',
     );
   }
 

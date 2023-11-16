@@ -12,6 +12,7 @@ import 'package:silverapp/roles/admin/presentation/delegates/search_driver_deleg
 import 'package:silverapp/roles/admin/presentation/delegates/search_passenger_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/providers/forms/reserve_form_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_create_update_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_car_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
@@ -28,7 +29,9 @@ class CreateReserveScreen extends ConsumerWidget {
     final reserveState = ref.watch(reserveCreateUpdateProvider(reserveId));
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: const Text('Crear reserva')),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(reserveId == 'new' ? "Crear Reserva" : "Editar Reserva")),
       body: reserveState.isLoading
           ? const FullScreenLoader()
           : Padding(
@@ -47,10 +50,12 @@ class CreateReserveView extends ConsumerWidget {
     required this.reserve,
   });
 
-  void showSnackbar(BuildContext context) {
+  void showSnackbar(BuildContext context, int method) {
+    final String snackBarText =
+        method == 0 ? "Reserva Creada" : "Reserva Editada";
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context)
-        .showSnackBar(const SnackBar(content: Text('Reserva Creada')));
+        .showSnackBar(SnackBar(content: Text(snackBarText)));
   }
 
   final Size size;
@@ -334,7 +339,6 @@ class CreateReserveView extends ConsumerWidget {
                               : const TextStyle(
                                   color: Colors.black, fontSize: 16),
                           items: [
-                            'Por punto',
                             'Por hora',
                             'Punto a punto',
                             'Seleccione el tipo de viaje'
@@ -615,13 +619,14 @@ class CreateReserveView extends ConsumerWidget {
                   width: size.width * .45,
                   child: Stack(children: [
                     CustomFormField(
+                      initialValue: reserveForm.price.value,
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       isTopField: true,
                       isBottomField: true,
                       label: reserveForm.tripType.value == 'Por hora'
-                          ? 'Tarifa base x hora'
-                          : 'Tarifa base',
+                          ? 'Tarifa base x hora*'
+                          : 'Tarifa base*',
                       hint: 'S/ 00.00',
                       errorMessage: reserveForm.price.errorMessage,
                       prefixIcon:
@@ -635,6 +640,9 @@ class CreateReserveView extends ConsumerWidget {
                 SizedBox(
                   width: size.width * .45,
                   child: CustomFormField(
+                    initialValue: reserveForm.silverPercent.value == '0'
+                        ? ''
+                        : reserveForm.silverPercent.value,
                     keyboardType: const TextInputType.numberWithOptions(),
                     isTopField: true,
                     isBottomField: true,
@@ -652,13 +660,19 @@ class CreateReserveView extends ConsumerWidget {
             const SizedBox(height: 30),
             Center(
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
                   ref
                       .read(reserveFormProvider(reserve).notifier)
-                      .onFormSubmit()
+                      .onFormSubmit(reserve.id!)
                       .then((value) {
                     if (!value) return;
-                    showSnackbar(context);
+                    if(reserve.id! != 0) {
+                    ref
+                        .read(reserveDetailProvider.notifier)
+                        .updateReserveDetail(reserve.id!.toString());
+                    }
+                    showSnackbar(context, reserve.id!);
+
                     context.pop();
                   });
                 },
@@ -672,8 +686,8 @@ class CreateReserveView extends ConsumerWidget {
                   backgroundColor:
                       MaterialStateProperty.all(const Color(0xFF23A5CD)),
                 ),
-                child: const Text('Crear',
-                    style: TextStyle(
+                child: Text(reserve.id == 0 ? "Crear" : "Editar",
+                    style: const TextStyle(
                         color: Colors.white,
                         fontFamily: 'Montserrat-Bold',
                         fontSize: 16)),

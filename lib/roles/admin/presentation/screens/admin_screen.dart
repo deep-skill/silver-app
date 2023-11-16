@@ -33,7 +33,7 @@ class AdminScreen extends ConsumerWidget {
               shape: const CircleBorder(),
               backgroundColor: const Color(0xff031329),
               onPressed: () {
-                context.push('/admin/reserves/create');
+                context.push('/admin/reserves/create/new');
               },
               child: const Icon(Icons.add, color: Colors.white),
             ),
@@ -52,7 +52,7 @@ class AdminScreen extends ConsumerWidget {
               shape: const CircleBorder(),
               backgroundColor: const Color(0xff031329),
               onPressed: () {
-                context.push('/admin/reserves/create');
+                context.push('/admin/reserves/create/new');
               },
               child: const Icon(Icons.add, color: Colors.white),
             ),

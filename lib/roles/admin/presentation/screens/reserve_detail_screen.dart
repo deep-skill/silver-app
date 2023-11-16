@@ -96,7 +96,7 @@ class ReserveInfo extends StatelessWidget {
                 BoxReserveDetail(
                     icon: Icons.domain,
                     label: 'Empresa',
-                    text: '${reserve.brand}'),
+                    text: reserve.enterpriseName),
                 BoxReserveDetail(
                     icon: Icons.business_center_outlined,
                     label: 'Tipo de Servicio',
@@ -136,7 +136,7 @@ class ReserveInfo extends StatelessWidget {
                       child: BoxReserveDetail(
                           icon: Icons.timeline,
                           label: 'Tipo de viaje',
-                          text: '${reserve.tripType}'),
+                          text: reserve.tripType),
                     ),
                     Expanded(
                       child: BoxEstadoReserveDetail(
@@ -175,7 +175,7 @@ class ReserveInfo extends StatelessWidget {
                               icon: Icons.person_2_outlined,
                               label: 'Conductor',
                               text: reserve.driverName != null
-                                  ? '${reserve.driverName} ${reserve.lastName}'
+                                  ? '${reserve.driverName} ${reserve.driverLastName}'
                                   : '-'),
                           BoxReserveDetail(
                               icon: Icons.drive_eta_rounded,
@@ -224,9 +224,9 @@ class ReserveInfo extends StatelessWidget {
                     BoxReservePayment(
                         label: 'Tarifa base', text: 'S/${reserve.price}'),
                     BoxReservePayment(
-                        label: 'Pago Silver', text: 'S/${silverPercent}'),
+                        label: 'Pago Silver', text: 'S/$silverPercent'),
                     BoxReservePayment(
-                        label: 'Pago conductor', text: 'S/${driverPayment}'),
+                        label: 'Pago conductor', text: 'S/$driverPayment'),
                     BoxReservePayment(
                         label: 'Porcentaje Silver',
                         text: '${reserve.silverPercent}%'),
@@ -240,7 +240,7 @@ class ReserveInfo extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
-                        context.push('/reserves/create');
+                        context.push('/admin/reserves/create/${reserve.id}');
                       },
                       style: ButtonStyle(
                         shape:
@@ -317,7 +317,7 @@ class ReserveInfo extends StatelessWidget {
                         fixedSize: MaterialStateProperty.all(
                             Size(size.width * .4, size.height * .06)),
                         backgroundColor:
-                            MaterialStateProperty.all(const Color(0xFFFFFF)),
+                            MaterialStateProperty.all(const Color(0x00ffffff)),
                       ),
                       child: const Text('Cancelar',
                           style: TextStyle(

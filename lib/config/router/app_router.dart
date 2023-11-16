@@ -34,11 +34,11 @@ final goRouterProvider = Provider((ref) {
                 builder: (context, state) => const ReserveListScreen(),
                 routes: [
                   GoRoute(
-                    path: 'create',
+                    path: 'create/:id',
                     builder: (context, state) {
-                      return const CreateReserveScreen(
-                        reserveId: 'new',
-                      );
+                      final reserveId =
+                          state.pathParameters['id'] ?? 'new';
+                      return CreateReserveScreen(reserveId: reserveId);
                     },
                   ),
                   GoRoute(

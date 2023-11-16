@@ -60,6 +60,8 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     'Estacionamiento',
     'Observaciones'
   ];
+  final TextStyle textStyleLastGoodbye = const TextStyle(
+      color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 
   List<String> dropdownItems = ["Seleccionar peaje"];
   List<TollMap> tollMapItems = [];
@@ -320,8 +322,15 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           const SizedBox(
             height: 5,
           ),
-          !boolValue ? const Text("Datos enviados") : const SizedBox(),
-          !boolValue ? const Text("¡Muchas gracias!") : const SizedBox(),
+          !boolValue
+              ? Text(
+                  "Datos enviados",
+                  style: textStyleLastGoodbye,
+                )
+              : const SizedBox(),
+          !boolValue
+              ? Text("¡Muchas gracias!", style: textStyleLastGoodbye)
+              : const SizedBox(),
           const SizedBox(
             height: 10,
           )

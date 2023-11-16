@@ -32,7 +32,7 @@ class _AlertParadasState extends State<AlertParking> {
       ));
 
   final InputDecoration _inputDecorationAmout = const InputDecoration(
-      labelText: 'S/ 00.00',
+      labelText: 'Ingresa el monto',
       contentPadding: EdgeInsets.all(5),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.black),
@@ -77,66 +77,61 @@ class _AlertParadasState extends State<AlertParking> {
         ],
       ),
       actions: <Widget>[
-        Container(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: TextButton(
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.all(5)),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFF23A5CD)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFF23A5CD)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                ),
+                onPressed: () {
+                  final double? parkingAmount =
+                      double.tryParse(_controllerInput.text);
+                  if (parkingAmount != null && _controller.text != "") {
+                    widget.addParking(_controller.text, parkingAmount);
+                    _controller.clear();
+                    context.pop();
+                  } else {
+                    context.pop();
+                  }
+                },
+                child: const Text(
+                  'Agregar',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontFamily: "Monserrat"),
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Expanded(
+              child: TextButton(
+                style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                  ),
-                  onPressed: () {
-                    final double? parkingAmount =
-                        double.tryParse(_controllerInput.text);
-                    if (parkingAmount != null) {
-                      widget.addParking(_controller.text, parkingAmount);
-                      _controller.clear();
-                      context.pop();
-                    } else {
-                      context.pop();
-                    }
-                  },
-                  child: const Text(
-                    'Agregar',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontFamily: "Monserrat"),
-                  ),
+                    side: MaterialStateProperty.all(
+                        const BorderSide(color: Color(0xFF23A5CD)))),
+                onPressed: () => context.pop(),
+                child: const Text(
+                  'Cerrar',
+                  style: TextStyle(color: Color(0xFF23A5CD)),
                 ),
               ),
-              const SizedBox(
-                width: 5,
-              ),
-              Expanded(
-                child: TextButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      side: MaterialStateProperty.all(
-                          const BorderSide(color: Color(0xFF23A5CD)))),
-                  onPressed: () => context.pop(),
-                  child: const Text(
-                    'Cerrar',
-                    style: TextStyle(color: Color(0xFF23A5CD)),
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

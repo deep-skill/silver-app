@@ -4,11 +4,11 @@ import 'package:silverapp/config/dio/dio.dart';
 
 class AlertTripCancelated extends StatefulWidget {
   final int tripId;
-  final VoidCallback reload;
+  final VoidCallback reloadHome;
   const AlertTripCancelated({
     Key? key,
     required this.tripId,
-    required this.reload,
+    required this.reloadHome,
   }) : super(key: key);
   @override
   State<AlertTripCancelated> createState() => _AlertTripEndState();
@@ -19,7 +19,7 @@ class _AlertTripEndState extends State<AlertTripCancelated> {
     try {
       await dio
           .patch('trips/driver-trip/$tripId', data: {"status": "CANCELED"});
-      widget.reload();
+      //widget.reloadHome();
       context.pop("/driver");
     } catch (e) {
       // ignore: avoid_print

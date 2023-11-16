@@ -42,6 +42,7 @@ class _AlertParadasState extends State<AlertObservations> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
+            maxLines: 2,
             controller: _controller,
             decoration: _inputDecoration,
           ),

@@ -271,7 +271,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
             children: tolls.asMap().entries.map((entry) {
               final toll = entry.value;
               return CustomCard(
-                text: toll.name,
+                text: "${toll.name} - S/ ${toll.amount}",
                 onPressed: () {
                   remTolls(toll.id);
                 },
@@ -286,7 +286,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
             children: parkings.asMap().entries.map((entry) {
               final parking = entry.value;
               return CustomCard(
-                text: parking.name,
+                text: "${parking.name} - S/ ${parking.amount}",
                 onPressed: () {
                   remParking(parking.id);
                 },

@@ -1,12 +1,17 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 
 class AlertToll extends StatefulWidget {
   final Function(String, double, double, double) addToll;
-
-  const AlertToll(this.addToll, {super.key});
+  final List<String> dropdownItems;
+  final List<TollMap> tollMapItems;
+  const AlertToll(
+      {Key? key,
+      required this.dropdownItems,
+      required this.addToll,
+      required this.tollMapItems})
+      : super(key: key);
 
   @override
   State<AlertToll> createState() => _AlertPeajeState();
@@ -14,7 +19,6 @@ class AlertToll extends StatefulWidget {
 
 class _AlertPeajeState extends State<AlertToll> {
   final TextEditingController _controller = TextEditingController();
-  List<String> dropdownItems = ["Seleccionar peaje"];
   List<TollMap> tollMapItems = [];
 
   String? selectedDropdownValue = "Seleccionar peaje";
@@ -22,27 +26,6 @@ class _AlertPeajeState extends State<AlertToll> {
   @override
   void initState() {
     super.initState();
-    fetchDataForDropdown();
-  }
-
-  Future<void> fetchDataForDropdown() async {
-    try {
-      Response response = await Dio().get(
-          'https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-09c30b41-966b-480d-ad0d-e248e9f1a45a/default/tolls');
-      List<dynamic> data = response.data as List<dynamic>;
-      List<TollMap> tollsMap =
-          data.map((item) => TollMap.fromJson(item)).toList();
-      List<String> tollsName = tollsMap.map((item) => item.name).toList();
-      setState(() {
-        dropdownItems = ["Seleccionar peaje", ...tollsName];
-        tollMapItems = [...tollsMap];
-      });
-    } catch (e) {
-      setState(() {
-        dropdownItems = ["Seleccionar peaje", "Error al obtener datos"];
-      });
-      print('Error al obtener datos: $e');
-    }
   }
 
   TollMap getTollMap(String? tollName) {
@@ -52,7 +35,7 @@ class _AlertPeajeState extends State<AlertToll> {
     if (tollName == "Error al obtener datos") {
       context.pop();
     }
-    return tollMapItems.firstWhere((toll) => toll.name == tollName);
+    return widget.tollMapItems.firstWhere((toll) => toll.name == tollName);
   }
 
   @override
@@ -88,7 +71,7 @@ class _AlertPeajeState extends State<AlertToll> {
                   selectedDropdownValue = newValue;
                 });
               },
-              items: dropdownItems.map((String toll) {
+              items: widget.dropdownItems.map((String toll) {
                 return DropdownMenuItem<String>(
                   value: toll,
                   child: Row(

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
@@ -48,6 +49,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     observations = List<Observations>.from(widget.observations);
     parkings = List<Parking>.from(widget.parkings);
     tolls = List<Toll>.from(widget.tolls);
+    fetchDataForDropdown();
   }
 
   List<String> options = [
@@ -57,6 +59,28 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     'Estacionamiento',
     'Observaciones'
   ];
+
+  List<String> dropdownItems = ["Seleccionar peaje"];
+  List<TollMap> tollMapItems = [];
+  Future<void> fetchDataForDropdown() async {
+    try {
+      Response response = await Dio().get(
+          'https://faas-nyc1-2ef2e6cc.doserverless.co/api/v1/web/fn-09c30b41-966b-480d-ad0d-e248e9f1a45a/default/tolls');
+      List<dynamic> data = response.data as List<dynamic>;
+      List<TollMap> tollsMap =
+          data.map((item) => TollMap.fromJson(item)).toList();
+      List<String> tollsName = tollsMap.map((item) => item.name).toList();
+      setState(() {
+        dropdownItems = ["Seleccionar peaje", ...tollsName];
+        tollMapItems = [...tollsMap];
+      });
+    } catch (e) {
+      setState(() {
+        dropdownItems = ["Seleccionar peaje", "Error al obtener datos"];
+      });
+      print('Error al obtener datos: $e');
+    }
+  }
 
   void addStops(String stop) async {
     try {
@@ -162,8 +186,9 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
         switch (option) {
           case 'Peaje':
             return AlertToll(
-              addTools,
-            );
+                addToll: addTools,
+                dropdownItems: dropdownItems,
+                tollMapItems: tollMapItems);
           case 'Paradas':
             return AlertStops(addStops);
           case "Observaciones":

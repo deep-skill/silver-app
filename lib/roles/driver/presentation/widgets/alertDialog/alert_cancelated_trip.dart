@@ -15,7 +15,7 @@ class AlertTripCancelated extends StatefulWidget {
 }
 
 class _AlertTripEndState extends State<AlertTripCancelated> {
-  void deleteTripDriver(BuildContext context, int tripId) async {
+  void canceledTripDriver(BuildContext context, int tripId) async {
     try {
       await dio
           .patch('trips/driver-trip/$tripId', data: {"status": "CANCELED"});
@@ -45,7 +45,7 @@ class _AlertTripEndState extends State<AlertTripCancelated> {
                   backgroundColor: const Color(0xFF23A5CD),
                 ),
                 onPressed: () => {
-                      deleteTripDriver(context, widget.tripId),
+                      canceledTripDriver(context, widget.tripId),
                       context.pop("/driver"),
                     },
                 child: const Text(

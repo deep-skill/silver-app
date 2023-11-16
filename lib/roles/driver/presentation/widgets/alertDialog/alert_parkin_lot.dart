@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 class AlertParking extends StatefulWidget {
-  final Function(String, String) addParking;
+  final Function(String, double) addParking;
 
   const AlertParking(this.addParking, {super.key});
 
@@ -59,11 +60,15 @@ class _AlertParadasState extends State<AlertParking> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+            ],
             controller: _controllerInput,
             decoration: _inputDecorationAmout,
           ),
           const SizedBox(
-            height: 2,
+            height: 5,
           ),
           TextField(
             controller: _controller,
@@ -91,9 +96,15 @@ class _AlertParadasState extends State<AlertParking> {
                     ),
                   ),
                   onPressed: () {
-                    widget.addParking(_controller.text, _controllerInput.text);
-                    _controller.clear();
-                    Navigator.of(context).pop();
+                    final double? parkingAmount =
+                        double.tryParse(_controllerInput.text);
+                    if (parkingAmount != null) {
+                      widget.addParking(_controller.text, parkingAmount);
+                      _controller.clear();
+                      context.pop();
+                    } else {
+                      context.pop();
+                    }
                   },
                   child: const Text(
                     'Agregar',
@@ -105,7 +116,7 @@ class _AlertParadasState extends State<AlertParking> {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
               Expanded(
                 child: TextButton(

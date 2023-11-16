@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomCard extends StatelessWidget {
+class LabelExtraTrip extends StatelessWidget {
   final String text;
   final Function()? onPressed;
 
-  const CustomCard({super.key, required this.text, this.onPressed});
+  const LabelExtraTrip({super.key, required this.text, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

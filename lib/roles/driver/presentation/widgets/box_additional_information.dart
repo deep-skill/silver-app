@@ -8,6 +8,7 @@ import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_ob
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_parkin_lot.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_stops.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra_end.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/title_additional_information.dart';
 
 class AdditionalInformation extends StatefulWidget {
@@ -78,7 +79,6 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
       setState(() {
         dropdownItems = ["Seleccionar peaje", "Error al obtener datos"];
       });
-      print('Error al obtener datos: $e');
     }
   }
 
@@ -128,14 +128,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
-  void addParking(String parking, String amount) async {
-    double? amoutDouble = double.tryParse(amount);
+  void addParking(String parking, double amount) async {
     try {
-      await dio.post('parkings', data: {
-        "name": parking,
-        "tripId": widget.tripId,
-        "amount": amoutDouble
-      });
+      await dio.post('parkings',
+          data: {"name": parking, "tripId": widget.tripId, "amount": amount});
       widget.reload();
     } catch (e) {
       // ignore: avoid_print
@@ -255,7 +251,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           Column(
             children: stops.asMap().entries.map((entry) {
               final stop = entry.value;
-              return CustomCard(
+              if (!boolValue) {
+                return LabelExtraTripEnd(text: stop.location);
+              }
+              return LabelExtraTrip(
                 text: stop.location,
                 onPressed: () {
                   removeStop(stop.id);
@@ -270,7 +269,11 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           Column(
             children: tolls.asMap().entries.map((entry) {
               final toll = entry.value;
-              return CustomCard(
+              if (!boolValue) {
+                return LabelExtraTripEnd(
+                    text: "${toll.name} - S/ ${toll.amount}");
+              }
+              return LabelExtraTrip(
                 text: "${toll.name} - S/ ${toll.amount}",
                 onPressed: () {
                   remTolls(toll.id);
@@ -285,7 +288,11 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           Column(
             children: parkings.asMap().entries.map((entry) {
               final parking = entry.value;
-              return CustomCard(
+              if (!boolValue) {
+                return LabelExtraTripEnd(
+                    text: "${parking.name} - S/ ${parking.amount}");
+              }
+              return LabelExtraTrip(
                 text: "${parking.name} - S/ ${parking.amount}",
                 onPressed: () {
                   remParking(parking.id);
@@ -300,13 +307,24 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           Column(
               children: observations.asMap().entries.map((entry) {
             final observation = entry.value;
-            return CustomCard(
+            if (!boolValue) {
+              return LabelExtraTripEnd(text: observation.observation);
+            }
+            return LabelExtraTrip(
               text: observation.observation,
               onPressed: () {
                 remObservations(observation.id);
               },
             );
-          }).toList())
+          }).toList()),
+          const SizedBox(
+            height: 5,
+          ),
+          !boolValue ? const Text("Datos enviados") : const SizedBox(),
+          !boolValue ? const Text("¡Muchas gracias!") : const SizedBox(),
+          const SizedBox(
+            height: 10,
+          )
         ],
       ),
     );

@@ -112,7 +112,7 @@ class Observations {
 
 class Parking {
   int id;
-  int amount;
+  double amount;
   String name;
   int tripId;
 

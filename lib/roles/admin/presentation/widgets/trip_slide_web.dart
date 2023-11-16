@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
 
-class TripSlide extends StatelessWidget {
+class TripSlideWeb extends StatelessWidget {
   final TripList trip;
-  const TripSlide({super.key, required this.trip});
+  const TripSlideWeb({super.key, required this.trip});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class TripSlide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: 130,
+                width: size.width * .11,
                 decoration: const BoxDecoration(
                   color: Color(0xff03132A),
                   borderRadius: BorderRadius.only(
@@ -145,6 +145,7 @@ class TripSlide extends StatelessWidget {
                         Icons.hail,
                         size: 20,
                       ),
+                      const SizedBox(width: 10),
                       Text(
                         '${trip.userName} ${trip.userLastName}',
                         style: const TextStyle(
@@ -157,13 +158,14 @@ class TripSlide extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    width: size.width * .4,
+                    width: size.width * .1,
                     child: Row(
                       children: [
                         const Icon(
                           Icons.account_balance_outlined,
                           size: 20,
                         ),
+                        const SizedBox(width: 9),
                         Expanded(
                           child: Text(
                             trip.enterpriseName != null
@@ -186,6 +188,7 @@ class TripSlide extends StatelessWidget {
                         Icons.event_available_outlined,
                         size: 20,
                       ),
+                      const SizedBox(width: 9),
                       Text(
                         ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
                         style: const TextStyle(
@@ -206,7 +209,7 @@ class TripSlide extends StatelessWidget {
                             color: Color(0xff03132A)),
                       ),
                       SizedBox(
-                        width: size.width * .06,
+                        width: size.width * .02,
                       ),
                       Text(
                         'S/ \$${trip.totalPrice}',

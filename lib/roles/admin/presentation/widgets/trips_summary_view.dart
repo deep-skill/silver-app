@@ -33,16 +33,15 @@ class TripsSummaryView extends StatelessWidget {
                   data: (tripsSummary) {
                     return Text('${tripsSummary.trips}',
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700,
-                        ));
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontFamily: 'Montserrat-Bold'));
                   },
                 ),
                 const Text('Viajes',
                     style: TextStyle(
                       color: Colors.white,
-                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Montserrat-Semi-Bold',
                     ))
               ],
             ),
@@ -62,15 +61,14 @@ class TripsSummaryView extends StatelessWidget {
                       return Text('S/ ${tripsSummary.income.toInt()}',
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 24,
+                            fontFamily: 'Montserrat-Bold',
                           ));
                     }),
                 const Text('Ingresos',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ))
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Semi-Bold'))
               ],
             ),
             const VerticalDivider(
@@ -88,17 +86,15 @@ class TripsSummaryView extends StatelessWidget {
                   data: (tripsSummary) {
                     return Text('S/ ${tripsSummary.revenue.toInt()}',
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ));
+                            color: Colors.white,
+                            fontSize: 24,
+                            fontFamily: 'Montserrat-Bold'));
                   },
                 ),
                 const Text('Ganancia',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ))
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Semi-Bold'))
               ],
             ),
           ],

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_home.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/trip_summary_response.dart';
+import 'package:silverapp/roles/admin/presentation/delegates/search_reserve_list_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/search_reserve_no_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home_web.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view_web.dart';
@@ -33,15 +36,9 @@ class AdminHomeWebView extends StatelessWidget {
         return ref.read(reservesHomeProvider.notifier).reloadData();
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 250),
+        padding: const EdgeInsets.fromLTRB(230, 50, 230, 0),
         child: Column(
           children: [
-            // SizedBox(
-            // width: size.width * .9,
-            // child: Text(months[date],
-            // textAlign: TextAlign.start,
-            // style: const TextStyle(
-            // fontSize: 21, fontWeight: FontWeight.bold))),
             TripsSummaryViewWeb(
               size: size,
               tripsSummary: tripsSummary,
@@ -49,7 +46,7 @@ class AdminHomeWebView extends StatelessWidget {
               date: date,
             ),
             const SizedBox(
-              height: 15,
+              height: 10,
             ),
             Container(
               width: size.width * .8,
@@ -58,9 +55,70 @@ class AdminHomeWebView extends StatelessWidget {
               child: const Text('Reservas por asignar',
                   style: TextStyle(
                     fontSize: 20,
+                    color: Color(0xff364356),
                     fontWeight: FontWeight.bold,
                   )),
             ),
+            GestureDetector(
+              onTap: () {
+                final searchedReserves =
+                    ref.read(searchedNoDriverReservesProvider);
+                final searchQuery = ref.read(searchNoDriverReservesProvider);
+
+                showSearch<ReserveList?>(
+                        query: searchQuery,
+                        context: context,
+                        delegate: SearchReserveDelegate(
+                            initialReserves: searchedReserves,
+                            searchReserves: ref
+                                .read(searchedNoDriverReservesProvider.notifier)
+                                .searchReservesByQuery))
+                    .then((reserve) {});
+              },
+              child: SizedBox(
+                  height: size.height * .07,
+                  child: const DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Text(
+                            'Búsqueda de reservas',
+                            style: TextStyle(
+                              fontFamily: 'Raleway-Semi-Bold',
+                              color: Color(0xFF636D77),
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: SizedBox(
+                            height: 45,
+                            width: 45,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Color(0xff03132A),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+            ),
+            const SizedBox(height: 15),
             ReservesListHomeWeb(
               reserves: reserves,
               loadNextPage: () {

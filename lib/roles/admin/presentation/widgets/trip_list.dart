@@ -1,8 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
-
 import 'package:silverapp/roles/admin/presentation/widgets/trip_slide.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/trip_slide_web.dart';
 
 class TripsList extends StatefulWidget {
   const TripsList({super.key, required this.trips, required this.loadNextPage});
@@ -38,16 +38,31 @@ class _TripsListState extends State<TripsList> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        controller: scrollController,
-        itemCount: widget.trips.length,
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (contex, index) {
-          return TripSlide(trip: widget.trips[index]);
-        },
-      ),
-    );
+    return kIsWeb
+        ? Expanded(
+            child: GridView.count(
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 40,
+            childAspectRatio: 3.2,
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            controller: scrollController,
+            scrollDirection: Axis.vertical,
+            physics: const BouncingScrollPhysics(),
+            children: List.generate(widget.trips.length, (index) {
+              return TripSlideWeb(trip: widget.trips[index]);
+            }),
+          ))
+        : Expanded(
+            child: ListView.builder(
+              controller: scrollController,
+              itemCount: widget.trips.length,
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (contex, index) {
+                return TripSlide(trip: widget.trips[index]);
+              },
+            ),
+          );
   }
 }

@@ -30,7 +30,8 @@ class CreateReserveScreen extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-          title: Text(reserveId == 'new' ? "Crear Reserva" : "Editar Reserva")),
+        centerTitle: true,
+        title: Text(reserveId == 'new' ? "Crear Reserva" : "Editar Reserva")),
       body: reserveState.isLoading
           ? const FullScreenLoader()
           : Padding(
@@ -67,7 +68,7 @@ class CreateReserveView extends ConsumerWidget {
     return SingleChildScrollView(
       child: Container(
         decoration: const BoxDecoration(
-          color: Color(0xffF2F3F7),
+          color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         width: size.width,
@@ -102,7 +103,9 @@ class CreateReserveView extends ConsumerWidget {
                           '${reserveForm.userName} ${reserveForm.userLastName}',
                           style: reserveForm.userName == 'Ejem. Carla'
                               ? const TextStyle(
-                                  color: Colors.grey, fontSize: 16)
+                                  color: Color(0xffB5B9C2),
+                                  fontSize: 16,
+                                  fontFamily: 'Montserrat-Regular')
                               : const TextStyle(
                                   color: Colors.black, fontSize: 16)),
                       onPressed: () {
@@ -160,7 +163,9 @@ class CreateReserveView extends ConsumerWidget {
                           style: reserveForm.serviceType.value ==
                                   'Seleccione el tipo de servicio'
                               ? const TextStyle(
-                                  color: Colors.grey, fontSize: 16)
+                                  color: Color(0xffB5B9C2),
+                                  fontSize: 16,
+                                  fontFamily: 'Montserrat-Regular')
                               : const TextStyle(
                                   color: Colors.black, fontSize: 16),
                           items: [
@@ -240,7 +245,9 @@ class CreateReserveView extends ConsumerWidget {
                                   style: reserveForm.startDate.value ==
                                           '2023-09-26'
                                       ? const TextStyle(
-                                          color: Colors.grey, fontSize: 16)
+                                          color: Color(0xffB5B9C2),
+                                          fontSize: 16,
+                                          fontFamily: 'Montserrat-Regular')
                                       : const TextStyle(
                                           color: Colors.black, fontSize: 16)),
                             ),
@@ -284,7 +291,9 @@ class CreateReserveView extends ConsumerWidget {
                               child: Text(reserveForm.startTime.value,
                                   style: reserveForm.startTime.value == '00:00'
                                       ? const TextStyle(
-                                          color: Colors.grey, fontSize: 16)
+                                          color: Color(0xffB5B9C2),
+                                          fontSize: 16,
+                                          fontFamily: 'Montserrat-Regular')
                                       : const TextStyle(
                                           color: Colors.black, fontSize: 16)),
                             ),
@@ -324,7 +333,9 @@ class CreateReserveView extends ConsumerWidget {
                           style: reserveForm.tripType.value ==
                                   'Seleccione el tipo de viaje'
                               ? const TextStyle(
-                                  color: Colors.grey, fontSize: 16)
+                                  color: Color(0xffB5B9C2),
+                                  fontSize: 16,
+                                  fontFamily: 'Montserrat-Regular')
                               : const TextStyle(
                                   color: Colors.black, fontSize: 16),
                           items: [
@@ -388,7 +399,9 @@ class CreateReserveView extends ConsumerWidget {
                               style: reserveForm.startAddress.value ==
                                       'Seleccione el punto de recojo'
                                   ? const TextStyle(
-                                      color: Colors.grey, fontSize: 16)
+                                      color: Color(0xffB5B9C2),
+                                      fontSize: 16,
+                                      fontFamily: 'Montserrat-Regular')
                                   : const TextStyle(
                                       color: Colors.black, fontSize: 16)),
                         ),
@@ -454,7 +467,9 @@ class CreateReserveView extends ConsumerWidget {
                                 style: reserveForm.endAddress!.value ==
                                         'Seleccione el punto de destino'
                                     ? const TextStyle(
-                                        color: Colors.grey, fontSize: 16)
+                                        color: Color(0xffB5B9C2),
+                                        fontSize: 16,
+                                        fontFamily: 'Montserrat-Regular')
                                     : const TextStyle(
                                         color: Colors.black, fontSize: 16)),
                           ),
@@ -514,7 +529,9 @@ class CreateReserveView extends ConsumerWidget {
                           '${reserveForm.driverName} ${reserveForm.driverLastName}',
                           style: reserveForm.driverName == 'Ejem. Luis'
                               ? const TextStyle(
-                                  color: Colors.grey, fontSize: 16)
+                                  color: Color(0xffB5B9C2),
+                                  fontSize: 16,
+                                  fontFamily: 'Montserrat-Regular')
                               : const TextStyle(
                                   color: Colors.black, fontSize: 16)),
                       onPressed: () {
@@ -564,8 +581,9 @@ class CreateReserveView extends ConsumerWidget {
                           style: reserveForm.brand == 'Ejem. Toyota'
                               ? const TextStyle(
                                   overflow: TextOverflow.ellipsis,
-                                  color: Colors.grey,
-                                  fontSize: 16)
+                                  color: Color(0xffB5B9C2),
+                                  fontSize: 16,
+                                  fontFamily: 'Montserrat-Regular')
                               : const TextStyle(
                                   color: Colors.black, fontSize: 16)),
                       onPressed: () {
@@ -668,10 +686,11 @@ class CreateReserveView extends ConsumerWidget {
                   backgroundColor:
                       MaterialStateProperty.all(const Color(0xFF23A5CD)),
                 ),
-                child: Text(reserve.id == 0 ? "Crear" : "Editar",
-                    style: const TextStyle(
-                      color: Colors.white,
-                    )),
+                child: const Text(reserve.id == 0 ? "Crear" : "Editar",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Bold',
+                        fontSize: 16)),
               ),
             ),
           ]),

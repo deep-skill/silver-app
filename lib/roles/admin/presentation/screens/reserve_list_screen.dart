@@ -14,11 +14,14 @@ class ReserveListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Lista de reservas'),
-          scrolledUnderElevation: 0,
-        ),
-        body: const ReserveListView());
+      appBar: AppBar(
+        backgroundColor: const Color(0xffF2F3F7),
+        title: const Text('Lista de reservas'),
+        scrolledUnderElevation: 0,
+      ),
+      body: const ReserveListView(),
+      backgroundColor: const Color(0xffF2F3F7),
+    );
   }
 }
 
@@ -149,7 +152,7 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                         height: size.height * .07,
                         child: const DecoratedBox(
                           decoration: BoxDecoration(
-                            color: Color(0xffF2F3F7),
+                            color: Color(0xffFFFFFF),
                             borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
                           child: Row(
@@ -160,7 +163,8 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                                 child: Text(
                                   'Búsqueda de reservas',
                                   style: TextStyle(
-                                    color: Colors.grey,
+                                    color: Color(0xFF636D77),
+                                    fontFamily: 'Montserrat-Regular',
                                     fontSize: 16,
                                   ),
                                 ),
@@ -172,7 +176,7 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                                   width: 45,
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
-                                      color: Color(0xff031329),
+                                      color: Color(0xff03132A),
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(12)),
                                     ),

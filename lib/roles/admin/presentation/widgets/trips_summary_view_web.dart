@@ -22,40 +22,34 @@ class TripsSummaryViewWeb extends StatelessWidget {
           color: Color(0xffFFFFFF),
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
-        height: size.height * .2,
+        height: size.height * .18,
         width: size.width * .7,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(left: 34),
+                  padding: EdgeInsets.only(left: 12),
                   child: Text('Resumen del mes',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Colors.black,
-                        fontWeight: FontWeight.w700,
+                        // fontWeight: FontWeight.w700,
                       )),
                 ),
                 SizedBox(
                     child: Text(months[date],
                         style: const TextStyle(
-                            color: Color(0xff23a5cd),
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold))),
+                            color: Color(0xff23a5cd), fontSize: 24))),
               ],
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Número de viajes',
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                    )),
+                    style: TextStyle(fontSize: 16, color: Colors.black)),
                 tripsSummary.when(
                   loading: () => const CircularProgressIndicator(),
                   error: (err, stack) => Text('Error: $err'),
@@ -70,11 +64,9 @@ class TripsSummaryViewWeb extends StatelessWidget {
                       height: 60,
                       child: Text('${tripsSummary.trips}',
                           style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 24.31,
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.w700,
-                          )),
+                              color: Colors.white,
+                              fontSize: 24.31,
+                              fontFamily: 'Montserrat-Bold')),
                     );
                   },
                 ),
@@ -84,11 +76,7 @@ class TripsSummaryViewWeb extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Ingresos',
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                    )),
+                    style: TextStyle(fontSize: 16, color: Colors.black)),
                 tripsSummary.when(
                     loading: () => const CircularProgressIndicator(),
                     error: (err, stack) => Text('Error: $err'),
@@ -103,11 +91,9 @@ class TripsSummaryViewWeb extends StatelessWidget {
                         height: 60,
                         child: Text('S/ ${tripsSummary.income.toInt()}',
                             style: const TextStyle(
-                              fontFamily: 'Montserrat',
-                              color: Colors.white,
-                              fontSize: 24.31,
-                              fontWeight: FontWeight.w700,
-                            )),
+                                fontFamily: 'Montserrat-Bold',
+                                color: Colors.white,
+                                fontSize: 24.31)),
                       );
                     }),
               ],
@@ -116,11 +102,7 @@ class TripsSummaryViewWeb extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Ganancia',
-                    style: TextStyle(
-                      fontSize: 17,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                    )),
+                    style: TextStyle(fontSize: 16, color: Colors.black)),
                 tripsSummary.when(
                   loading: () => const CircularProgressIndicator(),
                   error: (err, stack) => Text('Error: $err'),
@@ -135,11 +117,9 @@ class TripsSummaryViewWeb extends StatelessWidget {
                       height: 60,
                       child: Text('S/ ${tripsSummary.revenue.toInt()}',
                           style: const TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Montserrat',
-                            fontSize: 24.31,
-                            fontWeight: FontWeight.w700,
-                          )),
+                              color: Colors.white,
+                              fontFamily: 'Montserrat-Bold',
+                              fontSize: 24.31)),
                     );
                   },
                 ),

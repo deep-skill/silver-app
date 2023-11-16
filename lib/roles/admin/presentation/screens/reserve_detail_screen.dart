@@ -38,11 +38,14 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
     }
 
     return Scaffold(
+        backgroundColor: const Color(0xffF2F3F7),
         appBar: AppBar(
+            centerTitle: true,
+            backgroundColor: const Color(0xffF2F3F7),
             title: const Text('Detalle de reserva'),
             scrolledUnderElevation: 0.0),
         body: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(14),
             child: ReserveInfo(reserve: reserve, size: size)));
   }
 }
@@ -65,19 +68,27 @@ class ReserveInfo extends StatelessWidget {
         Container(
           height: size.height,
           decoration: const BoxDecoration(
-            color: Color(0xffF2F3F7),
+            color: Color(0xffFFFFFF),
             borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           width: size.width,
           child: Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const Text('Datos Del Servicio',
-                    style: TextStyle(color: cyanColor)),
-                const Divider(color: cyanColor),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Datos del Servicio',
+                        style: TextStyle(
+                            color: cyanColor,
+                            fontSize: 12,
+                            fontFamily: 'Montserrat-Medium')),
+                    Divider(color: cyanColor),
+                  ],
+                ),
                 BoxReserveDetail(
                     icon: Icons.hail,
                     label: 'Pasajero',
@@ -89,10 +100,18 @@ class ReserveInfo extends StatelessWidget {
                 BoxReserveDetail(
                     icon: Icons.business_center_outlined,
                     label: 'Tipo de Servicio',
-                    text: reserve.serviceType),
-                const Text('Datos Del Viaje',
-                    style: TextStyle(color: cyanColor)),
-                const Divider(color: cyanColor),
+                    text: '${reserve.serviceType}'),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Datos Del Viaje',
+                        style: TextStyle(
+                            color: cyanColor,
+                            fontFamily: 'Montserrat-Medium',
+                            fontSize: 12)),
+                    Divider(color: cyanColor),
+                  ],
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -130,15 +149,22 @@ class ReserveInfo extends StatelessWidget {
                 BoxReserveDetail(
                     icon: Icons.location_on,
                     label: 'Punto de recojo',
-                    text: reserve.startAddress),
-                if (reserve.endAddress != null)
-                  BoxReserveDetail(
-                      icon: Icons.trip_origin_outlined,
-                      label: 'Punto de destino',
-                      text: '${reserve.endAddress}'),
-                const Text('Datos del conductor y vehículo',
-                    style: TextStyle(color: cyanColor)),
-                const Divider(color: cyanColor),
+                    text: '${reserve.startAddress}'),
+                BoxReserveDetail(
+                    icon: Icons.trip_origin_outlined,
+                    label: 'Punto de destino',
+                    text: '${reserve.endAddress}'),
+                const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Datos del conductor y vehículo',
+                        style: TextStyle(
+                            color: cyanColor,
+                            fontFamily: 'Montserrat-Medium',
+                            fontSize: 12)),
+                    Divider(color: cyanColor),
+                  ],
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -192,7 +218,8 @@ class ReserveInfo extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     BoxReservePayment(
                         label: 'Tarifa base', text: 'S/${reserve.price}'),
@@ -228,6 +255,8 @@ class ReserveInfo extends StatelessWidget {
                       ),
                       child: const Text('Editar',
                           style: TextStyle(
+                            fontFamily: 'Montserrat-Bold',
+                            fontSize: 16,
                             color: Colors.white,
                           )),
                     ),
@@ -284,7 +313,7 @@ class ReserveInfo extends StatelessWidget {
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                     side: const BorderSide(
-                                        color: Colors.black, width: 2))),
+                                        color: Color(0xff23A5CD), width: 2))),
                         fixedSize: MaterialStateProperty.all(
                             Size(size.width * .4, size.height * .06)),
                         backgroundColor:
@@ -292,7 +321,9 @@ class ReserveInfo extends StatelessWidget {
                       ),
                       child: const Text('Cancelar',
                           style: TextStyle(
-                            color: Colors.black,
+                            fontFamily: 'Montserrat-Bold',
+                            fontSize: 16,
+                            color: Color(0xff23A5CD),
                           )),
                     )
                   ],

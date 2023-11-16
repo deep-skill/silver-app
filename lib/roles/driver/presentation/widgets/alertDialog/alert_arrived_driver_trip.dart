@@ -39,12 +39,21 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
           Text("Marcar esta opcion solo si ya vas a iniciar el viaje"),
         ],
       ),
+      //backgroundColor: const Color(0xFF23A5CD),
       actions: <Widget>[
         Row(children: [
           Expanded(
             child: TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: const Color(0xFF23A5CD),
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                      const EdgeInsets.all(5)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(const Color(0xFF23A5CD)),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                 ),
                 onPressed: () async {
                   patchArrivedDrive(context, widget.tripId);
@@ -63,10 +72,18 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
           Expanded(
             child: TextButton(
               style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
                   side: MaterialStateProperty.all(
                       const BorderSide(color: Color(0xFF23A5CD)))),
               onPressed: () => context.pop(),
-              child: const Text('Cerrar'),
+              child: const Text(
+                'Cerrar',
+                style: TextStyle(color: Color(0xFF23A5CD)),
+              ),
             ),
           ),
         ])

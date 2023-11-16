@@ -79,8 +79,16 @@ class _AlertParadasState extends State<AlertParking> {
             children: [
               Expanded(
                 child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: const Color(0xFF23A5CD),
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.all(5)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFF23A5CD)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
                   ),
                   onPressed: () {
                     widget.addParking(_controller.text, _controllerInput.text);
@@ -102,10 +110,18 @@ class _AlertParadasState extends State<AlertParking> {
               Expanded(
                 child: TextButton(
                   style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
                       side: MaterialStateProperty.all(
                           const BorderSide(color: Color(0xFF23A5CD)))),
                   onPressed: () => context.pop(),
-                  child: const Text('Cerrar'),
+                  child: const Text(
+                    'Cerrar',
+                    style: TextStyle(color: Color(0xFF23A5CD)),
+                  ),
                 ),
               ),
             ],

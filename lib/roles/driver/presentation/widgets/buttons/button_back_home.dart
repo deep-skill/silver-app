@@ -14,9 +14,14 @@ class BackHomeButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: () => context.pop("/driver"),
       style: ButtonStyle(
-        padding:
-            MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(10)),
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+        padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(5)),
+        backgroundColor:
+            MaterialStateProperty.all<Color>(const Color(0xFF23A5CD)),
+        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
       ),
       child: Text(
         buttonText,

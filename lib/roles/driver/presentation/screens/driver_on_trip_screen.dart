@@ -114,23 +114,35 @@ class TripInfo extends ConsumerWidget {
       trip.arrivedDriver != null &&
               trip.startTime == null &&
               trip.endTime == null
-          ? TextButton(
-              onPressed: () => showDialog(
-                  context: context,
-                  builder: (context) => AlertTripCancelated(
-                        tripId: trip.id,
-                        reload: reload,
-                      )),
-              child: const Text(
-                "El pasajero no se presento",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontFamily: "Monserrat",
-                  fontWeight: FontWeight.bold,
-                  decoration: TextDecoration.underline,
-                ),
-              ))
+          ? Container(
+              padding: const EdgeInsets.all(5),
+              child: TextButton(
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (context) => AlertTripCancelated(
+                            tripId: trip.id,
+                            reload: reload,
+                          )),
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.all(10)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    "El pasajero no se presento",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: "Monserrat",
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline,
+                    ),
+                  )),
+            )
           : const SizedBox(),
       const SizedBox(
         height: 10,

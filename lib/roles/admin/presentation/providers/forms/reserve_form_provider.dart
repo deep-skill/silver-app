@@ -16,6 +16,7 @@ import 'package:silverapp/roles/admin/infraestructure/inputs/start_date.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/start_time.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/trip_type.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/user_id.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
 
 final reserveFormProvider = StateNotifierProvider.autoDispose
     .family<ReserveFormNotifier, ReserveFormState, CreateReserve>(
@@ -43,8 +44,8 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
       //   response = await dio.patch(url, data: jsonEncode(reserveLike));
       //   status = response.statusCode;
       // }
-
-      return status == 201 ? true : false;
+      // if (status == 200) ref.invalidate(reserveDetailProvider);
+      return status == 201 || status == 200 ? true : false;
     } catch (e) {
       throw Exception();
     }
@@ -104,7 +105,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           driverLastName: (reserve.driverId == 0 || reserve.driverId == null)
               ? 'Perez'
               : reserve.driverLastName!,
-          carId: (reserve.carId == 0)
+          carId: (reserve.carId == 0 || reserve.carId == null)
               ? const CarId.pure()
               : CarId.dirty(reserve.carId!),
           licensePlate: (reserve.carId == 0 || reserve.carId == null)

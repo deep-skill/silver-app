@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 
-
 final reserveDetailProvider =
     StateNotifierProvider<ReserveDetailNotifier, Map<String, ReserveDetail>>(
         (ref) {
@@ -26,6 +25,12 @@ class ReserveDetailNotifier extends StateNotifier<Map<String, ReserveDetail>> {
   GetReserveDetailCallback getReserveDetail;
 
   Future<void> loadReserveDetail(String reserveDetailId) async {
+    if (state[reserveDetailId] != null) return;
+    final reserveDetail = await getReserveDetail(reserveDetailId);
+    state = {...state, reserveDetailId: reserveDetail};
+  }
+
+  Future<void> updateReserveDetail(String reserveDetailId) async {
     if (state[reserveDetailId] != null) return;
     final reserveDetail = await getReserveDetail(reserveDetailId);
     state = {...state, reserveDetailId: reserveDetail};

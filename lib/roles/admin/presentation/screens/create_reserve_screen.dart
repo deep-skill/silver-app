@@ -12,6 +12,9 @@ import 'package:silverapp/roles/admin/presentation/delegates/search_driver_deleg
 import 'package:silverapp/roles/admin/presentation/delegates/search_passenger_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/providers/forms/reserve_form_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_create_update_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_car_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
@@ -48,9 +51,9 @@ class CreateReserveView extends ConsumerWidget {
     required this.reserve,
   });
 
-  void showSnackbar(BuildContext context) {
+  void showSnackbar(BuildContext context, int method) {
     final String snackBarText =
-        reserve.id == 0 ? "Reserva Creada" : "Reserva Editada";
+        method == 0 ? "Reserva Creada" : "Reserva Editada";
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(snackBarText)));
@@ -62,7 +65,6 @@ class CreateReserveView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reserveForm = ref.watch(reserveFormProvider(reserve));
-
     const cyanColor = Color(0xff23a5cd);
     return SingleChildScrollView(
       child: Container(
@@ -643,13 +645,17 @@ class CreateReserveView extends ConsumerWidget {
             const SizedBox(height: 30),
             Center(
               child: TextButton(
-                onPressed: () {
+                onPressed: () async {
+                  final reserveDetailRef = ref.read(reserveDetailProvider);
                   ref
                       .read(reserveFormProvider(reserve).notifier)
                       .onFormSubmit(reserve.id!)
                       .then((value) {
+                    print('value on pressed $value');
+
                     if (!value) return;
-                    showSnackbar(context);
+                    showSnackbar(context, reserve.id!);
+
                     context.pop();
                   });
                 },

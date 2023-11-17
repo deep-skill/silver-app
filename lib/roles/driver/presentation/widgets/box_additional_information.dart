@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_toll.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_tolls.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_observation.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_parkin_lot.dart';

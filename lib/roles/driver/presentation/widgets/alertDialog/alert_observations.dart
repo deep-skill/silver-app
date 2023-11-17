@@ -14,7 +14,7 @@ class _AlertParadasState extends State<AlertObservations> {
   final TextEditingController _controller = TextEditingController();
 
   final InputDecoration _inputDecoration = const InputDecoration(
-      labelText: 'Ingresar observacion',
+      hintText: 'Escribe aquí datos adicionales a tener en cuenta.',
       contentPadding: EdgeInsets.all(5),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.black),
@@ -42,7 +42,7 @@ class _AlertParadasState extends State<AlertObservations> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
-            maxLines: 2,
+            maxLines: 3,
             controller: _controller,
             decoration: _inputDecoration,
           ),

@@ -16,7 +16,7 @@ class _AlertParadasState extends State<AlertParking> {
   final TextEditingController _controllerInput = TextEditingController();
 
   final InputDecoration _inputDecoration = const InputDecoration(
-      labelText: 'Ingresar Estacionamiento',
+      hintText: 'Ingresa descripción',
       contentPadding: EdgeInsets.all(5),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.black),
@@ -32,7 +32,7 @@ class _AlertParadasState extends State<AlertParking> {
       ));
 
   final InputDecoration _inputDecorationAmout = const InputDecoration(
-      labelText: 'Ingresa el monto',
+      hintText: 'S/ 00.00',
       contentPadding: EdgeInsets.all(5),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.black),

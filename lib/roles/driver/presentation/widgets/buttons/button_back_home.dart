@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 
-class BackHomeButton extends StatelessWidget {
+class BackHomeButton extends ConsumerWidget {
   final String buttonText;
 
   const BackHomeButton({
@@ -10,9 +12,12 @@ class BackHomeButton extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
-      onPressed: () => context.pop("/driver"),
+      onPressed: () {
+        ref.invalidate(nearestReserveProvider);
+        context.go("/driver");
+        },
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(5)),
         backgroundColor:

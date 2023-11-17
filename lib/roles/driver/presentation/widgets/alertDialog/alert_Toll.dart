@@ -21,7 +21,7 @@ class _AlertPeajeState extends State<AlertToll> {
   final TextEditingController _controller = TextEditingController();
   List<TollMap> tollMapItems = [];
 
-  String? selectedDropdownValue = "Seleccionar peaje";
+  String? selectedDropdownValue = "Selecciona el peaje";
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _AlertPeajeState extends State<AlertToll> {
   }
 
   TollMap getTollMap(String? tollName) {
-    if (tollName == "Seleccionar peaje") {
+    if (tollName == "Selecciona el peaje") {
       context.pop();
     }
     if (tollName == "Error al obtener datos") {

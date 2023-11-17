@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_state_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_arrived_driver_trip.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_cancelated_trip.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_canceled_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_end_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_start_time_driver.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_additional_information.dart';
@@ -93,9 +92,6 @@ class TripInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (trip.status == "CANCELED") {
-      context.pop("/driver");
-    }
     return ListView(children: [
       const SeeMap(),
       AddressInfoWidget(
@@ -119,7 +115,7 @@ class TripInfo extends ConsumerWidget {
               child: TextButton(
                   onPressed: () => showDialog(
                       context: context,
-                      builder: (context) => AlertTripCancelated(
+                      builder: (context) => AlertTripCanceled(
                             tripId: trip.id,
                             reload: reload,
                           )),
@@ -149,7 +145,7 @@ class TripInfo extends ConsumerWidget {
       ),
       trip.arrivedDriver == null
           ? const SizedBox()
-          : const TitleReserve(text: "Informacion adicional"),
+          : const TitleReserve(text: "Información adicional"),
       const SizedBox(
         height: 5,
       ),

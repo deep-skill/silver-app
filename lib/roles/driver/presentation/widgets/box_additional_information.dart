@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_toll.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_defaut.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_observations.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_parkin_lot.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_stops.dart';
@@ -36,7 +36,7 @@ class AdditionalInformation extends StatefulWidget {
 }
 
 class _AdditionalInformationState extends State<AdditionalInformation> {
-  String selectedOption = 'Seleccionar item';
+  String selectedOption = 'Selecciona ítem';
   late List<Stop> stops;
   late List<Observations> observations;
   late List<Parking> parkings;
@@ -45,7 +45,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
   @override
   void initState() {
     super.initState();
-    selectedOption = 'Seleccionar item';
+    selectedOption = 'Seleccionar ítem';
     stops = List<Stop>.from(widget.stops);
     observations = List<Observations>.from(widget.observations);
     parkings = List<Parking>.from(widget.parkings);
@@ -54,7 +54,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
   }
 
   List<String> options = [
-    'Seleccionar item',
+    'Seleccionar ítem',
     'Peaje',
     'Paradas',
     'Estacionamiento',
@@ -63,7 +63,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
   final TextStyle textStyleLastGoodbye = const TextStyle(
       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 
-  List<String> dropdownItems = ["Seleccionar peaje"];
+  List<String> dropdownItems = ["Selecciona el peaje"];
   List<TollMap> tollMapItems = [];
   Future<void> fetchDataForDropdown() async {
     try {
@@ -74,12 +74,12 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           data.map((item) => TollMap.fromJson(item)).toList();
       List<String> tollsName = tollsMap.map((item) => item.name).toList();
       setState(() {
-        dropdownItems = ["Seleccionar peaje", ...tollsName];
+        dropdownItems = ["Selecciona el peaje", ...tollsName];
         tollMapItems = [...tollsMap];
       });
     } catch (e) {
       setState(() {
-        dropdownItems = ["Seleccionar peaje", "Error al obtener datos"];
+        dropdownItems = ["Selecciona el peaje", "Error al obtener datos"];
       });
     }
   }
@@ -194,7 +194,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           case "Estacionamiento":
             return AlertParking(addParking);
           default:
-            return const AlertDefaul();
+            return const AlertDefault();
         }
       },
     );
@@ -238,7 +238,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedOption = newValue ?? '';
-                        if (selectedOption != 'Seleccionar item') {
+                        if (selectedOption != 'Seleccionar ítem') {
                           _showCustomDialog(selectedOption);
                         }
                       });

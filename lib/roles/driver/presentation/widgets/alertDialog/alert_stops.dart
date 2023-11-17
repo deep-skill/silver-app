@@ -14,11 +14,11 @@ class _AlertParadasState extends State<AlertStops> {
   final TextEditingController _controller = TextEditingController();
 
   final InputDecoration _inputDecoration = const InputDecoration(
-      labelText: 'Ingresar Parada',
+      hintText: 'Ingresa dirección',
       contentPadding: EdgeInsets.all(5),
       focusedBorder: OutlineInputBorder(
         borderSide:
-            BorderSide(color: Colors.black), // Borde negro al enfocar el campo
+            BorderSide(color: Colors.black),
         borderRadius: BorderRadius.all(
           Radius.circular(5),
         ),
@@ -36,7 +36,7 @@ class _AlertParadasState extends State<AlertStops> {
       title: const Row(
         children: [
           Icon(Icons.add_location_alt_outlined),
-          Text("Parada"),
+          Text(" Parada"),
         ],
       ),
       content: Column(
@@ -68,7 +68,7 @@ class _AlertParadasState extends State<AlertStops> {
                 onPressed: () {
                   widget.addStops(_controller.text);
                   _controller.clear();
-                  Navigator.of(context).pop();
+                  context.pop();
                 },
                 child: const Text(
                   'Agregar',

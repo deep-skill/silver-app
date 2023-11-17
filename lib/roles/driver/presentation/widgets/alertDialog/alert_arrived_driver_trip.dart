@@ -16,15 +16,12 @@ class AlertArrivedDriver extends StatefulWidget {
 }
 
 class _AlertTripStartState extends State<AlertArrivedDriver> {
-  void patchArrivedDrive(BuildContext context, int tripId) async {
+  void patchArrivedDriver(BuildContext context, int tripId) async {
     try {
       await dio.patch('trips/driver-trip/$tripId',
           data: {"arrivedDriver": DateTime.now().toIso8601String()});
       widget.reload();
-      // ignore: use_build_context_synchronously
-      context.pop();
     } catch (e) {
-      // ignore: avoid_print
       print(e);
     }
   }
@@ -32,14 +29,13 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("¿Estás seguro que deseas iniciar viaje?"),
+      title: const Text("¿Llegaste al punto de recojo?"),
       content: const Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("Marca esta opción solo si ya vas a iniciar el viaje"),
+          Text("Marca esta opción solo si estás esperando al pasajero"),
         ],
       ),
-      //backgroundColor: const Color(0xFF23A5CD),
       actions: <Widget>[
         Row(children: [
           Expanded(
@@ -56,7 +52,8 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
                   ),
                 ),
                 onPressed: () async {
-                  patchArrivedDrive(context, widget.tripId);
+                  patchArrivedDriver(context, widget.tripId);
+                  context.pop();
                 },
                 child: const Text(
                   "Confirmar",

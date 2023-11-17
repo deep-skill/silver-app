@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class AlertDefaul extends StatefulWidget {
-  const AlertDefaul({super.key});
+class AlertDefault extends StatefulWidget {
+  const AlertDefault({super.key});
 
   @override
-  State<AlertDefaul> createState() => _AlertDefaulState();
+  State<AlertDefault> createState() => _AlertDefaulState();
 }
 
-class _AlertDefaulState extends State<AlertDefaul> {
+class _AlertDefaulState extends State<AlertDefault> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

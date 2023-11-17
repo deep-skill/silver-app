@@ -1,16 +1,5 @@
-// To parse this JSON data, do
-//
-//     final tripDriverStatus = tripDriverStatusFromJson(jsonString);
-
-import 'dart:convert';
-
-TripDriverStatus tripDriverStatusFromJson(String str) =>
-    TripDriverStatus.fromJson(json.decode(str));
-
-String tripDriverStatusToJson(TripDriverStatus data) =>
-    json.encode(data.toJson());
-
 class TripDriverStatus {
+  //TODO: Modify totalPrice to notNull and double
   int id;
   int? totalPrice;
   DateTime onWayDriver;
@@ -125,7 +114,7 @@ class Parking {
 
   factory Parking.fromJson(Map<String, dynamic> json) => Parking(
         id: json["id"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         name: json["name"],
         tripId: json["tripId"],
       );

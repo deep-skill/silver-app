@@ -22,7 +22,6 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         "status": "COMPLETED"
       });
       widget.reload();
-      context.pop();
     } catch (e) {
       // ignore: avoid_print
       print(e);
@@ -32,7 +31,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Desea finalizar viaje y enviar datos?"),
+      title: const Text("¿Deseas finalizar viaje y enviar datos?"),
       content: const Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -54,7 +53,10 @@ class _AlertTripEndState extends State<AlertTripEnd> {
                     ),
                   ),
                 ),
-                onPressed: () => patchEndTripDrive(context, widget.tripId),
+                onPressed: () {
+                  patchEndTripDrive(context, widget.tripId);
+                  context.pop();
+                },
                 child: const Text(
                   "Confirmar",
                   style: TextStyle(

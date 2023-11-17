@@ -21,9 +21,7 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
       await dio.patch('trips/driver-trip/$tripId',
           data: {"startTime": DateTime.now().toIso8601String()});
       widget.reload();
-      context.pop();
     } catch (e) {
-      // ignore: avoid_print
       print(e);
     }
   }
@@ -31,7 +29,7 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Esta seguro qe deseas iniciar viaje?"),
+      title: const Text("¿Está seguro qe deseas iniciar viaje?"),
       content: const Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -53,7 +51,10 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
                     ),
                   ),
                 ),
-                onPressed: () => patchStartTripDrive(context, widget.tripId),
+                onPressed: () {
+                  patchStartTripDrive(context, widget.tripId);
+                  context.pop();
+                },
                 child: const Text(
                   "Confirmar",
                   style: TextStyle(

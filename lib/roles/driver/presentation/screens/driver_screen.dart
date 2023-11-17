@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -54,20 +52,7 @@ class HomeViewState extends ConsumerState<HomeView> {
   }
 
   @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    ref.invalidate(driverInfoProvider);
-    ref.invalidate(tripsSummaryDriverProvider);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    @override
-    void initState() {
-      super.initState();
-      ref.invalidate(nearestReserveProvider);
-      ref.invalidate(driverReservesHomeProvider);
-    }
 
     final size = MediaQuery.of(context).size;
     const months = [

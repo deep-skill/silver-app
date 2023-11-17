@@ -182,7 +182,7 @@ class Toll {
   factory Toll.fromJson(Map<String, dynamic> json) => Toll(
         id: json["id"],
         name: json["name"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         lat: json["lat"]?.toDouble(),
         lon: json["lon"]?.toDouble(),
         tripId: json["tripId"],

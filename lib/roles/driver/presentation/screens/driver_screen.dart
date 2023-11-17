@@ -48,7 +48,17 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(driverReservesHomeProvider.notifier).currentPage == 0) ref.read(driverReservesHomeProvider.notifier).loadNextPage();
+    if (ref.read(driverReservesHomeProvider.notifier).currentPage == 0)
+      ref.read(driverReservesHomeProvider.notifier).loadNextPage();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    ref.invalidate(driverInfoProvider);
+    ref.invalidate(tripsSummaryDriverProvider);
+    ref.invalidate(nearestReserveProvider);
+    ref.invalidate(driverReservesHomeProvider);
   }
 
   @override
@@ -78,6 +88,7 @@ class HomeViewState extends ConsumerState<HomeView> {
           data: {"reserve_id": id, "on_way_driver": date.toIso8601String()});
       return trip.data['id'];
     }
+
     void nav(id) {
       context.pop();
       context.push('/driver/trips/on-trip/$id');

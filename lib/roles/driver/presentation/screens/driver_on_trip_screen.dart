@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_state_provider.dart';
-import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_arrived_driver_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_cancelated_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_end_trip.dart';
@@ -44,11 +43,6 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
       ref.read(tripDriverStatusProvider.notifier).loadTripState(widget.tripId);
     }
 
-    void reloadHome() {
-      print("reloadHomeDriver");
-      ref.refresh(tripsSummaryDriverProvider);
-    }
-
     if (trip == null) {
       return Scaffold(
           backgroundColor: Colors.grey[200],
@@ -73,7 +67,6 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
             child: TripInfo(
               trip: trip,
               reload: reload,
-              reloadHome: reloadHome,
             )));
   }
 }
@@ -83,10 +76,8 @@ class TripInfo extends ConsumerWidget {
     Key? key,
     required this.trip,
     required this.reload,
-    required this.reloadHome,
   }) : super(key: key);
   final VoidCallback reload;
-  final VoidCallback reloadHome;
   final TripDriverStatus trip;
 
   Widget getAlertWidget() {
@@ -130,7 +121,7 @@ class TripInfo extends ConsumerWidget {
                       context: context,
                       builder: (context) => AlertTripCancelated(
                             tripId: trip.id,
-                            reloadHome: reloadHome,
+                            reload: reload,
                           )),
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(

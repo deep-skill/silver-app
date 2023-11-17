@@ -48,8 +48,9 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(driverReservesHomeProvider.notifier).currentPage == 0)
+    if (ref.read(driverReservesHomeProvider.notifier).currentPage == 0) {
       ref.read(driverReservesHomeProvider.notifier).loadNextPage();
+    }
   }
 
   @override
@@ -57,12 +58,17 @@ class HomeViewState extends ConsumerState<HomeView> {
     super.didChangeDependencies();
     ref.invalidate(driverInfoProvider);
     ref.invalidate(tripsSummaryDriverProvider);
-    ref.invalidate(nearestReserveProvider);
-    ref.invalidate(driverReservesHomeProvider);
   }
 
   @override
   Widget build(BuildContext context) {
+    @override
+    void initState() {
+      super.initState();
+      ref.invalidate(nearestReserveProvider);
+      ref.invalidate(driverReservesHomeProvider);
+    }
+
     final size = MediaQuery.of(context).size;
     const months = [
       'Enero',

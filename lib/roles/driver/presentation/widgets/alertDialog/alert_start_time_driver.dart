@@ -2,28 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
 
-class AlertTripEnd extends StatefulWidget {
+class AlertStartTimeDriver extends StatefulWidget {
   final int tripId;
   final VoidCallback reload;
-  const AlertTripEnd({
+  const AlertStartTimeDriver({
     Key? key,
     required this.tripId,
     required this.reload,
   }) : super(key: key);
+
   @override
-  State<AlertTripEnd> createState() => _AlertTripEndState();
+  State<AlertStartTimeDriver> createState() => _AlertTripStartState();
 }
 
-class _AlertTripEndState extends State<AlertTripEnd> {
-  void patchEndTripDrive(BuildContext context, int tripId) async {
+class _AlertTripStartState extends State<AlertStartTimeDriver> {
+  void patchStartTripDrive(BuildContext context, int tripId) async {
     try {
-      await dio.patch('trips/driver-trip/$tripId', data: {
-        "endTime": DateTime.now().toIso8601String(),
-        "status": "COMPLETED"
-      });
+      await dio.patch('trips/driver-trip/$tripId',
+          data: {"startTime": DateTime.now().toIso8601String()});
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
       print(e);
     }
   }
@@ -31,11 +29,11 @@ class _AlertTripEndState extends State<AlertTripEnd> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("¿Deseas finalizar viaje y enviar datos?"),
+      title: const Text("¿Está seguro qe deseas iniciar viaje?"),
       content: const Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("Luego no podras volver a editar datos"),
+          Text("Marcar esta opcion solo si ya vas a iniciar el viaje"),
         ],
       ),
       actions: <Widget>[
@@ -54,7 +52,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
                   ),
                 ),
                 onPressed: () {
-                  patchEndTripDrive(context, widget.tripId);
+                  patchStartTripDrive(context, widget.tripId);
                   context.pop();
                 },
                 child: const Text(

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-class AlertDefaul extends StatefulWidget {
-  const AlertDefaul({super.key});
+class AlertDefault extends StatefulWidget {
+  const AlertDefault({super.key});
 
   @override
-  State<AlertDefaul> createState() => _AlertDefaulState();
+  State<AlertDefault> createState() => _AlertDefaulState();
 }
 
-class _AlertDefaulState extends State<AlertDefaul> {
+class _AlertDefaulState extends State<AlertDefault> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -16,17 +17,13 @@ class _AlertDefaulState extends State<AlertDefaul> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text("Error al ingresar dato"),
-          // Agrega más widgets según tus necesidades
         ],
       ),
       actions: <Widget>[
         TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          onPressed: () => context.pop(),
           child: const Text('Cerrar'),
         ),
-        // Agrega más botones o acciones según tus necesidades
       ],
     );
   }

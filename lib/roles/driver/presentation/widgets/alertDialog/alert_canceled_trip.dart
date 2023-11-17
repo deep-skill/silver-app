@@ -2,28 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
 
-class AlertTripEnd extends StatefulWidget {
+class AlertTripCanceled extends StatefulWidget {
   final int tripId;
   final VoidCallback reload;
-  const AlertTripEnd({
+  const AlertTripCanceled({
     Key? key,
     required this.tripId,
     required this.reload,
   }) : super(key: key);
   @override
-  State<AlertTripEnd> createState() => _AlertTripEndState();
+  State<AlertTripCanceled> createState() => _AlertTripEndState();
 }
 
-class _AlertTripEndState extends State<AlertTripEnd> {
-  void patchEndTripDrive(BuildContext context, int tripId) async {
+class _AlertTripEndState extends State<AlertTripCanceled> {
+  void canceledTripDriver(int tripId) async {
     try {
-      await dio.patch('trips/driver-trip/$tripId', data: {
-        "endTime": DateTime.now().toIso8601String(),
-        "status": "COMPLETED"
-      });
+      await dio
+          .patch('trips/driver-trip/$tripId', data: {"status": "CANCELED"});
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
       print(e);
     }
   }
@@ -31,11 +28,11 @@ class _AlertTripEndState extends State<AlertTripEnd> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("¿Deseas finalizar viaje y enviar datos?"),
+      title: const Text("Cancelar viaje por no show"),
       content: const Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("Luego no podras volver a editar datos"),
+          Text("El pasajero no se presentó."),
         ],
       ),
       actions: <Widget>[
@@ -54,8 +51,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
                   ),
                 ),
                 onPressed: () {
-                  patchEndTripDrive(context, widget.tripId);
-                  context.pop();
+                  canceledTripDriver(widget.tripId);
+                  context.go("/driver");
                 },
                 child: const Text(
                   "Confirmar",

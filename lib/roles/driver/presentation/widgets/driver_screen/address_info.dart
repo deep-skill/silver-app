@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_reserve_detail.dart';
 
 class AddressInfoWidget extends StatelessWidget {
-  final String originAddress;
-  final String destinationAddress;
+  final String startAddress;
+  final String endAddress;
 
   const AddressInfoWidget({
-    required this.originAddress,
-    required this.destinationAddress,
+    required this.startAddress,
+    required this.endAddress,
   });
 
   @override
@@ -17,7 +17,7 @@ class AddressInfoWidget extends StatelessWidget {
         BoxReserveDetail(
           icon: Icons.location_on_outlined,
           label: "Punto de origen",
-          text: originAddress,
+          text: startAddress,
           row: false,
         ),
         Row(
@@ -36,7 +36,7 @@ class AddressInfoWidget extends StatelessWidget {
         BoxReserveDetail(
           icon: Icons.trip_origin,
           label: "Punto de destino",
-          text: destinationAddress,
+          text: endAddress,
           row: false,
         ),
       ],

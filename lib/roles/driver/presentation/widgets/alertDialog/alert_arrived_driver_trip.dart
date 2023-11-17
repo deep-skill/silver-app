@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import '../../../../../config/dio/dio.dart';
 
-class AlertTripEnd extends StatefulWidget {
+class AlertArrivedDriver extends StatefulWidget {
   final int tripId;
   final VoidCallback reload;
-  const AlertTripEnd({
+  const AlertArrivedDriver({
     Key? key,
     required this.tripId,
     required this.reload,
   }) : super(key: key);
+
   @override
-  State<AlertTripEnd> createState() => _AlertTripEndState();
+  State<AlertArrivedDriver> createState() => _AlertTripStartState();
 }
 
-class _AlertTripEndState extends State<AlertTripEnd> {
-  void patchEndTripDrive(BuildContext context, int tripId) async {
+class _AlertTripStartState extends State<AlertArrivedDriver> {
+  void patchArrivedDriver(BuildContext context, int tripId) async {
     try {
-      await dio.patch('trips/driver-trip/$tripId', data: {
-        "endTime": DateTime.now().toIso8601String(),
-        "status": "COMPLETED"
-      });
+      await dio.patch('trips/driver-trip/$tripId',
+          data: {"arrivedDriver": DateTime.now().toIso8601String()});
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
       print(e);
     }
   }
@@ -31,11 +29,11 @@ class _AlertTripEndState extends State<AlertTripEnd> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("¿Deseas finalizar viaje y enviar datos?"),
+      title: const Text("¿Llegaste al punto de recojo?"),
       content: const Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("Luego no podras volver a editar datos"),
+          Text("Marca esta opción solo si estás esperando al pasajero"),
         ],
       ),
       actions: <Widget>[
@@ -53,8 +51,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
                     ),
                   ),
                 ),
-                onPressed: () {
-                  patchEndTripDrive(context, widget.tripId);
+                onPressed: () async {
+                  patchArrivedDriver(context, widget.tripId);
                   context.pop();
                 },
                 child: const Text(

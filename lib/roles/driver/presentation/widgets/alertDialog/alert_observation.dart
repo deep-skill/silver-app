@@ -1,38 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
-class AlertParking extends StatefulWidget {
-  final Function(String, double) addParking;
+class AlertObservations extends StatefulWidget {
+  final Function(String) addObservations;
 
-  const AlertParking(this.addParking, {super.key});
+  const AlertObservations(this.addObservations, {super.key});
 
   @override
-  State<AlertParking> createState() => _AlertParadasState();
+  State<AlertObservations> createState() => _AlertParadasState();
 }
 
-class _AlertParadasState extends State<AlertParking> {
+class _AlertParadasState extends State<AlertObservations> {
   final TextEditingController _controller = TextEditingController();
-  final TextEditingController _controllerInput = TextEditingController();
 
   final InputDecoration _inputDecoration = const InputDecoration(
-      hintText: 'Ingresa descripción',
-      contentPadding: EdgeInsets.all(5),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
-      ),
-      border: OutlineInputBorder(
-        borderSide: BorderSide(color: Colors.black),
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
-      ));
-
-  final InputDecoration _inputDecorationAmout = const InputDecoration(
-      hintText: 'S/ 00.00',
+      hintText: 'Escribe aquí datos adicionales a tener en cuenta.',
       contentPadding: EdgeInsets.all(5),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: Colors.black),
@@ -52,25 +34,15 @@ class _AlertParadasState extends State<AlertParking> {
     return AlertDialog(
       title: const Row(
         children: [
-          Icon(Icons.local_parking),
-          Text("Estacionamiento"),
+          Icon(Icons.search),
+          Text("Observaciones"),
         ],
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           TextField(
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-            ],
-            controller: _controllerInput,
-            decoration: _inputDecorationAmout,
-          ),
-          const SizedBox(
-            height: 5,
-          ),
-          TextField(
+            maxLines: 3,
             controller: _controller,
             decoration: _inputDecoration,
           ),
@@ -83,6 +55,8 @@ class _AlertParadasState extends State<AlertParking> {
             Expanded(
               child: TextButton(
                 style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                      const EdgeInsets.all(5)),
                   backgroundColor:
                       MaterialStateProperty.all<Color>(const Color(0xFF23A5CD)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -92,15 +66,9 @@ class _AlertParadasState extends State<AlertParking> {
                   ),
                 ),
                 onPressed: () {
-                  final double? parkingAmount =
-                      double.tryParse(_controllerInput.text);
-                  if (parkingAmount != null && _controller.text != "") {
-                    widget.addParking(_controller.text, parkingAmount);
-                    _controller.clear();
-                    context.pop();
-                  } else {
-                    context.pop();
-                  }
+                  widget.addObservations(_controller.text);
+                  _controller.clear();
+                  context.pop();
                 },
                 child: const Text(
                   'Agregar',
@@ -112,7 +80,7 @@ class _AlertParadasState extends State<AlertParking> {
               ),
             ),
             const SizedBox(
-              width: 5,
+              width: 10,
             ),
             Expanded(
               child: TextButton(

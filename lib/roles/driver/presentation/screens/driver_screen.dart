@@ -163,7 +163,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                   return nearestReserve != null
                       ? Column(
                           children: [
-                            DriverCustomSlide(reserve: nearestReserve),
+                            DriverCustomSlide(reserve: nearestReserve, isNearest: true),
                             Center(
                               child: TextButton(
                                 onPressed: () async {

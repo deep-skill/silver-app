@@ -136,7 +136,7 @@ class _ReserveItem extends StatelessWidget {
         onReserveSelected(context, reserve);
         context.push('/admin/reserves/detail/${reserve.id}');
       },
-      child: DriverCustomSlide(reserve: reserve),
+      child: DriverCustomSlide(reserve: reserve, isNearest: false,),
     );
   }
 }

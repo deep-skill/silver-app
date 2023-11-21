@@ -1,8 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/custom_slide_web.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_list.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_custom_slide.dart';
 
@@ -48,7 +44,7 @@ class _ReservesListState extends State<DriverReservesList> {
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (contex, index) {
-          return DriverCustomSlide(reserve: widget.reserves[index]);
+          return DriverCustomSlide(reserve: widget.reserves[index], isNearest: false,);
         },
       ),
     );

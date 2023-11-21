@@ -4,7 +4,8 @@ import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_l
 
 class DriverCustomSlide extends StatelessWidget {
   final DriverReserveList reserve;
-  const DriverCustomSlide({super.key, required this.reserve});
+  final bool isNearest;
+  const DriverCustomSlide({super.key, required this.reserve, required this.isNearest});
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +162,7 @@ class DriverCustomSlide extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                reserve.tripId != null
+                reserve.tripId != null && isNearest
                     ? context.push('/driver/trips/on-trip/${reserve.tripId}')
                     : context.push('/driver/reserves/detail/${reserve.id}');
               },

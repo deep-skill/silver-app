@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/driver_reserve_list.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_reserve_list.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_list.dart';
 import 'package:silverapp/roles/driver/presentation/delegates/search_driver_reserve_list_delegate.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_provider.dart';

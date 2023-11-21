@@ -10,6 +10,7 @@ class DriverReserveDetail {
   String lastName;
   String? state;
   String enterpriseName;
+  int silverPercent;
 
   DriverReserveDetail({
     required this.id,
@@ -23,6 +24,7 @@ class DriverReserveDetail {
     required this.lastName,
     required this.state,
     required this.enterpriseName,
+    required this.silverPercent,
   });
 
   factory DriverReserveDetail.fromJson(Map<String, dynamic> json) =>
@@ -38,5 +40,6 @@ class DriverReserveDetail {
         lastName: json["User"]["lastName"],
         state: (json["Trip"] == null) ? null : json["Trip"]["state"],
         enterpriseName: json["Enterprise"]["name"],
+        silverPercent: json["silverPercent"],
       );
 }

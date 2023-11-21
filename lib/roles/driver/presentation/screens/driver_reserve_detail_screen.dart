@@ -63,6 +63,14 @@ class ReserveInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String capitalizeFirst(String input) {
+      return input[0].toUpperCase() + input.substring(1).toLowerCase();
+    }
+
+    double driverIncome(price, silverPercent) {
+      return price - ((price / 100) * silverPercent);
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -83,7 +91,7 @@ class ReserveInfo extends StatelessWidget {
         BoxReserveDetail(
             icon: Icons.business_center_outlined,
             label: "Tipo de servicio",
-            text: reserve.serviceType,
+            text: capitalizeFirst(reserve.serviceType),
             row: false),
         const TitleReserveDetail(text: "Datos del viaje"),
         const SizedBox(
@@ -95,7 +103,8 @@ class ReserveInfo extends StatelessWidget {
               child: BoxReserveDetail(
                   icon: Icons.today,
                   label: "Fecha de reserva",
-                  text: '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}',
+                  text:
+                      '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}',
                   row: true),
             ),
             Expanded(
@@ -112,7 +121,7 @@ class ReserveInfo extends StatelessWidget {
             child: BoxReserveDetail(
                 icon: Icons.timeline,
                 label: "Tipo de viaje",
-                text: reserve.tripType,
+                text: capitalizeFirst(reserve.tripType),
                 row: true),
           ),
           Expanded(
@@ -169,7 +178,8 @@ class ReserveInfo extends StatelessWidget {
             ],
           )),
           Expanded(
-              child: Text("S/  ${reserve.price}",
+              child: Text(
+                  "S/  ${driverIncome(reserve.price, reserve.silverPercent).toStringAsFixed(2)}",
                   style: const TextStyle(
                     fontFamily: "Raleway",
                     fontSize: 32.0,

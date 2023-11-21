@@ -74,13 +74,11 @@ class HomeViewState extends ConsumerState<HomeView> {
     final date = DateTime.now();
     final reserves = ref.watch(driverReservesHomeProvider);
     Future createTrip(id, price) async {
-      print(price);
       final trip = await dio.post('/trips', data: {
         "reserve_id": id,
         "on_way_driver": date.toIso8601String(),
         "totalPrice": price
       });
-      print(trip.data['id']);
       return trip.data['id'];
     }
 
@@ -218,11 +216,9 @@ class HomeViewState extends ConsumerState<HomeView> {
                                               onPressed: () async {
                                                 final tripId = await createTrip(
                                                     nearestReserve.id,
-                                                    nearestReserve
-                                                        .getTripTotalPrice());
+                                                    nearestReserve.price);
                                                 ref.invalidate(
                                                     driverInfoProvider);
-                                                print(tripId);
                                                 nav(tripId);
                                               },
                                             ),

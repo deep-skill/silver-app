@@ -1,8 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/driver_reserve_list.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_list.dart';
+import 'package:silverapp/roles/driver/presentation/delegates/search_driver_reserve_list_delegate.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_provider.dart';
+import 'package:silverapp/roles/driver/presentation/providers/search_driver_reserve_provider.dart';
 
 class DriverReserveListScreen extends StatelessWidget {
   const DriverReserveListScreen({super.key});
@@ -32,8 +34,9 @@ class DriverReserveListViewState extends ConsumerState<DriverReserveListView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(driverReservesListProvider.notifier).currentPage == 0)
+    if (ref.read(driverReservesListProvider.notifier).currentPage == 0) {
       ref.read(driverReservesListProvider.notifier).loadNextPage();
+    }
   }
 
   @override
@@ -49,65 +52,65 @@ class DriverReserveListViewState extends ConsumerState<DriverReserveListView> {
         child: Column(
           children: [
             const SizedBox(height: 15),
-            // GestureDetector(
-            //   onTap: () {
-            //     final searchedReserves =
-            //         ref.read(searchedReservesProvider);
-            //     final searchQuery = ref.read(searchReservesProvider);
+            GestureDetector(
+              onTap: () {
+                final searchedReserves =
+                    ref.read(searchedDriverReservesProvider);
+                final searchQuery = ref.read(searchDriverReservesProvider);
 
-            //     showSearch<ReserveList?>(
-            //             query: searchQuery,
-            //             context: context,
-            //             delegate: SearchReserveDelegate(
-            //                 initialReserves: searchedReserves,
-            //                 searchReserves: ref
-            //                     .read(searchedReservesProvider.notifier)
-            //                     .searchReservesByQuery))
-            //         .then((reserve) {});
-            //   },
-            //   child: SizedBox(
-            //       height: size.height * .07,
-            //       child: const DecoratedBox(
-            //         decoration: BoxDecoration(
-            //           color: Color(0xffFFFFFF),
-            //           borderRadius: BorderRadius.all(Radius.circular(12)),
-            //         ),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           children: [
-            //             Padding(
-            //               padding: EdgeInsets.only(left: 20),
-            //               child: Text(
-            //                 'Búsqueda de reservas',
-            //                 style: TextStyle(
-            //                   color: Color(0xFF636D77),
-            //                   fontFamily: 'Montserrat-Regular',
-            //                   fontSize: 16,
-            //                 ),
-            //               ),
-            //             ),
-            //             Padding(
-            //               padding: EdgeInsets.only(right: 20),
-            //               child: SizedBox(
-            //                 height: 45,
-            //                 width: 45,
-            //                 child: DecoratedBox(
-            //                   decoration: BoxDecoration(
-            //                     color: Color(0xff03132A),
-            //                     borderRadius:
-            //                         BorderRadius.all(Radius.circular(12)),
-            //                   ),
-            //                   child: Icon(
-            //                     Icons.search,
-            //                     color: Colors.white,
-            //                   ),
-            //                 ),
-            //               ),
-            //             )
-            //           ],
-            //         ),
-            //       )),
-            // ),
+                showSearch<DriverReserveList?>(
+                        query: searchQuery,
+                        context: context,
+                        delegate: SearchDriverReserveDelegate(
+                            initialReserves: searchedReserves,
+                            searchReserves: ref
+                                .read(searchedDriverReservesProvider.notifier)
+                                .searchReservesByQuery))
+                    .then((reserve) {});
+              },
+              child: SizedBox(
+                  height: size.height * .07,
+                  child: const DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 20),
+                          child: Text(
+                            'Búsqueda de reservas',
+                            style: TextStyle(
+                              color: Color(0xFF636D77),
+                              fontFamily: 'Montserrat-Regular',
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 20),
+                          child: SizedBox(
+                            height: 45,
+                            width: 45,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: Color(0xff03132A),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: Icon(
+                                Icons.search,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+            ),
             const SizedBox(height: 15),
             DriverReservesList(
               reserves: reserves,

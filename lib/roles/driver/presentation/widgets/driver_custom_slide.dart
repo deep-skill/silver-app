@@ -4,7 +4,8 @@ import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_l
 
 class DriverCustomSlide extends StatelessWidget {
   final DriverReserveList reserve;
-  const DriverCustomSlide({super.key, required this.reserve});
+  final bool isNearest;
+  const DriverCustomSlide({super.key, required this.reserve, required this.isNearest});
 
   @override
   Widget build(BuildContext context) {
@@ -27,26 +28,28 @@ class DriverCustomSlide extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         height: size.height * .15,
-        decoration: BoxDecoration(
-          color: const Color(0xffF2F3F7),
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        decoration: const BoxDecoration(
+          color: Color(0xffF2F3F7),
+          borderRadius: BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade200,
-              blurRadius: 10,
-              offset: const Offset(0, 3),
+              color: Color.fromRGBO(0, 0, 0, 0.25),
+              blurRadius: 4,
+              offset: Offset(0, 4),
             )
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
                 width: 100,
-                height: 110,
                 decoration: const BoxDecoration(
                   color: Color(0xff031329),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
+                  ),
                   image: DecorationImage(
                     opacity: 50,
                     fit: BoxFit.fill,
@@ -88,7 +91,7 @@ class DriverCustomSlide extends StatelessWidget {
                         ),
                       ))),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -118,6 +121,26 @@ class DriverCustomSlide extends StatelessWidget {
                     child: Row(
                       children: [
                         const Icon(
+                          Icons.event_available_outlined,
+                          size: 20,
+                        ),
+                        Expanded(
+                          child: Text(
+                            ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute} hs.',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: size.width * .5,
+                    child: Row(
+                      children: [
+                        const Icon(
                           Icons.location_on_outlined,
                           size: 20,
                         ),
@@ -134,40 +157,21 @@ class DriverCustomSlide extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: size.width * .5,
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.event_available_outlined,
-                          size: 20,
-                        ),
-                        Expanded(
-                          child: Text(
-                            ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute} hs.',
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
             GestureDetector(
               onTap: () {
-                reserve.tripId != null
-                ? context.push('/driver/trips/on-trip/${reserve.tripId}')
-                : context.push('/driver/reserves/detail/${reserve.id}');
+                reserve.tripId != null && isNearest
+                    ? context.push('/driver/trips/on-trip/${reserve.tripId}')
+                    : context.push('/driver/reserves/detail/${reserve.id}');
               },
               child: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 30,
               ),
             ),
+            SizedBox(width: 1)
           ],
         ),
       ),

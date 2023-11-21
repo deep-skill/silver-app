@@ -48,8 +48,6 @@ class ShowInformation extends ConsumerWidget {
           credentials != null
               ? Column(
                   children: [
-                    // Text(credentials.accessToken),
-                    // Text(credentials.scopes.toString()),
                     Padding(
                       padding: EdgeInsets.all(size.width * .08),
                       child: WelcomeMsgScreen(
@@ -57,7 +55,7 @@ class ShowInformation extends ConsumerWidget {
                           'assets/images/app_logo_auth.png',
                         ),
                         title: Text(
-                          'Bienvenido/a ${credentials?.user.nickname} a Silver Expresss!',
+                          'Bienvenido/a ${credentials?.user.email} a Silver Expresss!',
                           style: TextStyle(fontSize: size.width * .08),
                           textAlign: TextAlign.center,
                         ),

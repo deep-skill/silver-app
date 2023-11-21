@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
+import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
 
 class BackHomeButton extends ConsumerWidget {
   final String buttonText;
@@ -16,6 +17,7 @@ class BackHomeButton extends ConsumerWidget {
     return ElevatedButton(
       onPressed: () {
         ref.invalidate(nearestReserveProvider);
+        ref.invalidate(tripsSummaryDriverProvider);
         context.go("/driver");
         },
       style: ButtonStyle(

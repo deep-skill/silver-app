@@ -6,6 +6,7 @@ class DriverReserveList {
   final String lastName;
   final String? entrepriseName;
   final int? tripId;
+  final double price;
 
   DriverReserveList({
     required this.id,
@@ -15,6 +16,7 @@ class DriverReserveList {
     required this.lastName,
     required this.entrepriseName,
     this.tripId,
+    required this.price,
   });
   factory DriverReserveList.fromJson(Map<String, dynamic> json) =>
       DriverReserveList(
@@ -27,5 +29,6 @@ class DriverReserveList {
             ? 'Viaje personal'
             : json['Enterprise']['name'],
         tripId: json['Trip'] == null ? null : json['Trip']['id'],
+        price: json['price'],
       );
 }

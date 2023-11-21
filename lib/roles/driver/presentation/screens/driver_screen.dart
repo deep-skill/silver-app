@@ -53,7 +53,6 @@ class HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-
     final size = MediaQuery.of(context).size;
     const months = [
       'Enero',
@@ -74,9 +73,12 @@ class HomeViewState extends ConsumerState<HomeView> {
     final nearestReserve = ref.watch(nearestReserveProvider);
     final date = DateTime.now();
     final reserves = ref.watch(driverReservesHomeProvider);
-    Future createTrip(id) async {
-      final trip = await dio.post('/trips',
-          data: {"reserve_id": id, "on_way_driver": date.toIso8601String()});
+    Future createTrip(id, price) async {
+      final trip = await dio.post('/trips', data: {
+        "reserve_id": id,
+        "on_way_driver": date.toIso8601String(),
+        "totalPrice": price
+      });
       return trip.data['id'];
     }
 
@@ -213,7 +215,8 @@ class HomeViewState extends ConsumerState<HomeView> {
                                               child: const Text('Confirmar'),
                                               onPressed: () async {
                                                 final tripId = await createTrip(
-                                                    nearestReserve.id);
+                                                    nearestReserve.id,
+                                                    nearestReserve.price);
                                                 ref.invalidate(
                                                     driverInfoProvider);
                                                 nav(tripId);

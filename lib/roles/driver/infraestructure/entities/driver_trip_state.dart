@@ -1,8 +1,7 @@
 class TripDriverStatus {
-  //TODO: Modify totalPrice to notNull and double
   int id;
-  int? totalPrice;
   DateTime onWayDriver;
+  double totalPrice;
   DateTime? arrivedDriver;
   DateTime? startTime;
   DateTime? endTime;
@@ -35,7 +34,7 @@ class TripDriverStatus {
   factory TripDriverStatus.fromJson(Map<String, dynamic> json) =>
       TripDriverStatus(
         id: json["id"],
-        totalPrice: json["totalPrice"] ?? 0,
+        totalPrice: json["totalPrice"].toDouble(),
         onWayDriver: DateTime.parse(json["onWayDriver"]),
         arrivedDriver: json["arrivedDriver"] == null
             ? null

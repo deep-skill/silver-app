@@ -10,6 +10,7 @@ import 'package:silverapp/roles/admin/presentation/screens/reserve_list_screen.d
 import 'package:silverapp/roles/driver/presentation/screens/driver_on_trip_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/trips_list_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_detail_screen.dart';
+import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_list_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/trip_list_screen.dart';
 import 'package:silverapp/roles/no_role/no_role_screen.dart';
@@ -36,8 +37,7 @@ final goRouterProvider = Provider((ref) {
                   GoRoute(
                     path: 'create/:id',
                     builder: (context, state) {
-                      final reserveId =
-                          state.pathParameters['id'] ?? 'new';
+                      final reserveId = state.pathParameters['id'] ?? 'new';
                       return CreateReserveScreen(reserveId: reserveId);
                     },
                   ),
@@ -62,7 +62,7 @@ final goRouterProvider = Provider((ref) {
             routes: [
               GoRoute(
                   path: 'reserves',
-                  builder: (context, state) => const ReserveListScreen(),
+                  builder: (context, state) => const DriverReserveListScreen(),
                   routes: [
                     GoRoute(
                       path: 'detail/:id',

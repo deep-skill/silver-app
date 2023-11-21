@@ -1,7 +1,7 @@
 class TripDriverStatus {
   int id;
-  double totalPrice;
   DateTime onWayDriver;
+  double totalPrice;
   DateTime? arrivedDriver;
   DateTime? startTime;
   DateTime? endTime;

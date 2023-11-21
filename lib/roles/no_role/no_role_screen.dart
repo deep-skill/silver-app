@@ -2,6 +2,7 @@ import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/full_screen_loader.dart';
 import 'package:silverapp/roles/no_role/WelcomeMsgScreen.dart';
 
 class NoRoleScreen extends ConsumerWidget {
@@ -17,10 +18,11 @@ class NoRoleScreen extends ConsumerWidget {
         appBar: AppBar(title: const Text('Bienvenido/a')),
         body: Padding(
           padding: const EdgeInsets.all(12),
-          child: ShowInformation(
+          child: credentials != null
+          ? ShowInformation(
             size: size,
             credentials: credentials,
-          ),
+          ): const FullScreenLoader(),
         ));
   }
 }

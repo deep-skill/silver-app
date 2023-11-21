@@ -320,20 +320,8 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
             );
           }).toList()),
           const SizedBox(
-            height: 5,
+            height: 15,
           ),
-          !boolValue
-              ? Text(
-                  "Datos enviados",
-                  style: textStyleLastGoodbye,
-                )
-              : const SizedBox(),
-          !boolValue
-              ? Text("¡Muchas gracias!", style: textStyleLastGoodbye)
-              : const SizedBox(),
-          const SizedBox(
-            height: 10,
-          )
         ],
       ),
     );

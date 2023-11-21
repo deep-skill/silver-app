@@ -71,6 +71,17 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
 }
 
 class TripInfo extends ConsumerWidget {
+  double calculateCustomerPrice() {
+    double result = trip.totalPrice;
+    for (var element in trip.tolls) {
+      result += element.amount;
+    }
+    for (var element in trip.parkings) {
+      result += element.amount;
+    }
+    return result;
+  }
+
   const TripInfo({
     Key? key,
     required this.trip,
@@ -92,6 +103,9 @@ class TripInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    const TextStyle textStyleLastGoodbye = TextStyle(
+        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
+
     return ListView(children: [
       const SeeMap(),
       AddressInfoWidget(
@@ -166,6 +180,48 @@ class TripInfo extends ConsumerWidget {
               child: TripButton(
                   buttonText: "Finalizar viaje",
                   alertWidget: AlertTripEnd(tripId: trip.id, reload: reload)),
+            )
+          : const SizedBox(),
+      trip.endTime != null
+          ? Row(children: [
+              const Expanded(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Precio",
+                      style: TextStyle(
+                        fontFamily: "Raleway",
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  Text("Cliente",
+                      style: TextStyle(
+                        fontFamily: "Raleway",
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                ],
+              )),
+              Expanded(
+                  child: Text("S/  ${calculateCustomerPrice()}",
+                      style: const TextStyle(
+                        fontFamily: "Raleway",
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.bold,
+                      ))),
+            ])
+          : const SizedBox(
+              height: 5,
+            ),
+      trip.endTime != null
+          ? const Column(
+              children: [
+                Text(
+                  "Datos enviados",
+                  style: textStyleLastGoodbye,
+                ),
+                Text("¡Muchas gracias!", style: textStyleLastGoodbye)
+              ],
             )
           : const SizedBox(),
       trip.endTime == null

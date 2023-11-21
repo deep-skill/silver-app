@@ -1,7 +1,6 @@
 class TripDriverStatus {
-  //TODO: Modify totalPrice to notNull and double
   int id;
-  double? totalPrice;
+  double totalPrice;
   DateTime onWayDriver;
   DateTime? arrivedDriver;
   DateTime? startTime;

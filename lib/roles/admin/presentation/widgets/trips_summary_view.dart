@@ -38,11 +38,12 @@ class TripsSummaryView extends StatelessWidget {
                             fontFamily: 'Montserrat-Bold'));
                   },
                 ),
+                const SizedBox(height: 6),
                 const Text('Viajes',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'Montserrat-Semi-Bold',
-                    ))
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Semi-Bold',
+                        fontSize: 12))
               ],
             ),
             const VerticalDivider(
@@ -65,10 +66,12 @@ class TripsSummaryView extends StatelessWidget {
                             fontFamily: 'Montserrat-Bold',
                           ));
                     }),
+                const SizedBox(height: 6),
                 const Text('Ingresos',
                     style: TextStyle(
                         color: Colors.white,
-                        fontFamily: 'Montserrat-Semi-Bold'))
+                        fontFamily: 'Montserrat-Semi-Bold',
+                        fontSize: 12))
               ],
             ),
             const VerticalDivider(
@@ -91,10 +94,12 @@ class TripsSummaryView extends StatelessWidget {
                             fontFamily: 'Montserrat-Bold'));
                   },
                 ),
+                const SizedBox(height: 6),
                 const Text('Ganancia',
                     style: TextStyle(
                         color: Colors.white,
-                        fontFamily: 'Montserrat-Semi-Bold'))
+                        fontFamily: 'Montserrat-Semi-Bold',
+                        fontSize: 12))
               ],
             ),
           ],

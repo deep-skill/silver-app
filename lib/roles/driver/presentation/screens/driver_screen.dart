@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
@@ -114,8 +115,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                           children: [
                             const Text('¡Hola!',
                                 style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 32,
                                 )),
                             CustomDriverName(driverInfo: driverInfo),
                           ])
@@ -131,7 +131,9 @@ class HomeViewState extends ConsumerState<HomeView> {
                   child: Text(months[date.month - 1],
                       textAlign: TextAlign.start,
                       style: const TextStyle(
-                          fontSize: 21, fontWeight: FontWeight.bold))),
+                          fontSize: 20,
+                          fontFamily: 'Roboto-Bold',
+                          color: Color(0xff364356)))),
               SizedBox(height: size.height * .01),
               TripsSummaryDriverView(
                   size: size, tripsSummary: tripsSummaryDriver),
@@ -156,9 +158,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                             ))
                         : const Text('Reserva mas próxima',
                             style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ));
+                                fontSize: 20, color: Color(0xff364356)));
                   },
                 ),
               ),
@@ -171,7 +171,8 @@ class HomeViewState extends ConsumerState<HomeView> {
                   return nearestReserve != null
                       ? Column(
                           children: [
-                            DriverCustomSlide(reserve: nearestReserve, isNearest: true),
+                            DriverCustomSlide(
+                                reserve: nearestReserve, isNearest: true),
                             Center(
                               child: TextButton(
                                 onPressed: () async {
@@ -273,10 +274,7 @@ class HomeViewState extends ConsumerState<HomeView> {
               Container(
                 alignment: Alignment.centerLeft,
                 child: const Text('Reservas del día',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    )),
+                    style: TextStyle(fontSize: 20, color: Color(0xff364356))),
               ),
               DriverReservesListHome(
                 reserves: reserves,

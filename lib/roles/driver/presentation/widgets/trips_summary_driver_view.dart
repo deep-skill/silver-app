@@ -32,20 +32,21 @@ class TripsSummaryDriverView extends StatelessWidget {
                   error: (err, stack) => Text('Error: $err'),
                   data: (tripsSummary) {
                     return tripsSummary != null
-                    ? Text('${tripsSummary.trips}',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.w700,
-                        ))
+                        ? Text('${tripsSummary.trips}',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'Montserrat-Bold',
+                              fontSize: 24,
+                            ))
                         : const CircularProgressIndicator();
                   },
                 ),
+                const SizedBox(height: 8),
                 const Text('Viajes',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ))
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Semi-Bold',
+                        fontSize: 12))
               ],
             ),
             const VerticalDivider(
@@ -61,20 +62,21 @@ class TripsSummaryDriverView extends StatelessWidget {
                     loading: () => const CircularProgressIndicator(),
                     error: (err, stack) => Text('Error: $err'),
                     data: (tripsSummary) {
-                      return tripsSummary!= null
-                      ? Text('S/ ${tripsSummary.revenue.toDouble()}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                          ))
+                      return tripsSummary != null
+                          ? Text('S/ ${tripsSummary.revenue.toDouble()}',
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat-Bold',
+                                fontSize: 24,
+                              ))
                           : const CircularProgressIndicator();
                     }),
+                const SizedBox(height: 8),
                 const Text('Ganancia',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                    ))
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Semi-Bold',
+                        fontSize: 12))
               ],
             ),
           ],

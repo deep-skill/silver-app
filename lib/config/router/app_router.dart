@@ -13,7 +13,6 @@ import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_detai
 import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_list_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_trip_list_screen.dart';
-import 'package:silverapp/roles/driver/presentation/screens/trip_list_screen.dart';
 import 'package:silverapp/roles/no_role/no_role_screen.dart';
 import 'package:silverapp/roles/user/presentation/screens/user_screen.dart';
 
@@ -76,7 +75,7 @@ final goRouterProvider = Provider((ref) {
                   ]),
               GoRoute(
                   path: 'trips',
-                  builder: (context, state) => const DriverTripList(),
+                  builder: (context, state) => const DriverTripListScreen(),
                   routes: [
                     GoRoute(
                       path: 'on-trip/:id',

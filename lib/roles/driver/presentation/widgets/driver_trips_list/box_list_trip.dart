@@ -5,6 +5,7 @@ class BoxTripList extends StatelessWidget {
   final String name;
   final String date;
   final String stateReserve;
+  final double totalPrice;
 
   const BoxTripList({
     Key? key,
@@ -12,6 +13,7 @@ class BoxTripList extends StatelessWidget {
     required this.image,
     required this.name,
     required this.date,
+    required this.totalPrice,
   }) : super(key: key);
 
   @override
@@ -100,10 +102,10 @@ class BoxTripList extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const Row(
+                  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             SizedBox(
                               width: 8,
@@ -114,7 +116,7 @@ class BoxTripList extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(" S/. 100.00", style: styleTextPay),
+                        Text(" S/. $totalPrice", style: styleTextPay),
                       ]),
                   const SizedBox(
                     height: 5,

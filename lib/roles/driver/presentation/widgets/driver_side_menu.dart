@@ -67,11 +67,12 @@ class SideMenuState extends ConsumerState<DriverSideMenu> {
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     )),
-                    if (credentials?.user != null) Text(credentials!.user.email.toString(),
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold)),
+                if (credentials?.user != null)
+                  Text(credentials!.user.email.toString(),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold)),
               ],
             ),
           ),
@@ -137,7 +138,7 @@ const appMenuItems = <MenuItem>[
   ),
   MenuItem(
     title: 'Historial de viajes',
-    link: '/historial',
+    link: '/driver/trips',
     icon: Icons.emoji_transportation_rounded,
   ),
 ];

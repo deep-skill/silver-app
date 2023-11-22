@@ -1,30 +1,33 @@
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 
-class ListTripDriver {
+class DriverTripList {
+  int id;
+  double totalPrice;
   DateTime onWayDriver;
   String status;
-  double totalPrice;
-  String userName;
+  String name;
   String lastName;
   String enterpriseName;
   List<Toll> tolls;
   List<Parking> parkings;
 
-  ListTripDriver(
-      {required this.onWayDriver,
+  DriverTripList(
+      {required this.id,
+      required this.onWayDriver,
       required this.status,
       required this.totalPrice,
-      required this.userName,
+      required this.name,
       required this.lastName,
       required this.enterpriseName,
       required this.tolls,
       required this.parkings});
 
-  factory ListTripDriver.fromJson(Map<String, dynamic> json) => ListTripDriver(
+  factory DriverTripList.fromJson(Map<String, dynamic> json) => DriverTripList(
+        id: json["id"],
         onWayDriver: DateTime.parse(json["onWayDriver"]),
         status: json["status"],
         totalPrice: json["totalPrice"].toDouble(),
-        userName: json["Reserve"]["User"]["name"],
+        name: json["Reserve"]["User"]["name"],
         lastName: json["Reserve"]["User"]["lastName"],
         enterpriseName: json["Reserve"]["Enterprise"]["name"],
         tolls:

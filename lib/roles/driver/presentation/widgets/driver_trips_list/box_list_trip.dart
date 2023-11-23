@@ -18,16 +18,32 @@ class BoxTripList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: prefer_const_declarations
-    final TextStyle styleName =
-        const TextStyle(fontWeight: FontWeight.bold, fontSize: 15);
+    const TextStyle styleName =
+        TextStyle(fontWeight: FontWeight.bold, fontSize: 15);
     const TextStyle styleText =
-        // ignore: prefer_const_constructors
         TextStyle(fontWeight: FontWeight.normal, fontSize: 10);
-
     const TextStyle styleTextPay =
-        // ignore: prefer_const_constructors
         TextStyle(fontWeight: FontWeight.bold, fontSize: 10);
+
+    String textState() {
+      if (stateReserve == "CANCELED") {
+        return "Cancelada";
+      } else if (stateReserve == "COMPLETED") {
+        return "Finalizado";
+      } else {
+        return "En progreso";
+      }
+    }
+
+    Color? colorState() {
+      if (stateReserve == "CANCELED") {
+        return Colors.red[300];
+      } else if (stateReserve == "COMPLETED") {
+        return Colors.green[300];
+      } else {
+        return Colors.blue[300];
+      }
+    }
 
     return Container(
       decoration: BoxDecoration(
@@ -61,7 +77,7 @@ class BoxTripList extends StatelessWidget {
             ),
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.5,
+            width: MediaQuery.of(context).size.width * 0.45,
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,11 +142,11 @@ class BoxTripList extends StatelessWidget {
                       const SizedBox(
                         width: 8,
                       ),
-                      Text("Finalizado",
+                      Text(textState(),
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
-                              color: Colors.green[300])),
+                              color: colorState())),
                     ],
                   )
                 ]),

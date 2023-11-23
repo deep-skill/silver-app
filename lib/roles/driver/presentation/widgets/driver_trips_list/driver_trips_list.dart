@@ -38,6 +38,37 @@ class _TripsListState extends State<DriverTripsList> {
   Widget build(BuildContext context) {
     print(widget.trips);
     final trip = widget.trips;
+    const months = [
+      'ene',
+      'feb',
+      'mar',
+      'abr',
+      'may',
+      'jun',
+      'jul',
+      'ago',
+      'sep',
+      'oct',
+      'nov',
+      'dec'
+    ];
+
+    String getDate() {
+      final mont = months[trip[0].onWayDriver.month - 1];
+
+      return "${trip[0].onWayDriver.day} $mont ${widget.trips[0].onWayDriver.year}";
+    }
+
+    double calculateCustomerPrice(index) {
+      double result = trip[index].totalPrice;
+      for (var element in trip[index].tolls) {
+        result += element.amount;
+      }
+      for (var element in trip[index].parkings) {
+        result += element.amount;
+      }
+      return result;
+    }
 
     return Expanded(
       child: ListView.builder(
@@ -47,12 +78,11 @@ class _TripsListState extends State<DriverTripsList> {
         physics: const BouncingScrollPhysics(),
         itemBuilder: (contex, index) {
           return BoxTripList(
-            date:
-                "${trip[index].onWayDriver.day}/${trip[index].onWayDriver.month}/${widget.trips[index].onWayDriver.year}",
+            date: getDate(),
             image: 'assets/images/enterprise_logo.png',
-            name: widget.trips[index].name,
-            stateReserve: "finalizado",
-            totalPrice: widget.trips[index].totalPrice,
+            name: trip[index].name,
+            stateReserve: trip[index].status,
+            totalPrice: calculateCustomerPrice(index),
           );
         },
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/driver_trips_list/box_list_trip.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_trips_list/driver_custom_trip_slide.dart';
 
 class DriverTripsList extends StatefulWidget {
   const DriverTripsList(
@@ -45,7 +45,7 @@ class _TripsListState extends State<DriverTripsList> {
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (contex, index) {
-          return BoxTripList(
+          return CustomTripSlide(
             trip: trip[index],
           );
         },

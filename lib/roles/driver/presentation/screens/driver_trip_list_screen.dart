@@ -17,15 +17,9 @@ class DriverTripListScreen extends StatelessWidget {
           centerTitle: true,
           scrolledUnderElevation: 0,
         ),
-        body: Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.all(7.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[200],
-            ),
-            padding: const EdgeInsets.all(3),
-            child: const DriverTripListView()));
+        body: const DriverTripListView(),
+        backgroundColor: const Color(0xffF2F3F7),
+        );
   }
 }
 

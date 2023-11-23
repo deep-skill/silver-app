@@ -23,7 +23,6 @@ final searchedDriverTripsProvider =
         .get('/trips/driver-search/${driverInfo?.id}', queryParameters: {
       'query': query,
     });
-    print(response.data.toString());
     return _jsonToTrip(response.data);
   }
 

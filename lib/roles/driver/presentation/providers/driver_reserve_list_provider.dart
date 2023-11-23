@@ -16,13 +16,11 @@ final driverReservesListProvider =
         (ref) {
   Future<List<DriverReserveList>> getReserves({int page = 0}) async {
     final driverInfo = await ref.watch(driverInfoProvider.future);
-    print(driverInfo?.id);
     final response = await dio.get(
         'reserves/driver-reserves-list/${driverInfo?.id}',
         queryParameters: {
           'page': page,
         });
-    print(response.data);
     return _jsonToReserves(response.data);
   }
 
@@ -43,7 +41,6 @@ class DriverReservesNotifier extends StateNotifier<List<DriverReserveList>> {
 
   Future<void> loadNextPage() async {
     if (isLoading) return;
-    //print('Loading new pages');
     isLoading = true;
     final List<DriverReserveList> reserves =
         await fetchMoreReserves(page: currentPage);
@@ -55,7 +52,6 @@ class DriverReservesNotifier extends StateNotifier<List<DriverReserveList>> {
 
   Future<void> reloadData() async {
     if (isLoading) return;
-    //print('Loading new pages');
     currentPage = 0;
     isLoading = true;
     final List<DriverReserveList> reserves =

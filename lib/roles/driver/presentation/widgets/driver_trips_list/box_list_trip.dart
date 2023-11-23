@@ -6,6 +6,7 @@ class BoxTripList extends StatelessWidget {
   final String date;
   final String stateReserve;
   final double totalPrice;
+  final int tripId;
 
   const BoxTripList({
     Key? key,
@@ -14,6 +15,7 @@ class BoxTripList extends StatelessWidget {
     required this.name,
     required this.date,
     required this.totalPrice,
+    required this.tripId,
   }) : super(key: key);
 
   @override
@@ -152,7 +154,7 @@ class BoxTripList extends StatelessWidget {
                 ]),
           ),
           IconButton(
-              onPressed: () => print("Pressed"),
+              onPressed: () => print(tripId),
               icon: const Icon(Icons.navigate_next))
         ],
       ),

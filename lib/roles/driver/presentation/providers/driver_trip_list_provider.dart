@@ -15,12 +15,10 @@ final driverTripsListProvider =
     StateNotifierProvider<DriverTripsNotifier, List<DriverTripList>>((ref) {
   Future<List<DriverTripList>> getTrips({int page = 0}) async {
     final driverInfo = await ref.watch(driverInfoProvider.future);
-    print(driverInfo?.id);
     final response =
         await dio.get('trips/driver-trips/${driverInfo?.id}', queryParameters: {
       'page': page,
     });
-    print(response.data.toString());
     return _jsonToReserves(response.data);
   }
 
@@ -41,7 +39,6 @@ class DriverTripsNotifier extends StateNotifier<List<DriverTripList>> {
 
   Future<void> loadNextPage() async {
     if (isLoading) return;
-    //print('Loading new pages');
     isLoading = true;
     final List<DriverTripList> trips = await fetchMoreTrips(page: currentPage);
     currentPage++;
@@ -52,7 +49,6 @@ class DriverTripsNotifier extends StateNotifier<List<DriverTripList>> {
 
   Future<void> reloadData() async {
     if (isLoading) return;
-    //print('Loading new pages');
     currentPage = 0;
     isLoading = true;
     final List<DriverTripList> trips = await fetchMoreTrips(page: currentPage);

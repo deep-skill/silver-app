@@ -36,7 +36,6 @@ class _TripsListState extends State<DriverTripsList> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.trips);
     final trip = widget.trips;
     const months = [
       'ene',
@@ -83,6 +82,7 @@ class _TripsListState extends State<DriverTripsList> {
             name: trip[index].name,
             stateReserve: trip[index].status,
             totalPrice: calculateCustomerPrice(index),
+            tripId: trip[index].id,
           );
         },
       ),

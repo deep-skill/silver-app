@@ -134,11 +134,23 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "start_time":
           '${state.startDate.value}T${state.startTime.value}:00-05:00',
       "start_address": state.startAddress.value,
+      "start_address_lat": state.startAddressLat,
+      "start_address_lon": state.startAddressLon,
       "end_address":
           state.endAddress?.value == 'Seleccione el punto de destino' ||
                   state.tripType.value != 'Punto a punto'
               ? null
               : state.endAddress?.value,
+      "end_address_lat":
+          state.endAddress?.value == 'Seleccione el punto de destino' ||
+                  state.tripType.value != 'Punto a punto'
+              ? null
+              : state.endAddressLat,
+      "end_address_lon":
+          state.endAddress?.value == 'Seleccione el punto de destino' ||
+                  state.tripType.value != 'Punto a punto'
+              ? null
+              : state.endAddressLon,
       "driver_id": state.driverId?.value == 0 || state.driverId?.value == null
           ? null
           : state.driverId?.value,
@@ -147,7 +159,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
        if (state.silverPercent.value != '') "silver_percent": state.silverPercent.value,
       if (id != 0) "id": id.toString()
     };
-
     try {
       return await onSubmitCallback!(reserveLike);
     } catch (e) {
@@ -326,9 +337,11 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         ]));
   }
 
-  void onStartAddressChanged(String value) {
+  void onStartAddressChanged(String value, double lat, double lon) {
     state = state.copyWith(
         startAddress: StartAddress.dirty(value),
+        startAddressLat: lat,
+        startAddressLon: lon,
         isFormValid: Formz.validate([
           StartAddress.dirty(value),
           UserId.dirty(state.userId.value),
@@ -343,9 +356,11 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         ]));
   }
 
-  void onEndAddressChanged(String value) {
+  void onEndAddressChanged(String value, double lat, double lon) {
     state = state.copyWith(
         endAddress: EndAddress.dirty(value),
+        endAddressLat: lat,
+        endAddressLon: lon,
         isFormValid: Formz.validate([
           EndAddress.dirty(value),
           UserId.dirty(state.userId.value),
@@ -415,7 +430,11 @@ class ReserveFormState {
   final StartTime startTime;
   final StartDate startDate;
   final StartAddress startAddress;
+  final double startAddressLat;
+  final double startAddressLon;
   final EndAddress? endAddress;
+  final double? endAddressLat;
+  final double? endAddressLon;
   final Price price;
   final SilverPercent silverPercent;
 
@@ -431,7 +450,11 @@ class ReserveFormState {
     this.startTime = const StartTime.pure(),
     this.tripType = const TripType.pure(),
     this.startAddress = const StartAddress.pure(),
+    this.startAddressLat = 0,
+    this.startAddressLon = 0,
     this.endAddress = const EndAddress.pure(),
+    this.endAddressLat,
+    this.endAddressLon,
     this.enterpriseId = const EnterpriseId.dirty(0),
     this.carId = const CarId.dirty(0),
     this.licensePlate = 'A1R610',
@@ -462,7 +485,11 @@ class ReserveFormState {
     final StartTime? startTime,
     final StartDate? startDate,
     final StartAddress? startAddress,
+    final double? startAddressLat,
+    final double? startAddressLon,
     final EndAddress? endAddress,
+    final double? endAddressLat,
+    final double? endAddressLon,
     final Price? price,
     final SilverPercent? silverPercent,
   }) =>
@@ -485,7 +512,11 @@ class ReserveFormState {
         startTime: startTime ?? this.startTime,
         startDate: startDate ?? this.startDate,
         startAddress: startAddress ?? this.startAddress,
+        startAddressLat: startAddressLat ?? this.startAddressLat,
+        startAddressLon: startAddressLon ?? this.startAddressLon,
         endAddress: endAddress ?? this.endAddress,
+        endAddressLat: endAddressLat ?? this.endAddressLat,
+        endAddressLon: endAddressLon ?? this.endAddressLon,
         price: price ?? this.price,
         silverPercent: silverPercent ?? this.silverPercent,
       );

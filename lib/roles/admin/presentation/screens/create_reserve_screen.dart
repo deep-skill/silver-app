@@ -31,7 +31,7 @@ class CreateReserveScreen extends ConsumerWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color(0xffF2F3F7),
+          backgroundColor: const Color(0xffF2F3F7),
           centerTitle: true,
           title: Text(reserveId == 'new' ? "Crear Reserva" : "Editar Reserva")),
       body: reserveState.isLoading
@@ -504,7 +504,14 @@ class CreateReserveView extends ConsumerWidget {
                                                                       reserve)
                                                                   .notifier)
                                                               .onStartAddressChanged(
-                                                                  '${pickedData.addressName}, Lat: ${pickedData.latLong.latitude}, Long: ${pickedData.latLong.longitude}');
+                                                                  pickedData
+                                                                      .addressName,
+                                                                  pickedData
+                                                                      .latLong
+                                                                      .latitude,
+                                                                  pickedData
+                                                                      .latLong
+                                                                      .longitude);
                                                           context.pop();
                                                         });
                                                   })
@@ -565,34 +572,40 @@ class CreateReserveView extends ConsumerWidget {
                                                       fontSize: 16)),
                                         ),
                                         onPressed: () async {
-                                          determinePosition().then((position) =>
-                                              {
-                                                showModalBottomSheet<String>(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return OpenStreetMapSearchAndPick(
-                                                          locationPinText: '',
-                                                          center: LatLong(
-                                                              position.latitude,
-                                                              position
-                                                                  .longitude),
-                                                          buttonColor:
-                                                              Colors.blue,
-                                                          buttonText:
-                                                              'Seleccionar punto de recojo',
-                                                          onPicked:
-                                                              (pickedData) async {
-                                                            ref
-                                                                .read(reserveFormProvider(
-                                                                        reserve)
-                                                                    .notifier)
-                                                                .onEndAddressChanged(
-                                                                    '${pickedData.addressName}, Lat: ${pickedData.latLong.latitude}, Long: ${pickedData.latLong.longitude}');
-                                                            context.pop();
-                                                          });
-                                                    })
-                                              });
+                                          determinePosition()
+                                              .then((position) => {
+                                                    showModalBottomSheet<
+                                                            String>(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                            context) {
+                                                          return OpenStreetMapSearchAndPick(
+                                                              locationPinText:
+                                                                  '',
+                                                              center: LatLong(
+                                                                  position
+                                                                      .latitude,
+                                                                  position
+                                                                      .longitude),
+                                                              buttonColor:
+                                                                  Colors.blue,
+                                                              buttonText:
+                                                                  'Seleccionar punto de recojo',
+                                                              onPicked:
+                                                                  (pickedData) async {
+                                                                ref.read(reserveFormProvider(reserve).notifier).onEndAddressChanged(
+                                                                    pickedData
+                                                                        .addressName,
+                                                                    pickedData
+                                                                        .latLong
+                                                                        .latitude,
+                                                                    pickedData
+                                                                        .latLong
+                                                                        .longitude);
+                                                                context.pop();
+                                                              });
+                                                        })
+                                                  });
                                         },
                                       ),
                                     ],
@@ -1235,7 +1248,12 @@ class CreateReserveView extends ConsumerWidget {
                                                                       reserve)
                                                                   .notifier)
                                                           .onStartAddressChanged(
-                                                              '${pickedData.addressName}, Lat: ${pickedData.latLong.latitude}, Long: ${pickedData.latLong.longitude}');
+                                                              pickedData
+                                                                  .addressName,
+                                                              pickedData.latLong
+                                                                  .latitude,
+                                                              pickedData.latLong
+                                                                  .longitude);
                                                       context.pop();
                                                     });
                                               })
@@ -1311,7 +1329,14 @@ class CreateReserveView extends ConsumerWidget {
                                                                         reserve)
                                                                     .notifier)
                                                             .onEndAddressChanged(
-                                                                '${pickedData.addressName}, Lat: ${pickedData.latLong.latitude}, Long: ${pickedData.latLong.longitude}');
+                                                                pickedData
+                                                                    .addressName,
+                                                                pickedData
+                                                                    .latLong
+                                                                    .latitude,
+                                                                pickedData
+                                                                    .latLong
+                                                                    .longitude);
                                                         context.pop();
                                                       });
                                                 })
@@ -1400,16 +1425,20 @@ class CreateReserveView extends ConsumerWidget {
                                         Colors.transparent),
                                     shadowColor: MaterialStateProperty.all(
                                         Colors.transparent)),
-                                child: Text(
-                                    '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
-                                    style: reserveForm.brand == 'Ejem. Toyota'
-                                        ? const TextStyle(
-                                            overflow: TextOverflow.ellipsis,
-                                            color: Color(0xffB5B9C2),
-                                            fontSize: 16,
-                                            fontFamily: 'Montserrat-Regular')
-                                        : const TextStyle(
-                                            color: Colors.black, fontSize: 16)),
+                                child: SizedBox(
+                                  width: size.width * .7,
+                                  child: Text(
+                                      '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
+                                      style: reserveForm.brand == 'Ejem. Toyota'
+                                          ? const TextStyle(
+                                              overflow: TextOverflow.ellipsis,
+                                              color: Color(0xffB5B9C2),
+                                              fontSize: 16,
+                                              fontFamily: 'Montserrat-Regular')
+                                          : const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16)),
+                                ),
                                 onPressed: () {
                                   final searchedCars =
                                       ref.read(searchedCarsProvider);
@@ -1419,7 +1448,6 @@ class CreateReserveView extends ConsumerWidget {
                                       .read(
                                           reserveFormProvider(reserve).notifier)
                                       .onCarIdChanged;
-
                                   showSearch<SearchCar?>(
                                           query: searchQuery,
                                           context: context,

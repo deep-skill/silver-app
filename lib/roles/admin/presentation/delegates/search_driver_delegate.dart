@@ -103,7 +103,7 @@ class SearchDriverDelegate extends SearchDelegate<SearchDriver?> {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
       onPressed: () {
-        callback(0, 'Ejem. Luis', 'Perez');
+        callback(0, 'Ejem. Luis', 'Perez', null, null, null, null, null);
         clearStreams();
         close(context, null);
       },

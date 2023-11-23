@@ -103,7 +103,7 @@ class SearchPassengerDelegate extends SearchDelegate<SearchPassenger?> {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
       onPressed: () {
-        callback(0, 'Ejem. Carla', 'Peña Ramirez');
+        callback(0, 'Ejem. Carla', 'Peña Ramirez', null);
         clearStreams();
         close(context, null);
       },

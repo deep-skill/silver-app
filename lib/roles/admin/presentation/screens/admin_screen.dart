@@ -42,6 +42,7 @@ class AdminScreen extends ConsumerWidget {
             backgroundColor: const Color(0xffF2F3F7),
             key: scaffoldKey,
             appBar: AppBar(
+              backgroundColor: Color(0xffF2F3F7),
               scrolledUnderElevation: 0,
             ),
             drawer: SideMenu(

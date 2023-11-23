@@ -195,7 +195,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
   }
 
   void onUserIdChanged(
-      int value, String userName, String userLastName, {int? enterpriseId}) {
+      int value, String userName, String userLastName, int? enterpriseId) {
     state = state.copyWith(
         userId: UserId.dirty(value),
         enterpriseId:

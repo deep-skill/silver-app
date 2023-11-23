@@ -16,7 +16,9 @@ class BoxTripList extends StatelessWidget {
     const TextStyle styleText =
         TextStyle(fontWeight: FontWeight.normal, fontSize: 10);
     const TextStyle styleTextPay =
-        TextStyle(fontWeight: FontWeight.bold, fontSize: 10);
+        TextStyle(fontWeight: FontWeight.bold, fontSize: 12);
+    TextStyle styleTextImage = const TextStyle(
+        fontWeight: FontWeight.bold, fontSize: 12, color: Colors.white);
 
     const months = [
       'ene',
@@ -61,13 +63,13 @@ class BoxTripList extends StatelessWidget {
       }
     }
 
-    Color? colorState() {
+    Color colorState() {
       if (trip.status == "CANCELED") {
-        return Colors.red[300];
+        return const Color(0xFFFD3B3B);
       } else if (trip.status == "COMPLETED") {
-        return Colors.green[300];
+        return const Color(0xFF2FCF5C);
       } else {
-        return Colors.blue[300];
+        return const Color(0xFF23A5CD);
       }
     }
 
@@ -96,10 +98,20 @@ class BoxTripList extends StatelessWidget {
             width: 4,
           ),
           Container(
+            width: 100,
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-            child: Image.asset(
-              "assets/images/enterprise_logo.png",
-              width: MediaQuery.of(context).size.width * 0.2,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                Image.asset(
+                  "assets/images/enterprise_logo.png",
+                  width: 100.0,
+                ),
+                Text(
+                  trip.enterpriseName,
+                  style: styleTextImage,
+                )
+              ],
             ),
           ),
           SizedBox(
@@ -153,7 +165,7 @@ class BoxTripList extends StatelessWidget {
                               width: 8,
                             ),
                             Text(
-                              "Tarifa total",
+                              "Pago conductor",
                               style: styleTextPay,
                             ),
                           ],

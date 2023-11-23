@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
@@ -171,7 +172,8 @@ class HomeViewState extends ConsumerState<HomeView> {
                   return nearestReserve != null
                       ? Column(
                           children: [
-                            DriverCustomSlide(reserve: nearestReserve, isNearest: true),
+                            DriverCustomSlide(
+                                reserve: nearestReserve, isNearest: true),
                             Center(
                               child: TextButton(
                                 onPressed: () async {

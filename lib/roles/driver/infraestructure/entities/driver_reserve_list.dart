@@ -29,6 +29,6 @@ class DriverReserveList {
             ? 'Viaje personal'
             : json['Enterprise']['name'],
         tripId: json['Trip'] == null ? null : json['Trip']['id'],
-        price: json['price'],
+        price: json['price'].toDouble(),
       );
 }

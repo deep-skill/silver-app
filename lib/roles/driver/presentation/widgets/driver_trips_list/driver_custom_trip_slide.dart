@@ -91,53 +91,53 @@ class CustomTripSlide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                  width: 100,
-                  decoration: const BoxDecoration(
-                    color: Color(0xff031329),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      bottomLeft: Radius.circular(10),
-                    ),
-                    image: DecorationImage(
-                      opacity: 50,
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/images/enterprise_logo.png'),
-                    ),
+                width: size.width * .26,
+                decoration: const BoxDecoration(
+                  color: Color(0xff031329),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
                   ),
-                  child: trip.enterpriseName != ''
-                      ? Center(
-                          child: trip.enterpriseName != ''
-                              ? Text(
-                                  trip.enterpriseName,
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                  ),
-                                )
-                              : const Text(
-                                  'Viaje Personal',
-                                  maxLines: 2,
-                                  textAlign: TextAlign.center,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white,
-                                  ),
-                                ))
-                      : const Center(
-                          child: Text(
-                          'Viaje Personal',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white,
-                          ),
-                        ))),
+                  image: DecorationImage(
+                    opacity: 50,
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/images/enterprise_logo.png'),
+                  ),
+                ),
+                child: trip.enterpriseName != ''
+                    ? Center(
+                        child: trip.enterpriseName != ''
+                            ? Text(
+                                trip.enterpriseName,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text(
+                                'Viaje Personal',
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              ))
+                    : const Center(
+                        child: Text(
+                        'Viaje Personal',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ))),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.52,
               child: Column(

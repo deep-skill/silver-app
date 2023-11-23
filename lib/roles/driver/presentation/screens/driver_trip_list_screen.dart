@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
+import 'package:silverapp/roles/driver/presentation/delegates/search_driver_trip_list_delegate.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_trip_list_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/search_driver_trip_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trips_list/driver_trips_list.dart';
@@ -47,7 +48,7 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
   @override
   Widget build(BuildContext context) {
     final trips = ref.watch(driverTripsListProvider);
-    //final size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -57,7 +58,7 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
         child: Column(
           children: [
             const SizedBox(height: 15),
-            /* GestureDetector(
+            GestureDetector(
               onTap: () {
                 final searchedTrips = ref.read(searchedDriverTripsProvider);
                 final searchQuery = ref.read(searchDriverTripsProvider);
@@ -65,11 +66,11 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
                 showSearch<DriverTripList?>(
                         query: searchQuery,
                         context: context,
-                        delegate: SearchDriverReserveDelegate(
-                            initialReserves: searchedTrips,
-                            searchReserves: ref
-                                .read(searchedDriverReservesProvider.notifier)
-                                .searchReservesByQuery))
+                        delegate: SearchDriverTripDelegate(
+                            initialTrips: searchedTrips,
+                            searchTrips: ref
+                                .read(searchedDriverTripsProvider.notifier)
+                                .searchTripsByQuery))
                     .then((reserve) {});
               },
               child: SizedBox(
@@ -114,7 +115,7 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
                       ],
                     ),
                   )),
-            ), */
+            ),
             const SizedBox(height: 15),
             DriverTripsList(
               trips: trips,

@@ -1,54 +1,54 @@
-/* import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
+import 'package:silverapp/roles/driver/infraestructure/models/search_driver_trip_response.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 
 final searchDriverTripsProvider = StateProvider<String>((ref) {
   return '';
 });
 
-List<DriverTripList> _jsonToReserve(List json) {
-  final reservesResponse = SearchDriverTripsResponse.fromJson(json);
-  final List<DriverTripList> reserves = reservesResponse.reserves.toList();
-  return reserves;
+List<DriverTripList> _jsonToTrip(List json) {
+  final tripsResponse = SearchDriverTripResponse.fromJson(json);
+  final List<DriverTripList> trips = tripsResponse.trips.toList();
+  return trips;
 }
 
-final searchedDriverReservesProvider =
-    StateNotifierProvider<SearchedReservesNotifier, List<DriverTripList>>(
-        (ref) {
-  Future<List<DriverTripList>> searchReserve(query) async {
+final searchedDriverTripsProvider =
+    StateNotifierProvider<SearchedTripsNotifier, List<DriverTripList>>((ref) {
+  Future<List<DriverTripList>> searchTrip(query) async {
     if (query.isEmpty) return [];
     final driverInfo = await ref.watch(driverInfoProvider.future);
     final response = await dio
-        .get('/reserves/driver-search/${driverInfo?.id}', queryParameters: {
+        .get('/trips/driver-search/${driverInfo?.id}', queryParameters: {
       'query': query,
     });
-    return _jsonToReserve(response.data);
+    print(response.data.toString());
+    return _jsonToTrip(response.data);
   }
 
-  return SearchedReservesNotifier(
-    searchReserves: searchReserve,
+  return SearchedTripsNotifier(
+    searchTrips: searchTrip,
     ref: ref,
   );
 });
 
-typedef SearchedReservesCallback = Future<List<DriverTripList>> Function(
+typedef SearchedTripsCallback = Future<List<DriverTripList>> Function(
     String query);
 
-class SearchedReservesNotifier extends StateNotifier<List<DriverTripList>> {
-  SearchedReservesNotifier({
+class SearchedTripsNotifier extends StateNotifier<List<DriverTripList>> {
+  SearchedTripsNotifier({
     required this.ref,
-    required this.searchReserves,
+    required this.searchTrips,
   }) : super([]);
 
-  final SearchedReservesCallback searchReserves;
+  final SearchedTripsCallback searchTrips;
   final Ref ref;
 
-  Future<List<DriverTripList>> searchReservesByQuery(String query) async {
-    final List<DriverTripList> reserves = await searchReserves(query);
-    ref.read(searchDriverReservesProvider.notifier).update((state) => query);
-    state = reserves;
-    return reserves;
+  Future<List<DriverTripList>> searchTripsByQuery(String query) async {
+    final List<DriverTripList> trips = await searchTrips(query);
+    ref.read(searchDriverTripsProvider.notifier).update((state) => query);
+    state = trips;
+    return trips;
   }
 }
- */

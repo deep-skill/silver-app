@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
 
 class BoxTripList extends StatelessWidget {
-  final String image;
-  final String name;
-  final String date;
-  final String stateTrip;
-  final double totalPriceDriver;
-  final int tripId;
+  final DriverTripList trip;
 
   const BoxTripList({
     Key? key,
-    required this.stateTrip,
-    required this.image,
-    required this.name,
-    required this.date,
-    required this.totalPriceDriver,
-    required this.tripId,
+    required this.trip,
   }) : super(key: key);
 
   @override
@@ -27,10 +18,43 @@ class BoxTripList extends StatelessWidget {
     const TextStyle styleTextPay =
         TextStyle(fontWeight: FontWeight.bold, fontSize: 10);
 
+    const months = [
+      'ene',
+      'feb',
+      'mar',
+      'abr',
+      'may',
+      'jun',
+      'jul',
+      'ago',
+      'sep',
+      'oct',
+      'nov',
+      'dec'
+    ];
+
+    String getDate() {
+      final mont = months[trip.onWayDriver.month - 1];
+
+      return "${trip.onWayDriver.day} $mont ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}";
+    }
+
+    double calculateDriverPrice() {
+      double result =
+          trip.totalPrice - (trip.totalPrice * trip.silverPercent / 100);
+      for (var element in trip.tolls) {
+        result += element.amount;
+      }
+      for (var element in trip.parkings) {
+        result += element.amount;
+      }
+      return result;
+    }
+
     String textState() {
-      if (stateTrip == "CANCELED") {
+      if (trip.status == "CANCELED") {
         return "Cancelada";
-      } else if (stateTrip == "COMPLETED") {
+      } else if (trip.status == "COMPLETED") {
         return "Finalizado";
       } else {
         return "En progreso";
@@ -38,9 +62,9 @@ class BoxTripList extends StatelessWidget {
     }
 
     Color? colorState() {
-      if (stateTrip == "CANCELED") {
+      if (trip.status == "CANCELED") {
         return Colors.red[300];
-      } else if (stateTrip == "COMPLETED") {
+      } else if (trip.status == "COMPLETED") {
         return Colors.green[300];
       } else {
         return Colors.blue[300];
@@ -74,7 +98,7 @@ class BoxTripList extends StatelessWidget {
           Container(
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
             child: Image.asset(
-              image,
+              "assets/images/enterprise_logo.png",
               width: MediaQuery.of(context).size.width * 0.2,
             ),
           ),
@@ -97,7 +121,7 @@ class BoxTripList extends StatelessWidget {
                         width: 6,
                       ),
                       Text(
-                        name,
+                        "${trip.name} ${trip.lastName}",
                         style: styleName,
                       ),
                     ],
@@ -115,7 +139,7 @@ class BoxTripList extends StatelessWidget {
                         width: 6,
                       ),
                       Text(
-                        date.toString(),
+                        getDate(),
                         style: styleText,
                       ),
                     ],
@@ -134,7 +158,8 @@ class BoxTripList extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(" S/. ${totalPriceDriver.toStringAsFixed(2)}",
+                        Text(
+                            " S/. ${calculateDriverPrice().toStringAsFixed(2)}",
                             style: styleTextPay),
                       ]),
                   const SizedBox(
@@ -155,7 +180,7 @@ class BoxTripList extends StatelessWidget {
                 ]),
           ),
           IconButton(
-              onPressed: () => print(tripId),
+              onPressed: () => print(trip.id),
               icon: const Icon(Icons.navigate_next))
         ],
       ),

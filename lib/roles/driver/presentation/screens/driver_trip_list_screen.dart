@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_trip_list_provider.dart';
+import 'package:silverapp/roles/driver/presentation/providers/search_driver_trip_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trips_list/driver_trips_list.dart';
 
 class DriverTripListScreen extends StatelessWidget {
@@ -57,11 +59,10 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
             const SizedBox(height: 15),
             /* GestureDetector(
               onTap: () {
-                final searchedTrips =
-                    ref.read(driverTripsListProvider);
-                final searchQuery = ref.read(driverTripsListProvider);
+                final searchedTrips = ref.read(searchedDriverTripsProvider);
+                final searchQuery = ref.read(searchDriverTripsProvider);
 
-                showSearch<DriverTripsList?>(
+                showSearch<DriverTripList?>(
                         query: searchQuery,
                         context: context,
                         delegate: SearchDriverReserveDelegate(
@@ -70,7 +71,7 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
                                 .read(searchedDriverReservesProvider.notifier)
                                 .searchReservesByQuery))
                     .then((reserve) {});
-              }, 
+              },
               child: SizedBox(
                   height: size.height * .07,
                   child: const DecoratedBox(

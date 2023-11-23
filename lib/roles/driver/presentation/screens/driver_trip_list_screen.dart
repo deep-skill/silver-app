@@ -57,20 +57,20 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
             const SizedBox(height: 15),
             /* GestureDetector(
               onTap: () {
-                final searchedReserves =
+                final searchedTrips =
                     ref.read(driverTripsListProvider);
                 final searchQuery = ref.read(driverTripsListProvider);
 
-                showSearch<DriverReserveList?>(
+                showSearch<DriverTripsList?>(
                         query: searchQuery,
                         context: context,
                         delegate: SearchDriverReserveDelegate(
-                            initialReserves: searchedReserves,
+                            initialReserves: searchedTrips,
                             searchReserves: ref
                                 .read(searchedDriverReservesProvider.notifier)
                                 .searchReservesByQuery))
                     .then((reserve) {});
-              },
+              }, 
               child: SizedBox(
                   height: size.height * .07,
                   child: const DecoratedBox(

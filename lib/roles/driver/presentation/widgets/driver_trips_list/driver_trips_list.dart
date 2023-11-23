@@ -55,11 +55,12 @@ class _TripsListState extends State<DriverTripsList> {
     String getDate() {
       final mont = months[trip[0].onWayDriver.month - 1];
 
-      return "${trip[0].onWayDriver.day} $mont ${widget.trips[0].onWayDriver.year}";
+      return "${trip[0].onWayDriver.day} $mont ${widget.trips[0].onWayDriver.year} | ${trip[0].onWayDriver.hour}:${trip[0].onWayDriver.minute}";
     }
 
-    double calculateCustomerPrice(index) {
-      double result = trip[index].totalPrice;
+    double calculateDriverPrice(index) {
+      double result = trip[index].totalPrice -
+          (trip[index].totalPrice * trip[index].silverPercent / 100);
       for (var element in trip[index].tolls) {
         result += element.amount;
       }
@@ -79,9 +80,9 @@ class _TripsListState extends State<DriverTripsList> {
           return BoxTripList(
             date: getDate(),
             image: 'assets/images/enterprise_logo.png',
-            name: trip[index].name,
-            stateReserve: trip[index].status,
-            totalPrice: calculateCustomerPrice(index),
+            name: "${trip[index].name} ${trip[index].lastName}",
+            stateTrip: trip[index].status,
+            totalPriceDriver: calculateDriverPrice(index),
             tripId: trip[index].id,
           );
         },

@@ -4,17 +4,17 @@ class BoxTripList extends StatelessWidget {
   final String image;
   final String name;
   final String date;
-  final String stateReserve;
-  final double totalPrice;
+  final String stateTrip;
+  final double totalPriceDriver;
   final int tripId;
 
   const BoxTripList({
     Key? key,
-    required this.stateReserve,
+    required this.stateTrip,
     required this.image,
     required this.name,
     required this.date,
-    required this.totalPrice,
+    required this.totalPriceDriver,
     required this.tripId,
   }) : super(key: key);
 
@@ -28,9 +28,9 @@ class BoxTripList extends StatelessWidget {
         TextStyle(fontWeight: FontWeight.bold, fontSize: 10);
 
     String textState() {
-      if (stateReserve == "CANCELED") {
+      if (stateTrip == "CANCELED") {
         return "Cancelada";
-      } else if (stateReserve == "COMPLETED") {
+      } else if (stateTrip == "COMPLETED") {
         return "Finalizado";
       } else {
         return "En progreso";
@@ -38,9 +38,9 @@ class BoxTripList extends StatelessWidget {
     }
 
     Color? colorState() {
-      if (stateReserve == "CANCELED") {
+      if (stateTrip == "CANCELED") {
         return Colors.red[300];
-      } else if (stateReserve == "COMPLETED") {
+      } else if (stateTrip == "COMPLETED") {
         return Colors.green[300];
       } else {
         return Colors.blue[300];
@@ -73,7 +73,7 @@ class BoxTripList extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-            child: Image.network(
+            child: Image.asset(
               image,
               width: MediaQuery.of(context).size.width * 0.2,
             ),
@@ -134,7 +134,8 @@ class BoxTripList extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Text(" S/. $totalPrice", style: styleTextPay),
+                        Text(" S/. ${totalPriceDriver.toStringAsFixed(2)}",
+                            style: styleTextPay),
                       ]),
                   const SizedBox(
                     height: 5,

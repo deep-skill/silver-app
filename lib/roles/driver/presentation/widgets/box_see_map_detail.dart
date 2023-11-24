@@ -53,22 +53,19 @@ class SeeMap extends StatelessWidget {
             ]),
             onPressed: () {
               if (arrivedDriver == null) {
-                try {
-                  launchWaze(
-                      "https://waze.com/ul?ll=${startAddressLat.toString()},${startAddressLon.toString()}&navigate=yes");
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Waze not installed")));
-                }
+                launchWaze(
+                    "https://waze.com/ul?ll=${startAddressLat.toString()},${startAddressLon.toString()}&navigate=yes");
               }
-              if (arrivedDriver != null && startTime != null) {
-                try {
-                  launchWaze(
-                      "https://waze.com/ul?ll=${endAddressLat.toString()},${endAddressLon.toString()}&navigate=yes");
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Waze not installed")));
-                }
+              if (arrivedDriver != null &&
+                  startTime != null &&
+                  endAddress != null) {
+                launchWaze(
+                    "https://waze.com/ul?ll=${endAddressLat.toString()},${endAddressLon.toString()}&navigate=yes");
+              }
+              if (arrivedDriver != null &&
+                  startTime != null &&
+                  endAddress == null) {
+                launchWaze("https://waze.com/ul?navigate=yes");
               }
             }),
       ]),

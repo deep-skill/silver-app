@@ -6,6 +6,7 @@ class AddressInfoWidget extends StatelessWidget {
   final String endAddress;
 
   const AddressInfoWidget({
+    super.key,
     required this.startAddress,
     required this.endAddress,
   });

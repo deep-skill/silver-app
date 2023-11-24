@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_tolls_trip.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_estado_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/title_trip_detail.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/trip_address_info.dart';
 
 class AdminTripDetailScreen extends ConsumerStatefulWidget {
   const AdminTripDetailScreen({super.key, required this.tripId});
@@ -112,6 +114,16 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       ),
                     ],
                   ),
+                  TripAddressInfoWidget(
+                    startAddress: trip.startAddress,
+                    endAddress: trip.endAddress,
+                    stops: trip.stops,
+                  ),
+                  BoxTollsTrip(
+                    label: "Peaje",
+                    tolls: trip.tolls,
+                    icon: Icons.paid,
+                  )
                 ],
               )),
         ));

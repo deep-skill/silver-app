@@ -8,7 +8,11 @@ class TripDriverStatus {
   String? status;
   int reserveId;
   String startAddress;
+  double startAddressLat;
+  double startAddressLon;
   String? endAddress;
+  double? endAddressLat;
+  double? endAddressLon;
   List<Stop> stops;
   List<Observations> observations;
   List<Parking> parkings;
@@ -28,7 +32,11 @@ class TripDriverStatus {
     required this.parkings,
     required this.tolls,
     required this.startAddress,
+    required this.startAddressLat,
+    required this.startAddressLon,
     this.endAddress,
+    this.endAddressLat,
+    this.endAddressLon,
   });
 
   factory TripDriverStatus.fromJson(Map<String, dynamic> json) =>
@@ -47,7 +55,11 @@ class TripDriverStatus {
         status: json["status"] ?? '',
         reserveId: json["reserveId"],
         startAddress: json["Reserve"]["startAddress"],
+        startAddressLat: json["Reserve"]["startAddressLat"],
+        startAddressLon: json["Reserve"]["startAddressLon"],
         endAddress: json["Reserve"]["endAddress"],
+        endAddressLat: json["Reserve"]["endAddressLat"],
+        endAddressLon: json["Reserve"]["endAddressLon"],
         stops:
             List<Stop>.from(json["Stops"]?.map((x) => Stop.fromJson(x)) ?? []),
         observations: List<Observations>.from(

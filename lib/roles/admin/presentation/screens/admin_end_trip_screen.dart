@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
+import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
 
 class AdminTripDetailScreen extends ConsumerStatefulWidget {
   const AdminTripDetailScreen({super.key, required this.tripId});
@@ -14,16 +16,13 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
   @override
   void initState() {
     super.initState();
-    /*    ref
-        .read(driverReserveDetailProvider.notifier)
-        .loadReserveDetail(widget.reserveId); */
+    ref.read(tripAdminStatusProvider.notifier).loadTripState(widget.tripId);
   }
 
   @override
   Widget build(BuildContext context) {
-/*     final reserves = ref.watch(driverReserveDetailProvider);
-    final DriverReserveDetail? reserve = reserves[widget.reserveId]; */
-    final trip = widget.tripId;
+    final trips = ref.watch(tripAdminStatusProvider);
+    final AdminTripEnd? trip = trips[widget.tripId];
     if (trip == null) {
       return Scaffold(
           backgroundColor: Colors.grey[200],
@@ -45,6 +44,15 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
               color: Colors.grey[200],
             ),
             padding: const EdgeInsets.all(3),
-            child: Text(trip)));
+            child: Column(
+              children: [
+                Text(trip.id.toString()),
+                Text(trip.endAddress),
+                Text(trip.arrivedDriver.toString()),
+                Text(trip.userName.toString()),
+                Text(trip.userLastName.toString()),
+                Text(trip.driverName.toString()),
+              ],
+            )));
   }
 }

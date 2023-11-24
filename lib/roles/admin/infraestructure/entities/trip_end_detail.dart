@@ -1,11 +1,11 @@
 class AdminTripEnd {
   int id;
-  String status;
   double totalPrice;
   DateTime onWayDriver;
-  DateTime arrivedDriver;
-  DateTime startTime;
-  DateTime endTime;
+  DateTime? arrivedDriver;
+  DateTime? startTime;
+  DateTime? endTime;
+  String status;
   String startAddress;
   String endAddress;
   double price;
@@ -13,9 +13,9 @@ class AdminTripEnd {
   int silverPercent;
   String userName;
   String userLastName;
-  String enterpriseName;
-  String driverName;
-  String driverLastName;
+  String? enterpriseName;
+  String? driverName;
+  String? driverLastName;
   String licensePlate;
   String brand;
   String model;
@@ -62,23 +62,32 @@ class AdminTripEnd {
         status: json["status"],
         totalPrice: json["totalPrice"].toDouble(),
         onWayDriver: DateTime.parse(json["onWayDriver"]),
-        arrivedDriver: DateTime.parse(json["arrivedDriver"]),
-        startTime: DateTime.parse(json["startTime"]),
-        endTime: DateTime.parse(json["endTime"]),
+        arrivedDriver: json["arrivedDriver"] == null
+            ? null
+            : DateTime.parse(json["arrivedDriver"]),
+        startTime: json["startTime"] == null
+            ? null
+            : DateTime.parse(json["startTime"]),
+        endTime:
+            json["endTime"] == null ? null : DateTime.parse(json["endTime"]),
         startAddress: json["Reserve"]["startAddress"],
         endAddress: json["Reserve"]["endAddress"],
         price: json["Reserve"]["price"].toDouble(),
         driverPercent: json["Reserve"]["driverPercent"],
         silverPercent: json["Reserve"]["silverPercent"],
-        userName: json["Reserve"]["User"]["name"],
-        userLastName: json["Reserve"]["User"]["lastName"],
+        userName: json["Reserve"]["User"]["name"] ?? "no-user-name",
+        userLastName: json["Reserve"]["User"]["lastName"] ?? "no-user-lastName",
         enterpriseName: json["Reserve"]["Enterprise"]["name"],
-        driverName: json["Reserve"]["Driver"]["name"],
-        driverLastName: json["Reserve"]["Driver"]["lastName"],
-        licensePlate: json["Reserve"]["Car"]["licensePlate"],
-        brand: json["Reserve"]["Car"]["brand"],
-        model: json["Reserve"]["Car"]["model"],
-        color: json["Reserve"]["Car"]["color"],
+        driverName: json["Reserve"]["Driver"] != null
+            ? json["Reserve"]["Driver"]["name"] ?? 'no-driver-name'
+            : 'no-driver-name',
+        driverLastName: json["Reserve"]["Driver"] != null
+            ? json["Reserve"]["Driver"]["lastName"] ?? 'no-driver-name'
+            : 'no-driver-name',
+        licensePlate: json["Reserve"]["Car"]["licensePlate"] ?? 'no-car-plate',
+        brand: json["Reserve"]["Car"]["brand"] ?? 'no-car-brand',
+        model: json["Reserve"]["Car"]["model"] ?? 'no-car-model',
+        color: json["Reserve"]["Car"]["color"] ?? 'no-car-color',
         tripType: json["Reserve"]["tripType"],
         serviceType: json["Reserve"]["serviceType"],
         stops:

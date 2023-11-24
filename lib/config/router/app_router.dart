@@ -12,6 +12,7 @@ import 'package:silverapp/roles/admin/presentation/screens/trips_list_screen.dar
 import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_detail_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_list_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_screen.dart';
+import 'package:silverapp/roles/driver/presentation/screens/driver_trip_ended_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_trip_list_screen.dart';
 import 'package:silverapp/roles/no_role/no_role_screen.dart';
 import 'package:silverapp/roles/user/presentation/screens/user_screen.dart';
@@ -83,6 +84,14 @@ final goRouterProvider = Provider((ref) {
                         final tripId =
                             state.pathParameters['id'] ?? 'No params available';
                         return DriverOnTripScreen(tripId: tripId);
+                      },
+                    ),
+                    GoRoute(
+                      path: 'detail/:id',
+                      builder: (context, state) {
+                        final tripId =
+                            state.pathParameters['id'] ?? 'No params available';
+                        return DriverTripEndedScreen(tripId: tripId);
                       },
                     ),
                   ]),

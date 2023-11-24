@@ -55,6 +55,16 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
       return result;
     }
 
+    double calculatePaySilver() {
+      double result = trip.totalPrice * trip.silverPercent / 100;
+      return result;
+    }
+
+    double calculatePayConductor() {
+      double result = calculateCustomerPrice() - calculatePaySilver();
+      return result;
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Detalles'),
@@ -208,11 +218,11 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       textTipePrice: "Precio Total*",
                     ),
                     TripLabelAmout(
-                      textAmout: "S/ ${trip.price}",
+                      textAmout: "S/ ${calculatePayConductor()}",
                       textTipePrice: "Pago conductor",
                     ),
                     TripLabelAmout(
-                      textAmout: "S/ ${trip.price}",
+                      textAmout: "S/ ${calculatePaySilver()}",
                       textTipePrice: "Pago Silver",
                     ),
                     TripLabelAmout(

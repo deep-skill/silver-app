@@ -4,7 +4,7 @@ class DriverReserveDetail {
   String serviceType;
   String tripType;
   String startAddress;
-  String endAddress;
+  String? endAddress;
   double price;
   String name;
   String lastName;
@@ -18,7 +18,7 @@ class DriverReserveDetail {
     required this.serviceType,
     required this.tripType,
     required this.startAddress,
-    required this.endAddress,
+    this.endAddress,
     required this.price,
     required this.name,
     required this.lastName,
@@ -34,8 +34,8 @@ class DriverReserveDetail {
         serviceType: json["serviceType"],
         tripType: json["tripType"],
         startAddress: json["startAddress"],
-        endAddress: json["endAddress"],
-        price: json["price"],
+        endAddress: json["endAddress"] == null ? null : json["endAddress"],
+        price: json["price"].toDouble(),
         name: json["User"]["name"],
         lastName: json["User"]["lastName"],
         state: (json["Trip"] == null) ? null : json["Trip"]["state"],

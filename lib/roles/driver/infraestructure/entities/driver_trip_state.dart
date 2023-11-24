@@ -8,7 +8,7 @@ class TripDriverStatus {
   String? status;
   int reserveId;
   String startAddress;
-  String endAddress;
+  String? endAddress;
   List<Stop> stops;
   List<Observations> observations;
   List<Parking> parkings;
@@ -28,7 +28,7 @@ class TripDriverStatus {
     required this.parkings,
     required this.tolls,
     required this.startAddress,
-    required this.endAddress,
+    this.endAddress,
   });
 
   factory TripDriverStatus.fromJson(Map<String, dynamic> json) =>

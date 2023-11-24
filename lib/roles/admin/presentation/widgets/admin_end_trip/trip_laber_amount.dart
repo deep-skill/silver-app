@@ -1,36 +1,42 @@
 import 'package:flutter/material.dart';
 
-class TripLabelStop extends StatelessWidget {
-  final String text;
+class TripLabelAmout extends StatelessWidget {
+  final String textAmout;
+  final String textTipePrice;
 
-  const TripLabelStop({
-    super.key,
-    required this.text,
-  });
+  const TripLabelAmout({
+    Key? key,
+    required this.textAmout,
+    required this.textTipePrice,
+  }) : super(key: key);
+
+  final TextStyle textPrice = const TextStyle(
+    fontFamily: "Raleway",
+    fontSize: 20.0,
+    fontWeight: FontWeight.bold,
+  );
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: AlignmentDirectional.bottomStart,
-      padding: const EdgeInsets.all(5),
-      margin: const EdgeInsets.all(2),
-      child: IntrinsicWidth(
-        child: Container(
-          padding: const EdgeInsets.all(0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.grey[300],
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      width: MediaQuery.of(context).size.width * .6,
+      height: MediaQuery.of(context).size.height * .06,
+      margin: const EdgeInsets.all(6.0),
+      padding: const EdgeInsets.all(6.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(textTipePrice),
+          Text(
+            textAmout,
+            style: textPrice,
           ),
-          child: Row(
-            children: [
-              Icon(
-                Icons.add_location_alt,
-                color: Colors.grey[600],
-              ),
-              Text(text),
-            ],
-          ),
-        ),
+        ],
       ),
     );
   }

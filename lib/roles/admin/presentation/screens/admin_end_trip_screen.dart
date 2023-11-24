@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_observation_trip.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_parking_trip.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_tolls_trip.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/trip_laber_amount.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_estado_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/title_trip_detail.dart';
@@ -42,12 +44,23 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
       return input[0].toUpperCase() + input.substring(1).toLowerCase();
     }
 
+    double calculateCustomerPrice() {
+      double result = trip.totalPrice;
+      for (var element in trip.tolls) {
+        result += element.amount;
+      }
+      for (var element in trip.parkings) {
+        result += element.amount;
+      }
+      return result;
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Detalles'),
           centerTitle: true,
         ),
-        body: Container(
+        body: SizedBox(
           width: MediaQuery.of(context).size.width,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -185,11 +198,81 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 5,
-                        )
                       ],
-                    )
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    TripLabelAmout(
+                      textAmout: "S/ ${calculateCustomerPrice()}",
+                      textTipePrice: "Precio Total*",
+                    ),
+                    TripLabelAmout(
+                      textAmout: "S/ ${trip.price}",
+                      textTipePrice: "Pago conductor",
+                    ),
+                    TripLabelAmout(
+                      textAmout: "S/ ${trip.price}",
+                      textTipePrice: "Pago Silver",
+                    ),
+                    TripLabelAmout(
+                      textAmout: "${trip.silverPercent}%",
+                      textTipePrice: "Porcentaje Silver",
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const Text("*Incluye gastos de peaje y/o estacionamiento"),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(children: [
+                      Expanded(
+                        child: TextButton(
+                            style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(
+                                  const EdgeInsets.all(5)),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  const Color(0xFF23A5CD)),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                            // ignore: avoid_print
+                            onPressed: () => print("Editar"),
+                            child: const Text(
+                              "Confirmar",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontFamily: "Monserrat"),
+                            )),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(
+                        child: TextButton(
+                          style: ButtonStyle(
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                              side: MaterialStateProperty.all(
+                                  const BorderSide(color: Color(0xFF23A5CD)))),
+                          onPressed: () => context.pop(),
+                          child: const Text(
+                            'Cancelar',
+                            style: TextStyle(color: Color(0xFF23A5CD)),
+                          ),
+                        ),
+                      ),
+                    ])
                   ],
                 )),
           ),

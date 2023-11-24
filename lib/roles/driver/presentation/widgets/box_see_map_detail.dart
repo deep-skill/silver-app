@@ -1,29 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class SeeMap extends StatefulWidget {
-  const SeeMap({super.key});
+class SeeMap extends StatelessWidget {
+  const SeeMap({
+    super.key,
+    required this.arrivedDriver,
+    required this.startTime,
+    required this.endTime,
+    required this.startAddress,
+    required this.startAddressLat,
+    required this.startAddressLon,
+    this.endAddress,
+    this.endAddressLat,
+    this.endAddressLon,
+  });
+  final DateTime? arrivedDriver;
+  final DateTime? startTime;
+  final DateTime? endTime;
+  final String startAddress;
+  final double startAddressLat;
+  final double startAddressLon;
+  final String? endAddress;
+  final double? endAddressLat;
+  final double? endAddressLon;
 
-  @override
-  State<SeeMap> createState() => _SeeMapState();
-}
-
-class _SeeMapState extends State<SeeMap> {
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    launchWaze(String url) async {
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url));
+      } else {
+        return false;
+      }
+    }
+
+    return SizedBox(
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-        Icon(
-          Icons.map,
-          color: Color(0xFF23A5CD),
-        ),
-        Text("Ver mapa",
-            style: TextStyle(
-              color: Color(0xFF23A5CD),
-              decoration: TextDecoration.underline,
-              fontFamily: "Monserrat",
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ))
+        ElevatedButton(
+            child: const Row(children: [
+              Icon(
+                Icons.map,
+                color: Color(0xFF23A5CD),
+              ),
+              Text("Ver mapa",
+                  style: TextStyle(
+                    color: Color(0xFF23A5CD),
+                    decoration: TextDecoration.underline,
+                    fontFamily: "Monserrat",
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ))
+            ]),
+            onPressed: () {
+              if (arrivedDriver == null) {
+                try {
+                  launchWaze(
+                      "https://waze.com/ul?ll=${startAddressLat.toString()},${startAddressLon.toString()}&navigate=yes");
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Waze not installed")));
+                }
+              }
+              if (arrivedDriver != null && startTime != null) {
+                try {
+                  launchWaze(
+                      "https://waze.com/ul?ll=${endAddressLat.toString()},${endAddressLon.toString()}&navigate=yes");
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Waze not installed")));
+                }
+              }
+            }),
       ]),
     );
   }

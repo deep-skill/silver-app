@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_parking_trip.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_tolls_trip.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_estado_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
@@ -123,6 +124,11 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                     label: "Peaje",
                     tolls: trip.tolls,
                     icon: Icons.paid,
+                  ),
+                  BoxParkingTrip(
+                    label: "Estacionamiento",
+                    parkings: trip.parkings,
+                    icon: Icons.local_parking,
                   )
                 ],
               )),

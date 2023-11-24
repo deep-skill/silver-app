@@ -137,24 +137,30 @@ class ReserveInfo extends StatelessWidget {
             label: "Punto de origen",
             text: reserve.startAddress,
             row: false),
-        Row(
-          children: [
-            Container(
-              width: 11.0,
-            ),
-            Container(
-              width: 2.0,
-              height: 29.0,
-              color: Colors.black,
-              padding: const EdgeInsets.all(2.0),
-            ),
-          ],
-        ),
-        BoxReserveDetail(
-            icon: Icons.trip_origin,
-            label: "Punto de destino",
-            text: reserve.endAddress,
-            row: false),
+        reserve.endAddress != null
+            ? Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 11.0,
+                      ),
+                      Container(
+                        width: 2.0,
+                        height: 29.0,
+                        color: Colors.black,
+                        padding: const EdgeInsets.all(2.0),
+                      ),
+                    ],
+                  ),
+                  BoxReserveDetail(
+                      icon: Icons.trip_origin,
+                      label: "Punto de destino",
+                      text: reserve.endAddress!,
+                      row: false),
+                ],
+              )
+            : SizedBox(),
         Container(
           height: 10.0,
         ),

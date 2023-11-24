@@ -22,7 +22,7 @@ class BoxReserveDetail extends StatelessWidget {
                   ? Icon(
                       icon,
                     )
-                  : Text(''),
+                  : const Text(''),
               const SizedBox(width: 8.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -52,7 +52,7 @@ class BoxReserveDetail extends StatelessWidget {
                   ? Icon(
                       icon,
                     )
-                  : Text(''),
+                  : const Text(''),
               const SizedBox(width: 8.0),
               SizedBox(
                 width: MediaQuery.of(context).size.width * .35,

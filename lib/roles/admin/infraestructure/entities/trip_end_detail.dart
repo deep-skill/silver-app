@@ -75,15 +75,15 @@ class AdminTripEnd {
         price: json["Reserve"]["price"].toDouble(),
         driverPercent: json["Reserve"]["driverPercent"],
         silverPercent: json["Reserve"]["silverPercent"],
-        userName: json["Reserve"]["User"]["name"] ?? "no-user-name",
-        userLastName: json["Reserve"]["User"]["lastName"] ?? "no-user-lastName",
+        userName: json["Reserve"]["User"]["name"] ?? "no-name",
+        userLastName: json["Reserve"]["User"]["lastName"] ?? "no-lastName",
         enterpriseName: json["Reserve"]["Enterprise"]["name"],
         driverName: json["Reserve"]["Driver"] != null
-            ? json["Reserve"]["Driver"]["name"] ?? 'no-driver-name'
-            : 'no-driver-name',
+            ? json["Reserve"]["Driver"]["name"] ?? 'no-name'
+            : 'no-name',
         driverLastName: json["Reserve"]["Driver"] != null
-            ? json["Reserve"]["Driver"]["lastName"] ?? 'no-driver-name'
-            : 'no-driver-name',
+            ? json["Reserve"]["Driver"]["lastName"] ?? 'no-lastName'
+            : 'no-lastName',
         licensePlate: json["Reserve"]["Car"]["licensePlate"] ?? 'no-car-plate',
         brand: json["Reserve"]["Car"]["brand"] ?? 'no-car-brand',
         model: json["Reserve"]["Car"]["model"] ?? 'no-car-model',

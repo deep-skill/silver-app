@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_reserve_detail.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_label_stop.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_stop.dart';
 
 class DriverTripAddressInfoWidget extends StatelessWidget {
   final String startAddress;

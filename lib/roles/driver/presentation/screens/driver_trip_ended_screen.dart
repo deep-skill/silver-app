@@ -5,6 +5,9 @@ import 'package:silverapp/roles/driver/presentation/providers/driver_state_provi
 import 'package:silverapp/roles/driver/presentation/widgets/box_state_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_address_info_widget.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_observation.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_parking.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_toll.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/title_reserve_detail.dart';
 
 class DriverTripEndedScreen extends ConsumerStatefulWidget {
@@ -69,73 +72,85 @@ class TripEndedInfo extends StatelessWidget {
     // double driverIncome(price, silverPercent) {
     //   return price - ((price / 100) * silverPercent);
     // }
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const TitleReserveDetail(text: "Datos del servicio"),
-        const SizedBox(
-          height: 10,
-        ),
-        BoxReserveDetail(
-            icon: Icons.hail,
-            label: "Pasajero",
-            text: "${trip.userName} ${trip.userLastName}",
-            row: false),
-        BoxReserveDetail(
-            icon: Icons.domain,
-            label: "Empresa",
-            text: trip.enterpriseName ?? 'Viaje Personal',
-            row: false),
-        BoxReserveDetail(
-            icon: Icons.business_center_outlined,
-            label: "Tipo de servicio",
-            text: capitalizeFirst(trip.serviceType),
-            row: false),
-        const TitleReserveDetail(text: "Datos del viaje"),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: BoxReserveDetail(
-                  icon: Icons.today,
-                  label: "Fecha de reserva",
-                  text:
-                      '${trip.reserveStartTime.day}/${trip.reserveStartTime.month}/${trip.reserveStartTime.year}',
-                  row: true),
-            ),
-            Expanded(
-              child: BoxReserveDetail(
-                  icon: Icons.alarm,
-                  label: "Hora de reserva",
-                  text:
-                      '${trip.reserveStartTime.hour}:${trip.reserveStartTime.minute}',
-                  row: true),
-            ),
-          ],
-        ),
-        Row(children: [
-          Expanded(
-            child: BoxReserveDetail(
-                icon: Icons.timeline,
-                label: "Tipo de viaje",
-                text: capitalizeFirst(trip.tripType),
-                row: true),
+    return ListView(children: [
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const TitleReserveDetail(text: "Datos del servicio"),
+          const SizedBox(
+            height: 10,
           ),
-          Expanded(
-            child: BoxStateReserveDetail(
-              icon: Icons.cached,
-              label: "Estado",
-              state: trip.status,
+          BoxReserveDetail(
+              icon: Icons.hail,
+              label: "Pasajero",
+              text: "${trip.userName} ${trip.userLastName}",
+              row: false),
+          BoxReserveDetail(
+              icon: Icons.domain,
+              label: "Empresa",
+              text: trip.enterpriseName ?? 'Viaje Personal',
+              row: false),
+          BoxReserveDetail(
+              icon: Icons.business_center_outlined,
+              label: "Tipo de servicio",
+              text: capitalizeFirst(trip.serviceType),
+              row: false),
+          const TitleReserveDetail(text: "Datos del viaje"),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: BoxReserveDetail(
+                    icon: Icons.today,
+                    label: "Fecha de reserva",
+                    text:
+                        '${trip.reserveStartTime.day}/${trip.reserveStartTime.month}/${trip.reserveStartTime.year}',
+                    row: true),
+              ),
+              Expanded(
+                child: BoxReserveDetail(
+                    icon: Icons.alarm,
+                    label: "Hora de reserva",
+                    text:
+                        '${trip.reserveStartTime.hour}:${trip.reserveStartTime.minute}',
+                    row: true),
+              ),
+            ],
+          ),
+          Row(children: [
+            Expanded(
+              child: BoxReserveDetail(
+                  icon: Icons.timeline,
+                  label: "Tipo de viaje",
+                  text: capitalizeFirst(trip.tripType),
+                  row: true),
             ),
-          )
+            Expanded(
+              child: BoxStateReserveDetail(
+                icon: Icons.cached,
+                label: "Estado",
+                state: trip.status,
+              ),
+            )
+          ]),
+          DriverTripAddressInfoWidget(
+              startAddress: trip.startAddress,
+              endAddress: trip.endAddress,
+              stops: trip.stops),
+          DriverTripLabelToll(
+              label: "Peaje", tolls: trip.tolls, icon: Icons.paid),
+          DriverTripLabelParking(
+              label: "Estacionamiento",
+              parkings: trip.parkings,
+              icon: Icons.local_parking),
+          DriverTripLabelObservation(
+              label: "Observaciones",
+              observations: trip.observations,
+              icon: Icons.search)
         ]),
-        DriverTripAddressInfoWidget(
-            startAddress: trip.startAddress,
-            endAddress: trip.endAddress,
-            stops: trip.stops)
-      ]),
-    );
+      )
+    ]);
   }
 }

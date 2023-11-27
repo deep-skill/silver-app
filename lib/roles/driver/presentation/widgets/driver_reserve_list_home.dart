@@ -38,18 +38,17 @@ class _DriverReservesListHomeState extends State<DriverReservesListHome> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: 
-      widget.reserves.isEmpty
-      ? const Text('No hay reservas del día')
-      : ListView.builder(
-        controller: scrollController,
-        itemCount: widget.reserves.length,
-        scrollDirection: Axis.vertical,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (contex, index) {
-          return _Slide(reserve: widget.reserves[index]);
-        },
-      ),
+      child: widget.reserves.isEmpty
+          ? const Text('No hay reservas del día')
+          : ListView.builder(
+              controller: scrollController,
+              itemCount: widget.reserves.length,
+              scrollDirection: Axis.vertical,
+              physics: const BouncingScrollPhysics(),
+              itemBuilder: (contex, index) {
+                return _Slide(reserve: widget.reserves[index]);
+              },
+            ),
     );
   }
 }
@@ -78,15 +77,15 @@ class _Slide extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: size.height * .15,
-        decoration: BoxDecoration(
-          color: const Color(0xffF2F3F7),
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
+        height: size.height * .13,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.shade200,
-              blurRadius: 10,
-              offset: const Offset(0, 3),
+              color: Color.fromRGBO(0, 0, 0, 0.25),
+              blurRadius: 4,
+              offset: Offset(0, 4),
             )
           ],
         ),
@@ -94,11 +93,10 @@ class _Slide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Container(
-                width: 90,
-                height: 110,
+                width: size.width * .30,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                  color: Color(0xffF2F3F7),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
                 child: const Center(
                     child: Text(
@@ -109,59 +107,67 @@ class _Slide extends StatelessWidget {
                   ),
                 ))),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.hail,
-                        size: 20,
-                      ),
-                      Text(
-                        '${reserve.name} ${reserve.lastName}',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                  SizedBox(
+                    width: size.width * .5,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.hail,
+                          size: 20,
                         ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.account_balance_outlined,
-                        size: 20,
-                      ),
-                      Text(
-                        ' ${reserve.entrepriseName}',
-                        style: const TextStyle(
-                          fontSize: 16,
+                        Text(
+                          '${reserve.name} ${reserve.lastName}',
+                          style: const TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'Montserrat-Bold',
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.event_available_outlined,
-                        size: 20,
-                      ),
-                      Text(
-                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
-                        style: const TextStyle(
-                          fontSize: 16,
+                  SizedBox(
+                    width: size.width * .5,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.account_balance_outlined,
+                          size: 20,
                         ),
-                      ),
-                    ],
+                        Text(
+                          ' ${reserve.entrepriseName}',
+                          style: const TextStyle(
+                              fontSize: 12, fontFamily: 'Montserrat-Medium'),
+                        ),
+                      ],
+                    ),
                   ),
-                 
+                  SizedBox(
+                    width: size.width * .5,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.event_available_outlined,
+                          size: 20,
+                        ),
+                        Text(
+                          ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
+                          style: const TextStyle(
+                              fontSize: 12, fontFamily: 'Montserrat-Medium'),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
             GestureDetector(
-              onTap: () => context.push('/driver/reserves/detail/${reserve.id}'),
+              onTap: () =>
+                  context.push('/driver/reserves/detail/${reserve.id}'),
               child: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 30,

@@ -22,27 +22,30 @@ class BoxReserveDetail extends StatelessWidget {
                   ? Icon(
                       icon,
                     )
-                  : Text(''),
+                  : const Text(''),
               const SizedBox(width: 8.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: const TextStyle(
-                      color: Color(0xFF23A5CD),
-                      fontFamily: 'Montserrat-Medium',
-                      fontSize: 12,
-                    ),
-                  ),
-                  Text(text,
-                      maxLines: 2,
+              SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      label,
                       style: const TextStyle(
+                        color: Color(0xFF23A5CD),
                         fontFamily: 'Montserrat-Medium',
-                        fontSize: 15,
+                        fontSize: 12,
                         overflow: TextOverflow.ellipsis,
-                      )),
-                ],
+                      ),
+                    ),
+                    Text(text,
+                        maxLines: 2,
+                        style: const TextStyle(
+                          fontFamily: 'Montserrat-Medium',
+                          fontSize: 15,
+                          overflow: TextOverflow.ellipsis,
+                        )),
+                  ],
+                ),
               ),
             ],
           )
@@ -52,7 +55,7 @@ class BoxReserveDetail extends StatelessWidget {
                   ? Icon(
                       icon,
                     )
-                  : Text(''),
+                  : const Text(''),
               const SizedBox(width: 8.0),
               SizedBox(
                 width: MediaQuery.of(context).size.width * .35,

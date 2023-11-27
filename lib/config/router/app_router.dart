@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:silverapp/auth0/auth0.dart';
 import 'package:silverapp/config/router/app_router_notifier.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
+import 'package:silverapp/roles/admin/presentation/screens/admin_end_trip_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/admin_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/create_reserve_screen.dart';
+import 'package:silverapp/roles/admin/presentation/screens/create_trip_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/reserve_detail_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/reserve_list_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_on_trip_screen.dart';
@@ -51,9 +53,25 @@ final goRouterProvider = Provider((ref) {
                   ),
                 ]),
             GoRoute(
-              path: 'trips',
-              builder: (context, state) => const TripsListScreen(),
-            ),
+                path: 'trips',
+                builder: (context, state) => const TripsListScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'create/:id',
+                    builder: (context, state) {
+                      final tripId = state.pathParameters['id'] ?? 'new';
+                      return CreateTripScreen(tripId: tripId);
+                    },
+                  ),
+                  GoRoute(
+                    path: 'detail/:id',
+                    builder: (context, state) {
+                      final tripId =
+                          state.pathParameters['id'] ?? 'No params available';
+                      return AdminTripDetailScreen(tripId: tripId);
+                    },
+                  ),
+                ]),
           ],
         ),
         GoRoute(

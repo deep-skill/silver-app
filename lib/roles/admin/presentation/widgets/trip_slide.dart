@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
 
 class TripSlide extends StatelessWidget {
@@ -224,7 +225,7 @@ class TripSlide extends StatelessWidget {
               ),
             ),
             GestureDetector(
-              // onTap: () => context.push('/admin/reserves/detail/${reserve.id}'),
+              onTap: () => context.push('/admin/trips/detail/${trip.id}'),
               child: const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 30,

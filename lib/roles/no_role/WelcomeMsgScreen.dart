@@ -6,15 +6,18 @@ class WelcomeMsgScreen extends StatelessWidget {
   final Text subTitle;
   final Text? secSubTitle;
   final Image mainImage;
+  final Image? secondImage;
+  final Image? thirdImage;
 
-  const WelcomeMsgScreen({
-    super.key,
-    this.userName,
-    required this.title,
-    required this.subTitle,
-    this.secSubTitle,
-    required this.mainImage,
-  });
+  const WelcomeMsgScreen(
+      {super.key,
+      this.userName,
+      required this.title,
+      required this.subTitle,
+      required this.mainImage,
+      this.secSubTitle,
+      this.secondImage,
+      this.thirdImage});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,12 @@ class WelcomeMsgScreen extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        secSubTitle ?? const Text(''),
+        secSubTitle == null
+            ? Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                secondImage ?? const SizedBox(),
+                thirdImage ?? const SizedBox()
+              ])
+            : const SizedBox()
       ],
     );
   }

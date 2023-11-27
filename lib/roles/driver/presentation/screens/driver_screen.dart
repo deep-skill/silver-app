@@ -1,11 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_home_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
+import 'package:silverapp/roles/driver/presentation/screens/driver_web_deny_screen.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/custom_driver_name.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_reserve_list_home.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_side_menu.dart';
@@ -19,16 +22,18 @@ class DriverScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-//    AuthState? authState = ref.watch(authProvider);
+    AuthState? authState = ref.watch(authProvider);
+    final bool isDriverOnWeb =
+        authState!.credentials!.scopes.toString().contains('driver') && kIsWeb;
+
+    print(isDriverOnWeb);
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
         scrolledUnderElevation: 0,
       ),
-      drawer: DriverSideMenu(
-        scaffoldKey: scaffoldKey,
-      ),
-      body: const HomeView(),
+      drawer: isDriverOnWeb ? null : DriverSideMenu(scaffoldKey: scaffoldKey),
+      body: isDriverOnWeb ? const DriverWebDenyScreen() : const HomeView(),
     );
   }
 }

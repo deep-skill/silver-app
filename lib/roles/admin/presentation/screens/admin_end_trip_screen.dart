@@ -271,8 +271,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                 ),
                               ),
                             ),
-                            onPressed: () =>
-                                context.push('/admin/trips/create/${trip.id}'),
+                            onPressed: () => context.push('/admin/reserves/create/${trip.reserveId}'),
                             child: const Text(
                               "Editar",
                               style: TextStyle(

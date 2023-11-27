@@ -28,4 +28,8 @@ class TripAdminStatusNotifier extends StateNotifier<Map<String, AdminTripEnd>> {
     final tripStatus = await getTripAdminStatus(tripStatusId);
     state = {...state, tripStatusId: tripStatus};
   }
+    Future<void> updateTripStatus(String tripStatusId) async {
+    final tripStatus = await getTripAdminStatus(tripStatusId);
+    state = {...state, tripStatus.id.toString(): tripStatus};
+  }
 }

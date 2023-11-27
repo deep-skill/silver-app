@@ -1,6 +1,5 @@
+import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
-
-import '../../../../config/dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final tripAdminStatusProvider =

@@ -271,10 +271,10 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                 ),
                               ),
                             ),
-                            // ignore: avoid_print
-                            onPressed: () => print("Editar"),
+                            onPressed: () =>
+                                context.push('/admin/trips/create/${trip.id}'),
                             child: const Text(
-                              "Confirmar",
+                              "Editar",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,

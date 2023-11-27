@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 
@@ -16,6 +15,8 @@ class DriverTripLabelToll extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     return Row(
       children: [
         icon != null
@@ -38,6 +39,7 @@ class DriverTripLabelToll extends StatelessWidget {
                 ),
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: tolls
                     .map((e) => Text(
                           "${e.name} - S/ ${e.amount}",
@@ -49,7 +51,10 @@ class DriverTripLabelToll extends StatelessWidget {
                           ),
                         ))
                     .toList(),
-              )
+              ),
+              SizedBox(
+                height: size.width * 0.03,
+              ),
             ],
           ),
         ),

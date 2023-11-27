@@ -40,12 +40,12 @@ class DriverTripEndedScreenState extends ConsumerState<DriverTripEndedScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Detalles'),
+          title: const Text('Detalles del viaje'),
           centerTitle: true,
         ),
         body: Container(
             width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.all(7.0),
+            margin: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: Colors.grey[200],
@@ -68,10 +68,22 @@ class TripEndedInfo extends StatelessWidget {
       return input[0].toUpperCase() + input.substring(1).toLowerCase();
     }
 
-    // print('tolls ${trip.tolls[0].name}');
-    // double driverIncome(price, silverPercent) {
-    //   return price - ((price / 100) * silverPercent);
-    // }
+    final Size size = MediaQuery.of(context).size;
+    double calculateDriverPrice() {
+      double result =
+          trip.totalPrice - (trip.totalPrice * trip.silverPercent / 100);
+      for (var element in trip.tolls) {
+        result += element.amount;
+      }
+      for (var element in trip.parkings) {
+        result += element.amount;
+      }
+      return result;
+    }
+
+    final String reserveStartTimeMinute =
+        trip.reserveStartTime.minute.toString().padLeft(2, '0');
+
     return ListView(children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
@@ -114,7 +126,7 @@ class TripEndedInfo extends StatelessWidget {
                     icon: Icons.alarm,
                     label: "Hora de reserva",
                     text:
-                        '${trip.reserveStartTime.hour}:${trip.reserveStartTime.minute}',
+                        '${trip.reserveStartTime.hour}:${reserveStartTimeMinute}',
                     row: true),
               ),
             ],
@@ -139,16 +151,45 @@ class TripEndedInfo extends StatelessWidget {
               startAddress: trip.startAddress,
               endAddress: trip.endAddress,
               stops: trip.stops),
-          DriverTripLabelToll(
-              label: "Peaje", tolls: trip.tolls, icon: Icons.paid),
-          DriverTripLabelParking(
-              label: "Estacionamiento",
-              parkings: trip.parkings,
-              icon: Icons.local_parking),
-          DriverTripLabelObservation(
-              label: "Observaciones",
-              observations: trip.observations,
-              icon: Icons.search)
+          SizedBox(
+            height: size.width * 0.03,
+          ),
+          trip.tolls.isEmpty
+              ? const SizedBox()
+              : DriverTripLabelToll(
+                  label: "Peaje", tolls: trip.tolls, icon: Icons.paid),
+          trip.parkings.isEmpty
+              ? const SizedBox()
+              : DriverTripLabelParking(
+                  label: "Estacionamiento",
+                  parkings: trip.parkings,
+                  icon: Icons.local_parking),
+          trip.observations.isEmpty
+              ? const SizedBox()
+              : DriverTripLabelObservation(
+                  label: "Observaciones",
+                  observations: trip.observations,
+                  icon: Icons.search),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: size.width * .01),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Pago Conductor',
+                  style: TextStyle(fontSize: 24.0, fontFamily: 'Raleway-Bold'),
+                ),
+                Text(
+                  'S/ ${calculateDriverPrice().toStringAsFixed(2)}',
+                  style: const TextStyle(
+                      fontSize: 24.0, fontFamily: 'Montserrat-Semi-Bold'),
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: size.width * 0.03,
+          ),
         ]),
       )
     ]);

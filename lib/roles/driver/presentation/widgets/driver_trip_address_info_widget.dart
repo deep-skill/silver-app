@@ -17,6 +17,8 @@ class DriverTripAddressInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('stops is empty ${stops.isEmpty}');
+
     return Column(
       children: [
         BoxReserveDetail(
@@ -39,27 +41,30 @@ class DriverTripAddressInfoWidget extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            Column(
-              children: [
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 3.0),
-                  child: Text(
-                    'Paradas:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: Color(0xFF23A5CD),
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: stops
-                      .map((stop) => DriverTripLabelStop(text: stop.location))
-                      .toList(),
-                ),
-              ],
-            ),
+            stops.isEmpty == false
+                ? Column(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 3.0),
+                        child: Text(
+                          'Paradas:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Color(0xFF23A5CD),
+                          ),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: stops
+                            .map((stop) =>
+                                DriverTripLabelStop(text: stop.location))
+                            .toList(),
+                      ),
+                    ],
+                  )
+                : SizedBox()
           ],
         ),
         endAddress != null

@@ -70,6 +70,9 @@ class TripAddressInfoWidget extends StatelessWidget {
             label: "Punto de destino",
             text: endAddress,
           ),
+          const SizedBox(
+            height: 10.0,
+          ),
         ],
       ),
     );

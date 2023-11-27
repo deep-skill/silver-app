@@ -85,6 +85,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                 child: ListView(
                   children: [
                     const TitleTripDetail(text: "Datos del servicio"),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     BoxReserveDetail(
                       label: "Pasajero",
                       text: "${trip.userName} ${trip.userLastName}",
@@ -100,7 +103,13 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       text: capitalizeFirst(trip.serviceType.toString()),
                       icon: Icons.business_center_outlined,
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     const TitleTripDetail(text: "Datos del viaje"),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -146,23 +155,32 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       endAddress: trip.endAddress,
                       stops: trip.stops,
                     ),
-                    BoxTollsTrip(
-                      label: "Peaje",
-                      tolls: trip.tolls,
-                      icon: Icons.paid,
-                    ),
-                    BoxParkingTrip(
-                      label: "Estacionamiento",
-                      parkings: trip.parkings,
-                      icon: Icons.local_parking,
-                    ),
-                    BoxObservationsTrip(
-                      label: "Observaciones",
-                      observations: trip.observations,
-                      icon: Icons.search,
-                    ),
+                    trip.tolls.isEmpty
+                        ? const SizedBox()
+                        : BoxTollsTrip(
+                            label: "Peaje",
+                            tolls: trip.tolls,
+                            icon: Icons.paid,
+                          ),
+                    trip.parkings.isEmpty
+                        ? const SizedBox()
+                        : BoxParkingTrip(
+                            label: "Estacionamiento",
+                            parkings: trip.parkings,
+                            icon: Icons.local_parking,
+                          ),
+                    trip.observations.isEmpty
+                        ? const SizedBox()
+                        : BoxObservationsTrip(
+                            label: "Observaciones",
+                            observations: trip.observations,
+                            icon: Icons.search,
+                          ),
                     const TitleTripDetail(
                         text: "Datos del conductor y vehículo"),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     Row(
                       children: [
                         Expanded(

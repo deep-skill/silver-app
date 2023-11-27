@@ -14,17 +14,15 @@ class DriverWebDenyScreen extends ConsumerWidget {
     Credentials? credentials = ref.watch(authProvider).credentials;
     final size = MediaQuery.of(context).size;
 
-    return Scaffold(
-        appBar: AppBar(title: const Text('Bienvenido/a')),
-        body: Padding(
-          padding: const EdgeInsets.all(12),
-          child: credentials != null
-              ? ShowInformation(
-                  size: size,
-                  credentials: credentials,
-                )
-              : const FullScreenLoader(),
-        ));
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: credentials != null
+          ? ShowInformation(
+              size: size,
+              credentials: credentials,
+            )
+          : const FullScreenLoader(),
+    );
   }
 }
 
@@ -52,7 +50,7 @@ class ShowInformation extends ConsumerWidget {
                 padding: EdgeInsets.all(size.width * .08),
                 child: WelcomeMsgScreen(
                   mainImage: Image.asset(
-                    'assets/images/apple_store.png',
+                    'assets/images/app_logo_auth.png',
                   ),
                   title: Text(
                     'Hola, Conductor!',
@@ -69,8 +67,16 @@ class ShowInformation extends ConsumerWidget {
                     style: TextStyle(fontSize: size.width * .03),
                     textAlign: TextAlign.center,
                   ),
-                  secondImage: Image.asset('assets/images/apple_store.png'),
-                  thirdImage: Image.asset('assets/images/google_store.png'),
+                  secondImage: Image.asset(
+                    'assets/images/apple_store.png',
+                    width: size.width * .35,
+                    height: size.height * .08,
+                  ),
+                  thirdImage: Image.asset(
+                    'assets/images/google_store.png',
+                    width: size.width * .35,
+                    height: size.height * .15,
+                  ),
                 ),
               )
             ],

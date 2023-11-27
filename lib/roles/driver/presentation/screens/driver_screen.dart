@@ -29,9 +29,11 @@ class DriverScreen extends ConsumerWidget {
     print(isDriverOnWeb);
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-      ),
+      appBar: isDriverOnWeb
+          ? null
+          : AppBar(
+              scrolledUnderElevation: 0,
+            ),
       drawer: isDriverOnWeb ? null : DriverSideMenu(scaffoldKey: scaffoldKey),
       body: isDriverOnWeb ? const DriverWebDenyScreen() : const HomeView(),
     );

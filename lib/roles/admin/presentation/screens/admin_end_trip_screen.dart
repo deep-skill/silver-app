@@ -214,11 +214,13 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       height: 5,
                     ),
                     TripLabelAmout(
-                      textAmout: "S/ ${calculateCustomerPrice()}",
+                      textAmout:
+                          "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
                       textTipePrice: "Precio Total*",
                     ),
                     TripLabelAmout(
-                      textAmout: "S/ ${calculatePayConductor()}",
+                      textAmout:
+                          "S/ ${calculatePayConductor().toStringAsFixed(2)}",
                       textTipePrice: "Pago conductor",
                     ),
                     TripLabelAmout(

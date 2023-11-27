@@ -17,7 +17,7 @@ class TripAddressInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
@@ -33,34 +33,36 @@ class TripAddressInfoWidget extends StatelessWidget {
               ),
               Container(
                 width: 2.0,
-                height: 25.0 * (stops.length + 1),
+                height: 30.0 * (stops.length + 1),
                 color: Colors.black,
                 padding: const EdgeInsets.all(2.0),
               ),
               const SizedBox(
                 width: 5,
               ),
-              Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 3.0),
-                    child: Text(
-                      'Paradas:',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                        color: Color(0xFF23A5CD),
-                      ),
-                    ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: stops
-                        .map((stop) => TripLabelStop(text: stop.location))
-                        .toList(),
-                  ),
-                ],
-              ),
+              stops.isNotEmpty
+                  ? Column(
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 3.0),
+                          child: Text(
+                            'Paradas:',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: Color(0xFF23A5CD),
+                            ),
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: stops
+                              .map((stop) => TripLabelStop(text: stop.location))
+                              .toList(),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
             ],
           ),
           BoxReserveDetail(

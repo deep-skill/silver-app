@@ -160,7 +160,7 @@ class ReserveInfo extends StatelessWidget {
                       row: false),
                 ],
               )
-            : SizedBox(),
+            : const SizedBox(),
         Container(
           height: 10.0,
         ),

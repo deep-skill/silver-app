@@ -69,71 +69,72 @@ class TripSlide extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-                width: 130,
-                decoration: const BoxDecoration(
-                  color: Color(0xff03132A),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(8),
-                      topLeft: Radius.circular(8)),
-                ),
-                child: trip.driverName != '' || trip.driverName != null
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: Text(
-                              '${trip.driverName} ${trip.driverLastName}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Bold',
-                                color: Colors.white,
+            Expanded(
+              child: Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xff03132A),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(8),
+                        topLeft: Radius.circular(8)),
+                  ),
+                  child: trip.driverName != '' || trip.driverName != null
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                              child: Text(
+                                '${trip.driverName} ${trip.driverLastName}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat-Bold',
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Stack(children: [
-                            ClipOval(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 5.0, // Ancho del borde blanco
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Stack(children: [
+                              ClipOval(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Colors.white,
+                                      width: 5.0, // Ancho del borde blanco
+                                    ),
+                                  ),
+                                  child: Image.asset(
+                                    'assets/images/driver_img_example.png',
+                                    scale: 0.8,
                                   ),
                                 ),
-                                child: Image.asset(
-                                  'assets/images/driver_img_example.png',
-                                  scale: 0.8,
-                                ),
                               ),
-                            ),
-                            Positioned(
-                                bottom: -4,
-                                left: -12,
-                                child: Image.asset(
-                                  'assets/images/vehiculo_home_admin.png',
-                                  scale: 1,
-                                ))
-                          ]),
-                        ],
-                      )
-                    : const Center(
-                        child: Text(
-                        'Sin conductor',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ))),
+                              Positioned(
+                                  bottom: -4,
+                                  left: -12,
+                                  child: Image.asset(
+                                    'assets/images/vehiculo_home_admin.png',
+                                    scale: 1,
+                                  ))
+                            ]),
+                          ],
+                        )
+                      : const Center(
+                          child: Text(
+                          'Sin conductor',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ))),
+            ),
             Padding(
               padding: const EdgeInsets.all(4),
               child: Column(

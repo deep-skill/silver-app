@@ -4,6 +4,7 @@ class DriverReserveHome {
   final String name;
   final String lastName;
   final String entrepriseName;
+  final String startAddress;
 
   DriverReserveHome({
     required this.id,
@@ -11,6 +12,7 @@ class DriverReserveHome {
     required this.name,
     required this.lastName,
     required this.entrepriseName,
+    required this.startAddress,
   });
   factory DriverReserveHome.fromJson(Map<String, dynamic> json) => DriverReserveHome(
         id: json['id'],
@@ -18,5 +20,6 @@ class DriverReserveHome {
         name: json['User']['name'],
         lastName: json['User']['lastName'],
         entrepriseName: json['Enterprise'] == null ? 'Viaje personal' : json['Enterprise']['name'],
+        startAddress: json['startAddress'],
       );
 }

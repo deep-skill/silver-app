@@ -42,7 +42,7 @@ class AdminScreen extends ConsumerWidget {
             backgroundColor: const Color(0xffF2F3F7),
             key: scaffoldKey,
             appBar: AppBar(
-              backgroundColor: Color(0xffF2F3F7),
+              backgroundColor:  const Color(0xffF2F3F7),
               scrolledUnderElevation: 0,
             ),
             drawer: SideMenu(
@@ -74,8 +74,9 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(reservesHomeProvider.notifier).currentPage == 0)
+    if (ref.read(reservesHomeProvider.notifier).currentPage == 0) {
       ref.read(reservesHomeProvider.notifier).loadNextPage();
+    }
   }
 
   @override

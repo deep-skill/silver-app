@@ -91,54 +91,55 @@ class CustomTripSlide extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-                width: size.width * .30,
-                decoration: const BoxDecoration(
-                  color: Color(0xff031329),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
+            Expanded(
+              child: Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xff031329),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                    image: DecorationImage(
+                      opacity: 50,
+                      fit: BoxFit.fill,
+                      image: AssetImage('assets/images/enterprise_logo.png'),
+                    ),
                   ),
-                  image: DecorationImage(
-                    opacity: 50,
-                    fit: BoxFit.fill,
-                    image: AssetImage('assets/images/enterprise_logo.png'),
-                  ),
-                ),
-                child: trip.enterpriseName != ''
-                    ? Center(
-                        child: trip.enterpriseName != ''
-                            ? Text(
-                                trip.enterpriseName,
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
-                              )
-                            : const Text(
-                                'Viaje Personal',
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                ),
-                              ))
-                    : const Center(
-                        child: Text(
-                        'Viaje Personal',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ))),
+                  child: trip.enterpriseName != ''
+                      ? Center(
+                          child: trip.enterpriseName != ''
+                              ? Text(
+                                  trip.enterpriseName,
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : const Text(
+                                  'Viaje Personal',
+                                  maxLines: 2,
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white,
+                                  ),
+                                ))
+                      : const Center(
+                          child: Text(
+                          'Viaje Personal',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                          ),
+                        ))),
+            ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.50,
               child: Column(
@@ -219,7 +220,6 @@ class CustomTripSlide extends StatelessWidget {
             ),
             IconButton(
                 onPressed: () => {
-                      print(trip.status),
                       trip.status == 'INPROGRESS'
                           ? context.push('/driver/trips/on-trip/${trip.id}')
                           : context.push('/driver/trips/detail/${trip.id}')

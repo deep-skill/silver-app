@@ -19,9 +19,13 @@ class LabelExtraTripEnd extends StatelessWidget {
           const SizedBox(
             width: 32,
           ),
-          Text(
-            text,
-            style: styleText,
+          Expanded(
+            child: Text(
+              text,
+              style: styleText,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+            ),
           ),
         ],
       ),

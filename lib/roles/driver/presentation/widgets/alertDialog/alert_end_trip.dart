@@ -19,8 +19,27 @@ class AlertTripEnd extends StatefulWidget {
 }
 
 class _AlertTripEndState extends State<AlertTripEnd> {
+  double calculateFraction(int time) {
+    double result = 0.0;
+    int hourComplite = (time / 60).toInt();
+    int minuteComplite = (time % 60).toInt();
+    print("$hourComplite hora completa");
+    print("$minuteComplite minutos extra");
+
+    if (minuteComplite < 30) {
+      result = hourComplite.toDouble() + 0.5;
+    }
+    if (minuteComplite >= 30) {
+      result = hourComplite.toDouble() + 1.0;
+    }
+    print("$result este es el resultado");
+    return result;
+  }
+
   double totalPricePerHour(DateTime arrivedDriver) {
-    final diferencia = DateTime.now().difference(arrivedDriver);
+    final diferencia = DateTime.now()
+        .difference(arrivedDriver.subtract(Duration(minutes: 130)));
+    calculateFraction(diferencia.inMinutes);
     if (diferencia.inMinutes <= 60) {
       return 1;
     } else {

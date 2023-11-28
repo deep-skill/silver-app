@@ -5,22 +5,43 @@ import 'package:silverapp/config/dio/dio.dart';
 class AlertTripEnd extends StatefulWidget {
   final int tripId;
   final VoidCallback reload;
+  final String tripType;
+  final DateTime? arrivedDriver;
   const AlertTripEnd({
     Key? key,
     required this.tripId,
     required this.reload,
+    required this.tripType,
+    required this.arrivedDriver,
   }) : super(key: key);
   @override
   State<AlertTripEnd> createState() => _AlertTripEndState();
 }
 
 class _AlertTripEndState extends State<AlertTripEnd> {
+  double totalPricePerHour(DateTime arrivedDriver) {
+    final diferencia = DateTime.now().difference(arrivedDriver);
+    if (diferencia.inMinutes <= 60) {
+      return 1;
+    } else {
+      return (diferencia.inMinutes - 60) / 30;
+    }
+  }
+
   void patchEndTripDrive(BuildContext context, int tripId) async {
     try {
-      await dio.patch('trips/driver-trip/$tripId', data: {
+      if (widget.tripType == "POR HORA") {
+        totalPricePerHour(widget.arrivedDriver!);
+
+/*         await dio.patch('trips/driver-trip/$tripId', data: {
         "endTime": DateTime.now().toIso8601String(),
-        "status": "COMPLETED"
-      });
+        "status": "COMPLETED",  */
+      } else {
+        await dio.patch('trips/driver-trip/$tripId', data: {
+          "endTime": DateTime.now().toIso8601String(),
+          "status": "COMPLETED"
+        });
+      }
       widget.reload();
     } catch (e) {
       // ignore: avoid_print

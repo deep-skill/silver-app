@@ -107,7 +107,17 @@ class TripInfo extends ConsumerWidget {
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 
     return ListView(children: [
-      SeeMap(startAddress: trip.startAddress, startAddressLat: trip.startAddressLat, startAddressLon: trip.startAddressLon, endAddress: trip.endAddress, endAddressLat: trip.endAddressLat, endAddressLon: trip.endAddressLon, arrivedDriver: trip.arrivedDriver, startTime: trip.startTime, endTime: trip.endTime,),
+      SeeMap(
+        startAddress: trip.startAddress,
+        startAddressLat: trip.startAddressLat,
+        startAddressLon: trip.startAddressLon,
+        endAddress: trip.endAddress,
+        endAddressLat: trip.endAddressLat,
+        endAddressLon: trip.endAddressLon,
+        arrivedDriver: trip.arrivedDriver,
+        startTime: trip.startTime,
+        endTime: trip.endTime,
+      ),
       AddressInfoWidget(
           startAddress: trip.startAddress, endAddress: trip.endAddress),
       TripStatus(
@@ -181,7 +191,11 @@ class TripInfo extends ConsumerWidget {
               padding: const EdgeInsets.all(10),
               child: TripButton(
                   buttonText: "Finalizar viaje",
-                  alertWidget: AlertTripEnd(tripId: trip.id, reload: reload)),
+                  alertWidget: AlertTripEnd(
+                      tripId: trip.id,
+                      reload: reload,
+                      tripType: trip.tripType,
+                      arrivedDriver: trip.arrivedDriver)),
             )
           : const SizedBox(),
       trip.endTime != null

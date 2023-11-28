@@ -17,6 +17,13 @@ class TripDriverStatus {
   List<Observations> observations;
   List<Parking> parkings;
   List<Toll> tolls;
+  String userName;
+  String userLastName;
+  String tripType;
+  int silverPercent;
+  String serviceType;
+  String? enterpriseName;
+  DateTime reserveStartTime;
 
   TripDriverStatus({
     required this.id,
@@ -34,6 +41,13 @@ class TripDriverStatus {
     required this.startAddress,
     required this.startAddressLat,
     required this.startAddressLon,
+    required this.userName,
+    required this.userLastName,
+    required this.tripType,
+    required this.serviceType,
+    required this.silverPercent,
+    required this.reserveStartTime,
+    this.enterpriseName,
     this.endAddress,
     this.endAddressLat,
     this.endAddressLon,
@@ -43,7 +57,7 @@ class TripDriverStatus {
       TripDriverStatus(
         id: json["id"],
         totalPrice: json["totalPrice"].toDouble(),
-        onWayDriver: DateTime.parse(json["onWayDriver"]),
+        onWayDriver: DateTime.parse(json["onWayDriver"]).toLocal(),
         arrivedDriver: json["arrivedDriver"] == null
             ? null
             : DateTime.parse(json["arrivedDriver"]),
@@ -68,6 +82,14 @@ class TripDriverStatus {
             json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
         tolls:
             List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
+        userName: json["Reserve"]["User"]["name"],
+        userLastName: json["Reserve"]["User"]["lastName"],
+        tripType: json["Reserve"]["tripType"],
+        serviceType: json["Reserve"]["serviceType"],
+        silverPercent: json["Reserve"]["silverPercent"],
+        enterpriseName: json["Reserve"]["Enterprise"]["name"],
+        reserveStartTime:
+            DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
       );
 
   Map<String, dynamic> toJson() => {

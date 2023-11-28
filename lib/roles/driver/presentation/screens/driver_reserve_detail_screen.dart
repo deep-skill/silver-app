@@ -86,7 +86,7 @@ class ReserveInfo extends StatelessWidget {
         BoxReserveDetail(
             icon: Icons.domain,
             label: "Empresa",
-            text: reserve.enterpriseName,
+            text: reserve.enterpriseName ?? "Personal",
             row: false),
         BoxReserveDetail(
             icon: Icons.business_center_outlined,

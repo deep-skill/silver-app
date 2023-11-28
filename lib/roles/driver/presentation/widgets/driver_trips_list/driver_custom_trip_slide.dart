@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
 
 class CustomTripSlide extends StatelessWidget {
@@ -217,7 +218,12 @@ class CustomTripSlide extends StatelessWidget {
                   ]),
             ),
             IconButton(
-                onPressed: () => print(trip.id),
+                onPressed: () => {
+                      print(trip.status),
+                      trip.status == 'INPROGRESS'
+                          ? context.push('/driver/trips/on-trip/${trip.id}')
+                          : context.push('/driver/trips/detail/${trip.id}')
+                    },
                 icon: const Icon(Icons.arrow_forward_ios_rounded, size: 30))
           ],
         ),

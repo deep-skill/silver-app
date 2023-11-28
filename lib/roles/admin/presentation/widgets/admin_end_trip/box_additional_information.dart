@@ -203,7 +203,6 @@ class _AdminAdditionalInformationState
 
   @override
   Widget build(BuildContext context) {
-    bool boolValue = widget.boolValue;
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: Column(

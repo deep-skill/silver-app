@@ -8,7 +8,6 @@ class LabelExtraTripEnd extends StatelessWidget {
     color: Color(0xFF000000),
     fontFamily: "Monserrat",
     fontSize: 16,
-    fontWeight: FontWeight.bold,
   );
 
   @override

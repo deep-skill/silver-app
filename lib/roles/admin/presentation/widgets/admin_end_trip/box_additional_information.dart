@@ -12,7 +12,6 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/title_
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
 
 class AdminAdditionalInformation extends StatefulWidget {
-  final bool boolValue;
   final int tripId;
   final VoidCallback reload;
   final List<Stop> stops;
@@ -22,7 +21,6 @@ class AdminAdditionalInformation extends StatefulWidget {
 
   const AdminAdditionalInformation({
     Key? key,
-    required this.boolValue,
     required this.tripId,
     required this.reload,
     required this.stops,
@@ -43,6 +41,7 @@ class _AdminAdditionalInformationState
   late List<Observations> observations;
   late List<Parking> parkings;
   late List<Toll> tolls;
+  bool boolValue = false;
 
   @override
   void initState() {
@@ -204,7 +203,7 @@ class _AdminAdditionalInformationState
 
   @override
   Widget build(BuildContext context) {
-    final bool boolValue = widget.boolValue;
+    bool boolValue = widget.boolValue;
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: Column(
@@ -324,6 +323,15 @@ class _AdminAdditionalInformationState
           const SizedBox(
             height: 15,
           ),
+          TextButton(
+              onPressed: () {
+                setState(() {
+                  print("update: $boolValue ");
+                  boolValue = !boolValue;
+                  print("update: $boolValue ");
+                });
+              },
+              child: const Text("Modificar extras")),
         ],
       ),
     );

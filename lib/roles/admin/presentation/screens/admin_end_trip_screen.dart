@@ -30,6 +30,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
   Widget build(BuildContext context) {
     final trips = ref.watch(tripAdminStatusProvider);
     final AdminTripEnd? trip = trips[widget.tripId];
+    bool update = false;
+
     if (trip == null) {
       return Scaffold(
           backgroundColor: Colors.grey[200],
@@ -159,13 +161,15 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       stops: trip.stops,
                     ),
                     AdminAdditionalInformation(
-                      boolValue: true,
                       tripId: trip.id,
                       observations: trip.observations,
                       tolls: trip.tolls,
                       parkings: trip.parkings,
                       stops: trip.stops,
                       reload: reload,
+                    ),
+                    const SizedBox(
+                      height: 5,
                     ),
                     const TitleTripDetail(
                         text: "Datos del conductor y vehículo"),

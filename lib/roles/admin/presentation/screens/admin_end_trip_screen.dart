@@ -3,9 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_observation_trip.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_parking_trip.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_tolls_trip.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_additional_information.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/trip_laber_amount.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_estado_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
@@ -32,12 +30,18 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
   Widget build(BuildContext context) {
     final trips = ref.watch(tripAdminStatusProvider);
     final AdminTripEnd? trip = trips[widget.tripId];
+
     if (trip == null) {
       return Scaffold(
           backgroundColor: Colors.grey[200],
           body: const Center(
             child: CircularProgressIndicator(),
           ));
+    }
+
+    void reload() {
+      ref.invalidate(tripAdminStatusProvider);
+      ref.read(tripAdminStatusProvider.notifier).loadTripState(widget.tripId);
     }
 
     String capitalizeFirst(String input) {
@@ -144,10 +148,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: BoxEstadoReserveDetail(
+                        BoxEstadoReserveDetail(
                               tripStatus: trip.status, label: "Estado"),
-                        ),
                       ],
                     ),
                     TripAddressInfoWidget(
@@ -155,27 +157,17 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       endAddress: trip.endAddress,
                       stops: trip.stops,
                     ),
-                    trip.tolls.isEmpty
-                        ? const SizedBox()
-                        : BoxTollsTrip(
-                            label: "Peaje",
-                            tolls: trip.tolls,
-                            icon: Icons.paid,
-                          ),
-                    trip.parkings.isEmpty
-                        ? const SizedBox()
-                        : BoxParkingTrip(
-                            label: "Estacionamiento",
-                            parkings: trip.parkings,
-                            icon: Icons.local_parking,
-                          ),
-                    trip.observations.isEmpty
-                        ? const SizedBox()
-                        : BoxObservationsTrip(
-                            label: "Observaciones",
-                            observations: trip.observations,
-                            icon: Icons.search,
-                          ),
+                    AdminAdditionalInformation(
+                      tripId: trip.id,
+                      observations: trip.observations,
+                      tolls: trip.tolls,
+                      parkings: trip.parkings,
+                      stops: trip.stops,
+                      reload: reload,
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
                     const TitleTripDetail(
                         text: "Datos del conductor y vehículo"),
                     const SizedBox(
@@ -271,8 +263,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                 ),
                               ),
                             ),
-                            onPressed: () =>
-                                context.push('/admin/trips/create/${trip.id}'),
+                            onPressed: () => context.push(
+                                '/admin/reserves/create/${trip.reserveId}'),
                             child: const Text(
                               "Editar",
                               style: TextStyle(

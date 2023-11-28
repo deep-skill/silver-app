@@ -173,6 +173,8 @@ class TripInfo extends ConsumerWidget {
               observations: trip.observations,
               parkings: trip.parkings,
               tolls: trip.tolls,
+              tripType: trip.tripType,
+              reserveId: trip.reserveId,
             ),
       trip.startTime != null && trip.endTime == null
           ? Container(

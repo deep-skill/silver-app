@@ -14,11 +14,11 @@ class CustomTripSlide extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     const TextStyle styleName =
-        TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
+        TextStyle(fontFamily: 'Montserrat-Bold', fontSize: 15);
     const TextStyle styleText =
-        TextStyle(fontWeight: FontWeight.normal, fontSize: 16);
+        TextStyle(fontFamily: 'Montserrat-Medium', fontSize: 12);
     const TextStyle styleTextPay =
-        TextStyle(fontWeight: FontWeight.bold, fontSize: 12);
+        TextStyle(fontFamily: 'Montserrat-Bold', fontSize: 12);
 
     const months = [
       'ene',
@@ -86,13 +86,13 @@ class CustomTripSlide extends StatelessWidget {
               offset: Offset(0, 4),
             ),
           ],
-          color: const Color(0xffF2F3F7),
+          color: Colors.white,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: size.width * .26,
+                width: size.width * .30,
                 decoration: const BoxDecoration(
                   color: Color(0xff031329),
                   borderRadius: BorderRadius.only(
@@ -140,7 +140,7 @@ class CustomTripSlide extends StatelessWidget {
                         ),
                       ))),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.52,
+              width: MediaQuery.of(context).size.width * 0.50,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +164,7 @@ class CustomTripSlide extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 3),
                     Row(
                       children: [
                         const SizedBox(
@@ -183,7 +183,7 @@ class CustomTripSlide extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 3),
                     Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -200,7 +200,7 @@ class CustomTripSlide extends StatelessWidget {
                               style: styleTextPay),
                         ]),
                     const SizedBox(
-                      height: 5,
+                      height: 3,
                     ),
                     Row(
                       children: [
@@ -209,8 +209,8 @@ class CustomTripSlide extends StatelessWidget {
                         ),
                         Text(textState(),
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14,
+                                fontFamily: 'Montserrat-Bold',
+                                fontSize: 10,
                                 color: colorState())),
                       ],
                     ),

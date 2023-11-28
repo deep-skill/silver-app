@@ -1,63 +1,70 @@
-class TripDriverStatus {
+class AdminTripEnd {
   int id;
-  DateTime onWayDriver;
+  int reserveId;
   double totalPrice;
+  DateTime onWayDriver;
   DateTime? arrivedDriver;
   DateTime? startTime;
   DateTime? endTime;
-  String? status;
-  int reserveId;
+  String status;
   String startAddress;
-  double startAddressLat;
-  double startAddressLon;
-  String? endAddress;
-  double? endAddressLat;
-  double? endAddressLon;
+  String endAddress;
+  double price;
+  int driverPercent;
+  int silverPercent;
+  String userName;
+  String userLastName;
+  String? enterpriseName;
+  String? driverName;
+  String? driverLastName;
+  String licensePlate;
+  String brand;
+  String model;
+  String color;
+  String tripType;
+  String serviceType;
   List<Stop> stops;
   List<Observations> observations;
   List<Parking> parkings;
   List<Toll> tolls;
-  String userName;
-  String userLastName;
-  String tripType;
-  int silverPercent;
-  String serviceType;
-  String? enterpriseName;
-  DateTime reserveStartTime;
 
-  TripDriverStatus({
+  AdminTripEnd({
     required this.id,
-    required this.totalPrice,
+    required this.reserveId,
     required this.onWayDriver,
+    required this.status,
+    required this.totalPrice,
     required this.arrivedDriver,
     required this.startTime,
     required this.endTime,
-    required this.status,
-    required this.reserveId,
+    required this.startAddress,
+    required this.endAddress,
+    required this.price,
+    required this.driverPercent,
+    required this.silverPercent,
+    required this.userName,
+    required this.userLastName,
+    required this.enterpriseName,
+    required this.driverName,
+    required this.driverLastName,
+    required this.licensePlate,
+    required this.brand,
+    required this.model,
+    required this.color,
+    required this.tripType,
+    required this.serviceType,
     required this.stops,
     required this.observations,
     required this.parkings,
     required this.tolls,
-    required this.startAddress,
-    required this.startAddressLat,
-    required this.startAddressLon,
-    required this.userName,
-    required this.userLastName,
-    required this.tripType,
-    required this.serviceType,
-    required this.silverPercent,
-    required this.reserveStartTime,
-    this.enterpriseName,
-    this.endAddress,
-    this.endAddressLat,
-    this.endAddressLon,
   });
 
-  factory TripDriverStatus.fromJson(Map<String, dynamic> json) =>
-      TripDriverStatus(
+  factory AdminTripEnd.fromJson(Map<String, dynamic> json) => AdminTripEnd(
         id: json["id"],
+        reserveId: json["Reserve"]["id"],
+        status: json["status"],
         totalPrice: json["totalPrice"].toDouble(),
-        onWayDriver: DateTime.parse(json["onWayDriver"]).toLocal(),
+        onWayDriver: DateTime.parse(json["onWayDriver"]),
         arrivedDriver: json["arrivedDriver"] == null
             ? null
             : DateTime.parse(json["arrivedDriver"]),
@@ -66,14 +73,26 @@ class TripDriverStatus {
             : DateTime.parse(json["startTime"]),
         endTime:
             json["endTime"] == null ? null : DateTime.parse(json["endTime"]),
-        status: json["status"] ?? '',
-        reserveId: json["reserveId"],
         startAddress: json["Reserve"]["startAddress"],
-        startAddressLat: json["Reserve"]["startAddressLat"],
-        startAddressLon: json["Reserve"]["startAddressLon"],
         endAddress: json["Reserve"]["endAddress"],
-        endAddressLat: json["Reserve"]["endAddressLat"],
-        endAddressLon: json["Reserve"]["endAddressLon"],
+        price: json["Reserve"]["price"].toDouble(),
+        driverPercent: json["Reserve"]["driverPercent"],
+        silverPercent: json["Reserve"]["silverPercent"],
+        userName: json["Reserve"]["User"]["name"] ?? "no-name",
+        userLastName: json["Reserve"]["User"]["lastName"] ?? "no-lastName",
+        enterpriseName: json["Reserve"]["Enterprise"]["name"],
+        driverName: json["Reserve"]["Driver"] != null
+            ? json["Reserve"]["Driver"]["name"] ?? 'no-name'
+            : 'no-name',
+        driverLastName: json["Reserve"]["Driver"] != null
+            ? json["Reserve"]["Driver"]["lastName"] ?? 'no-lastName'
+            : 'no-lastName',
+        licensePlate: json["Reserve"]["Car"]["licensePlate"] ?? 'no-car-plate',
+        brand: json["Reserve"]["Car"]["brand"] ?? 'no-car-brand',
+        model: json["Reserve"]["Car"]["model"] ?? 'no-car-model',
+        color: json["Reserve"]["Car"]["color"] ?? 'no-car-color',
+        tripType: json["Reserve"]["tripType"],
+        serviceType: json["Reserve"]["serviceType"],
         stops:
             List<Stop>.from(json["Stops"]?.map((x) => Stop.fromJson(x)) ?? []),
         observations: List<Observations>.from(
@@ -82,30 +101,7 @@ class TripDriverStatus {
             json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
         tolls:
             List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
-        userName: json["Reserve"]["User"]["name"],
-        userLastName: json["Reserve"]["User"]["lastName"],
-        tripType: json["Reserve"]["tripType"],
-        serviceType: json["Reserve"]["serviceType"],
-        silverPercent: json["Reserve"]["silverPercent"],
-        enterpriseName: json["Reserve"]["Enterprise"]["name"],
-        reserveStartTime:
-            DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "totalPrice": totalPrice,
-        "onWayDriver": onWayDriver.toIso8601String(),
-        "arrivedDriver": arrivedDriver?.toIso8601String(),
-        "startTime": startTime?.toIso8601String(),
-        "endTime": endTime?.toIso8601String(),
-        "status": status,
-        "reserveId": reserveId,
-        "Stops": List<dynamic>.from(stops.map((x) => x.toJson())),
-        "Observations": List<dynamic>.from(observations.map((x) => x.toJson())),
-        "Parkings": List<dynamic>.from(parkings.map((x) => x.toJson())),
-        "Tolls": List<dynamic>.from(tolls.map((x) => x.toJson())),
-      };
 }
 
 class Observations {

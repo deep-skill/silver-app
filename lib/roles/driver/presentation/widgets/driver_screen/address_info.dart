@@ -6,10 +6,10 @@ class AddressInfoWidget extends StatelessWidget {
   final String? endAddress;
 
   const AddressInfoWidget({
-    Key? key,
+    super.key,
     required this.startAddress,
     this.endAddress,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

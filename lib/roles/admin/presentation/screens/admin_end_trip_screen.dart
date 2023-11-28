@@ -148,10 +148,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Expanded(
-                          child: BoxEstadoReserveDetail(
+                        BoxEstadoReserveDetail(
                               tripStatus: trip.status, label: "Estado"),
-                        ),
                       ],
                     ),
                     TripAddressInfoWidget(

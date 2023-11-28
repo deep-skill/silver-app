@@ -57,8 +57,7 @@ class BoxReserveDetail extends StatelessWidget {
                     )
                   : const Text(''),
               const SizedBox(width: 8.0),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * .35,
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

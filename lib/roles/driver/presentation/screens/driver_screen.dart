@@ -162,6 +162,9 @@ class HomeViewState extends ConsumerState<HomeView> {
                   },
                 ),
               ),
+              const SizedBox(
+                height: 15,
+              ),
               nearestReserve.when(
                 loading: () => SizedBox(
                     height: size.height * .15,
@@ -173,6 +176,9 @@ class HomeViewState extends ConsumerState<HomeView> {
                           children: [
                             DriverCustomSlide(
                                 reserve: nearestReserve, isNearest: true),
+                            const SizedBox(
+                              height: 15,
+                            ),
                             Center(
                               child: TextButton(
                                 onPressed: () async {
@@ -269,12 +275,15 @@ class HomeViewState extends ConsumerState<HomeView> {
                 },
               ),
               const SizedBox(
-                height: 15,
+                height: 25,
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 child: const Text('Reservas del día',
                     style: TextStyle(fontSize: 20, color: Color(0xff364356))),
+              ),
+              const SizedBox(
+                height: 15,
               ),
               DriverReservesListHome(
                 reserves: reserves,

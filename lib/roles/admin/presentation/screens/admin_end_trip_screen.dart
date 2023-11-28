@@ -30,7 +30,6 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
   Widget build(BuildContext context) {
     final trips = ref.watch(tripAdminStatusProvider);
     final AdminTripEnd? trip = trips[widget.tripId];
-    bool update = false;
 
     if (trip == null) {
       return Scaffold(

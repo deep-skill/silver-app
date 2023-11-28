@@ -324,11 +324,7 @@ class _AdminAdditionalInformationState
           ),
           TextButton(
               onPressed: () {
-                setState(() {
-                  print("update: $boolValue ");
-                  boolValue = !boolValue;
-                  print("update: $boolValue ");
-                });
+                setState(() => boolValue = !boolValue);
               },
               child: const Text("Modificar extras")),
         ],

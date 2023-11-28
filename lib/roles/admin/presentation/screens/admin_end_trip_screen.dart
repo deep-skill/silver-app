@@ -5,7 +5,7 @@ import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.d
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_additional_information.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/trip_laber_amount.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/box_estado_reserve_detail.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/title_trip_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trip_address_info.dart';
@@ -148,7 +148,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const SizedBox(
                           width: 10,
                         ),
-                        BoxEstadoReserveDetail(
+                        BoxStatusReserveDetail(
                               tripStatus: trip.status, label: "Estado"),
                       ],
                     ),
@@ -234,7 +234,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       textTipePrice: "Pago conductor",
                     ),
                     TripLabelAmout(
-                      textAmout: "S/ ${calculatePaySilver()}",
+                      textAmout: "S/ ${calculatePaySilver().toStringAsFixed(2)}",
                       textTipePrice: "Pago Silver",
                     ),
                     TripLabelAmout(

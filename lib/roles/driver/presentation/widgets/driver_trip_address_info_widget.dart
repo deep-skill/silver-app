@@ -17,8 +17,6 @@ class DriverTripAddressInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('stops is empty ${stops.isEmpty}');
-
     return Column(
       children: [
         BoxReserveDetail(
@@ -64,7 +62,7 @@ class DriverTripAddressInfoWidget extends StatelessWidget {
                       ),
                     ],
                   )
-                : SizedBox()
+                : const SizedBox()
           ],
         ),
         endAddress != null

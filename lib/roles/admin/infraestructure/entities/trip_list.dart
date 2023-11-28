@@ -1,20 +1,16 @@
 class TripList {
   final int id;
-  final int? totalPrice;
+  final double? totalPrice;
   final DateTime onWayDriver;
   final String status;
-  //from reserve
   final int reserveId;
   final String startAddress;
-  //from user
   final int userId;
   final String userName;
   final String userLastName;
-  //from driver
   final int? driverId;
   final String? driverName;
   final String? driverLastName;
-  //from enterprise
   final int? enterpriseId;
   final String? enterpriseName;
 
@@ -36,17 +32,14 @@ class TripList {
   });
   factory TripList.fromJson(Map<String, dynamic> json) => TripList(
         id: json['id'],
-        totalPrice: json['totalPrice'],
         onWayDriver: DateTime.parse(json['onWayDriver']),
+        totalPrice: json['totalPrice'].toDouble(),
         status: json['status'],
-        //from reserve
         reserveId: json['Reserve']['id'],
         startAddress: json['Reserve']['startAddress'],
-        //from user
         userId: json['Reserve']['User']['id'],
         userName: json['Reserve']['User']['name'],
         userLastName: json['Reserve']['User']['lastName'],
-        //from driver
         driverId: json['Reserve']['Driver'] == null
             ? null
             : json['Reserve']['Driver']['id'],

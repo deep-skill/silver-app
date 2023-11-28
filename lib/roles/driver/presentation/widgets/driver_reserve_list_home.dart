@@ -95,17 +95,50 @@ class _Slide extends StatelessWidget {
             Container(
                 width: size.width * .30,
                 decoration: const BoxDecoration(
-                  color: Color(0xffF2F3F7),
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                ),
-                child: const Center(
-                    child: Text(
-                  'Sin conductor',
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w700,
+                  color: Color(0xff031329),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    bottomLeft: Radius.circular(10),
                   ),
-                ))),
+                  image: DecorationImage(
+                    opacity: 50,
+                    fit: BoxFit.fill,
+                    image: AssetImage('assets/images/enterprise_logo.png'),
+                  ),
+                ),
+                child: reserve.entrepriseName != 'Viaje Personal'
+                    ? Center(
+                        child: reserve.entrepriseName != 'Viaje Personal'
+                            ? Text(
+                                reserve.entrepriseName,
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : const Text(
+                                'Viaje Personal',
+                                maxLines: 2,
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
+                              ))
+                    : const Center(
+                        child: Text(
+                        'Viaje Personal',
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white,
+                        ),
+                      ))),
             Padding(
               padding: const EdgeInsets.all(5),
               child: Column(
@@ -135,11 +168,11 @@ class _Slide extends StatelessWidget {
                     child: Row(
                       children: [
                         const Icon(
-                          Icons.account_balance_outlined,
+                          Icons.event_available_outlined,
                           size: 20,
                         ),
                         Text(
-                          ' ${reserve.entrepriseName}',
+                          ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
                           style: const TextStyle(
                               fontSize: 12, fontFamily: 'Montserrat-Medium'),
                         ),
@@ -151,13 +184,17 @@ class _Slide extends StatelessWidget {
                     child: Row(
                       children: [
                         const Icon(
-                          Icons.event_available_outlined,
+                          Icons.location_on_outlined,
                           size: 20,
                         ),
-                        Text(
-                          ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
-                          style: const TextStyle(
-                              fontSize: 12, fontFamily: 'Montserrat-Medium'),
+                        Expanded(
+                          child: Text(
+                            ' ${reserve.startAddress}',
+                            style: const TextStyle(
+                                fontSize: 12, fontFamily: 'Montserrat-Medium'),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ],
                     ),

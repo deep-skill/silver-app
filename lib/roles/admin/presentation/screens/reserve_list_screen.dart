@@ -36,8 +36,9 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(reservesListProvider.notifier).currentPage == 0)
+    if (ref.read(reservesListProvider.notifier).currentPage == 0) {
       ref.read(reservesListProvider.notifier).loadNextPage();
+    }
   }
 
   @override

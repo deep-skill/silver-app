@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/full_screen_loader.dart';
-import 'package:silverapp/roles/no_role/WelcomeMsgScreen.dart';
+import 'package:silverapp/roles/no_role/welcome_msg_screen.dart';
 
 class NoRoleScreen extends ConsumerWidget {
   static const name = 'no-role';

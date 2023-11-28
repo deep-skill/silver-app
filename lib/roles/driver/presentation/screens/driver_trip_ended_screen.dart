@@ -126,7 +126,7 @@ class TripEndedInfo extends StatelessWidget {
                     icon: Icons.alarm,
                     label: "Hora de reserva",
                     text:
-                        '${trip.reserveStartTime.hour}:${reserveStartTimeMinute}',
+                        '${trip.reserveStartTime.hour}:$reserveStartTimeMinute',
                     row: true),
               ),
             ],

@@ -47,7 +47,7 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    const months = [
+    /* const months = [
       'Enero',
       'Febrero',
       'Marzo',
@@ -60,9 +60,9 @@ class HomeViewState extends ConsumerState<HomeView> {
       'Octubre',
       'Noviembre',
       'Deciembre'
-    ];
+    ]; */
     final reserves = ref.watch(reservesProvider);
-    final date = DateTime.now().month - 1;
+    //final date = DateTime.now().month - 1;
     AsyncValue<TripsSummaryResponse> tripsSummary =
         ref.watch(tripsSummaryProvider);
     return Padding(

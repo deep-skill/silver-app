@@ -26,7 +26,7 @@ class DriverTripLabelParking extends StatelessWidget {
             : const Text(''),
         const SizedBox(width: 8.0),
         SizedBox(
-          width: MediaQuery.of(context).size.width * .8,
+          width: MediaQuery.of(context).size.width * .7,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

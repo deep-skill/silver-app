@@ -4,7 +4,8 @@ class LabelExtraTrip extends StatelessWidget {
   final String text;
   final Function()? onPressed;
 
-  const LabelExtraTrip({super.key, required this.text, this.onPressed});
+  const LabelExtraTrip({Key? key, required this.text, this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,13 @@ class LabelExtraTrip extends StatelessWidget {
           child: Row(
             children: [
               const SizedBox(width: 10),
-              Text(text),
+              Flexible(
+                child: Text(
+                  text,
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
               IconButton(
                 onPressed: onPressed,
                 icon: const Icon(Icons.cancel_outlined),

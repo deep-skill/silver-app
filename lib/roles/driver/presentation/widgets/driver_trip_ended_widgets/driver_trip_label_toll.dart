@@ -26,7 +26,7 @@ class DriverTripLabelToll extends StatelessWidget {
             : const Text(''),
         const SizedBox(width: 8.0),
         SizedBox(
-          width: MediaQuery.of(context).size.width * .8,
+          width: MediaQuery.of(context).size.width * .6,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

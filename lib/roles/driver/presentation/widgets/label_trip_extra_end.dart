@@ -23,6 +23,8 @@ class LabelExtraTripEnd extends StatelessWidget {
           Text(
             text,
             style: styleText,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 4,
           ),
         ],
       ),

@@ -304,7 +304,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           ),
           const TitleAdditionalInformation(
             icon: Icons.search,
-            label: "Obsercaviones",
+            label: "Observaciones",
           ),
           Column(
               children: observations.asMap().entries.map((entry) {

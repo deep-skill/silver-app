@@ -32,18 +32,16 @@ class BoxReserveDetail extends StatelessWidget {
                 maxLines: 1,
                 style: const TextStyle(
                   color: Color(0xFF23A5CD),
-                  fontFamily: "Monserrat",
+                  fontFamily: "Montserrat-Medium",
                   fontSize: 12,
-                  fontWeight: FontWeight.bold,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               Text(text,
                   maxLines: 3,
                   style: const TextStyle(
-                    fontFamily: "Monserrat",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                    fontFamily: "Montserrat-Medium",
+                    fontSize: 16,
                     overflow: TextOverflow.ellipsis,
                   )),
               Container(

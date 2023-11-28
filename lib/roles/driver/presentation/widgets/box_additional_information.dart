@@ -14,6 +14,8 @@ import 'package:silverapp/roles/driver/presentation/widgets/title_additional_inf
 class AdditionalInformation extends StatefulWidget {
   final bool boolValue;
   final int tripId;
+  final int reserveId;
+  final String tripType;
   final VoidCallback reload;
   final List<Stop> stops;
   final List<Observations> observations;
@@ -24,6 +26,8 @@ class AdditionalInformation extends StatefulWidget {
     Key? key,
     required this.boolValue,
     required this.tripId,
+    required this.reserveId,
+    required this.tripType,
     required this.reload,
     required this.stops,
     required this.observations,
@@ -84,10 +88,23 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
-  void addStops(String stop) async {
+  void addStops(String address, double lat, double lon) async {
     try {
-      await dio
-          .post('stops', data: {"location": stop, "tripId": widget.tripId});
+      if (widget.tripType == "POR HORA") {
+        await dio.post('reserves/driver-stop/${widget.reserveId}', data: {
+          "endAddress": address,
+          "endAddressLat": lat,
+          "endAddressLon": lon,
+          "tripId": widget.tripId
+        });
+      } else {
+        await dio.post('stops', data: {
+          "location": address,
+          "lat": lat,
+          "lon": lon,
+          "tripId": widget.tripId
+        });
+      }
       widget.reload();
     } catch (e) {
       // ignore: avoid_print

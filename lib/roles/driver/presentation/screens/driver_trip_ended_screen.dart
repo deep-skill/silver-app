@@ -84,7 +84,7 @@ class TripEndedInfo extends StatelessWidget {
     final String reserveStartTimeMinute =
         trip.reserveStartTime.minute.toString().padLeft(2, '0');
 
-    return ListView(children: [
+    return ListView(shrinkWrap: true, children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

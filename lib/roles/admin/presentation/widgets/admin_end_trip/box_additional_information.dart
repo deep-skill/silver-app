@@ -6,12 +6,10 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertD
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_parkin_lot.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_stop.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_tolls.dart';
-
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra_end.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/title_additional_information.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
-
-import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra_end.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/title_additional_information.dart';
 
 class AdminAdditionalInformation extends StatefulWidget {
   final bool boolValue;

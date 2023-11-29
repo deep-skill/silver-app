@@ -38,19 +38,23 @@ class ReserveDetailScreenState
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Detalles'),
-          centerTitle: true,
-        ),
-        body: Container(
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.all(7.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[200],
-            ),
-            padding: const EdgeInsets.all(3),
-            child: ReserveInfo(reserve: reserve)));
+      appBar: AppBar(
+        backgroundColor: const Color(0XFFF2F3F7),
+        title: const Text('Detalles'),
+        centerTitle: true,
+      ),
+      body: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.67,
+          margin: const EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+          ),
+          padding: const EdgeInsets.all(5),
+          child: ReserveInfo(reserve: reserve)),
+      backgroundColor: const Color(0xffF2F3F7),
+    );
   }
 }
 
@@ -74,7 +78,7 @@ class ReserveInfo extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const TitleReserveDetail(text: "Datos del servicio"),
+        const TitleReserveDetail(text: 'Datos del servicio'),
         const SizedBox(
           height: 10,
         ),
@@ -83,16 +87,19 @@ class ReserveInfo extends StatelessWidget {
             label: "Pasajero",
             text: "${reserve.name} ${reserve.lastName}",
             row: false),
+        const SizedBox(height: 8),
         BoxReserveDetail(
             icon: Icons.domain,
             label: "Empresa",
             text: reserve.enterpriseName ?? "Personal",
             row: false),
+        const SizedBox(height: 8),
         BoxReserveDetail(
             icon: Icons.business_center_outlined,
             label: "Tipo de servicio",
             text: capitalizeFirst(reserve.serviceType),
             row: false),
+        const SizedBox(height: 5),
         const TitleReserveDetail(text: "Datos del viaje"),
         const SizedBox(
           height: 10,
@@ -116,6 +123,7 @@ class ReserveInfo extends StatelessWidget {
             ),
           ],
         ),
+        const SizedBox(height: 8),
         Row(children: [
           Expanded(
             child: BoxReserveDetail(
@@ -132,6 +140,7 @@ class ReserveInfo extends StatelessWidget {
             ),
           )
         ]),
+        const SizedBox(height: 8),
         BoxReserveDetail(
             icon: Icons.location_on_outlined,
             label: "Punto de origen",
@@ -147,7 +156,7 @@ class ReserveInfo extends StatelessWidget {
                       ),
                       Container(
                         width: 2.0,
-                        height: 29.0,
+                        height: 25.0,
                         color: Colors.black,
                         padding: const EdgeInsets.all(2.0),
                       ),
@@ -162,34 +171,24 @@ class ReserveInfo extends StatelessWidget {
               )
             : const SizedBox(),
         Container(
-          height: 10.0,
+          height: 40.0,
         ),
         Row(children: [
           const Expanded(
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Tarifa",
+              Text("Tarifa \nconductor",
                   style: TextStyle(
-                    fontFamily: "Raleway",
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Text("conductor",
-                  style: TextStyle(
-                    fontFamily: "Raleway",
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  )),
+                      height: 1.2, fontSize: 20.0, color: Color(0xff03132A))),
             ],
           )),
           Expanded(
               child: Text(
                   "S/  ${driverIncome(reserve.price, reserve.silverPercent).toStringAsFixed(2)}",
                   style: const TextStyle(
-                    fontFamily: "Raleway",
                     fontSize: 32.0,
-                    fontWeight: FontWeight.bold,
+                    color: Color(0xff03132A),
                   ))),
         ])
       ]),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
-import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_home_provider.dart';
@@ -22,20 +21,15 @@ class DriverScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AuthState? authState = ref.watch(authProvider);
-    final bool isDriverOnWeb =
-        authState!.credentials!.scopes.toString().contains('driver') && kIsWeb;
-
-    print(isDriverOnWeb);
     return Scaffold(
       key: scaffoldKey,
-      appBar: isDriverOnWeb
+      appBar: kIsWeb
           ? null
           : AppBar(
               scrolledUnderElevation: 0,
             ),
-      drawer: isDriverOnWeb ? null : DriverSideMenu(scaffoldKey: scaffoldKey),
-      body: isDriverOnWeb ? const DriverWebDenyScreen() : const HomeView(),
+      drawer: kIsWeb ? null : DriverSideMenu(scaffoldKey: scaffoldKey),
+      body: kIsWeb ? const DriverWebDenyScreen() : const HomeView(),
     );
   }
 }

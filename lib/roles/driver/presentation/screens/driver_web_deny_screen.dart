@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/full_screen_loader.dart';
 import 'package:silverapp/roles/no_role/WelcomeMsgScreen.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class DriverWebDenyScreen extends ConsumerWidget {

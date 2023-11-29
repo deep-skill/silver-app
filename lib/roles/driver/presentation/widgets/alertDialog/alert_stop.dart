@@ -16,7 +16,8 @@ class AlertStops extends StatelessWidget {
           Text("Agregar Parada"),
         ],
       ),
-      content: const Text('Busque correctamente la parada en el mapa para agregar'),
+      content:
+          const Text('Busque correctamente la parada en el mapa para agregar'),
       actions: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

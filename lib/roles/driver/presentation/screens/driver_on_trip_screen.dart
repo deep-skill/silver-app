@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
+import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_state_provider.dart';
+import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_arrived_driver_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_canceled_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_end_trip.dart';
@@ -44,6 +47,11 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
       ref.read(tripDriverStatusProvider.notifier).loadTripState(widget.tripId);
     }
 
+    void canceladReload() {
+      ref.invalidate(nearestReserveProvider);
+      ref.invalidate(tripsSummaryDriverProvider);
+    }
+
     if (trip == null) {
       return Scaffold(
           backgroundColor: Colors.grey[200],
@@ -68,6 +76,7 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
             child: TripInfo(
               trip: trip,
               reload: reload,
+              canceledReload: canceladReload,
             )));
   }
 }
@@ -88,8 +97,10 @@ class TripInfo extends ConsumerWidget {
     Key? key,
     required this.trip,
     required this.reload,
+    required this.canceledReload,
   }) : super(key: key);
   final VoidCallback reload;
+  final VoidCallback canceledReload;
   final TripDriverStatus trip;
 
   void addStops(String address, double lat, double lon) async {
@@ -137,6 +148,10 @@ class TripInfo extends ConsumerWidget {
     const TextStyle textStyleLastGoodbye = TextStyle(
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 
+    if (trip.status == 'CANCELED') {
+      context.go("driver/trips/detail/${trip.id}");
+    }
+
     return ListView(children: [
       SeeMap(
         startAddress: trip.startAddress,
@@ -173,6 +188,7 @@ class TripInfo extends ConsumerWidget {
                       builder: (context) => AlertTripCanceled(
                             tripId: trip.id,
                             reload: reload,
+                            canceladReload: canceledReload,
                           )),
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(

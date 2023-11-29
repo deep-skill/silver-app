@@ -49,40 +49,37 @@ class SideMenuState extends ConsumerState<DriverSideMenu> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(
-                  onPressed: () {
-                    widget.scaffoldKey.currentState?.closeDrawer();
-                  },
-                  icon: const Icon(Icons.close),
-                  color: Colors.white,
-                ),
                 SizedBox(
                     child: Image.asset(
                   "assets/images/app_logo.png",
                   width: size.width * .15,
                 )),
+                const SizedBox(height: 20),
                 const Text('Silver Express',
                     style: TextStyle(
-                      fontSize: 21,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 26,
                       color: Colors.white,
                     )),
                 if (credentials?.user != null)
                   Text(credentials!.user.email.toString(),
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold)),
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontFamily: 'Raleway-Semi-Bold',
+                      )),
               ],
             ),
           ),
+          const SizedBox(height: 20),
           ...appMenuItems.map(
             (item) => NavigationDrawerDestination(
               icon: Icon(item.icon, color: Colors.white),
-              label:
-                  Text(item.title, style: const TextStyle(color: Colors.white)),
+              label: Text(item.title,
+                  style: const TextStyle(
+                      fontFamily: 'Raleway-Semi-Bold', color: Colors.white)),
             ),
           ),
+          const SizedBox(height: 250),
           const Padding(
             padding: EdgeInsets.fromLTRB(28, 16, 16, 19),
             child: Divider(),
@@ -106,6 +103,7 @@ class SideMenuState extends ConsumerState<DriverSideMenu> {
                   ),
                   Text('Cerrar sesión',
                       style: TextStyle(
+                        fontFamily: 'Raleway-Semi-Bold',
                         color: Colors.white,
                       )),
                 ],

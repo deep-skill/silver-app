@@ -26,8 +26,6 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     double result = 0.0;
     int hourComplite = time ~/ 60;
     int minuteComplite = (time % 60).toInt();
-    print("$hourComplite hora completa");
-    print("$minuteComplite minutos extra");
     if (minuteComplite == 0) {
       result = hourComplite.toDouble();
     }
@@ -37,7 +35,6 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     if (minuteComplite >= 30) {
       result = hourComplite.toDouble() + 1.0;
     }
-    print("$result este es el resultado");
     return result;
   }
 

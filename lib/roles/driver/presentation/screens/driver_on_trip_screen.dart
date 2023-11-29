@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_state_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_arrived_driver_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_canceled_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_end_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_start_time_driver.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_stop.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_additional_information.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_see_map_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_trip_status.dart';
@@ -90,8 +92,37 @@ class TripInfo extends ConsumerWidget {
   final VoidCallback reload;
   final TripDriverStatus trip;
 
+  void addStops(String address, double lat, double lon) async {
+    try {
+      if (trip.tripType == "POR HORA") {
+        await dio.post('reserves/driver-stop/${trip.reserveId}', data: {
+          "endAddress": address,
+          "endAddressLat": lat,
+          "endAddressLon": lon,
+          "tripId": trip.id
+        });
+      } else {
+        await dio.post('stops', data: {
+          "location": address,
+          "lat": lat,
+          "lon": lon,
+          "tripId": trip.id
+        });
+      }
+      reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
+
   Widget getAlertWidget() {
     if (trip.arrivedDriver != null) {
+      if (trip.endAddress == null) {
+        return TripButton(
+            buttonText: "Indicar punto de destino",
+            alertWidget: AlertStops(addStops));
+      }
       return TripButton(
           buttonText: "Iniciar viaje",
           alertWidget: AlertStartTimeDriver(tripId: trip.id, reload: reload));
@@ -220,12 +251,13 @@ class TripInfo extends ConsumerWidget {
                 ],
               )),
               Expanded(
-                  child: Text("S/  ${calculateCustomerPrice()}",
-                      style: const TextStyle(
-                        fontFamily: "Raleway",
-                        fontSize: 32.0,
-                        fontWeight: FontWeight.bold,
-                      ))),
+                  child:
+                      Text("S/  ${calculateCustomerPrice().toStringAsFixed(2)}",
+                          style: const TextStyle(
+                            fontFamily: "Raleway",
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.bold,
+                          ))),
             ])
           : const SizedBox(
               height: 5,

@@ -19,10 +19,11 @@ class NoRoleScreen extends ConsumerWidget {
         body: Padding(
           padding: const EdgeInsets.all(12),
           child: credentials != null
-          ? ShowInformation(
-            size: size,
-            credentials: credentials,
-          ): const FullScreenLoader(),
+              ? ShowInformation(
+                  size: size,
+                  credentials: credentials,
+                )
+              : const FullScreenLoader(),
         ));
   }
 }

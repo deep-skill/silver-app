@@ -24,24 +24,23 @@ class AlertTripEnd extends StatefulWidget {
 class _AlertTripEndState extends State<AlertTripEnd> {
   double calculateFraction(int time) {
     double result = 0.0;
-    int hourComplite = time ~/ 60;
-    int minuteComplite = (time % 60).toInt();
-    if (minuteComplite == 0) {
-      result = hourComplite.toDouble();
+    int hourComplete = time ~/ 60;
+    int minuteComplete = (time % 60).toInt();
+    if (minuteComplete == 0) {
+      result = hourComplete.toDouble();
     }
-    if (minuteComplite < 30 && minuteComplite > 0) {
-      result = hourComplite.toDouble() + 0.5;
+    if (minuteComplete < 30 && minuteComplete > 0) {
+      result = hourComplete.toDouble() + 0.5;
     }
-    if (minuteComplite >= 30) {
-      result = hourComplite.toDouble() + 1.0;
+    if (minuteComplete >= 30) {
+      result = hourComplete.toDouble() + 1.0;
     }
     return result;
   }
 
   double totalPricePerHour(DateTime arrivedDriver) {
     final diferencia = DateTime.now()
-        .difference(arrivedDriver.subtract(Duration(minutes: 240)));
-    calculateFraction(diferencia.inMinutes);
+        .difference(arrivedDriver);
     if (diferencia.inMinutes <= 60) {
       return 1;
     } else {
@@ -52,7 +51,6 @@ class _AlertTripEndState extends State<AlertTripEnd> {
   void patchEndTripDrive(BuildContext context, int tripId) async {
     try {
       if (widget.tripType == "POR HORA") {
-        totalPricePerHour(widget.arrivedDriver!);
         await dio.patch('trips/driver-trip/$tripId', data: {
           "endTime": DateTime.now().toIso8601String(),
           "status": "COMPLETED",

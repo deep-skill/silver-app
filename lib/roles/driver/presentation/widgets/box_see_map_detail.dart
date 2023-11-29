@@ -62,11 +62,6 @@ class SeeMap extends StatelessWidget {
                 launchWaze(
                     "https://waze.com/ul?ll=${endAddressLat.toString()},${endAddressLon.toString()}&navigate=yes");
               }
-              if (arrivedDriver != null &&
-                  startTime != null &&
-                  endAddress == null) {
-                launchWaze("https://waze.com/ul?navigate=yes");
-              }
             }),
       ]),
     );

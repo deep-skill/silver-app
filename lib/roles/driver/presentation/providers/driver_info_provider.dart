@@ -8,14 +8,19 @@ final driverInfoProvider = FutureProvider((ref) async {
   String? email = ref.watch(authProvider).user?.email;
   Credentials? credentials = ref.watch(authProvider).credentials;
   if (email != null) {
-    final response = await dio2(credentials!.accessToken).get('drivers/driver', queryParameters: {
-      'query': email,
-    });
+    try {
+      final response = await dio2(credentials!.accessToken)
+          .get('drivers/driver', queryParameters: {
+        'query': email,
+      });
 
-    final DriverInfoResponse driverInfo =
-        DriverInfoResponse.fromJson(response.data);
-    return driverInfo;
+      final DriverInfoResponse driverInfo =
+          DriverInfoResponse.fromJson(response.data);
+      return driverInfo;
+    } catch (e) {
+      print(e);
+    }
   } else {
-  return null;
+    return null;
   }
 });

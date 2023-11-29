@@ -17,6 +17,7 @@ import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_prov
 import 'package:silverapp/roles/admin/presentation/providers/search_car_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/custom_form_field.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/full_screen_loader.dart';
 
@@ -41,7 +42,7 @@ class CreateReserveScreen extends ConsumerWidget {
               child:
                   CreateReserveView(size: size, reserve: reserveState.reserve!),
             ),
-      backgroundColor: Color(0xffF2F3F7),
+      backgroundColor: const Color(0xffF2F3F7),
     );
   }
 }
@@ -1532,6 +1533,12 @@ class CreateReserveView extends ConsumerWidget {
                                     .read(reserveDetailProvider.notifier)
                                     .updateReserveDetail(
                                         reserve.id!.toString());
+                                if(reserve.tripId != null) {
+                                  ref
+                                    .read(tripAdminStatusProvider.notifier)
+                                    .updateTripStatus(
+                                        reserve.tripId!.toString());
+                                }
                               }
                               showSnackbar(context, reserve.id!);
 

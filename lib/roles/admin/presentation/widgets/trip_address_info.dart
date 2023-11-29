@@ -43,15 +43,12 @@ class TripAddressInfoWidget extends StatelessWidget {
               stops.isNotEmpty
                   ? Column(
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 3.0),
-                          child: Text(
-                            'Paradas:',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                              color: Color(0xFF23A5CD),
-                            ),
+                        const Text(
+                          'Paradas:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Color(0xFF23A5CD),
                           ),
                         ),
                         Column(

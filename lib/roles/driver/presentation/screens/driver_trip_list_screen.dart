@@ -12,14 +12,15 @@ class DriverTripListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Historial de viajes'),
-          centerTitle: true,
-          scrolledUnderElevation: 0,
-        ),
-        body: const DriverTripListView(),
+      appBar: AppBar(
         backgroundColor: const Color(0xffF2F3F7),
-        );
+        title: const Text('Historial de viajes'),
+        centerTitle: true,
+        scrolledUnderElevation: 0,
+      ),
+      body: const DriverTripListView(),
+      backgroundColor: const Color(0xffF2F3F7),
+    );
   }
 }
 

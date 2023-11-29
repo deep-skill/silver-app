@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/box_estado_reserve_detail.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_payment.dart';
 
@@ -125,7 +125,7 @@ class ReserveInfo extends StatelessWidget {
                                     BoxReserveDetail(
                                         icon: Icons.business_center_outlined,
                                         label: 'Tipo de Servicio',
-                                        text: '${reserve.serviceType}'),
+                                        text: reserve.serviceType),
                                   ],
                                 ),
                                 SizedBox(height: size.height * .03),
@@ -271,7 +271,7 @@ class ReserveInfo extends StatelessWidget {
                                           text: reserve.tripType),
                                     ),
                                     Expanded(
-                                      child: BoxEstadoReserveDetail(
+                                      child: BoxStatusReserveDetail(
                                         label: "Estado",
                                         tripStatus: reserve.tripStatus,
                                       ),
@@ -284,7 +284,7 @@ class ReserveInfo extends StatelessWidget {
                                     BoxReserveDetail(
                                         icon: Icons.location_on,
                                         label: 'Punto de recojo',
-                                        text: '${reserve.startAddress}'),
+                                        text: reserve.startAddress),
                                     SizedBox(height: size.height * .03),
                                     BoxReserveDetail(
                                         icon: Icons.trip_origin_outlined,
@@ -445,7 +445,7 @@ class ReserveInfo extends StatelessWidget {
                       BoxReserveDetail(
                           icon: Icons.business_center_outlined,
                           label: 'Tipo de Servicio',
-                          text: '${reserve.serviceType}'),
+                          text: reserve.serviceType),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -484,7 +484,7 @@ class ReserveInfo extends StatelessWidget {
                                 text: reserve.tripType),
                           ),
                           Expanded(
-                            child: BoxEstadoReserveDetail(
+                            child: BoxStatusReserveDetail(
                               label: "Estado",
                               tripStatus: reserve.tripStatus,
                             ),
@@ -494,7 +494,7 @@ class ReserveInfo extends StatelessWidget {
                       BoxReserveDetail(
                           icon: Icons.location_on,
                           label: 'Punto de recojo',
-                          text: '${reserve.startAddress}'),
+                          text: reserve.startAddress),
                       BoxReserveDetail(
                           icon: Icons.trip_origin_outlined,
                           label: 'Punto de destino',

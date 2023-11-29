@@ -1,5 +1,6 @@
 class CreateReserve {
   int? id;
+  int? tripId;
   int userId;
   String userName;
   String userLastName;
@@ -24,6 +25,7 @@ class CreateReserve {
 
   CreateReserve({
     required this.id,
+    this.tripId,
     required this.userId,
     required this.userName,
     required this.userLastName,
@@ -49,6 +51,7 @@ class CreateReserve {
 
   factory CreateReserve.fromJson(Map<String, dynamic> json) => CreateReserve(
         id: json['id'],
+        tripId: json['Trip'] == null ? null : json["Trip"]['id'],
         userId: json['User'] == null ? null : json['User']['id'],
         userName: json['User'] == null ? null : json['User']['name'],
         userLastName: json['User'] == null ? null : json['User']['lastName'],

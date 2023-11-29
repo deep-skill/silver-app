@@ -5,7 +5,7 @@ class DateAndTextWidget extends StatelessWidget {
   final DateTime date;
   final List<String> months;
 
-  DateAndTextWidget({
+  const DateAndTextWidget({super.key, 
     required this.size,
     required this.date,
     required this.months,

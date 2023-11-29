@@ -5,7 +5,8 @@ import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_l
 class DriverCustomSlide extends StatelessWidget {
   final DriverReserveList reserve;
   final bool isNearest;
-  const DriverCustomSlide({super.key, required this.reserve, required this.isNearest});
+  const DriverCustomSlide(
+      {super.key, required this.reserve, required this.isNearest});
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +28,9 @@ class DriverCustomSlide extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: size.height * .15,
+        height: size.height * .13,
         decoration: const BoxDecoration(
-          color: Color(0xffF2F3F7),
+          color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(12)),
           boxShadow: [
             BoxShadow(
@@ -43,7 +44,7 @@ class DriverCustomSlide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: 100,
+                width: size.width * .30,
                 decoration: const BoxDecoration(
                   color: Color(0xff031329),
                   borderRadius: BorderRadius.only(
@@ -77,7 +78,6 @@ class DriverCustomSlide extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w700,
                                   color: Colors.white,
                                 ),
                               ))
@@ -108,9 +108,7 @@ class DriverCustomSlide extends StatelessWidget {
                           child: Text(
                             '${reserve.name} ${reserve.lastName}',
                             style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                                fontSize: 15, fontFamily: 'Montserrat-Bold'),
                           ),
                         ),
                       ],
@@ -129,7 +127,8 @@ class DriverCustomSlide extends StatelessWidget {
                             ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute} hs.',
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                              fontSize: 16,
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Medium',
                             ),
                           ),
                         ),
@@ -148,8 +147,7 @@ class DriverCustomSlide extends StatelessWidget {
                           child: Text(
                             ' ${reserve.startAddress}',
                             style: const TextStyle(
-                              fontSize: 16,
-                            ),
+                                fontSize: 12, fontFamily: 'Montserrat-Medium'),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -171,7 +169,7 @@ class DriverCustomSlide extends StatelessWidget {
                 size: 30,
               ),
             ),
-            SizedBox(width: 1)
+            const SizedBox(width: 1)
           ],
         ),
       ),

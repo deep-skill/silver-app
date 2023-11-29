@@ -75,7 +75,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           ...appMenuItems.map(
@@ -85,7 +85,7 @@ class SideMenuState extends ConsumerState<SideMenu> {
                   Text(item.title, style: const TextStyle(color: Colors.white)),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 280,
           ),
           const Padding(

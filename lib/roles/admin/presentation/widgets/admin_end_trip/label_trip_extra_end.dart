@@ -8,7 +8,6 @@ class LabelExtraTripEnd extends StatelessWidget {
     color: Color(0xFF000000),
     fontFamily: "Monserrat",
     fontSize: 16,
-    fontWeight: FontWeight.bold,
   );
 
   @override
@@ -20,11 +19,13 @@ class LabelExtraTripEnd extends StatelessWidget {
           const SizedBox(
             width: 32,
           ),
-          Text(
-            text,
-            style: styleText,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
+          Expanded(
+            child: Text(
+              text,
+              style: styleText,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+            ),
           ),
         ],
       ),

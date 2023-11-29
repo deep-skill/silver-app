@@ -1,8 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/config/dio/dio.dart';
-import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
-import 'package:silverapp/roles/admin/infraestructure/models/search_reserve_response.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/search_trip_response.dart';
 
 final searchTripsProvider = StateProvider<String>((ref) {

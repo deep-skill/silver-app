@@ -1,5 +1,6 @@
 class AdminTripEnd {
   int id;
+  int reserveId;
   double totalPrice;
   DateTime onWayDriver;
   DateTime? arrivedDriver;
@@ -29,6 +30,7 @@ class AdminTripEnd {
 
   AdminTripEnd({
     required this.id,
+    required this.reserveId,
     required this.onWayDriver,
     required this.status,
     required this.totalPrice,
@@ -59,6 +61,7 @@ class AdminTripEnd {
 
   factory AdminTripEnd.fromJson(Map<String, dynamic> json) => AdminTripEnd(
         id: json["id"],
+        reserveId: json["Reserve"]["id"],
         status: json["status"],
         totalPrice: json["totalPrice"].toDouble(),
         onWayDriver: DateTime.parse(json["onWayDriver"]),

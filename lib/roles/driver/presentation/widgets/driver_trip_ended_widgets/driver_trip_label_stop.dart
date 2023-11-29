@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
-class LabelExtraTrip extends StatelessWidget {
+class DriverTripLabelStop extends StatelessWidget {
   final String text;
-  final Function()? onPressed;
 
-  const LabelExtraTrip({Key? key, required this.text, this.onPressed})
-      : super(key: key);
+  const DriverTripLabelStop({
+    super.key,
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: AlignmentDirectional.bottomStart,
+      padding: const EdgeInsets.all(5),
+      margin: const EdgeInsets.all(2),
       child: IntrinsicWidth(
         child: Container(
           padding: const EdgeInsets.all(0),
@@ -20,18 +23,11 @@ class LabelExtraTrip extends StatelessWidget {
           ),
           child: Row(
             children: [
-              const SizedBox(width: 10),
-              Flexible(
-                child: Text(
-                  text,
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                ),
+              Icon(
+                Icons.add_location_alt,
+                color: Colors.grey[600],
               ),
-              IconButton(
-                onPressed: onPressed,
-                icon: const Icon(Icons.cancel_outlined),
-              ),
+              Text(text),
             ],
           ),
         ),

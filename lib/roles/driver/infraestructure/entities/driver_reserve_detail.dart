@@ -9,7 +9,7 @@ class DriverReserveDetail {
   String name;
   String lastName;
   String? state;
-  String enterpriseName;
+  String? enterpriseName;
   int silverPercent;
 
   DriverReserveDetail({
@@ -23,7 +23,7 @@ class DriverReserveDetail {
     required this.name,
     required this.lastName,
     required this.state,
-    required this.enterpriseName,
+    this.enterpriseName,
     required this.silverPercent,
   });
 
@@ -34,12 +34,12 @@ class DriverReserveDetail {
         serviceType: json["serviceType"],
         tripType: json["tripType"],
         startAddress: json["startAddress"],
-        endAddress: json["endAddress"] == null ? null : json["endAddress"],
+        endAddress: json["endAddress"],
         price: json["price"].toDouble(),
         name: json["User"]["name"],
         lastName: json["User"]["lastName"],
         state: (json["Trip"] == null) ? null : json["Trip"]["state"],
-        enterpriseName: json["Enterprise"]["name"],
+        enterpriseName: json["Reserve"] == null ? null : json["Reserve"]["Enterprise"]["name"],
         silverPercent: json["silverPercent"],
       );
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class BoxEstadoReserveDetail extends StatelessWidget {
+class BoxStatusReserveDetail extends StatelessWidget {
   final String label;
 
   final String? tripStatus;
 
-  const BoxEstadoReserveDetail({
+  const BoxStatusReserveDetail({
     super.key,
     required this.label,
     this.tripStatus,
@@ -57,8 +57,7 @@ class BoxEstadoReserveDetail extends StatelessWidget {
                         fontFamily: "Montserrat-Medium",
                         fontSize: 12,
                       ),
-                      overflow: TextOverflow
-                          .ellipsis, // Muestra "..." cuando el texto se desborda
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
                     Text(
@@ -68,8 +67,7 @@ class BoxEstadoReserveDetail extends StatelessWidget {
                         fontFamily: "Montserrat-Medium",
                         fontSize: 15,
                       ),
-                      overflow: TextOverflow
-                          .ellipsis, // Muestra "..." cuando el texto se desborda
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
                   ],
@@ -84,7 +82,7 @@ class BoxEstadoReserveDetail extends StatelessWidget {
               ),
               const SizedBox(width: 8.0),
               SizedBox(
-                width: MediaQuery.of(context).size.width * .35,
+                width: MediaQuery.of(context).size.width * .30,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -96,8 +94,7 @@ class BoxEstadoReserveDetail extends StatelessWidget {
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                       ),
-                      overflow: TextOverflow
-                          .ellipsis, // Muestra "..." cuando el texto se desborda
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
                     Text(
@@ -108,8 +105,7 @@ class BoxEstadoReserveDetail extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
-                      overflow: TextOverflow
-                          .ellipsis, // Muestra "..." cuando el texto se desborda
+                      overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
                     Container(

@@ -1,33 +1,27 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:silverapp/config/dio/dio.dart';
-import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_tolls.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_observation.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_parkin_lot.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_stop.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_tolls.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra_end.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/title_additional_information.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_observation.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_parkin_lot.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_stop.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra_end.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/title_additional_information.dart';
 
-class AdditionalInformation extends StatefulWidget {
-  final bool boolValue;
+class AdminAdditionalInformation extends StatefulWidget {
   final int tripId;
-  final int reserveId;
-  final String tripType;
   final VoidCallback reload;
   final List<Stop> stops;
   final List<Observations> observations;
   final List<Parking> parkings;
   final List<Toll> tolls;
 
-  const AdditionalInformation({
+  const AdminAdditionalInformation({
     Key? key,
-    required this.boolValue,
     required this.tripId,
-    required this.reserveId,
-    required this.tripType,
     required this.reload,
     required this.stops,
     required this.observations,
@@ -36,15 +30,18 @@ class AdditionalInformation extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AdditionalInformation> createState() => _AdditionalInformationState();
+  State<AdminAdditionalInformation> createState() =>
+      _AdminAdditionalInformationState();
 }
 
-class _AdditionalInformationState extends State<AdditionalInformation> {
+class _AdminAdditionalInformationState
+    extends State<AdminAdditionalInformation> {
   String selectedOption = 'Selecciona ítem';
   late List<Stop> stops;
   late List<Observations> observations;
   late List<Parking> parkings;
   late List<Toll> tolls;
+  bool boolValue = false;
 
   @override
   void initState() {
@@ -88,23 +85,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
-  void addStops(String address, double lat, double lon) async {
+  void addStops(String stop) async {
     try {
-      if (widget.tripType == "POR HORA") {
-        await dio.post('reserves/driver-stop/${widget.reserveId}', data: {
-          "endAddress": address,
-          "endAddressLat": lat,
-          "endAddressLon": lon,
-          "tripId": widget.tripId
-        });
-      } else {
-        await dio.post('stops', data: {
-          "location": address,
-          "lat": lat,
-          "lon": lon,
-          "tripId": widget.tripId
-        });
-      }
+      await dio
+          .post('stops', data: {"location": stop, "tripId": widget.tripId});
       widget.reload();
     } catch (e) {
       // ignore: avoid_print
@@ -219,7 +203,6 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   @override
   Widget build(BuildContext context) {
-    final bool boolValue = widget.boolValue;
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       child: Column(
@@ -339,6 +322,11 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           const SizedBox(
             height: 15,
           ),
+          TextButton(
+              onPressed: () {
+                setState(() => boolValue = !boolValue);
+              },
+              child: const Text("Modificar extras")),
         ],
       ),
     );

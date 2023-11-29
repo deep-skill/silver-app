@@ -15,7 +15,7 @@ class TitleAdditionalInformation extends StatelessWidget {
     return Row(children: [
       Icon(
         icon,
-        color: Colors.cyan,
+        color: const Color(0xFF23A5CD),
       ),
       const SizedBox(
         width: 8.0,
@@ -23,7 +23,7 @@ class TitleAdditionalInformation extends StatelessWidget {
       Text(
         label,
         style: const TextStyle(
-            color: Colors.cyan,
+            color: Color(0xFF23A5CD),
             fontFamily: "Monserrat",
             fontSize: 16,
             fontWeight: FontWeight.bold),

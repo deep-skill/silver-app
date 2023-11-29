@@ -192,6 +192,7 @@ class TripInfo extends ConsumerWidget {
               child: TripButton(
                   buttonText: "Finalizar viaje",
                   alertWidget: AlertTripEnd(
+                      totalPrice: trip.totalPrice,
                       tripId: trip.id,
                       reload: reload,
                       tripType: trip.tripType,

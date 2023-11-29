@@ -7,12 +7,15 @@ class AlertTripEnd extends StatefulWidget {
   final VoidCallback reload;
   final String tripType;
   final DateTime? arrivedDriver;
+  final double totalPrice;
+
   const AlertTripEnd({
     Key? key,
     required this.tripId,
     required this.reload,
     required this.tripType,
     required this.arrivedDriver,
+    required this.totalPrice,
   }) : super(key: key);
   @override
   State<AlertTripEnd> createState() => _AlertTripEndState();
@@ -45,7 +48,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     if (diferencia.inMinutes <= 60) {
       return 1;
     } else {
-      return (diferencia.inMinutes - 60) / 30;
+      return calculateFraction(diferencia.inMinutes);
     }
   }
 
@@ -53,10 +56,12 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     try {
       if (widget.tripType == "POR HORA") {
         totalPricePerHour(widget.arrivedDriver!);
-
-/*         await dio.patch('trips/driver-trip/$tripId', data: {
-        "endTime": DateTime.now().toIso8601String(),
-        "status": "COMPLETED",  */
+        await dio.patch('trips/driver-trip/$tripId', data: {
+          "endTime": DateTime.now().toIso8601String(),
+          "status": "COMPLETED",
+          "totalPrice":
+              totalPricePerHour(widget.arrivedDriver!) * widget.totalPrice
+        });
       } else {
         await dio.patch('trips/driver-trip/$tripId', data: {
           "endTime": DateTime.now().toIso8601String(),

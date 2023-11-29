@@ -1,8 +1,12 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_home_provider.dart';
@@ -54,6 +58,7 @@ class HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    Credentials? credentials = ref.watch(authProvider).credentials;
     final size = MediaQuery.of(context).size;
     const months = [
       'Enero',
@@ -165,6 +170,32 @@ class HomeViewState extends ConsumerState<HomeView> {
               ),
               const SizedBox(
                 height: 15,
+              ),
+              TextButton(
+                onPressed: () async {
+                  final dio2 = Dio(BaseOptions(
+                    baseUrl:
+                    'http://${dotenv.env['YOUR_IP']}:${dotenv.env['SERVER_PORT']}',
+                    headers: <String, String>{
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer ${credentials!.accessToken}'
+                      }
+                    ));
+                  // ignore: avoid_print
+                  print('PROBANDO!');
+                  // ignore: avoid_print
+                  print(credentials!.scopes);
+                  print(credentials!.accessToken);
+                  try {
+                    dynamic response = await dio2.get('/jwt');
+                    // ignore: avoid_print
+                    print(response.data.toString());
+                  } catch (e) {
+                    // ignore: avoid_print
+                    print(e);
+                  }
+                },
+                child: const Text('Prueba API'),
               ),
               nearestReserve.when(
                 loading: () => SizedBox(

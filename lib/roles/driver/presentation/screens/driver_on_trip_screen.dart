@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
+import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_state_provider.dart';
+import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_arrived_driver_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_canceled_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_end_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_start_time_driver.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_stop.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_additional_information.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_see_map_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_trip_status.dart';
@@ -42,6 +46,11 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
       ref.read(tripDriverStatusProvider.notifier).loadTripState(widget.tripId);
     }
 
+    void cancelReload() {
+      ref.invalidate(nearestReserveProvider);
+      ref.invalidate(tripsSummaryDriverProvider);
+    }
+
     if (trip == null) {
       return Scaffold(
           backgroundColor: Colors.grey[200],
@@ -66,6 +75,7 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
             child: TripInfo(
               trip: trip,
               reload: reload,
+              cancelReload: cancelReload,
             )));
   }
 }
@@ -86,12 +96,43 @@ class TripInfo extends ConsumerWidget {
     Key? key,
     required this.trip,
     required this.reload,
+    required this.cancelReload,
   }) : super(key: key);
   final VoidCallback reload;
+  final VoidCallback cancelReload;
   final TripDriverStatus trip;
+
+  void addStops(String address, double lat, double lon) async {
+    try {
+      if (trip.tripType == "POR HORA") {
+        await dio.post('reserves/driver-stop/${trip.reserveId}', data: {
+          "endAddress": address,
+          "endAddressLat": lat,
+          "endAddressLon": lon,
+          "tripId": trip.id
+        });
+      } else {
+        await dio.post('stops', data: {
+          "location": address,
+          "lat": lat,
+          "lon": lon,
+          "tripId": trip.id
+        });
+      }
+      reload();
+    } catch (e) {
+      // ignore: avoid_print
+      print(e);
+    }
+  }
 
   Widget getAlertWidget() {
     if (trip.arrivedDriver != null) {
+      if (trip.endAddress == null) {
+        return TripButton(
+            buttonText: "Indicar punto de destino",
+            alertWidget: AlertStops(addStops));
+      }
       return TripButton(
           buttonText: "Iniciar viaje",
           alertWidget: AlertStartTimeDriver(tripId: trip.id, reload: reload));
@@ -107,7 +148,17 @@ class TripInfo extends ConsumerWidget {
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 
     return ListView(children: [
-      SeeMap(startAddress: trip.startAddress, startAddressLat: trip.startAddressLat, startAddressLon: trip.startAddressLon, endAddress: trip.endAddress, endAddressLat: trip.endAddressLat, endAddressLon: trip.endAddressLon, arrivedDriver: trip.arrivedDriver, startTime: trip.startTime, endTime: trip.endTime,),
+      SeeMap(
+        startAddress: trip.startAddress,
+        startAddressLat: trip.startAddressLat,
+        startAddressLon: trip.startAddressLon,
+        endAddress: trip.endAddress,
+        endAddressLat: trip.endAddressLat,
+        endAddressLon: trip.endAddressLon,
+        arrivedDriver: trip.arrivedDriver,
+        startTime: trip.startTime,
+        endTime: trip.endTime,
+      ),
       AddressInfoWidget(
           startAddress: trip.startAddress, endAddress: trip.endAddress),
       TripStatus(
@@ -132,6 +183,7 @@ class TripInfo extends ConsumerWidget {
                       builder: (context) => AlertTripCanceled(
                             tripId: trip.id,
                             reload: reload,
+                            cancelReload: cancelReload,
                           )),
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
@@ -181,7 +233,12 @@ class TripInfo extends ConsumerWidget {
               padding: const EdgeInsets.all(10),
               child: TripButton(
                   buttonText: "Finalizar viaje",
-                  alertWidget: AlertTripEnd(tripId: trip.id, reload: reload)),
+                  alertWidget: AlertTripEnd(
+                      totalPrice: trip.totalPrice,
+                      tripId: trip.id,
+                      reload: reload,
+                      tripType: trip.tripType,
+                      arrivedDriver: trip.arrivedDriver)),
             )
           : const SizedBox(),
       trip.endTime != null
@@ -205,12 +262,13 @@ class TripInfo extends ConsumerWidget {
                 ],
               )),
               Expanded(
-                  child: Text("S/  ${calculateCustomerPrice()}",
-                      style: const TextStyle(
-                        fontFamily: "Raleway",
-                        fontSize: 32.0,
-                        fontWeight: FontWeight.bold,
-                      ))),
+                  child:
+                      Text("S/  ${calculateCustomerPrice().toStringAsFixed(2)}",
+                          style: const TextStyle(
+                            fontFamily: "Raleway",
+                            fontSize: 32.0,
+                            fontWeight: FontWeight.bold,
+                          ))),
             ])
           : const SizedBox(
               height: 5,

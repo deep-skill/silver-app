@@ -5,22 +5,64 @@ import 'package:silverapp/config/dio/dio.dart';
 class AlertTripEnd extends StatefulWidget {
   final int tripId;
   final VoidCallback reload;
+  final String tripType;
+  final DateTime? arrivedDriver;
+  final double totalPrice;
+
   const AlertTripEnd({
     Key? key,
     required this.tripId,
     required this.reload,
+    required this.tripType,
+    required this.arrivedDriver,
+    required this.totalPrice,
   }) : super(key: key);
   @override
   State<AlertTripEnd> createState() => _AlertTripEndState();
 }
 
 class _AlertTripEndState extends State<AlertTripEnd> {
+  double calculateFraction(int time) {
+    double result = 0.0;
+    int hourComplete = time ~/ 60;
+    int minuteComplete = (time % 60).toInt();
+    if (minuteComplete == 0) {
+      result = hourComplete.toDouble();
+    }
+    if (minuteComplete < 30 && minuteComplete > 0) {
+      result = hourComplete.toDouble() + 0.5;
+    }
+    if (minuteComplete >= 30) {
+      result = hourComplete.toDouble() + 1.0;
+    }
+    return result;
+  }
+
+  double totalPricePerHour(DateTime arrivedDriver) {
+    final diferencia = DateTime.now()
+        .difference(arrivedDriver);
+    if (diferencia.inMinutes <= 60) {
+      return 1;
+    } else {
+      return calculateFraction(diferencia.inMinutes);
+    }
+  }
+
   void patchEndTripDrive(BuildContext context, int tripId) async {
     try {
-      await dio.patch('trips/driver-trip/$tripId', data: {
-        "endTime": DateTime.now().toIso8601String(),
-        "status": "COMPLETED"
-      });
+      if (widget.tripType == "POR HORA") {
+        await dio.patch('trips/driver-trip/$tripId', data: {
+          "endTime": DateTime.now().toIso8601String(),
+          "status": "COMPLETED",
+          "totalPrice":
+              totalPricePerHour(widget.arrivedDriver!) * widget.totalPrice
+        });
+      } else {
+        await dio.patch('trips/driver-trip/$tripId', data: {
+          "endTime": DateTime.now().toIso8601String(),
+          "status": "COMPLETED"
+        });
+      }
       widget.reload();
     } catch (e) {
       // ignore: avoid_print

@@ -1,5 +1,7 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/search_reserve_response.dart';
 
@@ -16,8 +18,10 @@ List<ReserveList> _jsonToReserve(List json) {
 final searchedReservesProvider =
     StateNotifierProvider<SearchedReservesNotifier, List<ReserveList>>((ref) {
   Future<List<ReserveList>> searchReserve(query) async {
+    Credentials? credentials = ref.watch(authProvider).credentials;
     if (query.isEmpty) return [];
-    final response = await dio.get('/reserves/search/', queryParameters: {
+    final response = await dio2(credentials!.accessToken)
+        .get('/reserves/search/', queryParameters: {
       'query': query,
     });
     return _jsonToReserve(response.data);

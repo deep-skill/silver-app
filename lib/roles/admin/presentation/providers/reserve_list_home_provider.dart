@@ -20,7 +20,6 @@ final reservesHomeProvider =
         .get('reserves/admin-home', queryParameters: {
       'page': page,
     });
-
     return _jsonToReserves(response.data);
   }
 

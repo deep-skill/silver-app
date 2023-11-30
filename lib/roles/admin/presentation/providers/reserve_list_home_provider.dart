@@ -15,15 +15,12 @@ final reservesHomeProvider =
     StateNotifierProvider<ReservesNotifier, List<ReserveHome>>((ref) {
   Future<List<ReserveHome>> getReserves({int page = 0}) async {
     Credentials? credentials = ref.watch(authProvider).credentials;
-    dynamic response;
-    try {
-      response = await dio2(credentials!.accessToken)
-          .get('reserves/admin-home', queryParameters: {
-        'page': page,
-      });
-    } catch (e) {
-      throw Exception(e);
-    }
+
+    final response = await dio2(credentials!.accessToken)
+        .get('reserves/admin-home', queryParameters: {
+      'page': page,
+    });
+
     return _jsonToReserves(response.data);
   }
 

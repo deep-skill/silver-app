@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio2.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_observation.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_parkin_lot.dart';
@@ -12,6 +12,7 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/title_
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
 
 class AdminAdditionalInformation extends StatefulWidget {
+  final String credentials;
   final int tripId;
   final VoidCallback reload;
   final List<Stop> stops;
@@ -21,6 +22,7 @@ class AdminAdditionalInformation extends StatefulWidget {
 
   const AdminAdditionalInformation({
     Key? key,
+    required this.credentials,
     required this.tripId,
     required this.reload,
     required this.stops,
@@ -85,76 +87,74 @@ class _AdminAdditionalInformationState
     }
   }
 
-  void addStops(String stop) async {
+  void addStops(String address, double lat, double lon) async {
     try {
-      await dio
-          .post('stops', data: {"location": stop, "tripId": widget.tripId});
+      await dio2(widget.credentials).post('stops', data: {
+        "location": address,
+        "lat": lat,
+        "lon": lon,
+        "tripId": widget.tripId
+      });
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      throw Exception(e);
     }
   }
 
   void removeStop(int stopId) async {
     try {
-      await dio.delete(
+      await dio2(widget.credentials).delete(
         'stops/$stopId',
       );
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      throw Exception(e);
     }
   }
 
   void addObservations(String observation) async {
     try {
-      await dio.post('observations',
+      await dio2(widget.credentials).post('observations',
           data: {"observation": observation, "tripId": widget.tripId});
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      throw Exception(e);
     }
   }
 
   void remObservations(int observationId) async {
     try {
-      await dio.delete(
+      await dio2(widget.credentials).delete(
         'observations/$observationId',
       );
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      throw Exception(e);
     }
   }
 
   void addParking(String parking, double amount) async {
     try {
-      await dio.post('parkings',
+      await dio2(widget.credentials).post('parkings',
           data: {"name": parking, "tripId": widget.tripId, "amount": amount});
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      throw Exception(e);
     }
   }
 
   void remParking(int parkingId) async {
     try {
-      await dio.delete('parkings/$parkingId');
+      await dio2(widget.credentials).delete('parkings/$parkingId');
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      throw Exception(e);
     }
   }
 
   void addTools(String name, double amount, double lat, double lon) async {
     try {
-      await dio.post('tolls', data: {
+      await dio2(widget.credentials).post('tolls', data: {
         "tripId": widget.tripId,
         "name": name,
         "amount": amount,
@@ -163,18 +163,16 @@ class _AdminAdditionalInformationState
       });
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      throw Exception(e);
     }
   }
 
   void remTolls(int tollId) async {
     try {
-      await dio.delete('tolls/$tollId');
+      await dio2(widget.credentials).delete('tolls/$tollId');
       widget.reload();
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
+      throw Exception(e);
     }
   }
 

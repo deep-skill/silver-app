@@ -352,6 +352,11 @@ class ReserveInfo extends StatelessWidget {
                               ),
                               actions: <Widget>[
                                 TextButton(
+                                  onPressed: () async {
+                                    final res =
+                                        deleteReserve(reserve.toString());
+                                    print('response ${res}');
+                                  },
                                   style: ButtonStyle(
                                     foregroundColor:
                                         MaterialStateProperty.all<Color>(
@@ -367,7 +372,6 @@ class ReserveInfo extends StatelessWidget {
                                     ),
                                   ),
                                   child: const Text('Confirmar'),
-                                  onPressed: () {},
                                 ),
                                 TextButton(
                                   style: TextButton.styleFrom(
@@ -585,7 +589,7 @@ class ReserveInfo extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           TextButton(
-                            onPressed: () {
+                            onPressed: () async {
                               context
                                   .push('/admin/reserves/create/${reserve.id}');
                             },
@@ -638,7 +642,12 @@ class ReserveInfo extends StatelessWidget {
                                           ),
                                         ),
                                         child: const Text('Confirmar'),
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          final res = await deleteReserve(
+                                              reserve.id.toString());
+
+                                          print('res ${res}');
+                                        },
                                       ),
                                       TextButton(
                                         style: TextButton.styleFrom(

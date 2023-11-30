@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/config/dio/dio.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
@@ -13,6 +14,15 @@ final reserveDetailProvider =
   final fetchReserveDetail = getReserveDetail;
   return ReserveDetailNotifier(getReserveDetail: fetchReserveDetail);
 });
+Future<int> deleteReserve(String id) async {
+  try {
+    final response = await dio.delete('reserves/$id');
+    if (response.statusCode == 204) return 204;
+  } catch (e) {
+    if (e is DioException) e.response?.statusCode ?? -1;
+  }
+  return -1;
+}
 
 typedef GetReserveDetailCallback = Future<ReserveDetail> Function(
     String reserveDetailId);

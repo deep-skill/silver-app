@@ -47,6 +47,7 @@ class BoxReservePayment extends StatelessWidget {
             children: [
               SizedBox(
                 width: MediaQuery.of(context).size.width * .21,
+                height: MediaQuery.of(context).size.width * .21,
                 child: Column(
                   children: [
                     Text(
@@ -59,7 +60,6 @@ class BoxReservePayment extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
-                    const SizedBox(height: 17),
                     Text(
                       text,
                       style: const TextStyle(
@@ -69,7 +69,7 @@ class BoxReservePayment extends StatelessWidget {
                 ),
               ),
               Container(
-                width: 1.5,
+                width: MediaQuery.of(context).size.width * .002,
                 height: 60.0,
                 color: Colors.black,
               ),

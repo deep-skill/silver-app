@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/alert_dialogs/build_delete_dialog.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
@@ -48,7 +49,7 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
                 scrolledUnderElevation: 0.0),
             body: Padding(
                 padding: const EdgeInsets.fromLTRB(180, 20, 180, 20),
-                child: ReserveInfo(reserve: reserve, size: size)))
+                child: ReserveInfo(reserve: reserve, size: size, ref: ref)))
         : Scaffold(
             backgroundColor: const Color(0xffF2F3F7),
             appBar: AppBar(
@@ -58,14 +59,20 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
                 scrolledUnderElevation: 0.0),
             body: Padding(
                 padding: const EdgeInsets.all(14),
-                child: ReserveInfo(reserve: reserve, size: size)));
+                child: ReserveInfo(reserve: reserve, size: size, ref: ref)));
   }
 }
 
 class ReserveInfo extends StatelessWidget {
-  const ReserveInfo({super.key, required this.reserve, required this.size});
+  const ReserveInfo(
+      {super.key,
+      required this.reserve,
+      required this.size,
+      required this.ref});
   final ReserveDetail reserve;
   final Size size;
+
+  final WidgetRef ref;
 
   @override
   Widget build(BuildContext context) {
@@ -146,8 +153,6 @@ class ReserveInfo extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: Row(
-                                        // mainAxisAlignment:
-                                        //     MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -341,7 +346,7 @@ class ReserveInfo extends StatelessWidget {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: const Text(
-                                  '¿Estás seguro de que deseas cancelar el viaje?',
+                                  '¿Estás seguro de que deseas cancelar la reserva?',
                                   style: TextStyle(fontSize: 20),
                                   textAlign: TextAlign.center),
                               content: const Text(
@@ -354,9 +359,7 @@ class ReserveInfo extends StatelessWidget {
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () async {
-                                    final res =
-                                        deleteReserve(reserve.toString());
-                                    print('response ${res}');
+                                    await deleteReserve(reserve.toString());
                                   },
                                   style: ButtonStyle(
                                     foregroundColor:
@@ -619,7 +622,7 @@ class ReserveInfo extends StatelessWidget {
                                 builder: (BuildContext context) {
                                   return AlertDialog(
                                     title: const Text(
-                                        '¿Estás seguro de que deseas cancelar el viaje?',
+                                        '¿Estás seguro de que deseas cancelar la reserva?',
                                         textAlign: TextAlign.center),
                                     content: const Text(
                                       'No podrás volver a activar el recorrido.',
@@ -657,48 +660,59 @@ class ReserveInfo extends StatelessWidget {
 
                                           void showSuccessDialog() {
                                             showDialog(
+                                              barrierDismissible: false,
                                               context: context,
                                               builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 20),
-                                                  content: SizedBox(
-                                                    width: size.width * 0.7,
-                                                    height: size.height * 0.1,
-                                                    child: const Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(Icons.check,
-                                                            size: 40,
-                                                            color:
-                                                                Colors.green),
-                                                        SizedBox(height: 8),
-                                                        Text(
-                                                          'Reserva eliminada',
-                                                          style: TextStyle(
-                                                              fontSize: 20),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                        ),
-                                                      ],
+                                                return WillPopScope(
+                                                  onWillPop: () async {
+                                                    return false;
+                                                  },
+                                                  child: AlertDialog(
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 20,
+                                                            vertical: 20),
+                                                    content: SizedBox(
+                                                      width: size.width * 0.7,
+                                                      height: size.height * 0.1,
+                                                      child: const Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Icon(Icons.check,
+                                                              size: 40,
+                                                              color:
+                                                                  Colors.green),
+                                                          SizedBox(height: 8),
+                                                          Text(
+                                                            'Reserva eliminada',
+                                                            style: TextStyle(
+                                                                fontSize: 20),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          ref
+                                                              .read(
+                                                                  reservesListProvider
+                                                                      .notifier)
+                                                              .reloadData();
+                                                          context.pop();
+                                                          context.pop();
+                                                          context.pop();
+                                                        },
+                                                        child: const Text(
+                                                            'Cerrar'),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        context.pop();
-                                                        context.pop();
-                                                        context.pop();
-                                                      },
-                                                      child:
-                                                          const Text('Cerrar'),
-                                                    ),
-                                                  ],
                                                 );
                                               },
                                             );
@@ -707,59 +721,63 @@ class ReserveInfo extends StatelessWidget {
                                           void showErrorDialog() {
                                             showDialog(
                                               context: context,
+                                              barrierDismissible: false,
                                               builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  contentPadding:
-                                                      const EdgeInsets
-                                                          .symmetric(
-                                                          horizontal: 20,
-                                                          vertical: 20),
-                                                  content: SizedBox(
-                                                    width: size.width * 0.7,
-                                                    height: size.height * 0.1,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(Icons.error,
-                                                            size:
-                                                                size.width * .1,
-                                                            color: Colors.red),
-                                                        SizedBox(
-                                                          height: 10,
-                                                        ),
-                                                        Text(
-                                                          'Error al internar eliminar la reserva.',
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  size.width *
-                                                                      .04),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                        ),
-                                                      ],
+                                                return WillPopScope(
+                                                  onWillPop: () async {
+                                                    return false;
+                                                  },
+                                                  child: AlertDialog(
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 20,
+                                                            vertical: 20),
+                                                    content: SizedBox(
+                                                      width: size.width * 0.7,
+                                                      height: size.height * 0.1,
+                                                      child: Column(
+                                                        children: [
+                                                          Icon(Icons.error,
+                                                              size: size.width *
+                                                                  .08,
+                                                              color:
+                                                                  Colors.red),
+                                                          SizedBox(
+                                                            height: 1,
+                                                          ),
+                                                          Text(
+                                                            'Error al internar eliminar la reserva.',
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    size.width *
+                                                                        .04),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            maxLines: 3,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          context.pop();
+                                                          context.pop();
+                                                        },
+                                                        child: const Text(
+                                                            'Cerrar'),
+                                                      ),
+                                                    ],
                                                   ),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () {
-                                                        context.pop();
-                                                        context.pop();
-                                                      },
-                                                      child:
-                                                          const Text('Cerrar'),
-                                                    ),
-                                                  ],
                                                 );
                                               },
                                             );
                                           }
 
-                                          print('res mobile ${res}');
                                           if (res == 204) {
                                             showSuccessDialog();
                                           } else {

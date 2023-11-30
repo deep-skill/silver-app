@@ -26,7 +26,7 @@ class CustomSlide extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: size.height * .15,
+        height: size.height * .17,
         decoration: BoxDecoration(
           color: const Color(0xffFFFFFF),
           borderRadius: const BorderRadius.all(Radius.circular(12)),

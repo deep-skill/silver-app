@@ -12,9 +12,9 @@ Widget buildDeleteDialog(BuildContext context) {
       textAlign: TextAlign.center,
     ),
     contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-    content: Container(
-      width: size.width * .7, // Ancho deseado
-      height: size.height * .1, // Alto deseado
+    content: SizedBox(
+      width: size.width * .7,
+      height: size.height * .1,
       child: SpinPerfect(
         duration: const Duration(seconds: 1),
         child: const FullScreenLoader(),

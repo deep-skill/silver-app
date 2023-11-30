@@ -1,6 +1,8 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_additional_information.dart';
@@ -28,6 +30,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Credentials? credentials = ref.watch(authProvider).credentials;
     final trips = ref.watch(tripAdminStatusProvider);
     final AdminTripEnd? trip = trips[widget.tripId];
 
@@ -149,7 +152,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           width: 10,
                         ),
                         BoxStatusReserveDetail(
-                              tripStatus: trip.status, label: "Estado"),
+                            tripStatus: trip.status, label: "Estado"),
                       ],
                     ),
                     TripAddressInfoWidget(
@@ -158,6 +161,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       stops: trip.stops,
                     ),
                     AdminAdditionalInformation(
+                      credentials: credentials!.accessToken,
                       tripId: trip.id,
                       observations: trip.observations,
                       tolls: trip.tolls,
@@ -234,7 +238,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       textTipePrice: "Pago conductor",
                     ),
                     TripLabelAmout(
-                      textAmout: "S/ ${calculatePaySilver().toStringAsFixed(2)}",
+                      textAmout:
+                          "S/ ${calculatePaySilver().toStringAsFixed(2)}",
                       textTipePrice: "Pago Silver",
                     ),
                     TripLabelAmout(

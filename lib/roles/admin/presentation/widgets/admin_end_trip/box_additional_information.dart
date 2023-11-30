@@ -87,10 +87,14 @@ class _AdminAdditionalInformationState
     }
   }
 
-  void addStops(String stop) async {
+  void addStops(String address, double lat, double lon) async {
     try {
-      await dio2(widget.credentials)
-          .post('stops', data: {"location": stop, "tripId": widget.tripId});
+      await dio2(widget.credentials).post('stops', data: {
+        "location": address,
+        "lat": lat,
+        "lon": lon,
+        "tripId": widget.tripId
+      });
       widget.reload();
     } catch (e) {
       throw Exception(e);

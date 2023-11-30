@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/alert_dialogs/build_delete_dialog.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_payment.dart';
@@ -643,10 +644,127 @@ class ReserveInfo extends StatelessWidget {
                                         ),
                                         child: const Text('Confirmar'),
                                         onPressed: () async {
+                                          Navigator.of(context).pop();
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return buildDeleteDialog(context);
+                                            },
+                                          );
+
                                           final res = await deleteReserve(
                                               reserve.id.toString());
 
-                                          print('res ${res}');
+                                          void showSuccessDialog() {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 20),
+                                                  content: SizedBox(
+                                                    width: size.width * 0.7,
+                                                    height: size.height * 0.1,
+                                                    child: const Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(Icons.check,
+                                                            size: 40,
+                                                            color:
+                                                                Colors.green),
+                                                        SizedBox(height: 8),
+                                                        Text(
+                                                          'Reserva eliminada',
+                                                          style: TextStyle(
+                                                              fontSize: 20),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        context.pop();
+                                                        context.pop();
+                                                        context.pop();
+                                                      },
+                                                      child:
+                                                          const Text('Cerrar'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          }
+
+                                          void showErrorDialog() {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  contentPadding:
+                                                      const EdgeInsets
+                                                          .symmetric(
+                                                          horizontal: 20,
+                                                          vertical: 20),
+                                                  content: SizedBox(
+                                                    width: size.width * 0.7,
+                                                    height: size.height * 0.1,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Icon(Icons.error,
+                                                            size:
+                                                                size.width * .1,
+                                                            color: Colors.red),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Text(
+                                                          'Error al internar eliminar la reserva.',
+                                                          style: TextStyle(
+                                                              fontSize:
+                                                                  size.width *
+                                                                      .04),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        context.pop();
+                                                        context.pop();
+                                                      },
+                                                      child:
+                                                          const Text('Cerrar'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          }
+
+                                          print('res mobile ${res}');
+                                          if (res == 204) {
+                                            showSuccessDialog();
+                                          } else {
+                                            showErrorDialog();
+                                          }
                                         },
                                       ),
                                       TextButton(

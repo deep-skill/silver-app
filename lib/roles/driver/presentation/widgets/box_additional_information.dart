@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio2.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_tolls.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
@@ -14,6 +14,7 @@ import 'package:silverapp/roles/driver/presentation/widgets/title_additional_inf
 class AdditionalInformation extends StatefulWidget {
   final bool boolValue;
   final int tripId;
+  final String credentials;
   final int reserveId;
   final String tripType;
   final VoidCallback reload;
@@ -33,6 +34,7 @@ class AdditionalInformation extends StatefulWidget {
     required this.observations,
     required this.parkings,
     required this.tolls,
+    required this.credentials,
   }) : super(key: key);
 
   @override
@@ -91,14 +93,14 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
   void addStops(String address, double lat, double lon) async {
     try {
       if (widget.tripType == "POR HORA") {
-        await dio.post('reserves/driver-stop/${widget.reserveId}', data: {
+        await dio2(widget.credentials).post('reserves/driver-stop/${widget.reserveId}', data: {
           "endAddress": address,
           "endAddressLat": lat,
           "endAddressLon": lon,
           "tripId": widget.tripId
         });
       } else {
-        await dio.post('stops', data: {
+        await dio2(widget.credentials).post('stops', data: {
           "location": address,
           "lat": lat,
           "lon": lon,
@@ -114,7 +116,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void removeStop(int stopId) async {
     try {
-      await dio.delete(
+      await dio2(widget.credentials).delete(
         'stops/$stopId',
       );
       widget.reload();
@@ -126,7 +128,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void addObservations(String observation) async {
     try {
-      await dio.post('observations',
+      await dio2(widget.credentials).post('observations',
           data: {"observation": observation, "tripId": widget.tripId});
       widget.reload();
     } catch (e) {
@@ -137,7 +139,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void remObservations(int observationId) async {
     try {
-      await dio.delete(
+      await dio2(widget.credentials).delete(
         'observations/$observationId',
       );
       widget.reload();
@@ -149,7 +151,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void addParking(String parking, double amount) async {
     try {
-      await dio.post('parkings',
+      await dio2(widget.credentials).post('parkings',
           data: {"name": parking, "tripId": widget.tripId, "amount": amount});
       widget.reload();
     } catch (e) {
@@ -160,7 +162,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void remParking(int parkingId) async {
     try {
-      await dio.delete('parkings/$parkingId');
+      await dio2(widget.credentials).delete('parkings/$parkingId');
       widget.reload();
     } catch (e) {
       // ignore: avoid_print
@@ -168,9 +170,9 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
-  void addTools(String name, double amount, double lat, double lon) async {
+  void addTolls(String name, double amount, double lat, double lon) async {
     try {
-      await dio.post('tolls', data: {
+      await dio2(widget.credentials).post('tolls', data: {
         "tripId": widget.tripId,
         "name": name,
         "amount": amount,
@@ -186,7 +188,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void remTolls(int tollId) async {
     try {
-      await dio.delete('tolls/$tollId');
+      await dio2(widget.credentials).delete('tolls/$tollId');
       widget.reload();
     } catch (e) {
       // ignore: avoid_print
@@ -201,7 +203,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
         switch (option) {
           case 'Peaje':
             return AlertToll(
-                addToll: addTools,
+                addToll: addTolls,
                 dropdownItems: dropdownItems,
                 tollMapItems: tollMapItems);
           case 'Paradas':

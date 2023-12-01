@@ -262,6 +262,7 @@ class _AdminAdditionalInformationState
               );
             }).toList(),
           ),
+          const SizedBox(height: 8),
           const TitleAdditionalInformation(
             icon: Icons.paid_outlined,
             label: "Peaje",
@@ -281,6 +282,7 @@ class _AdminAdditionalInformationState
               );
             }).toList(),
           ),
+          const SizedBox(height: 8),
           const TitleAdditionalInformation(
             icon: Icons.local_parking,
             label: "Estacionamiento",
@@ -300,6 +302,7 @@ class _AdminAdditionalInformationState
               );
             }).toList(),
           ),
+          const SizedBox(height: 8),
           const TitleAdditionalInformation(
             icon: Icons.search,
             label: "Observaciones",
@@ -324,7 +327,10 @@ class _AdminAdditionalInformationState
               onPressed: () {
                 setState(() => boolValue = !boolValue);
               },
-              child: const Text("Modificar extras")),
+              child: const Text(
+                "Modificar extras",
+                style: TextStyle(color: Color(0xff03132A), fontSize: 15),
+              )),
         ],
       ),
     );

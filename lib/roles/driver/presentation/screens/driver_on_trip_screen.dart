@@ -66,15 +66,17 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
         appBar: AppBar(
           title: const Text('Viaje en curso'),
           centerTitle: true,
+          backgroundColor: Color(0xffF2F3F7),
         ),
         body: Container(
             width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * .85,
             margin: const EdgeInsets.all(7.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Colors.grey[200],
+              color: Colors.white,
             ),
-            padding: const EdgeInsets.all(3),
+            padding: const EdgeInsets.all(5),
             child: TripInfo(
               trip: trip,
               reload: reload,
@@ -209,8 +211,7 @@ class TripInfo extends ConsumerWidget {
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,
-                      fontFamily: "Monserrat",
-                      fontWeight: FontWeight.bold,
+                      fontFamily: "Montserrat-Bold",
                       decoration: TextDecoration.underline,
                     ),
                   )),
@@ -223,7 +224,7 @@ class TripInfo extends ConsumerWidget {
           ? const SizedBox()
           : const TitleReserve(text: "Información adicional"),
       const SizedBox(
-        height: 5,
+        height: 12,
       ),
       trip.arrivedDriver == null
           ? const SizedBox()
@@ -259,28 +260,16 @@ class TripInfo extends ConsumerWidget {
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Precio",
-                      style: TextStyle(
-                        fontFamily: "Raleway",
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      )),
-                  Text("Cliente",
-                      style: TextStyle(
-                        fontFamily: "Raleway",
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                      )),
+                  Text("Precio \nconductor",
+                      style:
+                          TextStyle(fontSize: 20.0, color: Color(0xff03132A)))
                 ],
               )),
               Expanded(
-                  child:
-                      Text("S/  ${calculateCustomerPrice().toStringAsFixed(2)}",
-                          style: const TextStyle(
-                            fontFamily: "Raleway",
-                            fontSize: 32.0,
-                            fontWeight: FontWeight.bold,
-                          ))),
+                  child: Text(
+                      "S/  ${calculateCustomerPrice().toStringAsFixed(2)}",
+                      style: const TextStyle(
+                          fontSize: 32.0, color: Color(0xff03132A)))),
             ])
           : const SizedBox(
               height: 5,
@@ -300,7 +289,7 @@ class TripInfo extends ConsumerWidget {
           ? const SizedBox()
           : Container(
               padding: const EdgeInsets.all(10),
-              child: const BackHomeButton(buttonText: "Volver al inicio"))
+              child: const BackHomeButton(buttonText: "Ir al inicio"))
     ]);
   }
 }

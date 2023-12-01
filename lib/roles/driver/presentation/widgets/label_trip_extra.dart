@@ -16,7 +16,7 @@ class LabelExtraTrip extends StatelessWidget {
           padding: const EdgeInsets.all(0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.grey[300],
+            color: const Color(0xffF2F3F7),
           ),
           child: Row(
             children: [
@@ -24,13 +24,19 @@ class LabelExtraTrip extends StatelessWidget {
               Flexible(
                 child: Text(
                   text,
+                  style: const TextStyle(
+                      fontFamily: 'Roboto-Bold',
+                      fontSize: 14,
+                      color: Color(0xff1D192B)),
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               IconButton(
                 onPressed: onPressed,
-                icon: const Icon(Icons.cancel_outlined),
+                iconSize: 22,
+                color: const Color(0xff1D192B),
+                icon: const Icon(Icons.close),
               ),
             ],
           ),

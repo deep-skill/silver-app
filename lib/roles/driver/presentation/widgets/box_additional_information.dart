@@ -266,10 +266,12 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                   ),
                 )
               : const SizedBox(),
+          const SizedBox(height: 10),
           const TitleAdditionalInformation(
             icon: Icons.add_location_alt_outlined,
             label: "Parada",
           ),
+          const SizedBox(height: 8),
           Column(
             children: stops.asMap().entries.map((entry) {
               final stop = entry.value;
@@ -288,6 +290,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
             icon: Icons.paid_outlined,
             label: "Peaje",
           ),
+          const SizedBox(height: 8),
           Column(
             children: tolls.asMap().entries.map((entry) {
               final toll = entry.value;
@@ -307,6 +310,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
             icon: Icons.local_parking,
             label: "Estacionamiento",
           ),
+          const SizedBox(height: 8),
           Column(
             children: parkings.asMap().entries.map((entry) {
               final parking = entry.value;

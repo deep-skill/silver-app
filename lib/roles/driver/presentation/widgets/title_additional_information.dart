@@ -23,10 +23,10 @@ class TitleAdditionalInformation extends StatelessWidget {
       Text(
         label,
         style: const TextStyle(
-            color: Color(0xFF23A5CD),
-            fontFamily: "Monserrat",
-            fontSize: 16,
-            fontWeight: FontWeight.bold),
+          color: Color(0xFF23A5CD),
+          fontFamily: "Montserrat-Medium",
+          fontSize: 16,
+        ),
       ),
     ]);
   }

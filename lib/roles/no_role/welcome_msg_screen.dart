@@ -35,7 +35,7 @@ class WelcomeMsgScreen extends StatelessWidget {
         const SizedBox(
           height: 15,
         ),
-        secSubTitle!,
+        secSubTitle ?? const SizedBox(),
         secondImage != null && thirdImage != null
             ? Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                 secondImage ?? const SizedBox(),

@@ -19,7 +19,7 @@ class BackHomeButton extends ConsumerWidget {
         ref.invalidate(nearestReserveProvider);
         ref.invalidate(tripsSummaryDriverProvider);
         context.go("/driver");
-        },
+      },
       style: ButtonStyle(
         padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(5)),
         backgroundColor:
@@ -33,7 +33,7 @@ class BackHomeButton extends ConsumerWidget {
       child: Text(
         buttonText,
         style: const TextStyle(
-          fontFamily: "Monserrat",
+          fontFamily: "Montserrat-Bold",
           fontSize: 16,
           color: Colors.white,
         ),

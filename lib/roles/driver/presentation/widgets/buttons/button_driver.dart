@@ -28,14 +28,14 @@ class TripButton extends StatelessWidget {
               MaterialStateProperty.all<Color>(const Color(0xFF23A5CD)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(8),
             ),
           ),
         ),
         child: Text(
           buttonText,
           style: const TextStyle(
-            fontFamily: "Monserrat",
+            fontFamily: "Montserrat-Bold",
             fontSize: 16,
             color: Colors.white,
           ),

@@ -46,9 +46,8 @@ class SeeMap extends StatelessWidget {
                   style: TextStyle(
                     color: Color(0xFF23A5CD),
                     decoration: TextDecoration.underline,
-                    fontFamily: "Monserrat",
+                    fontFamily: "Montserrat-Bold",
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
                   ))
             ]),
             onPressed: () {

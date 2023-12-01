@@ -5,10 +5,9 @@ class LabelExtraTripEnd extends StatelessWidget {
   const LabelExtraTripEnd({super.key, required this.text});
 
   final styleText = const TextStyle(
-    color: Color(0xFF000000),
-    fontFamily: "Monserrat",
+    color: Color(0xFF1D192B),
+    fontFamily: "Montserrat-Medium",
     fontSize: 16,
-    fontWeight: FontWeight.bold,
   );
 
   @override

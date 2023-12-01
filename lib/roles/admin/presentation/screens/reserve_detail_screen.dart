@@ -359,7 +359,125 @@ class ReserveInfo extends StatelessWidget {
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () async {
-                                    await deleteReserve(reserve.toString());
+                                    Navigator.of(context).pop();
+                                    final res = await deleteReserve(
+                                        reserve.id.toString());
+
+                                    void showSuccessDialog() {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return WillPopScope(
+                                            onWillPop: () async {
+                                              return false;
+                                            },
+                                            child: AlertDialog(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 20),
+                                              content: SizedBox(
+                                                width: size.width * 0.3,
+                                                height: size.height * 0.1,
+                                                child: const Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(Icons.check,
+                                                        size: 40,
+                                                        color: Colors.green),
+                                                    SizedBox(height: 8),
+                                                    Text(
+                                                      'Reserva eliminada',
+                                                      style: TextStyle(
+                                                          fontSize: 20),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    ref
+                                                        .read(
+                                                            reservesListProvider
+                                                                .notifier)
+                                                        .reloadData();
+
+                                                    context.pop();
+                                                    context.pop();
+                                                  },
+                                                  child: const Text('Cerrar'),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }
+
+                                    void showErrorDialog() {
+                                      showDialog(
+                                        context: context,
+                                        barrierDismissible: false,
+                                        builder: (BuildContext context) {
+                                          return WillPopScope(
+                                            onWillPop: () async {
+                                              return false;
+                                            },
+                                            child: AlertDialog(
+                                              contentPadding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 20),
+                                              content: SizedBox(
+                                                width: size.width * 0.3,
+                                                height: size.height * 0.1,
+                                                child: Column(
+                                                  children: [
+                                                    Icon(Icons.error,
+                                                        size: size.width * .02,
+                                                        color: Colors.red),
+                                                    SizedBox(
+                                                      height: 1,
+                                                    ),
+                                                    Text(
+                                                      'Error al internar eliminar la reserva.',
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              size.width * .01),
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      maxLines: 3,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    context.pop();
+                                                    context.pop();
+                                                  },
+                                                  child: const Text('Cerrar'),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }
+
+                                    if (res == 204) {
+                                      showSuccessDialog();
+                                    } else {
+                                      showErrorDialog();
+                                    }
                                   },
                                   style: ButtonStyle(
                                     foregroundColor:

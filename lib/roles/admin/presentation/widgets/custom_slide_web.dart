@@ -44,8 +44,8 @@ class SlideWeb extends StatelessWidget {
                 width: size.width * .12,
                 decoration: BoxDecoration(
                   color: reserve.driverName != ''
-                  ? const Color(0xff020B19)
-                  : Colors.grey.shade200,
+                      ? const Color(0xff020B19)
+                      : Colors.grey.shade200,
                   borderRadius: const BorderRadius.all(Radius.circular(15)),
                 ),
                 child: reserve.driverName != ''
@@ -83,9 +83,10 @@ class SlideWeb extends StatelessWidget {
                         ),
                       ))),
             Padding(
-              padding: const EdgeInsets.all(7),
+              padding: const EdgeInsets.all(4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
                     children: [
@@ -98,12 +99,10 @@ class SlideWeb extends StatelessWidget {
                         style: const TextStyle(
                           fontSize: 17,
                           fontFamily: 'Montserrat-Bold',
-                          // fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 9),
                   SizedBox(
                     width: size.width * .1,
                     child: Row(
@@ -126,7 +125,6 @@ class SlideWeb extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 6),
                   Row(
                     children: [
                       const Icon(
@@ -142,7 +140,6 @@ class SlideWeb extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
                   Row(
                     children: [
                       const Icon(

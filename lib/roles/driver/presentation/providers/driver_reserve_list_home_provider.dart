@@ -22,7 +22,7 @@ final driverReservesHomeProvider =
     }
     try {
       final response = await dio2(credentials!.accessToken)
-          .get('reserves/driver-home', queryParameters: {
+          .get('reserves/driver-home/driver', queryParameters: {
         'id': driverInfo!.id,
         'page': page,
       });

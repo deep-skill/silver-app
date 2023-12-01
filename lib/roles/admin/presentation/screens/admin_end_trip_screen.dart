@@ -338,6 +338,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                       parkings: trip.parkings,
                                       stops: trip.stops,
                                       reload: reload,
+                                      credentials: credentials!.accessToken,
                                     ),
                                     const SizedBox(
                                       height: 5,
@@ -517,6 +518,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           parkings: trip.parkings,
                           stops: trip.stops,
                           reload: reload,
+                          credentials: credentials!.accessToken,
                         ),
                         const SizedBox(
                           height: 5,

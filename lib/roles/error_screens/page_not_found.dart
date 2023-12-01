@@ -72,6 +72,5 @@ class PageNotFoundInfo extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }

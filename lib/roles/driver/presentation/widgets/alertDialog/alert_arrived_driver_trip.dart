@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 
 class AlertArrivedDriver extends StatefulWidget {
   final int tripId;
@@ -21,7 +21,7 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
   void patchArrivedDriver(
       BuildContext context, int tripId, String credentials) async {
     try {
-      await dio2(credentials).patch('trips/driver-trip/$tripId',
+      await dio(credentials).patch('trips/driver-trip/$tripId',
           data: {"arrivedDriver": DateTime.now().toIso8601String()});
       widget.reload();
     } catch (e) {

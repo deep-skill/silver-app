@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_tolls.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
@@ -93,7 +93,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
   void addStops(String address, double lat, double lon) async {
     try {
       if (widget.tripType == "POR HORA") {
-        await dio2(widget.credentials)
+        await dio(widget.credentials)
             .post('reserves/driver-stop/${widget.reserveId}', data: {
           "endAddress": address,
           "endAddressLat": lat,
@@ -101,7 +101,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           "tripId": widget.tripId
         });
       } else {
-        await dio2(widget.credentials).post('stops/driver', data: {
+        await dio(widget.credentials).post('stops/driver', data: {
           "location": address,
           "lat": lat,
           "lon": lon,
@@ -117,7 +117,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void removeStop(int stopId) async {
     try {
-      await dio2(widget.credentials).delete(
+      await dio(widget.credentials).delete(
         'stops/driver/$stopId',
       );
       widget.reload();
@@ -129,7 +129,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void addObservations(String observation) async {
     try {
-      await dio2(widget.credentials).post('observations/driver',
+      await dio(widget.credentials).post('observations/driver',
           data: {"observation": observation, "tripId": widget.tripId});
       widget.reload();
     } catch (e) {
@@ -140,7 +140,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void remObservations(int observationId) async {
     try {
-      await dio2(widget.credentials).delete(
+      await dio(widget.credentials).delete(
         'observations/driver/$observationId',
       );
       widget.reload();
@@ -152,7 +152,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void addParking(String parking, double amount) async {
     try {
-      await dio2(widget.credentials).post('parkings/driver',
+      await dio(widget.credentials).post('parkings/driver',
           data: {"name": parking, "tripId": widget.tripId, "amount": amount});
       widget.reload();
     } catch (e) {
@@ -163,7 +163,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void remParking(int parkingId) async {
     try {
-      await dio2(widget.credentials).delete('parkings/driver/$parkingId');
+      await dio(widget.credentials).delete('parkings/driver/$parkingId');
       widget.reload();
     } catch (e) {
       // ignore: avoid_print
@@ -173,7 +173,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void addTolls(String name, double amount, double lat, double lon) async {
     try {
-      await dio2(widget.credentials).post('tolls/driver', data: {
+      await dio(widget.credentials).post('tolls/driver', data: {
         "tripId": widget.tripId,
         "name": name,
         "amount": amount,
@@ -189,7 +189,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
 
   void remTolls(int tollId) async {
     try {
-      await dio2(widget.credentials).delete('tolls/driver/$tollId');
+      await dio(widget.credentials).delete('tolls/driver/$tollId');
       widget.reload();
     } catch (e) {
       // ignore: avoid_print

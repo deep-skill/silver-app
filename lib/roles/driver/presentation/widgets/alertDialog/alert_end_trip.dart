@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 
 class AlertTripEnd extends StatefulWidget {
   final int tripId;
@@ -52,19 +52,17 @@ class _AlertTripEndState extends State<AlertTripEnd> {
   void patchEndTripDrive(BuildContext context, int tripId) async {
     try {
       if (widget.tripType == "POR HORA") {
-        await dio2(widget.credentials)
-            .patch('trips/driver-trip/$tripId', data: {
+        await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": DateTime.now().toIso8601String(),
           "status": "COMPLETED",
           "totalPrice":
               totalPricePerHour(widget.arrivedDriver!) * widget.totalPrice
         });
       } else {
-        await dio2(widget.credentials).patch('trips/driver-trip/$tripId',
-            data: {
-              "endTime": DateTime.now().toIso8601String(),
-              "status": "COMPLETED"
-            });
+        await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
+          "endTime": DateTime.now().toIso8601String(),
+          "status": "COMPLETED"
+        });
       }
       widget.reload();
     } catch (e) {

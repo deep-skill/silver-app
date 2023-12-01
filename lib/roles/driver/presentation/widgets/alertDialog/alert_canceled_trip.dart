@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 
 class AlertTripCanceled extends StatefulWidget {
   final int tripId;
@@ -21,7 +21,7 @@ class AlertTripCanceled extends StatefulWidget {
 class _AlertTripEndState extends State<AlertTripCanceled> {
   void canceledTripDriver(int tripId, String credentials) async {
     try {
-      await dio2(credentials)
+      await dio(credentials)
           .patch('trips/driver-trip/$tripId', data: {"status": "CANCELED"});
       widget.cancelReload();
       widget.reload();

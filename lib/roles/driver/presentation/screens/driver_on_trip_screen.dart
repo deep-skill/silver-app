@@ -1,7 +1,7 @@
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
@@ -111,7 +111,7 @@ class TripInfo extends ConsumerWidget {
   void addStops(String address, double lat, double lon) async {
     try {
       if (trip.tripType == "POR HORA") {
-        await dio2(credentials)
+        await dio(credentials)
             .post('reserves/driver-stop/${trip.reserveId}', data: {
           "endAddress": address,
           "endAddressLat": lat,
@@ -119,7 +119,7 @@ class TripInfo extends ConsumerWidget {
           "tripId": trip.id
         });
       } else {
-        await dio2(credentials).post('stops', data: {
+        await dio(credentials).post('stops', data: {
           "location": address,
           "lat": lat,
           "lon": lon,

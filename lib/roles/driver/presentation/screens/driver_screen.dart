@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
@@ -80,11 +80,11 @@ class HomeViewState extends ConsumerState<HomeView> {
     final reserves = ref.watch(driverReservesHomeProvider);
     Future createTrip(id, price) async {
       try {
-        final trip = await dio2(credentials!.accessToken).post('/trips', data: {
+        final trip = await dio(credentials!.accessToken).post('/trips', data: {
           "reserve_id": id,
           "on_way_driver": date.toIso8601String(),
           "totalPrice": price
-          });
+        });
         return trip.data['id'];
       } catch (e) {
         print(e);

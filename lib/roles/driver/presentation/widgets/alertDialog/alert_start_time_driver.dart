@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 
 class AlertStartTimeDriver extends StatefulWidget {
   final int tripId;
@@ -20,7 +20,7 @@ class AlertStartTimeDriver extends StatefulWidget {
 class _AlertTripStartState extends State<AlertStartTimeDriver> {
   void patchStartTripDrive(BuildContext context, int tripId) async {
     try {
-      await dio2(widget.credentials).patch('trips/driver-trip/$tripId',
+      await dio(widget.credentials).patch('trips/driver-trip/$tripId',
           data: {"startTime": DateTime.now().toIso8601String()});
       widget.reload();
     } catch (e) {

@@ -1,6 +1,6 @@
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
 
@@ -18,8 +18,8 @@ final driverTripsListProvider =
   Future<List<DriverTripList>> getTrips({int page = 0}) async {
     final driverInfo = await ref.watch(driverInfoProvider.future);
     Credentials? credentials = ref.watch(authProvider).credentials;
-    final response =
-        await dio2(credentials!.accessToken).get('trips/driver-trips/${driverInfo?.id}', queryParameters: {
+    final response = await dio(credentials!.accessToken)
+        .get('trips/driver-trips/${driverInfo?.id}', queryParameters: {
       'page': page,
     });
     return _jsonToReserves(response.data);

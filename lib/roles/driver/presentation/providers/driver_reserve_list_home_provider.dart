@@ -1,6 +1,6 @@
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_home.dart';
 import 'package:silverapp/roles/driver/infraestructure/models/driver_reserves_paginated_response.dart';
@@ -21,7 +21,7 @@ final driverReservesHomeProvider =
       return _jsonToReserves({"count": 0, "rows": []});
     }
     try {
-      final response = await dio2(credentials!.accessToken)
+      final response = await dio(credentials!.accessToken)
           .get('reserves/driver-home/', queryParameters: {
         'id': driverInfo!.id,
         'page': page,

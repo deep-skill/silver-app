@@ -3,7 +3,7 @@ import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/car_id.dart';
@@ -30,7 +30,7 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
           (reserveId == null) ? '/reserves/' : '/reserves/$reserveId';
       Credentials? credentials = ref.watch(authProvider).credentials;
       reserveLike.remove('id');
-      final response = await dio2(credentials!.accessToken).request(url,
+      final response = await dio(credentials!.accessToken).request(url,
           data: jsonEncode(reserveLike), options: Options(method: method));
       final status = response.statusCode;
       return status == 201 || status == 200 ? true : false;

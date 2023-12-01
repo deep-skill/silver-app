@@ -1,7 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:silverapp/config/dio/dio2.dart';
+import 'package:dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_default.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_observation.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_parkin_lot.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_stop.dart';
@@ -9,7 +10,6 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertD
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra_end.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/title_additional_information.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
 
 class AdminAdditionalInformation extends StatefulWidget {
   final String credentials;
@@ -89,7 +89,7 @@ class _AdminAdditionalInformationState
 
   void addStops(String address, double lat, double lon) async {
     try {
-      await dio2(widget.credentials).post('stops', data: {
+      await dio(widget.credentials).post('stops', data: {
         "location": address,
         "lat": lat,
         "lon": lon,
@@ -103,7 +103,7 @@ class _AdminAdditionalInformationState
 
   void removeStop(int stopId) async {
     try {
-      await dio2(widget.credentials).delete(
+      await dio(widget.credentials).delete(
         'stops/$stopId',
       );
       widget.reload();
@@ -114,7 +114,7 @@ class _AdminAdditionalInformationState
 
   void addObservations(String observation) async {
     try {
-      await dio2(widget.credentials).post('observations',
+      await dio(widget.credentials).post('observations',
           data: {"observation": observation, "tripId": widget.tripId});
       widget.reload();
     } catch (e) {
@@ -124,7 +124,7 @@ class _AdminAdditionalInformationState
 
   void remObservations(int observationId) async {
     try {
-      await dio2(widget.credentials).delete(
+      await dio(widget.credentials).delete(
         'observations/$observationId',
       );
       widget.reload();
@@ -135,7 +135,7 @@ class _AdminAdditionalInformationState
 
   void addParking(String parking, double amount) async {
     try {
-      await dio2(widget.credentials).post('parkings',
+      await dio(widget.credentials).post('parkings',
           data: {"name": parking, "tripId": widget.tripId, "amount": amount});
       widget.reload();
     } catch (e) {
@@ -145,7 +145,7 @@ class _AdminAdditionalInformationState
 
   void remParking(int parkingId) async {
     try {
-      await dio2(widget.credentials).delete('parkings/$parkingId');
+      await dio(widget.credentials).delete('parkings/$parkingId');
       widget.reload();
     } catch (e) {
       throw Exception(e);
@@ -154,7 +154,7 @@ class _AdminAdditionalInformationState
 
   void addTools(String name, double amount, double lat, double lon) async {
     try {
-      await dio2(widget.credentials).post('tolls', data: {
+      await dio(widget.credentials).post('tolls', data: {
         "tripId": widget.tripId,
         "name": name,
         "amount": amount,
@@ -169,7 +169,7 @@ class _AdminAdditionalInformationState
 
   void remTolls(int tollId) async {
     try {
-      await dio2(widget.credentials).delete('tolls/$tollId');
+      await dio(widget.credentials).delete('tolls/$tollId');
       widget.reload();
     } catch (e) {
       throw Exception(e);

@@ -1,5 +1,7 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/search_trip_response.dart';
 
@@ -16,8 +18,10 @@ List<TripList> _jsonToTrip(List json) {
 final searchedTripsProvider =
     StateNotifierProvider<SearchedTripsNotifier, List<TripList>>((ref) {
   Future<List<TripList>> searchTrip(query) async {
+    Credentials? credentials = ref.watch(authProvider).credentials;
     if (query.isEmpty) return [];
-    final response = await dio.get('/trips/trip-search/', queryParameters: {
+    final response = await dio(credentials!.accessToken)
+        .get('/trips/trip-search/', queryParameters: {
       'query': query,
     });
     return _jsonToTrip(response.data);

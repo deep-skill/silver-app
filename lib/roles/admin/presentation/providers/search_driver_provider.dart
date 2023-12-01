@@ -1,5 +1,7 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/search_driver.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/search_driver_response.dart';
 
@@ -9,17 +11,17 @@ final searchDriversProvider = StateProvider<String>((ref) {
 
 List<SearchDriver> _jsonToDriver(List json) {
   final driversResponse = SearchDriverResponse.fromJson(json);
-  final List<SearchDriver> drivers =
-      driversResponse.drivers.toList();
+  final List<SearchDriver> drivers = driversResponse.drivers.toList();
   return drivers;
 }
 
 final searchedDriversProvider =
-    StateNotifierProvider<SearchedDriversNotifier, List<SearchDriver>>(
-        (ref) {
+    StateNotifierProvider<SearchedDriversNotifier, List<SearchDriver>>((ref) {
   Future<List<SearchDriver>> searchDriver(query) async {
+    Credentials? credentials = ref.watch(authProvider).credentials;
     if (query.isEmpty) return [];
-    final response = await dio.get('/drivers/drivers', queryParameters: {
+    final response = await dio(credentials!.accessToken)
+        .get('/drivers/drivers', queryParameters: {
       'query': query,
     });
     return _jsonToDriver(response.data);

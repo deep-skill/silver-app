@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/car_id.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/driver_id.dart';
@@ -20,16 +22,15 @@ import 'package:silverapp/roles/admin/infraestructure/inputs/user_id.dart';
 final reserveFormProvider = StateNotifierProvider.autoDispose
     .family<ReserveFormNotifier, ReserveFormState, CreateReserve>(
         (ref, reserve) {
-
   Future<bool> createCallback(Map<String, dynamic> reserveLike) async {
     try {
       final String? reserveId = reserveLike['id'];
       final String method = (reserveId == null) ? 'POST' : 'PATCH';
       final String url =
           (reserveId == null) ? '/reserves/' : '/reserves/$reserveId';
-
+      Credentials? credentials = ref.watch(authProvider).credentials;
       reserveLike.remove('id');
-      final response = await dio.request(url,
+      final response = await dio(credentials!.accessToken).request(url,
           data: jsonEncode(reserveLike), options: Options(method: method));
       final status = response.statusCode;
       return status == 201 || status == 200 ? true : false;
@@ -156,7 +157,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           : state.driverId?.value,
       "car_id": state.carId?.value == 0 ? null : state.carId?.value,
       "price": state.price.value,
-       if (state.silverPercent.value != '') "silver_percent": state.silverPercent.value,
+      if (state.silverPercent.value != '')
+        "silver_percent": state.silverPercent.value,
       if (id != 0) "id": id.toString()
     };
     try {

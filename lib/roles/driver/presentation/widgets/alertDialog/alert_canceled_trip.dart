@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 
 class AlertTripCanceled extends StatefulWidget {
   final int tripId;
   final VoidCallback reload;
   final VoidCallback cancelReload;
+  final String credentials;
   const AlertTripCanceled({
     Key? key,
     required this.tripId,
     required this.cancelReload,
     required this.reload,
+    required this.credentials,
   }) : super(key: key);
   @override
   State<AlertTripCanceled> createState() => _AlertTripEndState();
 }
 
 class _AlertTripEndState extends State<AlertTripCanceled> {
-  void canceledTripDriver(int tripId) async {
+  void canceledTripDriver(int tripId, String credentials) async {
     try {
-      await dio
+      await dio(credentials)
           .patch('trips/driver-trip/$tripId', data: {"status": "CANCELED"});
       widget.cancelReload();
       widget.reload();
@@ -54,7 +56,7 @@ class _AlertTripEndState extends State<AlertTripCanceled> {
                   ),
                 ),
                 onPressed: () {
-                  canceledTripDriver(widget.tripId);
+                  canceledTripDriver(widget.tripId, widget.credentials);
                   context.go("/driver");
                 },
                 child: const Text(

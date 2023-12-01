@@ -1,5 +1,7 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/reserves_list_response.dart';
 
@@ -12,7 +14,9 @@ List<ReserveList> _jsonToReserves(Map<String, dynamic> json) {
 final reservesListProvider =
     StateNotifierProvider<ReservesNotifier, List<ReserveList>>((ref) {
   Future<List<ReserveList>> getReserves({int page = 0}) async {
-    final response = await dio.get('reserves/admin-reserves', queryParameters: {
+    Credentials? credentials = ref.watch(authProvider).credentials;
+    final response = await dio(credentials!.accessToken)
+        .get('reserves/admin-reserves', queryParameters: {
       'page': page,
     });
     return _jsonToReserves(response.data);

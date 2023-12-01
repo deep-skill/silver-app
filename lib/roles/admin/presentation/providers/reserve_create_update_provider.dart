@@ -1,13 +1,17 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
 
 final reserveCreateUpdateProvider = StateNotifierProvider.autoDispose
     .family<ReserveCreteUpdateNotifier, ReserveCreteUpdateState, String>(
         (ref, reserveId) {
   Future<CreateReserve> getReserveById(String id) async {
+    Credentials? credentials = ref.watch(authProvider).credentials;
     try {
-      final response = await dio.get('reserves/admin-reserves/$id');
+      final response = await dio(credentials!.accessToken)
+          .get('reserves/admin-reserves/$id');
       final createReserve = CreateReserve.fromJson(response.data);
       return createReserve;
     } catch (e) {
@@ -65,7 +69,7 @@ class ReserveCreteUpdateNotifier
 
       state = state.copyWith(isLoading: false, reserve: reserve);
     } catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 }

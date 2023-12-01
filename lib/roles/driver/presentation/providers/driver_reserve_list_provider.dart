@@ -1,5 +1,7 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_list.dart';
 import 'package:silverapp/roles/driver/infraestructure/models/driver_reserves_list_response.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
@@ -16,7 +18,8 @@ final driverReservesListProvider =
         (ref) {
   Future<List<DriverReserveList>> getReserves({int page = 0}) async {
     final driverInfo = await ref.watch(driverInfoProvider.future);
-    final response = await dio.get(
+    Credentials? credentials = ref.watch(authProvider).credentials;
+    final response = await dio(credentials!.accessToken).get(
         'reserves/driver-reserves-list/${driverInfo?.id}',
         queryParameters: {
           'page': page,

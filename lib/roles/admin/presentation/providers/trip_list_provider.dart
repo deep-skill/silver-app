@@ -1,5 +1,7 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/trips_list_response.dart';
 
@@ -12,7 +14,9 @@ List<TripList> _jsonToTrips(Map<String, dynamic> json) {
 final tripsListProvider =
     StateNotifierProvider<TripsNotifier, List<TripList>>((ref) {
   Future<List<TripList>> getTrips({int page = 0}) async {
-    final response = await dio.get('trips/admin-history', queryParameters: {
+    Credentials? credentials = ref.watch(authProvider).credentials;
+    final response = await dio(credentials!.accessToken)
+        .get('trips/admin-history', queryParameters: {
       'page': page,
     });
     return _jsonToTrips(response.data);

@@ -1,11 +1,15 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_detail.dart';
 
 final driverReserveDetailProvider = StateNotifierProvider<ReserveDetailNotifier,
     Map<String, DriverReserveDetail>>((ref) {
+  Credentials? credentials = ref.watch(authProvider).credentials;
   Future<DriverReserveDetail> getReserveDetail(id) async {
-    final response = await dio.get('reserves/driver-reserves/$id');
+    final response =
+        await dio(credentials!.accessToken).get('reserves/driver-reserves/$id');
     return DriverReserveDetail.fromJson(response.data);
   }
 

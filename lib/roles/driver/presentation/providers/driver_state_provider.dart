@@ -1,11 +1,16 @@
-import '../../../../config/dio/dio.dart';
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 
 final tripDriverStatusProvider = StateNotifierProvider<TripDriverStatusNotifier,
     Map<String, TripDriverStatus>>((ref) {
+  Credentials? credentials = ref.watch(authProvider).credentials;
+
   Future<TripDriverStatus> getTripDriverStatus(id) async {
-    final response = await dio.get('trips/driver-trip/$id');
+    final response =
+        await dio(credentials!.accessToken).get('trips/driver-trip/$id');
     return TripDriverStatus.fromJson(response.data);
   }
 

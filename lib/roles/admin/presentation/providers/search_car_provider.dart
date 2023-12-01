@@ -1,5 +1,7 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/search_car.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/search_car_response.dart';
 
@@ -9,17 +11,17 @@ final searchCarsProvider = StateProvider<String>((ref) {
 
 List<SearchCar> _jsonToDriver(List json) {
   final carsResponse = SearchCarResponse.fromJson(json);
-  final List<SearchCar> cars =
-      carsResponse.cars.toList();
+  final List<SearchCar> cars = carsResponse.cars.toList();
   return cars;
 }
 
 final searchedCarsProvider =
-    StateNotifierProvider<SearchedCarsNotifier, List<SearchCar>>(
-        (ref) {
+    StateNotifierProvider<SearchedCarsNotifier, List<SearchCar>>((ref) {
   Future<List<SearchCar>> searchCar(query) async {
+    Credentials? credentials = ref.watch(authProvider).credentials;
     if (query.isEmpty) return [];
-    final response = await dio.get('/cars/cars', queryParameters: {
+    final response =
+        await dio(credentials!.accessToken).get('/cars/cars', queryParameters: {
       'query': query,
     });
     return _jsonToDriver(response.data);
@@ -31,8 +33,7 @@ final searchedCarsProvider =
   );
 });
 
-typedef SearchedCarsCallback = Future<List<SearchCar>> Function(
-    String query);
+typedef SearchedCarsCallback = Future<List<SearchCar>> Function(String query);
 
 class SearchedCarsNotifier extends StateNotifier<List<SearchCar>> {
   SearchedCarsNotifier({

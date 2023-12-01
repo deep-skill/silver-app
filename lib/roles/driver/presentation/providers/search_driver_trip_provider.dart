@@ -1,5 +1,7 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
 import 'package:silverapp/roles/driver/infraestructure/models/search_driver_trip_response.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
@@ -19,7 +21,8 @@ final searchedDriverTripsProvider =
   Future<List<DriverTripList>> searchTrip(query) async {
     if (query.isEmpty) return [];
     final driverInfo = await ref.watch(driverInfoProvider.future);
-    final response = await dio
+    Credentials? credentials = ref.watch(authProvider).credentials;
+    final response = await dio(credentials!.accessToken)
         .get('/trips/driver-search/${driverInfo?.id}', queryParameters: {
       'query': query,
     });

@@ -1,6 +1,8 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_state_provider.dart';
@@ -40,6 +42,7 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
   @override
   Widget build(BuildContext context) {
     final trips = ref.watch(tripDriverStatusProvider);
+    Credentials? credentials = ref.watch(authProvider).credentials;
     final TripDriverStatus? trip = trips[widget.tripId];
     void reload() {
       ref.invalidate(tripDriverStatusProvider);
@@ -78,8 +81,8 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
               trip: trip,
               reload: reload,
               cancelReload: cancelReload,
-            )),
-        backgroundColor: const Color(0xffF2F3F7));
+              credentials: credentials!.accessToken,
+            )));
   }
 }
 
@@ -100,22 +103,25 @@ class TripInfo extends ConsumerWidget {
     required this.trip,
     required this.reload,
     required this.cancelReload,
+    required this.credentials,
   }) : super(key: key);
   final VoidCallback reload;
   final VoidCallback cancelReload;
+  final String credentials;
   final TripDriverStatus trip;
 
   void addStops(String address, double lat, double lon) async {
     try {
       if (trip.tripType == "POR HORA") {
-        await dio.post('reserves/driver-stop/${trip.reserveId}', data: {
+        await dio(credentials)
+            .post('reserves/driver-stop/${trip.reserveId}', data: {
           "endAddress": address,
           "endAddressLat": lat,
           "endAddressLon": lon,
           "tripId": trip.id
         });
       } else {
-        await dio.post('stops', data: {
+        await dio(credentials).post('stops', data: {
           "location": address,
           "lat": lat,
           "lon": lon,
@@ -138,11 +144,13 @@ class TripInfo extends ConsumerWidget {
       }
       return TripButton(
           buttonText: "Iniciar viaje",
-          alertWidget: AlertStartTimeDriver(tripId: trip.id, reload: reload));
+          alertWidget: AlertStartTimeDriver(
+              tripId: trip.id, reload: reload, credentials: credentials));
     }
     return TripButton(
         buttonText: "Llegué al punto de recojo",
-        alertWidget: AlertArrivedDriver(tripId: trip.id, reload: reload));
+        alertWidget: AlertArrivedDriver(
+            tripId: trip.id, reload: reload, credentials: credentials));
   }
 
   @override
@@ -187,6 +195,7 @@ class TripInfo extends ConsumerWidget {
                             tripId: trip.id,
                             reload: reload,
                             cancelReload: cancelReload,
+                            credentials: credentials,
                           )),
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all<EdgeInsets>(
@@ -229,6 +238,7 @@ class TripInfo extends ConsumerWidget {
               tolls: trip.tolls,
               tripType: trip.tripType,
               reserveId: trip.reserveId,
+              credentials: credentials,
             ),
       trip.startTime != null && trip.endTime == null
           ? Container(
@@ -236,6 +246,7 @@ class TripInfo extends ConsumerWidget {
               child: TripButton(
                   buttonText: "Finalizar viaje",
                   alertWidget: AlertTripEnd(
+                      credentials: credentials,
                       totalPrice: trip.totalPrice,
                       tripId: trip.id,
                       reload: reload,

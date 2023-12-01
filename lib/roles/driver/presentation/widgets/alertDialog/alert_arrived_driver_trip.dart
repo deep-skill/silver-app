@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../config/dio/dio.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
 
 class AlertArrivedDriver extends StatefulWidget {
   final int tripId;
+  final String credentials;
   final VoidCallback reload;
   const AlertArrivedDriver({
     Key? key,
     required this.tripId,
     required this.reload,
+    required this.credentials,
   }) : super(key: key);
 
   @override
@@ -16,9 +18,10 @@ class AlertArrivedDriver extends StatefulWidget {
 }
 
 class _AlertTripStartState extends State<AlertArrivedDriver> {
-  void patchArrivedDriver(BuildContext context, int tripId) async {
+  void patchArrivedDriver(
+      BuildContext context, int tripId, String credentials) async {
     try {
-      await dio.patch('trips/driver-trip/$tripId',
+      await dio(credentials).patch('trips/driver-trip/$tripId',
           data: {"arrivedDriver": DateTime.now().toIso8601String()});
       widget.reload();
     } catch (e) {
@@ -52,7 +55,8 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
                   ),
                 ),
                 onPressed: () async {
-                  patchArrivedDriver(context, widget.tripId);
+                  patchArrivedDriver(
+                      context, widget.tripId, widget.credentials);
                   context.pop();
                 },
                 child: const Text(

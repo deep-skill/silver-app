@@ -14,15 +14,15 @@ class TitleReserve extends StatelessWidget {
           text,
           style: const TextStyle(
             color: Color(0xFF23A5CD),
-            fontFamily: "Monserrat",
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
+        const SizedBox(height: 7),
         Container(
-          height: 2.0,
+          height: 1.0,
           color: const Color(0xFF23A5CD),
         ),
       ],

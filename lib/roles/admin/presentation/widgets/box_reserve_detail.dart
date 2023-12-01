@@ -5,12 +5,14 @@ class BoxReserveDetail extends StatelessWidget {
   final IconData? icon;
   final String label;
   final String text;
+  final bool row;
 
   const BoxReserveDetail({
     super.key,
     this.icon,
     required this.label,
     required this.text,
+    required this.row,
   });
 
   @override
@@ -25,6 +27,7 @@ class BoxReserveDetail extends StatelessWidget {
                   : const Text(''),
               const SizedBox(width: 8.0),
               SizedBox(
+                width: MediaQuery.of(context).size.width * (row ? .08 : .25),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

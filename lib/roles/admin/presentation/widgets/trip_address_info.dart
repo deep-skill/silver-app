@@ -25,6 +25,7 @@ class TripAddressInfoWidget extends StatelessWidget {
             icon: Icons.location_on_outlined,
             label: "Punto de origen",
             text: startAddress,
+            row: false,
           ),
           Row(
             children: [
@@ -66,6 +67,7 @@ class TripAddressInfoWidget extends StatelessWidget {
             icon: Icons.trip_origin,
             label: "Punto de destino",
             text: endAddress,
+            row: false,
           ),
           const SizedBox(
             height: 10.0,

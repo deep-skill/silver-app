@@ -96,16 +96,19 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       label: "Pasajero",
                       text: "${trip.userName} ${trip.userLastName}",
                       icon: Icons.hail,
+                      row: false,
                     ),
                     BoxReserveDetail(
                       label: "Empresa",
                       text: trip.enterpriseName.toString(),
                       icon: Icons.domain,
+                      row: false,
                     ),
                     BoxReserveDetail(
                       label: "Tipo de servicio",
                       text: capitalizeFirst(trip.serviceType.toString()),
                       icon: Icons.business_center_outlined,
+                      row: false,
                     ),
                     const SizedBox(
                       height: 10,
@@ -122,6 +125,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             text:
                                 '${trip.onWayDriver.day}/${trip.onWayDriver.month}/${trip.onWayDriver.year}',
                             icon: Icons.today,
+                            row: false,
                           ),
                         ),
                         const SizedBox(
@@ -133,6 +137,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             text:
                                 '${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
                             icon: Icons.alarm,
+                            row: false,
                           ),
                         ),
                       ],
@@ -143,13 +148,14 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           child: BoxReserveDetail(
                             label: "Tipo de viaje",
                             text: capitalizeFirst(trip.tripType),
+                            row: true,
                           ),
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         BoxStatusReserveDetail(
-                              tripStatus: trip.status, label: "Estado"),
+                            tripStatus: trip.status, label: "Estado"),
                       ],
                     ),
                     TripAddressInfoWidget(
@@ -184,17 +190,20 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                 text:
                                     "${trip.driverName} ${trip.driverLastName}",
                                 icon: Icons.person_2_outlined,
+                                row: false,
                               ),
                               BoxReserveDetail(
                                 label: "Marca/ modelo/ color",
                                 text:
                                     "${trip.brand} ${trip.model} ${trip.color}",
                                 icon: Icons.person_2_outlined,
+                                row: false,
                               ),
                               BoxReserveDetail(
                                 label: "Placa",
                                 text: trip.licensePlate,
                                 icon: Icons.person_2_outlined,
+                                row: false,
                               ),
                             ],
                           ),
@@ -234,7 +243,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       textTipePrice: "Pago conductor",
                     ),
                     TripLabelAmout(
-                      textAmout: "S/ ${calculatePaySilver().toStringAsFixed(2)}",
+                      textAmout:
+                          "S/ ${calculatePaySilver().toStringAsFixed(2)}",
                       textTipePrice: "Pago Silver",
                     ),
                     TripLabelAmout(

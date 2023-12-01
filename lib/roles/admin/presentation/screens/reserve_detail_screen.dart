@@ -68,6 +68,7 @@ class ReserveInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final minutes = reserve.startTime.minute.toString().padLeft(2, '0');
     const cyanColor = Color(0xff23a5cd);
     final siverPercentToDouble = double.parse(reserve.silverPercent) / 100;
     final priceToDouble = double.parse(reserve.price);
@@ -114,18 +115,24 @@ class ReserveInfo extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     BoxReserveDetail(
-                                        icon: Icons.hail,
-                                        label: 'Pasajero',
-                                        text:
-                                            '${reserve.name} ${reserve.lastName}'),
+                                      icon: Icons.hail,
+                                      label: 'Pasajero',
+                                      text:
+                                          '${reserve.name} ${reserve.lastName}',
+                                      row: true,
+                                    ),
                                     BoxReserveDetail(
-                                        icon: Icons.domain,
-                                        label: 'Empresa',
-                                        text: reserve.enterpriseName),
+                                      icon: Icons.domain,
+                                      label: 'Empresa',
+                                      text: reserve.enterpriseName,
+                                      row: true,
+                                    ),
                                     BoxReserveDetail(
-                                        icon: Icons.business_center_outlined,
-                                        label: 'Tipo de Servicio',
-                                        text: reserve.serviceType),
+                                      icon: Icons.business_center_outlined,
+                                      label: 'Tipo de Servicio',
+                                      text: reserve.serviceType,
+                                      row: true,
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: size.height * .03),
@@ -151,20 +158,24 @@ class ReserveInfo extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           BoxReserveDetail(
-                                              icon: Icons.person_2_outlined,
-                                              label: 'Conductor',
-                                              text: reserve.driverName != null
-                                                  ? '${reserve.driverName} ${reserve.driverLastName}'
-                                                  : '-'),
+                                            icon: Icons.person_2_outlined,
+                                            label: 'Conductor',
+                                            text: reserve.driverName != null
+                                                ? '${reserve.driverName} ${reserve.driverLastName}'
+                                                : '-',
+                                            row: true,
+                                          ),
                                           SizedBox(width: size.width * .08),
                                           BoxReserveDetail(
-                                              icon: Icons.drive_eta_rounded,
-                                              label: 'Marca/ modelo/ color',
-                                              text: (reserve.brand != '' &&
-                                                      reserve.model != '' &&
-                                                      reserve.color != '')
-                                                  ? '${reserve.brand}/ ${reserve.model}/ ${reserve.color}'
-                                                  : ' - '),
+                                            icon: Icons.drive_eta_rounded,
+                                            label: 'Marca/ modelo/ color',
+                                            text: (reserve.brand != '' &&
+                                                    reserve.model != '' &&
+                                                    reserve.color != '')
+                                                ? '${reserve.brand}/ ${reserve.model}/ ${reserve.color}'
+                                                : ' - ',
+                                            row: true,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -175,11 +186,13 @@ class ReserveInfo extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     BoxReserveDetail(
-                                        icon: Icons.money,
-                                        label: 'Placa',
-                                        text: (reserve.licensePlate != ''
-                                            ? '${reserve.licensePlate}'
-                                            : ' - ')),
+                                      icon: Icons.money,
+                                      label: 'Placa',
+                                      text: (reserve.licensePlate != ''
+                                          ? '${reserve.licensePlate}'
+                                          : ' - '),
+                                      row: true,
+                                    ),
                                     SizedBox(width: size.width * .15),
                                     Expanded(
                                       child: Stack(
@@ -248,16 +261,20 @@ class ReserveInfo extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: BoxReserveDetail(
-                                          icon: Icons.today,
-                                          label: 'Fecha de Reserva',
-                                          text:
-                                              '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}'),
+                                        icon: Icons.today,
+                                        label: 'Fecha de Reserva',
+                                        text:
+                                            '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}',
+                                        row: true,
+                                      ),
                                     ),
                                     Expanded(
                                       child: BoxReserveDetail(
-                                          label: 'Hora de reserva',
-                                          text:
-                                              '${reserve.startTime.hour}:${reserve.startTime.minute}'),
+                                        label: 'Hora de reserva',
+                                        text:
+                                            '${reserve.startTime.hour}:$minutes',
+                                        row: true,
+                                      ),
                                     )
                                   ],
                                 ),
@@ -266,9 +283,11 @@ class ReserveInfo extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: BoxReserveDetail(
-                                          icon: Icons.timeline,
-                                          label: 'Tipo de viaje',
-                                          text: reserve.tripType),
+                                        icon: Icons.timeline,
+                                        label: 'Tipo de viaje',
+                                        text: reserve.tripType,
+                                        row: true,
+                                      ),
                                     ),
                                     Expanded(
                                       child: BoxStatusReserveDetail(
@@ -282,14 +301,20 @@ class ReserveInfo extends StatelessWidget {
                                 Column(
                                   children: [
                                     BoxReserveDetail(
-                                        icon: Icons.location_on,
-                                        label: 'Punto de recojo',
-                                        text: reserve.startAddress),
+                                      icon: Icons.location_on,
+                                      label: 'Punto de recojo',
+                                      text: reserve.startAddress,
+                                      row: false,
+                                    ),
                                     SizedBox(height: size.height * .03),
-                                    BoxReserveDetail(
-                                        icon: Icons.trip_origin_outlined,
-                                        label: 'Punto de destino',
-                                        text: '${reserve.endAddress}'),
+                                    reserve.endAddress == null
+                                        ? const SizedBox()
+                                        : BoxReserveDetail(
+                                            icon: Icons.trip_origin_outlined,
+                                            label: 'Punto de destino',
+                                            text: '${reserve.endAddress}',
+                                            row: false,
+                                          ),
                                   ],
                                 ),
                               ],
@@ -435,17 +460,23 @@ class ReserveInfo extends StatelessWidget {
                         ],
                       ),
                       BoxReserveDetail(
-                          icon: Icons.hail,
-                          label: 'Pasajero',
-                          text: '${reserve.name} ${reserve.lastName}'),
+                        icon: Icons.hail,
+                        label: 'Pasajero',
+                        text: '${reserve.name} ${reserve.lastName}',
+                        row: true,
+                      ),
                       BoxReserveDetail(
-                          icon: Icons.domain,
-                          label: 'Empresa',
-                          text: reserve.enterpriseName),
+                        icon: Icons.domain,
+                        label: 'Empresa',
+                        text: reserve.enterpriseName,
+                        row: true,
+                      ),
                       BoxReserveDetail(
-                          icon: Icons.business_center_outlined,
-                          label: 'Tipo de Servicio',
-                          text: reserve.serviceType),
+                        icon: Icons.business_center_outlined,
+                        label: 'Tipo de Servicio',
+                        text: reserve.serviceType,
+                        row: true,
+                      ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -462,16 +493,19 @@ class ReserveInfo extends StatelessWidget {
                         children: [
                           Expanded(
                             child: BoxReserveDetail(
-                                icon: Icons.today,
-                                label: 'Fecha de Reserva',
-                                text:
-                                    '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}'),
+                              icon: Icons.today,
+                              label: 'Fecha de Reserva',
+                              text:
+                                  '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}',
+                              row: true,
+                            ),
                           ),
                           Expanded(
                             child: BoxReserveDetail(
-                                label: 'Hora de reserva',
-                                text:
-                                    '${reserve.startTime.hour}:${reserve.startTime.minute}'),
+                              label: 'Hora de reserva',
+                              text: '${reserve.startTime.hour}:$minutes',
+                              row: true,
+                            ),
                           )
                         ],
                       ),
@@ -479,9 +513,11 @@ class ReserveInfo extends StatelessWidget {
                         children: [
                           Expanded(
                             child: BoxReserveDetail(
-                                icon: Icons.timeline,
-                                label: 'Tipo de viaje',
-                                text: reserve.tripType),
+                              icon: Icons.timeline,
+                              label: 'Tipo de viaje',
+                              text: reserve.tripType,
+                              row: true,
+                            ),
                           ),
                           Expanded(
                             child: BoxStatusReserveDetail(
@@ -492,13 +528,19 @@ class ReserveInfo extends StatelessWidget {
                         ],
                       ),
                       BoxReserveDetail(
-                          icon: Icons.location_on,
-                          label: 'Punto de recojo',
-                          text: reserve.startAddress),
-                      BoxReserveDetail(
-                          icon: Icons.trip_origin_outlined,
-                          label: 'Punto de destino',
-                          text: '${reserve.endAddress}'),
+                        icon: Icons.location_on,
+                        label: 'Punto de recojo',
+                        text: reserve.startAddress,
+                        row: true,
+                      ),
+                      reserve.endAddress == null
+                          ? const SizedBox()
+                          : BoxReserveDetail(
+                              icon: Icons.trip_origin_outlined,
+                              label: 'Punto de destino',
+                              text: '${reserve.endAddress}',
+                              row: true,
+                            ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -517,25 +559,31 @@ class ReserveInfo extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 BoxReserveDetail(
-                                    icon: Icons.person_2_outlined,
-                                    label: 'Conductor',
-                                    text: reserve.driverName != null
-                                        ? '${reserve.driverName} ${reserve.driverLastName}'
-                                        : '-'),
+                                  icon: Icons.person_2_outlined,
+                                  label: 'Conductor',
+                                  text: reserve.driverName != null
+                                      ? '${reserve.driverName} ${reserve.driverLastName}'
+                                      : '-',
+                                  row: true,
+                                ),
                                 BoxReserveDetail(
-                                    icon: Icons.drive_eta_rounded,
-                                    label: 'Marca/ modelo/ color',
-                                    text: (reserve.brand != '' &&
-                                            reserve.model != '' &&
-                                            reserve.color != '')
-                                        ? '${reserve.brand}/ ${reserve.model}/ ${reserve.color}'
-                                        : ' - '),
+                                  icon: Icons.drive_eta_rounded,
+                                  label: 'Marca/ modelo/ color',
+                                  text: (reserve.brand != '' &&
+                                          reserve.model != '' &&
+                                          reserve.color != '')
+                                      ? '${reserve.brand}/ ${reserve.model}/ ${reserve.color}'
+                                      : ' - ',
+                                  row: true,
+                                ),
                                 BoxReserveDetail(
-                                    icon: Icons.money,
-                                    label: 'Placa',
-                                    text: (reserve.licensePlate != ''
-                                        ? '${reserve.licensePlate}'
-                                        : ' - ')),
+                                  icon: Icons.money,
+                                  label: 'Placa',
+                                  text: (reserve.licensePlate != ''
+                                      ? '${reserve.licensePlate}'
+                                      : ' - '),
+                                  row: true,
+                                ),
                               ],
                             ),
                           ),

@@ -59,7 +59,7 @@ class ReserveDetail {
       endAddress: json['endAddress'],
       price: json['price'].toString(),
       silverPercent: json['silverPercent'].toString(),
-      startTime: DateTime.parse(json['startTime']),
+      startTime: DateTime.parse(json['startTime']).toLocal(),
       name: json['User']['name'],
       lastName: json['User']['lastName'],
       enterpriseName: json['Enterprise'] == null

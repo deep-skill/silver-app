@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeMsgScreen extends StatelessWidget {
@@ -21,28 +22,56 @@ class WelcomeMsgScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        mainImage,
-        const SizedBox(
-          height: 15,
-        ),
-        title,
-        const SizedBox(
-          height: 15,
-        ),
-        subTitle,
-        const SizedBox(
-          height: 15,
-        ),
-        secSubTitle ?? const SizedBox(),
-        secondImage != null && thirdImage != null
-            ? Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                secondImage ?? const SizedBox(),
-                thirdImage ?? const SizedBox()
-              ])
-            : const SizedBox()
-      ],
-    );
+    return kIsWeb
+        ? Column(
+            children: [
+              mainImage,
+              const SizedBox(
+                height: 50,
+              ),
+              title,
+              const SizedBox(
+                height: 15,
+              ),
+              subTitle,
+              const SizedBox(
+                height: 40,
+              ),
+              secSubTitle ?? const SizedBox(),
+              secondImage != null && thirdImage != null
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                          secondImage ?? const SizedBox(),
+                          thirdImage ?? const SizedBox()
+                        ])
+                  : const SizedBox()
+            ],
+          )
+        : Column(
+            children: [
+              mainImage,
+              const SizedBox(
+                height: 15,
+              ),
+              title,
+              const SizedBox(
+                height: 15,
+              ),
+              subTitle,
+              const SizedBox(
+                height: 15,
+              ),
+              secSubTitle ?? const SizedBox(),
+              secondImage != null && thirdImage != null
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                          secondImage ?? const SizedBox(),
+                          thirdImage ?? const SizedBox()
+                        ])
+                  : const SizedBox()
+            ],
+          );
   }
 }

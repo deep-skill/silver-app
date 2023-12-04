@@ -401,6 +401,12 @@ class ReserveInfo extends StatelessWidget {
                                   onPressed: () {
                                     deleteReserve();
                                     context.go("/admin");
+                                    ScaffoldMessenger.of(context)
+                                        .clearSnackBars();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content:
+                                                Text("Reserva eliminada")));
                                   },
                                 ),
                                 TextButton(
@@ -410,7 +416,7 @@ class ReserveInfo extends StatelessWidget {
                                   ),
                                   child: const Text('Cancelar'),
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                    context.pop();
                                   },
                                 ),
                               ],
@@ -675,6 +681,12 @@ class ReserveInfo extends StatelessWidget {
                                         onPressed: () {
                                           deleteReserve();
                                           context.go("/admin");
+                                          ScaffoldMessenger.of(context)
+                                        .clearSnackBars();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content:
+                                                Text("Reserva eliminada")));
                                         },
                                       ),
                                       TextButton(

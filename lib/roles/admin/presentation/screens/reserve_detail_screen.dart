@@ -216,7 +216,7 @@ class ReserveInfo extends StatelessWidget {
                                         text: 'S/$silverPercent'),
                                     BoxReservePayment(
                                         label: 'Pago conductor',
-                                        text: 'S/$driverPayment'),
+                                        text: 'S/${driverPayment}'),
                                     BoxReservePayment(
                                         label: 'Porcentaje Silver',
                                         text: '${reserve.silverPercent}%'),

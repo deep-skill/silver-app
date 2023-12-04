@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TripLabelStop extends StatelessWidget {
@@ -10,6 +11,7 @@ class TripLabelStop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       alignment: AlignmentDirectional.bottomStart,
       child: IntrinsicWidth(
@@ -23,7 +25,7 @@ class TripLabelStop extends StatelessWidget {
             children: [
               const SizedBox(width: 15),
               SizedBox(
-                width: MediaQuery.of(context).size.width * .27,
+                width: kIsWeb ? size.width * .27 : size.width * .75,
                 child: Flexible(
                   child: Text(
                     text,
@@ -31,7 +33,7 @@ class TripLabelStop extends StatelessWidget {
                         fontFamily: 'Roboto-Bold',
                         fontSize: 14,
                         color: Color(0xff1D192B)),
-                    maxLines: 5,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

@@ -1,9 +1,13 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_payment.dart';
@@ -25,11 +29,25 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
         .loadReserveDetail(widget.reserveId);
   }
 
+  void reload() {
+    ref.invalidate(reservesListProvider);
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final reserves = ref.watch(reserveDetailProvider);
     final ReserveDetail? reserve = reserves[widget.reserveId];
+    Credentials? credentials = ref.watch(authProvider).credentials;
+
+    void deleteReserve() async {
+      try {
+        await dio(credentials!.accessToken).delete('reserves/${reserve?.id}');
+      } catch (e) {
+        print(e);
+      }
+      reload();
+    }
 
     if (reserve == null) {
       return const Scaffold(
@@ -47,7 +65,11 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
                 scrolledUnderElevation: 0.0),
             body: Padding(
                 padding: const EdgeInsets.fromLTRB(180, 20, 180, 20),
-                child: ReserveInfo(reserve: reserve, size: size)))
+                child: ReserveInfo(
+                  reserve: reserve,
+                  size: size,
+                  deleteReserve: deleteReserve,
+                )))
         : Scaffold(
             backgroundColor: const Color(0xffF2F3F7),
             appBar: AppBar(
@@ -57,12 +79,21 @@ class ReserveDetailScreenState extends ConsumerState<ReserveDetailScreen> {
                 scrolledUnderElevation: 0.0),
             body: Padding(
                 padding: const EdgeInsets.all(14),
-                child: ReserveInfo(reserve: reserve, size: size)));
+                child: ReserveInfo(
+                  reserve: reserve,
+                  size: size,
+                  deleteReserve: deleteReserve,
+                )));
   }
 }
 
 class ReserveInfo extends StatelessWidget {
-  const ReserveInfo({super.key, required this.reserve, required this.size});
+  const ReserveInfo(
+      {super.key,
+      required this.reserve,
+      required this.size,
+      required this.deleteReserve});
+  final VoidCallback deleteReserve;
   final ReserveDetail reserve;
   final Size size;
 
@@ -367,7 +398,10 @@ class ReserveInfo extends StatelessWidget {
                                     ),
                                   ),
                                   child: const Text('Confirmar'),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    deleteReserve();
+                                    context.go("/admin");
+                                  },
                                 ),
                                 TextButton(
                                   style: TextButton.styleFrom(
@@ -638,7 +672,10 @@ class ReserveInfo extends StatelessWidget {
                                           ),
                                         ),
                                         child: const Text('Confirmar'),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          deleteReserve();
+                                          context.go("/admin");
+                                        },
                                       ),
                                       TextButton(
                                         style: TextButton.styleFrom(
@@ -648,7 +685,7 @@ class ReserveInfo extends StatelessWidget {
                                         ),
                                         child: const Text('Cancelar'),
                                         onPressed: () {
-                                          Navigator.of(context).pop();
+                                          context.pop();
                                         },
                                       ),
                                     ],

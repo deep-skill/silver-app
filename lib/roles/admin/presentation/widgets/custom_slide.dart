@@ -97,7 +97,7 @@ class CustomSlide extends StatelessWidget {
                       SizedBox(
                         width: size.width * .45,
                         child: Text(
-                          '${reserve.name} ${reserve.lastName} jjj',
+                          '${reserve.name} ${reserve.lastName}',
                           style: const TextStyle(
                             fontSize: 17,
                             fontFamily: 'Montserrat-Bold',

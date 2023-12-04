@@ -94,11 +94,15 @@ class CustomSlide extends StatelessWidget {
                         Icons.hail,
                         size: 20,
                       ),
-                      Text(
-                        '${reserve.name} ${reserve.lastName}',
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontFamily: 'Montserrat-Bold',
+                      SizedBox(
+                        width: size.width * .45,
+                        child: Text(
+                          '${reserve.name} ${reserve.lastName} jjj',
+                          style: const TextStyle(
+                            fontSize: 17,
+                            fontFamily: 'Montserrat-Bold',
+                          overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                     ],

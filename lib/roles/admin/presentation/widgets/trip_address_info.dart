@@ -29,7 +29,7 @@ class TripAddressInfoWidget extends StatelessWidget {
           Row(
             children: [
               Container(
-                width: 11.0,
+                width: 10.0,
               ),
               Container(
                 width: 2.0,

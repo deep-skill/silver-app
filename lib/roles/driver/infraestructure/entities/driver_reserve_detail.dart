@@ -30,7 +30,7 @@ class DriverReserveDetail {
   factory DriverReserveDetail.fromJson(Map<String, dynamic> json) =>
       DriverReserveDetail(
         id: json["id"],
-        startTime: DateTime.parse(json["startTime"]),
+        startTime: DateTime.parse(json["startTime"]).toLocal(),
         serviceType: json["serviceType"],
         tripType: json["tripType"],
         startAddress: json["startAddress"],
@@ -39,7 +39,9 @@ class DriverReserveDetail {
         name: json["User"]["name"],
         lastName: json["User"]["lastName"],
         state: (json["Trip"] == null) ? null : json["Trip"]["state"],
-        enterpriseName: json["Reserve"] == null ? null : json["Reserve"]["Enterprise"]["name"],
+        enterpriseName: json["Reserve"] == null
+            ? null
+            : json["Reserve"]["Enterprise"]["name"],
         silverPercent: json["silverPercent"],
       );
 }

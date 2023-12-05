@@ -20,6 +20,7 @@ class BoxReserveDetail extends StatelessWidget {
       children: [
         Icon(
           icon,
+          size: MediaQuery.of(context).size.width * 0.055,
         ),
         const SizedBox(width: 8.0),
         SizedBox(

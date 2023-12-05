@@ -43,9 +43,7 @@ class BoxStateReserveDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
-          icon,
-        ),
+        Icon(icon, size: MediaQuery.of(context).size.width * 0.055),
         const SizedBox(width: 8.0),
         SizedBox(
           width: MediaQuery.of(context).size.width * .35,

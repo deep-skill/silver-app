@@ -45,7 +45,7 @@ class ReserveDetailScreenState
       ),
       body: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.67,
+          height: MediaQuery.of(context).size.height * 0.8,
           margin: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -75,123 +75,131 @@ class ReserveInfo extends StatelessWidget {
       return price - ((price / 100) * silverPercent);
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const TitleReserveDetail(text: 'Datos del servicio'),
-        const SizedBox(
-          height: 10,
-        ),
-        BoxReserveDetail(
-            icon: Icons.hail,
-            label: "Pasajero",
-            text: "${reserve.name} ${reserve.lastName}",
-            row: false),
-        const SizedBox(height: 8),
-        BoxReserveDetail(
-            icon: Icons.domain,
-            label: "Empresa",
-            text: reserve.enterpriseName ?? "Personal",
-            row: false),
-        const SizedBox(height: 8),
-        BoxReserveDetail(
-            icon: Icons.business_center_outlined,
-            label: "Tipo de servicio",
-            text: capitalizeFirst(reserve.serviceType),
-            row: false),
-        const SizedBox(height: 5),
-        const TitleReserveDetail(text: "Datos del viaje"),
-        const SizedBox(
-          height: 10,
-        ),
-        Row(
-          children: [
-            Expanded(
-              child: BoxReserveDetail(
-                  icon: Icons.today,
-                  label: "Fecha de reserva",
-                  text:
-                      '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}',
-                  row: true),
+    return ListView(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const TitleReserveDetail(text: 'Datos del servicio'),
+            const SizedBox(
+              height: 10,
             ),
-            Expanded(
-              child: BoxReserveDetail(
-                  icon: Icons.alarm,
-                  label: "Hora de reserva",
-                  text: '${reserve.startTime.hour}:${reserve.startTime.minute}',
-                  row: true),
+            BoxReserveDetail(
+                icon: Icons.hail,
+                label: "Pasajero",
+                text: "${reserve.name} ${reserve.lastName}",
+                row: false),
+            const SizedBox(height: 8),
+            BoxReserveDetail(
+                icon: Icons.domain,
+                label: "Empresa",
+                text: reserve.enterpriseName ?? "Personal",
+                row: false),
+            const SizedBox(height: 8),
+            BoxReserveDetail(
+                icon: Icons.business_center_outlined,
+                label: "Tipo de servicio",
+                text: capitalizeFirst(reserve.serviceType),
+                row: false),
+            const SizedBox(height: 5),
+            const TitleReserveDetail(text: "Datos del viaje"),
+            const SizedBox(
+              height: 10,
             ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        Row(children: [
-          Expanded(
-            child: BoxReserveDetail(
-                icon: Icons.timeline,
-                label: "Tipo de viaje",
-                text: capitalizeFirst(reserve.tripType),
-                row: true),
-          ),
-          Expanded(
-            child: BoxStateReserveDetail(
-              icon: Icons.cached,
-              label: "Estado",
-              state: reserve.state,
+            Row(
+              children: [
+                Expanded(
+                  child: BoxReserveDetail(
+                      icon: Icons.today,
+                      label: "Fecha de reserva",
+                      text:
+                          '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}',
+                      row: true),
+                ),
+                Expanded(
+                  child: BoxReserveDetail(
+                      icon: Icons.alarm,
+                      label: "Hora de reserva",
+                      text:
+                          '${reserve.startTime.hour}:${reserve.startTime.minute}',
+                      row: true),
+                ),
+              ],
             ),
-          )
-        ]),
-        const SizedBox(height: 8),
-        BoxReserveDetail(
-            icon: Icons.location_on_outlined,
-            label: "Punto de origen",
-            text: reserve.startAddress,
-            row: false),
-        reserve.endAddress != null
-            ? Column(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 11.0,
-                      ),
-                      Container(
-                        width: 2.0,
-                        height: 25.0,
-                        color: Colors.black,
-                        padding: const EdgeInsets.all(2.0),
-                      ),
-                    ],
-                  ),
-                  BoxReserveDetail(
-                      icon: Icons.trip_origin,
-                      label: "Punto de destino",
-                      text: reserve.endAddress!,
-                      row: false),
-                ],
+            const SizedBox(height: 8),
+            Row(children: [
+              Expanded(
+                child: BoxReserveDetail(
+                    icon: Icons.timeline,
+                    label: "Tipo de viaje",
+                    text: capitalizeFirst(reserve.tripType),
+                    row: true),
+              ),
+              Expanded(
+                child: BoxStateReserveDetail(
+                  icon: Icons.cached,
+                  label: "Estado",
+                  state: reserve.state,
+                ),
               )
-            : const SizedBox(),
-        Container(
-          height: 40.0,
-        ),
-        Row(children: [
-          const Expanded(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Tarifa \nconductor",
-                  style: TextStyle(
-                      height: 1.2, fontSize: 20.0, color: Color(0xff03132A))),
-            ],
-          )),
-          Expanded(
-              child: Text(
-                  "S/  ${driverIncome(reserve.price, reserve.silverPercent).toStringAsFixed(2)}",
-                  style: const TextStyle(
-                    fontSize: 32.0,
-                    color: Color(0xff03132A),
-                  ))),
-        ])
-      ]),
+            ]),
+            const SizedBox(height: 8),
+            BoxReserveDetail(
+                icon: Icons.location_on_outlined,
+                label: "Punto de origen",
+                text: reserve.startAddress,
+                row: false),
+            reserve.endAddress != null
+                ? Column(
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 9.0,
+                          ),
+                          Container(
+                            width: 2.0,
+                            height: 25.0,
+                            color: Colors.black,
+                            padding: const EdgeInsets.all(2.0),
+                          ),
+                        ],
+                      ),
+                      BoxReserveDetail(
+                          icon: Icons.trip_origin,
+                          label: "Punto de destino",
+                          text: reserve.endAddress!,
+                          row: false),
+                    ],
+                  )
+                : const SizedBox(),
+            Container(
+              height: 40.0,
+            ),
+            Row(children: [
+              const Expanded(
+                  child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tarifa \nconductor",
+                      style: TextStyle(
+                          height: 1.2,
+                          fontSize: 20.0,
+                          color: Color(0xff03132A))),
+                ],
+              )),
+              Expanded(
+                  child: Text(
+                      "S/  ${driverIncome(reserve.price, reserve.silverPercent).toStringAsFixed(2)}",
+                      style: const TextStyle(
+                        fontSize: 32.0,
+                        color: Color(0xff03132A),
+                      ))),
+            ])
+          ]),
+        )
+      ],
     );
   }
 }

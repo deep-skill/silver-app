@@ -26,7 +26,7 @@ class CustomSlide extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
-        height: size.height * .15,
+        height: size.height * .17,
         decoration: BoxDecoration(
           color: const Color(0xffFFFFFF),
           borderRadius: const BorderRadius.all(Radius.circular(12)),
@@ -95,13 +95,12 @@ class CustomSlide extends StatelessWidget {
                         size: 20,
                       ),
                       SizedBox(
-                        width: size.width * .45,
                         child: Text(
                           '${reserve.name} ${reserve.lastName}',
                           style: const TextStyle(
                             fontSize: 17,
                             fontFamily: 'Montserrat-Bold',
-                          overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ),
@@ -165,11 +164,15 @@ class CustomSlide extends StatelessWidget {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => context.push('/admin/reserves/detail/${reserve.id}'),
-              child: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 30,
+            Container(
+              margin: EdgeInsets.only(right: size.width * .005),
+              child: GestureDetector(
+                onTap: () =>
+                    context.push('/admin/reserves/detail/${reserve.id}'),
+                child: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 30,
+                ),
               ),
             ),
           ],

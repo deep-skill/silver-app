@@ -28,11 +28,12 @@ class DriverTripLabelStop extends StatelessWidget {
                 Icons.add_location_alt,
                 color: Colors.grey[600],
               ),
+              SizedBox(width: size.width * .02),
               SizedBox(
                 width: size.width * .7,
                 child: Text(
                   text,
-                  maxLines: 4,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),

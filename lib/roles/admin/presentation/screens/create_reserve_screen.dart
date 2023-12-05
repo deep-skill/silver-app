@@ -14,6 +14,7 @@ import 'package:silverapp/roles/admin/presentation/delegates/search_passenger_de
 import 'package:silverapp/roles/admin/presentation/providers/forms/reserve_form_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_create_update_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_car_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
@@ -591,7 +592,7 @@ class CreateReserveView extends ConsumerWidget {
                                                               buttonColor:
                                                                   Colors.blue,
                                                               buttonText:
-                                                                  'Seleccionar punto de recojo',
+                                                                  'Seleccionar punto de destino',
                                                               onPicked:
                                                                   (pickedData) async {
                                                                 ref.read(reserveFormProvider(reserve).notifier).onEndAddressChanged(
@@ -825,18 +826,20 @@ class CreateReserveView extends ConsumerWidget {
                             onPressed: () async {
                               ref
                                   .read(reserveFormProvider(reserve).notifier)
-                                  .onFormSubmit(reserve.id!)
+                                  .onFormSubmit(reserve.id!, reserve.tripId)
                                   .then((value) {
-                                if (!value) return;
-                                if (reserve.id! != 0) {
-                                  ref
-                                      .read(reserveDetailProvider.notifier)
-                                      .updateReserveDetail(
-                                          reserve.id!.toString());
-                                }
-                                showSnackbar(context, reserve.id!);
+                              if (!value) return;
+                              if (reserve.id! != 0) {
+                                ref
+                                .read(reserveDetailProvider.notifier)
+                                .updateReserveDetail(
+                                  reserve.id!.toString());
+                              }
+                              showSnackbar(context, reserve.id!);
 
-                                context.pop();
+                              ref.read(reservesHomeProvider.notifier).reloadData();
+
+                              context.pop();
                               });
                             },
                             style: ButtonStyle(
@@ -1321,7 +1324,7 @@ class CreateReserveView extends ConsumerWidget {
                                                           position.longitude),
                                                       buttonColor: Colors.blue,
                                                       buttonText:
-                                                          'Seleccionar punto de recojo',
+                                                          'Seleccionar punto de destino',
                                                       onPicked:
                                                           (pickedData) async {
                                                         ref
@@ -1525,7 +1528,7 @@ class CreateReserveView extends ConsumerWidget {
                           onPressed: () async {
                             ref
                                 .read(reserveFormProvider(reserve).notifier)
-                                .onFormSubmit(reserve.id!)
+                                .onFormSubmit(reserve.id!, reserve.tripId)
                                 .then((value) {
                               if (!value) return;
                               if (reserve.id! != 0) {
@@ -1541,6 +1544,8 @@ class CreateReserveView extends ConsumerWidget {
                                 }
                               }
                               showSnackbar(context, reserve.id!);
+
+                              ref.read(reservesHomeProvider.notifier).reloadData();
 
                               context.pop();
                             });

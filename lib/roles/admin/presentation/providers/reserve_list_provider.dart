@@ -30,6 +30,7 @@ typedef ReserveCallback = Future<List<ReserveList>> Function({int page});
 
 class ReservesNotifier extends StateNotifier<List<ReserveList>> {
   int currentPage = 0;
+  bool lastPage = false;
   bool isLoading = false;
   ReserveCallback fetchMoreReserves;
 
@@ -39,10 +40,14 @@ class ReservesNotifier extends StateNotifier<List<ReserveList>> {
 
   Future<void> loadNextPage() async {
     if (isLoading) return;
+    if (lastPage) return;
     //print('Loading new pages');
     isLoading = true;
     final List<ReserveList> reserves =
         await fetchMoreReserves(page: currentPage);
+    if(reserves.isEmpty) {
+      lastPage = true;
+    }
     currentPage++;
     state = [...state, ...reserves];
     await Future.delayed(const Duration(milliseconds: 400));

@@ -64,15 +64,15 @@ class AdminTripEnd {
         reserveId: json["Reserve"]["id"],
         status: json["status"],
         totalPrice: json["totalPrice"].toDouble(),
-        onWayDriver: DateTime.parse(json["onWayDriver"]),
+        onWayDriver: DateTime.parse(json["onWayDriver"]).toLocal(),
         arrivedDriver: json["arrivedDriver"] == null
             ? null
-            : DateTime.parse(json["arrivedDriver"]),
+            : DateTime.parse(json["arrivedDriver"]).toLocal(),
         startTime: json["startTime"] == null
             ? null
-            : DateTime.parse(json["startTime"]),
+            : DateTime.parse(json["startTime"]).toLocal(),
         endTime:
-            json["endTime"] == null ? null : DateTime.parse(json["endTime"]),
+            json["endTime"] == null ? null : DateTime.parse(json["endTime"]).toLocal(),
         startAddress: json["Reserve"]["startAddress"],
         endAddress: json["Reserve"]["endAddress"],
         price: json["Reserve"]["price"].toDouble(),

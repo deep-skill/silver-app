@@ -18,7 +18,7 @@ class ReserveDetail {
   final String tripType;
   final String startAddress;
   final String? endAddress;
-  final String price;
+  final double price;
   final String silverPercent;
   final String? tripStatus;
 
@@ -57,9 +57,9 @@ class ReserveDetail {
       serviceType: json['serviceType'],
       startAddress: json['startAddress'],
       endAddress: json['endAddress'],
-      price: json['price'].toString(),
+      price: json['price'].toDouble(),
       silverPercent: json['silverPercent'].toString(),
-      startTime: DateTime.parse(json['startTime']),
+      startTime: DateTime.parse(json['startTime']).toLocal(),
       name: json['User']['name'],
       lastName: json['User']['lastName'],
       enterpriseName: json['Enterprise'] == null

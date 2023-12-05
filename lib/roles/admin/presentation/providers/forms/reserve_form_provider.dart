@@ -23,6 +23,17 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
     .family<ReserveFormNotifier, ReserveFormState, CreateReserve>(
         (ref, reserve) {
   Future<bool> createCallback(Map<String, dynamic> reserveLike) async {
+    if (reserveLike['trip_id'] != null && reserveLike['id'] != null) {
+      try {
+        final String? tripId = reserveLike['trip_id'];
+        Credentials? credentials = ref.watch(authProvider).credentials;
+        await dio(credentials!.accessToken).patch(
+            '/trips/admin-trip-total-price/$tripId',
+            data: {"total_price": reserveLike['price']});
+      } catch (e) {
+        print(e);
+      }
+    }
     try {
       final String? reserveId = reserveLike['id'];
       final String method = (reserveId == null) ? 'POST' : 'PATCH';
@@ -116,7 +127,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
               : SilverPercent.dirty(reserve.silverPercent.toString()),
         ));
 
-  Future<bool> onFormSubmit(int id) async {
+  Future<bool> onFormSubmit(int id, [int? tripId]) async {
     _touchedEverything();
     if (!state.isFormValid) return false;
 
@@ -159,7 +170,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "price": state.price.value,
       if (state.silverPercent.value != '')
         "silver_percent": state.silverPercent.value,
-      if (id != 0) "id": id.toString()
+      if (id != 0) "id": id.toString(),
+      if (tripId != 0) "trip_id": tripId.toString(),
     };
     try {
       return await onSubmitCallback!(reserveLike);

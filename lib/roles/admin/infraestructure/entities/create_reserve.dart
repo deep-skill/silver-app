@@ -73,7 +73,9 @@ class CreateReserve {
         price: json['price'].toString(),
         driverPercent: 0,
         silverPercent: json['silverPercent'].toString(),
-        startTime: json['startTime'].substring(11, 16),
-        startDate: json['startTime'].substring(0, 10),
+        startTime:
+            '${DateTime.parse(json['startTime']).toLocal().hour.toString()}:${DateTime.parse(json['startTime']).toLocal().minute.toString().padLeft(2, '0')}',
+        startDate:
+            '${DateTime.parse(json['startTime']).toLocal().year.toString()}-${DateTime.parse(json['startTime']).toLocal().month.toString().padLeft(2, '0')}-${DateTime.parse(json['startTime']).toLocal().day.toString().padLeft(2, '0')}',
       );
 }

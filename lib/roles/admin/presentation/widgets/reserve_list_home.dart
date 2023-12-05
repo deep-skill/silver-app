@@ -90,10 +90,9 @@ class _Slide extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: 120,
+                width: size.width * .3,
                 decoration: const BoxDecoration(
                   color: Color(0xffF2F3F7),
                   borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -109,18 +108,24 @@ class _Slide extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.hail,
-                        size: 20,
-                      ),
-                      Text(
-                        '${reserve.name} ${reserve.lastName}',
-                        style: const TextStyle(
-                            fontSize: 17, fontFamily: 'Montserrat-Bold'),
-                      ),
-                    ],
+                  SizedBox(
+                    width: size.width * .45,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.hail,
+                          size: 20,
+                        ),
+                        Expanded(
+                          child: Text(
+                            '${reserve.name} ${reserve.lastName}',
+                            style: const TextStyle(
+                                fontSize: 17, fontFamily: 'Montserrat-Bold'),
+                                overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 9),
                   Row(
@@ -146,7 +151,7 @@ class _Slide extends StatelessWidget {
                         size: 20,
                       ),
                       Text(
-                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
+                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
                         style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'Montserrat-Medium',

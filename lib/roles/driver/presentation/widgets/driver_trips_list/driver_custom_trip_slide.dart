@@ -109,7 +109,7 @@ class CustomTripSlide extends StatelessWidget {
                       ? Center(
                           child: trip.enterpriseName != ''
                               ? Text(
-                                  trip.enterpriseName,
+                                  trip.enterpriseName ?? "Viaje personal",
                                   maxLines: 2,
                                   textAlign: TextAlign.center,
                                   overflow: TextOverflow.ellipsis,
@@ -197,7 +197,7 @@ class CustomTripSlide extends StatelessWidget {
                             ],
                           ),
                           Text(
-                              " S/. ${calculateDriverPrice().toStringAsFixed(2)}",
+                              " S/ ${calculateDriverPrice().toStringAsFixed(2)}",
                               style: styleTextPay),
                         ]),
                     const SizedBox(

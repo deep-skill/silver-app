@@ -124,7 +124,7 @@ class DriverCustomSlide extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute} hs.',
+                            ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')} hs.',
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               fontSize: 12,

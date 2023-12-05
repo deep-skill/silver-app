@@ -10,6 +10,7 @@ class DriverTripLabelStop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       alignment: AlignmentDirectional.bottomStart,
       padding: const EdgeInsets.all(5),
@@ -27,7 +28,15 @@ class DriverTripLabelStop extends StatelessWidget {
                 Icons.add_location_alt,
                 color: Colors.grey[600],
               ),
-              Text(text),
+              SizedBox(width: size.width * .02),
+              SizedBox(
+                width: size.width * .7,
+                child: Text(
+                  text,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
         ),

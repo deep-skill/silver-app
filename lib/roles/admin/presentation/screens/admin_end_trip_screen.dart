@@ -425,6 +425,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
           )
         : Scaffold(
             appBar: AppBar(
+              backgroundColor: const Color(0xffF2F3F7),
               title: const Text('Detalles'),
               centerTitle: true,
             ),
@@ -437,25 +438,27 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                     margin: const EdgeInsets.all(7.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey[200],
+                      color: Colors.white,
                     ),
                     padding: const EdgeInsets.all(10),
                     child: ListView(
                       children: [
                         const TitleTripDetail(text: "Datos del servicio"),
                         const SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         BoxReserveDetail(
                           label: "Pasajero",
                           text: "${trip.userName} ${trip.userLastName}",
                           icon: Icons.hail,
                         ),
+                        const SizedBox(height: 12),
                         BoxReserveDetail(
                           label: "Empresa",
                           text: trip.enterpriseName.toString(),
                           icon: Icons.domain,
                         ),
+                        const SizedBox(height: 12),
                         BoxReserveDetail(
                           label: "Tipo de servicio",
                           text: capitalizeFirst(trip.serviceType.toString()),
@@ -466,7 +469,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         ),
                         const TitleTripDetail(text: "Datos del viaje"),
                         const SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Row(
                           children: [
@@ -479,7 +482,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                               ),
                             ),
                             const SizedBox(
-                              width: 10,
+                              width: 40,
                             ),
                             Expanded(
                               child: BoxReserveDetail(
@@ -491,21 +494,24 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             ),
                           ],
                         ),
+                        const SizedBox(height: 12),
                         Row(
                           children: [
                             Expanded(
                               child: BoxReserveDetail(
                                 label: "Tipo de viaje",
                                 text: capitalizeFirst(trip.tripType),
+                                icon: Icons.timeline,
                               ),
                             ),
                             const SizedBox(
-                              width: 10,
+                              width: 12,
                             ),
                             BoxStatusReserveDetail(
                                 tripStatus: trip.status, label: "Estado"),
                           ],
                         ),
+                        const SizedBox(height: 12),
                         TripAddressInfoWidget(
                           startAddress: trip.startAddress,
                           endAddress: trip.endAddress,
@@ -526,7 +532,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const TitleTripDetail(
                             text: "Datos del conductor y vehículo"),
                         const SizedBox(
-                          height: 5,
+                          height: 8,
                         ),
                         Row(
                           children: [
@@ -540,12 +546,14 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                         "${trip.driverName} ${trip.driverLastName}",
                                     icon: Icons.person_2_outlined,
                                   ),
+                                  const SizedBox(height: 12),
                                   BoxReserveDetail(
                                     label: "Marca/ modelo/ color",
                                     text:
                                         "${trip.brand} ${trip.model} ${trip.color}",
                                     icon: Icons.person_2_outlined,
                                   ),
+                                  const SizedBox(height: 12),
                                   BoxReserveDetail(
                                     label: "Placa",
                                     text: trip.licensePlate,
@@ -658,6 +666,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                       ],
                     )),
               ),
-            ));
+            ),
+            backgroundColor: const Color(0xffF2F3F7),
+          );
   }
 }

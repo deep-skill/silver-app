@@ -31,6 +31,7 @@ typedef TripCallback = Future<List<TripList>> Function({int page});
 class TripsNotifier extends StateNotifier<List<TripList>> {
   int currentPage = 0;
   bool isLoading = false;
+  bool lastPage = false;
   TripCallback fetchMoreTrips;
 
   TripsNotifier({
@@ -39,9 +40,13 @@ class TripsNotifier extends StateNotifier<List<TripList>> {
 
   Future<void> loadNextPage() async {
     if (isLoading) return;
+    if (lastPage) return;
     //print('Loading new pages');
     isLoading = true;
     final List<TripList> reserves = await fetchMoreTrips(page: currentPage);
+     if(reserves.isEmpty) {
+      lastPage = true;
+    }
     currentPage++;
     state = [...state, ...reserves];
     await Future.delayed(const Duration(milliseconds: 400));

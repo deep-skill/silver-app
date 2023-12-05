@@ -78,7 +78,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
             appBar: AppBar(
               title: const Text('Detalles'),
               centerTitle: true,
-              backgroundColor: Color(0xffF2F3F7),
+              backgroundColor: const Color(0xffF2F3F7),
             ),
             body: Center(
               child: SizedBox(

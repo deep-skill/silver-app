@@ -32,7 +32,7 @@ class TripList {
   });
   factory TripList.fromJson(Map<String, dynamic> json) => TripList(
         id: json['id'],
-        onWayDriver: DateTime.parse(json['onWayDriver']),
+        onWayDriver: DateTime.parse(json['onWayDriver']).toLocal(),
         totalPrice: json['totalPrice'].toDouble(),
         status: json['status'],
         reserveId: json['Reserve']['id'],

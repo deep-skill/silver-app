@@ -21,7 +21,7 @@ class ReserveHome {
   factory ReserveHome.fromJson(Map<String, dynamic> json) => ReserveHome(
         id: json['id'],
         tripType: json['tripType'],
-        startTime: DateTime.parse(json['startTime']),
+        startTime: DateTime.parse(json['startTime']).toLocal(),
         name: json['User']['name'],
         lastName: json['User']['lastName'],
         entrepriseName: json['Enterprise']['name'],

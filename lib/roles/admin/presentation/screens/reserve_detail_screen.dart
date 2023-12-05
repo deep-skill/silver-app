@@ -101,10 +101,9 @@ class ReserveInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     const cyanColor = Color(0xff23a5cd);
     final siverPercentToDouble = double.parse(reserve.silverPercent) / 100;
-    final priceToDouble = double.parse(reserve.price);
     final double silverPercent =
-        double.parse((siverPercentToDouble * priceToDouble).toStringAsFixed(2));
-    final double driverPayment = priceToDouble - silverPercent;
+        double.parse((siverPercentToDouble * reserve.price).toStringAsFixed(2));
+    final double driverPayment = reserve.price - silverPercent;
     return kIsWeb
         ? ListView(
             children: [
@@ -176,8 +175,6 @@ class ReserveInfo extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: Row(
-                                        // mainAxisAlignment:
-                                        //     MainAxisAlignment.spaceBetween,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -241,13 +238,13 @@ class ReserveInfo extends StatelessWidget {
                                   children: [
                                     BoxReservePayment(
                                         label: 'Tarifa base',
-                                        text: 'S/${reserve.price}'),
+                                        text: 'S/${reserve.price.toStringAsFixed(2)}'),
                                     BoxReservePayment(
                                         label: 'Pago Silver',
-                                        text: 'S/$silverPercent'),
+                                        text: 'S/${silverPercent.toStringAsFixed(2)}'),
                                     BoxReservePayment(
                                         label: 'Pago conductor',
-                                        text: 'S/${driverPayment}'),
+                                        text: 'S/${driverPayment.toStringAsFixed(2)}'),
                                     BoxReservePayment(
                                         label: 'Porcentaje Silver',
                                         text: '${reserve.silverPercent}%'),
@@ -288,7 +285,7 @@ class ReserveInfo extends StatelessWidget {
                                       child: BoxReserveDetail(
                                           label: 'Hora de reserva',
                                           text:
-                                              '${reserve.startTime.hour}:${reserve.startTime.minute}'),
+                                              '${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}'),
                                     )
                                   ],
                                 ),
@@ -317,7 +314,9 @@ class ReserveInfo extends StatelessWidget {
                                         label: 'Punto de recojo',
                                         text: reserve.startAddress),
                                     SizedBox(height: size.height * .03),
-                                    BoxReserveDetail(
+                                    reserve.endAddress == null
+                                    ? const SizedBox()
+                                    :BoxReserveDetail(
                                         icon: Icons.trip_origin_outlined,
                                         label: 'Punto de destino',
                                         text: '${reserve.endAddress}'),
@@ -511,7 +510,7 @@ class ReserveInfo extends StatelessWidget {
                             child: BoxReserveDetail(
                                 label: 'Hora de reserva',
                                 text:
-                                    '${reserve.startTime.hour}:${reserve.startTime.minute}'),
+                                    '${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}'),
                           )
                         ],
                       ),
@@ -535,7 +534,9 @@ class ReserveInfo extends StatelessWidget {
                           icon: Icons.location_on,
                           label: 'Punto de recojo',
                           text: reserve.startAddress),
-                      BoxReserveDetail(
+                      reserve.endAddress == null
+                      ? const SizedBox()
+                      : BoxReserveDetail(
                           icon: Icons.trip_origin_outlined,
                           label: 'Punto de destino',
                           text: '${reserve.endAddress}'),
@@ -607,12 +608,12 @@ class ReserveInfo extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           BoxReservePayment(
-                              label: 'Tarifa base', text: 'S/${reserve.price}'),
+                              label: 'Tarifa base', text: 'S/${reserve.price.toStringAsFixed(2)}'),
                           BoxReservePayment(
-                              label: 'Pago Silver', text: 'S/$silverPercent'),
+                              label: 'Pago Silver', text: 'S/${silverPercent.toStringAsFixed(2)}'),
                           BoxReservePayment(
                               label: 'Pago conductor',
-                              text: 'S/$driverPayment'),
+                              text: 'S/${driverPayment.toStringAsFixed(2)}'),
                           BoxReservePayment(
                               label: 'Porcentaje Silver',
                               text: '${reserve.silverPercent}%'),

@@ -31,12 +31,12 @@ class AdminHomeAppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
+      triggerMode: RefreshIndicatorTriggerMode.anywhere,
       onRefresh: () {
         ref.invalidate(tripsSummaryProvider);
         return ref.read(reservesHomeProvider.notifier).reloadData();
       },
       child: Stack(children: <Widget>[
-        ListView(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
@@ -160,6 +160,7 @@ class AdminHomeAppView extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(height: size.height * .25, child: ListView()),
       ]),
     );
   }

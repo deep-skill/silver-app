@@ -26,7 +26,7 @@ class DriverTripList {
 
   factory DriverTripList.fromJson(Map<String, dynamic> json) => DriverTripList(
         id: json["id"],
-        onWayDriver: DateTime.parse(json["onWayDriver"]),
+        onWayDriver: DateTime.parse(json["onWayDriver"]).toLocal(),
         status: json["status"],
         totalPrice: json["totalPrice"].toDouble(),
         name: json["Reserve"]["User"]["name"],

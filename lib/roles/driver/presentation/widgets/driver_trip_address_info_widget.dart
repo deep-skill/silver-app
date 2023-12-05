@@ -41,6 +41,7 @@ class DriverTripAddressInfoWidget extends StatelessWidget {
             ),
             stops.isEmpty == false
                 ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 3.0),

@@ -87,7 +87,9 @@ class TripDriverStatus {
         tripType: json["Reserve"]["tripType"],
         serviceType: json["Reserve"]["serviceType"],
         silverPercent: json["Reserve"]["silverPercent"],
-        enterpriseName: json["Reserve"]["Enterprise"]["name"],
+        enterpriseName: json["Reserve"]["Enterprise"] != null
+            ? json["Reserve"]["Enterprise"]["name"]
+            : null,
         reserveStartTime:
             DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
       );

@@ -12,18 +12,22 @@ class LabelExtraTripEnd extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
+      margin: EdgeInsets.only(bottom: size.height * .02),
       alignment: AlignmentDirectional.bottomStart,
       child: Row(
         children: [
           const SizedBox(
             width: 32,
           ),
-          Text(
-            text,
-            style: styleText,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
+          Expanded(
+            child: Text(
+              text,
+              style: styleText,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
+            ),
           ),
         ],
       ),

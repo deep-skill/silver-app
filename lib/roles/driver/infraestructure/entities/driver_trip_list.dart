@@ -7,7 +7,7 @@ class DriverTripList {
   String status;
   String name;
   String lastName;
-  String enterpriseName;
+  String? enterpriseName;
   int silverPercent;
   List<Toll> tolls;
   List<Parking> parkings;
@@ -19,7 +19,7 @@ class DriverTripList {
       required this.totalPrice,
       required this.name,
       required this.lastName,
-      required this.enterpriseName,
+      this.enterpriseName,
       required this.silverPercent,
       required this.tolls,
       required this.parkings});
@@ -31,7 +31,9 @@ class DriverTripList {
         totalPrice: json["totalPrice"].toDouble(),
         name: json["Reserve"]["User"]["name"],
         lastName: json["Reserve"]["User"]["lastName"],
-        enterpriseName: json["Reserve"]["Enterprise"]["name"],
+        enterpriseName: json["Reserve"]["Enterprise"] != null
+            ? json["Reserve"]["Enterprise"]["name"]
+            : null,
         silverPercent: json["Reserve"]["silverPercent"],
         tolls:
             List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),

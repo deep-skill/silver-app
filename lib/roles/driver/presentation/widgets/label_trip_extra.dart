@@ -9,10 +9,12 @@ class LabelExtraTrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       alignment: AlignmentDirectional.bottomStart,
       child: IntrinsicWidth(
         child: Container(
+          margin: EdgeInsets.only(bottom: size.height * .02),
           padding: const EdgeInsets.all(0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

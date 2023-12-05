@@ -122,7 +122,7 @@ class ReserveInfo extends StatelessWidget {
                       icon: Icons.alarm,
                       label: "Hora de reserva",
                       text:
-                          '${reserve.startTime.hour}:${reserve.startTime.minute}',
+                          '${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
                       row: true),
                 ),
               ],

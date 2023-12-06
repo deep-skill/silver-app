@@ -42,7 +42,7 @@ class CustomSlide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: size.width * .28,
+                width: size.width * .33,
                 decoration: BoxDecoration(
                   color: reserve.driverName != ''
                       ? const Color(0xff020B19)
@@ -95,6 +95,7 @@ class CustomSlide extends StatelessWidget {
                         size: 20,
                       ),
                       SizedBox(
+                        width: size.width * .37,
                         child: Text(
                           '${reserve.name} ${reserve.lastName}',
                           style: const TextStyle(
@@ -137,7 +138,7 @@ class CustomSlide extends StatelessWidget {
                         size: 20,
                       ),
                       Text(
-                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
+                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
                         style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'Montserrat-Medium',

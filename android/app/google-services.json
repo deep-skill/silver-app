@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "186537693375",
+    "project_id": "silver-express-8fa19",
+    "storage_bucket": "silver-express-8fa19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:186537693375:android:fcd60c05ee6ea3484d760a",
+        "android_client_info": {
+          "package_name": "com.example.silverapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOpl6QvUmlB-63jNFUPusLtUeZkUwLDKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

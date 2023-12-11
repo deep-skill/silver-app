@@ -1,7 +1,10 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
 import 'package:silverapp/roles/admin/presentation/screens/views/mobile/admin_home_app_view.dart';
@@ -15,7 +18,22 @@ class AdminScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-//    Credentials? credentials = ref.watch(authProvider).credentials;
+    Credentials? credentials = ref.watch(authProvider).credentials;
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+    final String? userEmail = credentials?.user.email;
+    final int hour = DateTime.now().hour;
+    final int minutes = DateTime.now().minute;
+    final String hourAndMinutes =
+        '${hour.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
+    if (userEmail != null) {
+      analytics.logEvent(name: 'admin_home_open', parameters: <String, dynamic>{
+        'it_opened': 'true',
+        'admin_email': userEmail,
+        'hour_logged': hourAndMinutes
+      });
+    }
+
 //    AuthState? authState = ref.watch(authProvider);
     return kIsWeb
         ? Scaffold(
@@ -42,7 +60,7 @@ class AdminScreen extends ConsumerWidget {
             backgroundColor: const Color(0xffF2F3F7),
             key: scaffoldKey,
             appBar: AppBar(
-              backgroundColor:  const Color(0xffF2F3F7),
+              backgroundColor: const Color(0xffF2F3F7),
               scrolledUnderElevation: 0,
             ),
             drawer: SideMenu(

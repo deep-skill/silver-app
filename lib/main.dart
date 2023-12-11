@@ -3,10 +3,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/config/router/app_router.dart';
 import 'package:silverapp/config/theme/app_theme.dart';
+//firebase
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   await dotenv.load();
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const ProviderScope(child: MainApp()));
 }
 

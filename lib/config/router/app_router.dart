@@ -17,10 +17,16 @@ import 'package:silverapp/roles/driver/presentation/screens/driver_trip_ended_sc
 import 'package:silverapp/roles/driver/presentation/screens/driver_trip_list_screen.dart';
 import 'package:silverapp/roles/no_role/no_role_screen.dart';
 import 'package:silverapp/roles/user/presentation/screens/user_screen.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 final goRouterProvider = Provider((ref) {
+  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  final FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
+  analytics.setAnalyticsCollectionEnabled(true);
   final goRouterNotifier = ref.read(goRouterNotifierProvider);
   return GoRouter(
+      observers: [observer],
       initialLocation: '/login',
       refreshListenable: goRouterNotifier,
       routes: [

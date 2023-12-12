@@ -1,4 +1,5 @@
 import 'package:auth0_flutter/auth0_flutter.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,6 +47,39 @@ class HomeView extends ConsumerStatefulWidget {
 }
 
 class HomeViewState extends ConsumerState<HomeView> {
+  bool analyticsEventLogged = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!analyticsEventLogged) {
+      sendEventDriverHomeOpen();
+      analyticsEventLogged = true;
+    }
+  }
+
+  void sendEventDriverHomeOpen() {
+    final credentials = ref.read(authProvider).credentials;
+    final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    final String? userEmail = credentials?.user.email;
+    final int hour = DateTime.now().hour;
+    final int minutes = DateTime.now().minute;
+    final String hourAndMinutes =
+        '${hour.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}';
+
+    if (userEmail != null) {
+      analytics.logEvent(
+        name: 'driver_home_open',
+        parameters: <String, dynamic>{
+          'it_opened': 'true',
+          'driver_email': userEmail,
+          'hour_logged': hourAndMinutes,
+        },
+      );
+      print('driver home open $userEmail $hourAndMinutes');
+    }
+  }
+
   @override
   void initState() {
     super.initState();

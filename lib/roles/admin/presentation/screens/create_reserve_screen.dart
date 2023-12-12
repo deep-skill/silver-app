@@ -90,6 +90,7 @@ class CreateReserveView extends ConsumerWidget {
     //analytics
     final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     analytics.setAnalyticsCollectionEnabled(true);
+
     Credentials? credentials = ref.watch(authProvider).credentials;
     final String? adminEmail = credentials?.user.email;
     print('first hour $screenLoadTime');

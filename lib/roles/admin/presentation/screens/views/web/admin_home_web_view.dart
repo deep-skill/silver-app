@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_home.dart';
@@ -30,6 +31,7 @@ class AdminHomeWebView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     return Padding(
       padding: const EdgeInsets.fromLTRB(230, 50, 230, 0),
       child: Column(
@@ -79,7 +81,13 @@ class AdminHomeWebView extends StatelessWidget {
                           searchReserves: ref
                               .read(searchedNoDriverReservesProvider.notifier)
                               .searchReservesByQuery))
-                  .then((reserve) {});
+                  .then((reserve) {
+                analytics.logEvent(
+                    name: 'admin_search_home',
+                    parameters: <String, dynamic>{
+                      'word_searched': searchQuery
+                    });
+              });
             },
             child: SizedBox(
                 height: size.height * .07,

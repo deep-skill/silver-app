@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
@@ -44,6 +45,18 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
   Widget build(BuildContext context) {
     final trips = ref.watch(driverTripsListProvider);
     final size = MediaQuery.of(context).size;
+    void sendEventDriverSearchTripsList(
+        String querySearched, int amountTripsReturned) {
+      FirebaseAnalytics.instance.logEvent(
+          name: 'driver_search_trips_list',
+          parameters: <String, dynamic>{
+            'query_searched': querySearched,
+            'amount_trips_returned': amountTripsReturned
+          });
+
+      print(
+          'driver search reserves list $querySearched  amount: $amountTripsReturned');
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -67,6 +80,8 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
                                 .read(searchedDriverTripsProvider.notifier)
                                 .searchTripsByQuery))
                     .then((reserve) {});
+                sendEventDriverSearchTripsList(
+                    searchQuery, searchedTrips.length);
               },
               child: SizedBox(
                   height: size.height * .07,

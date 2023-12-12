@@ -9,6 +9,7 @@ import 'package:silverapp/roles/admin/presentation/providers/search_reserve_no_d
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class AdminHomeAppView extends StatelessWidget {
   const AdminHomeAppView({
@@ -93,6 +94,8 @@ class AdminHomeAppView extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
+                  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
                   final searchedReserves =
                       ref.read(searchedNoDriverReservesProvider);
                   final searchQuery = ref.read(searchNoDriverReservesProvider);
@@ -106,7 +109,13 @@ class AdminHomeAppView extends StatelessWidget {
                                   .read(
                                       searchedNoDriverReservesProvider.notifier)
                                   .searchReservesByQuery))
-                      .then((reserve) {});
+                      .then((reserve) {
+                    analytics.logEvent(
+                        name: 'admin_search_home',
+                        parameters: <String, dynamic>{
+                          'word_searched': searchQuery
+                        });
+                  });
                 },
                 child: SizedBox(
                     height: size.height * .07,

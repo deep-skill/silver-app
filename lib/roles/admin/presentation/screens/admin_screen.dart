@@ -22,6 +22,7 @@ class AdminScreen extends ConsumerWidget {
     FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
     final String? userEmail = credentials?.user.email;
+
     final int hour = DateTime.now().hour;
     final int minutes = DateTime.now().minute;
     final String hourAndMinutes =
@@ -30,8 +31,10 @@ class AdminScreen extends ConsumerWidget {
       analytics.logEvent(name: 'admin_home_open', parameters: <String, dynamic>{
         'it_opened': 'true',
         'admin_email': userEmail,
-        'hour_logged': hourAndMinutes
+        'hour_logged': hourAndMinutes,
+        'is_web': kIsWeb ? 'true' : 'false',
       });
+      print('admin home open $userEmail $hourAndMinutes');
     }
 
 //    AuthState? authState = ref.watch(authProvider);

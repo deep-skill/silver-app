@@ -67,10 +67,10 @@ class TripSlide extends StatelessWidget {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
               child: Container(
+                  width: size.width * .4,
                   decoration: const BoxDecoration(
                     color: Color(0xff03132A),
                     borderRadius: BorderRadius.only(
@@ -82,7 +82,8 @@ class TripSlide extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4),
                               child: Text(
                                 '${trip.driverName} ${trip.driverLastName}',
                                 maxLines: 1,
@@ -137,92 +138,95 @@ class TripSlide extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.hail,
-                        size: 20,
-                      ),
-                      Text(
-                        '${trip.userName} ${trip.userLastName}',
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontFamily: 'Montserrat-Bold',
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: size.width * .4,
-                    child: Row(
+              child: SizedBox(
+                width: size.width * .48,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Row(
                       children: [
                         const Icon(
-                          Icons.account_balance_outlined,
+                          Icons.hail,
                           size: 20,
                         ),
-                        Expanded(
-                          child: Text(
-                            trip.enterpriseName != null
-                                ? ' ${trip.enterpriseName}'
-                                : 'No enterprise name',
-                            style: const TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Medium',
-                                fontWeight: FontWeight.w700),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                        Text(
+                          '${trip.userName} ${trip.userLastName}',
+                          style: const TextStyle(
+                            fontSize: 17,
+                            fontFamily: 'Montserrat-Bold',
                           ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.event_available_outlined,
-                        size: 20,
+                    SizedBox(
+                      width: size.width * .4,
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.account_balance_outlined,
+                            size: 20,
+                          ),
+                          Expanded(
+                            child: Text(
+                              trip.enterpriseName != null
+                                  ? ' ${trip.enterpriseName}'
+                                  : 'Viaje Personal',
+                              style: const TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Montserrat-Medium',
+                                  fontWeight: FontWeight.w700),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Medium',
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text(
-                        'Tarifa Total',
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Bold',
-                            color: Color(0xff03132A)),
-                      ),
-                      SizedBox(
-                        width: size.width * .06,
-                      ),
-                      Text(
-                        'S/ \$${trip.totalPrice}',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Bold',
-                            color: Color(0xff03132A)),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [tripStatus],
-                  )
-                ],
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.event_available_outlined,
+                          size: 20,
+                        ),
+                        Text(
+                          ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Medium',
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Text(
+                          'Tarifa Total',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Bold',
+                              color: Color(0xff03132A)),
+                        ),
+                        SizedBox(
+                          width: size.width * .06,
+                        ),
+                        Text(
+                          'S/ \$${trip.totalPrice}',
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Bold',
+                              color: Color(0xff03132A)),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [tripStatus],
+                    )
+                  ],
+                ),
               ),
             ),
             GestureDetector(

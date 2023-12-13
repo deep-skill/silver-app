@@ -50,10 +50,10 @@ class TripList {
             ? 'no-driver-lastName'
             : json['Reserve']['Driver']['lastName'],
         enterpriseId: json['Reserve']['Enterprise'] == null
-            ? 'no-enterprise-id'
+            ? null
             : json['Reserve']['Enterprise']['id'],
         enterpriseName: json['Reserve']['Enterprise'] == null
-            ? 'no-enterprise-name'
+            ? null
             : json['Reserve']['Enterprise']['name'],
       );
 }

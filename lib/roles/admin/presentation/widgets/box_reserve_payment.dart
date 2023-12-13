@@ -8,6 +8,8 @@ class BoxReservePayment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return kIsWeb
         ? Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -46,31 +48,33 @@ class BoxReservePayment extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * .21,
+                width: size.width * .21,
+                height: size.height * .08,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       label,
                       textAlign: TextAlign.center,
                       maxLines: 2,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.black,
                         fontFamily: 'Montserrat-Regular',
-                        fontSize: 12,
+                        fontSize: size.width * .033,
                       ),
                     ),
-                    const SizedBox(height: 17),
                     Text(
                       text,
-                      style: const TextStyle(
-                          fontSize: 16, fontFamily: 'Montserrat-Bold'),
+                      style: TextStyle(
+                          fontSize: size.width * .045,
+                          fontFamily: 'Montserrat-Bold'),
                     ),
                   ],
                 ),
               ),
               Container(
-                width: 1.5,
-                height: 60.0,
+                width: size.width * .003,
+                height: size.height * .08,
                 color: Colors.black,
               ),
             ],

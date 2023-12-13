@@ -122,8 +122,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                             ),
                                             BoxReserveDetail(
                                               label: "Empresa",
-                                              text: trip.enterpriseName
-                                                  .toString(),
+                                             text: trip.enterpriseName == null
+                                             ? 'Viaje Personal'
+                                             : trip.enterpriseName.toString(),
                                               icon: Icons.domain,
                                             ),
                                             BoxReserveDetail(
@@ -455,7 +456,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const SizedBox(height: 12),
                         BoxReserveDetail(
                           label: "Empresa",
-                          text: trip.enterpriseName.toString(),
+                          text: trip.enterpriseName == null
+                          ? 'Viaje Personal'
+                          : trip.enterpriseName.toString(),
                           icon: Icons.domain,
                         ),
                         const SizedBox(height: 12),

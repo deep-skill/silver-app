@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_home.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/trip_summary_response.dart';
@@ -31,6 +32,8 @@ class AdminHomeAppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLogged =
+        ref.watch(authProvider).credentials?.user.email == null ? false : true;
     return RefreshIndicator(
       triggerMode: RefreshIndicatorTriggerMode.anywhere,
       onRefresh: () {
@@ -79,7 +82,8 @@ class AdminHomeAppView extends StatelessWidget {
                           fontFamily: 'Roboto-Bold',
                           color: Color(0xff364356)))),
               SizedBox(height: size.height * .01),
-              TripsSummaryView(size: size, tripsSummary: tripsSummary),
+              TripsSummaryView(
+                  size: size, tripsSummary: tripsSummary, isLogged: isLogged),
               const SizedBox(
                 height: 15,
               ),

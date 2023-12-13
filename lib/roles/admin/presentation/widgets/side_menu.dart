@@ -65,11 +65,12 @@ class SideMenuState extends ConsumerState<SideMenu> {
                             fontWeight: FontWeight.bold,
                             color: Colors.white,
                           )),
-                      Text(credentials!.user.email.toString(),
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 11,
-                              fontFamily: 'Montserrat-Bold')),
+                      if (credentials != null)
+                        Text(credentials.user.email.toString(),
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 11,
+                                fontFamily: 'Montserrat-Bold')),
                     ],
                   ),
                 ),

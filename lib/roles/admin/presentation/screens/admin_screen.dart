@@ -20,9 +20,7 @@ class AdminScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Credentials? credentials = ref.watch(authProvider).credentials;
     FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-
     final String? userEmail = credentials?.user.email;
-
     final int hour = DateTime.now().hour;
     final int minutes = DateTime.now().minute;
     final String hourAndMinutes =

@@ -1,0 +1,49 @@
+version: '3.9'
+
+services:
+
+  nginx:
+    container_name: nginx
+    build: 
+      context: ./silver-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./silver-app/build/web:/usr/share/nginx/html
+    depends_on:
+      - node_app
+      - db_api
+
+  node_app:
+    build: 
+      context: ./silver-api
+      dockerfile: Dockerfile
+    container_name: silver-api
+    ports:
+      - "3001:3001"
+    environment:
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_HOST=db_api
+      - DB_PORT=5432
+      - DB_NAME=silver
+      - PORT=3001
+    depends_on:
+      - db_api
+    restart: always
+
+  db_api:
+    container_name: db-compose
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=silver
+    volumes:
+      - db-compose_data:/var/lib/postgresql/data
+
+volumes:
+  db-compose_data: {}

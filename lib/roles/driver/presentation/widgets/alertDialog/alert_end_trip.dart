@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
@@ -23,7 +24,17 @@ class AlertTripEnd extends StatefulWidget {
   State<AlertTripEnd> createState() => _AlertTripEndState();
 }
 
+String getDifferenceBetweenTimes(DateTime arrivedDriver, DateTime tripEnded) {
+  Duration difference = tripEnded.difference(arrivedDriver);
+  int minutes = difference.inMinutes;
+  int seconds = difference.inSeconds % 60;
+  String formattedMinutes = minutes.toString().padLeft(2, '0');
+  String formattedSeconds = seconds.toString().padLeft(2, '0');
+  return '$formattedMinutes:$formattedSeconds';
+}
+
 class _AlertTripEndState extends State<AlertTripEnd> {
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   double calculateFraction(int time) {
     double result = 0.0;
     int hourComplete = time ~/ 60;
@@ -38,6 +49,12 @@ class _AlertTripEndState extends State<AlertTripEnd> {
       result = hourComplete.toDouble() + 1.0;
     }
     return result;
+  }
+
+  void sendEventTripEnded(String tripTimeMinutes) {
+    analytics.logEvent(
+        name: 'driver_trip_ended',
+        parameters: <String, dynamic>{'trip_time_minutes': tripTimeMinutes});
   }
 
   double totalPricePerHour(DateTime arrivedDriver) {
@@ -98,6 +115,14 @@ class _AlertTripEndState extends State<AlertTripEnd> {
                 ),
                 onPressed: () {
                   patchEndTripDrive(context, widget.tripId);
+                  final DateTime? startTime = widget.arrivedDriver;
+
+                  if (startTime != null) {
+                    final String minutes =
+                        getDifferenceBetweenTimes(startTime, DateTime.now());
+                    sendEventTripEnded(minutes);
+                  }
+
                   context.pop();
                 },
                 child: const Text(

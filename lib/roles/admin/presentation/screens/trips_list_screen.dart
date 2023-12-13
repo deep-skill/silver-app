@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,6 +42,16 @@ class TripListViewState extends ConsumerState<TripListView> {
     }
   }
 
+  void sendEventAdminSearchTripsList(
+      String querySearched, int amountTripsReturned) {
+    FirebaseAnalytics.instance.logEvent(
+        name: 'admin_search_trips_list',
+        parameters: <String, dynamic>{
+          'query_searched': querySearched,
+          'amount_reserves_returned': amountTripsReturned
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final trips = ref.watch(tripsListProvider);
@@ -69,6 +80,9 @@ class TripListViewState extends ConsumerState<TripListView> {
                                       .read(searchedTripsProvider.notifier)
                                       .searchTripsByQuery))
                           .then((trip) {});
+
+                      sendEventAdminSearchTripsList(
+                          searchQuery, searchedTrips.length);
                     },
                     child: SizedBox(
                         height: size.height * .07,
@@ -145,6 +159,8 @@ class TripListViewState extends ConsumerState<TripListView> {
                                       .read(searchedTripsProvider.notifier)
                                       .searchTripsByQuery))
                           .then((trip) {});
+                      sendEventAdminSearchTripsList(
+                          searchQuery, searchedTrips.length);
                     },
                     child: SizedBox(
                         height: size.height * .07,

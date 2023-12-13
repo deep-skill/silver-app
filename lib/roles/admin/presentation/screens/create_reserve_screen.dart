@@ -1,9 +1,12 @@
+import 'package:auth0_flutter/auth0_flutter.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
 import 'package:silverapp/position/determine_position_helper.dart';
+import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/search_car.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/search_driver.dart';
@@ -24,8 +27,8 @@ import 'package:silverapp/roles/admin/presentation/widgets/full_screen_loader.da
 
 class CreateReserveScreen extends ConsumerWidget {
   final String reserveId;
-
-  const CreateReserveScreen({super.key, required this.reserveId});
+  final DateTime screenLoadTime = DateTime.now();
+  CreateReserveScreen({super.key, required this.reserveId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,20 +43,31 @@ class CreateReserveScreen extends ConsumerWidget {
           ? const FullScreenLoader()
           : Padding(
               padding: const EdgeInsets.all(8.0),
-              child:
-                  CreateReserveView(size: size, reserve: reserveState.reserve!),
+              child: CreateReserveView(
+                  size: size,
+                  reserve: reserveState.reserve!,
+                  screenLoadTime: screenLoadTime),
             ),
       backgroundColor: const Color(0xffF2F3F7),
     );
   }
 }
 
+String getDifferenceBetweenTimes(DateTime screenLoad, DateTime reserveCreated) {
+  Duration difference = reserveCreated.difference(screenLoad);
+  int minutes = difference.inMinutes;
+  int seconds = difference.inSeconds % 60;
+  String formattedMinutes = minutes.toString().padLeft(2, '0');
+  String formattedSeconds = seconds.toString().padLeft(2, '0');
+  return '$formattedMinutes:$formattedSeconds';
+}
+
 class CreateReserveView extends ConsumerWidget {
-  const CreateReserveView({
-    super.key,
-    required this.size,
-    required this.reserve,
-  });
+  const CreateReserveView(
+      {super.key,
+      required this.size,
+      required this.reserve,
+      required this.screenLoadTime});
 
   void showSnackbar(BuildContext context, int method) {
     final String snackBarText =
@@ -65,11 +79,41 @@ class CreateReserveView extends ConsumerWidget {
 
   final Size size;
   final CreateReserve reserve;
-
+  final DateTime screenLoadTime;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final reserveForm = ref.watch(reserveFormProvider(reserve));
     const cyanColor = Color(0xff23a5cd);
+    //analytics
+    final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    analytics.setAnalyticsCollectionEnabled(true);
+
+    Credentials? credentials = ref.watch(authProvider).credentials;
+    final String? adminEmail = credentials?.user.email;
+    void sendEventCreatedReserve(
+        {String? adminEmail,
+        required String amountMinutesCreating,
+        required int driverId,
+        required int userId,
+        required String serviceType,
+        required String tripType,
+        required String reservePrice,
+        required String silverPercent}) {
+      analytics.logEvent(
+        name: 'admin_create_reserve',
+        parameters: <String, dynamic>{
+          'admin_email': adminEmail,
+          'amount_minutes_creating': amountMinutesCreating,
+          'driver_id': driverId,
+          'user_id': userId,
+          'service_type': serviceType,
+          'trip_type': tripType,
+          'reserve_price': reservePrice,
+          'silver_percent': silverPercent == '' ? 20 : silverPercent
+        },
+      );
+    }
+
     return kIsWeb
         ? Center(
             child: SingleChildScrollView(
@@ -828,18 +872,20 @@ class CreateReserveView extends ConsumerWidget {
                                   .read(reserveFormProvider(reserve).notifier)
                                   .onFormSubmit(reserve.id!, reserve.tripId)
                                   .then((value) {
-                              if (!value) return;
-                              if (reserve.id! != 0) {
+                                if (!value) return;
+                                if (reserve.id! != 0) {
+                                  ref
+                                      .read(reserveDetailProvider.notifier)
+                                      .updateReserveDetail(
+                                          reserve.id!.toString());
+                                }
+                                showSnackbar(context, reserve.id!);
+
                                 ref
-                                .read(reserveDetailProvider.notifier)
-                                .updateReserveDetail(
-                                  reserve.id!.toString());
-                              }
-                              showSnackbar(context, reserve.id!);
+                                    .read(reservesHomeProvider.notifier)
+                                    .reloadData();
 
-                              ref.read(reservesHomeProvider.notifier).reloadData();
-
-                              context.pop();
+                                context.pop();
                               });
                             },
                             style: ButtonStyle(
@@ -1536,16 +1582,33 @@ class CreateReserveView extends ConsumerWidget {
                                     .read(reserveDetailProvider.notifier)
                                     .updateReserveDetail(
                                         reserve.id!.toString());
-                                if(reserve.tripId != null) {
+                                if (reserve.tripId != null) {
                                   ref
-                                    .read(tripAdminStatusProvider.notifier)
-                                    .updateTripStatus(
-                                        reserve.tripId!.toString());
+                                      .read(tripAdminStatusProvider.notifier)
+                                      .updateTripStatus(
+                                          reserve.tripId!.toString());
                                 }
+                              } else {
+                                final String time = getDifferenceBetweenTimes(
+                                    screenLoadTime, DateTime.now());
+                                sendEventCreatedReserve(
+                                    adminEmail: adminEmail,
+                                    amountMinutesCreating: time,
+                                    driverId: reserveForm.driverId?.value ?? 0,
+                                    serviceType: reserveForm.serviceType.value,
+                                    tripType: reserveForm.tripType.value,
+                                    userId: reserveForm.userId.value,
+                                    reservePrice: reserveForm.price.value,
+                                    silverPercent:
+                                        reserveForm.silverPercent.value == ''
+                                            ? '20'
+                                            : reserveForm.silverPercent.value);
                               }
                               showSnackbar(context, reserve.id!);
 
-                              ref.read(reservesHomeProvider.notifier).reloadData();
+                              ref
+                                  .read(reservesHomeProvider.notifier)
+                                  .reloadData();
 
                               context.pop();
                             });

@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,11 +42,20 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
     }
   }
 
+  void sendEventAdminSearchReservesList(
+      String querySearched, int amountReservesReturned) {
+    FirebaseAnalytics.instance.logEvent(
+        name: 'admin_search_reserves_list',
+        parameters: <String, dynamic>{
+          'query_searched': querySearched,
+          'amount_reserves_returned': amountReservesReturned
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final reserves = ref.watch(reservesListProvider);
     final size = MediaQuery.of(context).size;
-
     return kIsWeb
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 220),
@@ -70,6 +80,8 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                                       .read(searchedReservesProvider.notifier)
                                       .searchReservesByQuery))
                           .then((reserve) {});
+                      sendEventAdminSearchReservesList(
+                          searchQuery, searchedReserves.length);
                     },
                     child: SizedBox(
                         height: size.height * .07,
@@ -148,6 +160,8 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                                       .read(searchedReservesProvider.notifier)
                                       .searchReservesByQuery))
                           .then((reserve) {});
+                      sendEventAdminSearchReservesList(
+                          searchQuery, searchedReserves.length);
                     },
                     child: SizedBox(
                         height: size.height * .07,

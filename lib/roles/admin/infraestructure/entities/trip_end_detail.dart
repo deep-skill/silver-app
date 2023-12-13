@@ -10,7 +10,6 @@ class AdminTripEnd {
   String startAddress;
   String endAddress;
   double price;
-  int driverPercent;
   int silverPercent;
   String userName;
   String userLastName;
@@ -40,7 +39,6 @@ class AdminTripEnd {
     required this.startAddress,
     required this.endAddress,
     required this.price,
-    required this.driverPercent,
     required this.silverPercent,
     required this.userName,
     required this.userLastName,
@@ -76,11 +74,10 @@ class AdminTripEnd {
         startAddress: json["Reserve"]["startAddress"],
         endAddress: json["Reserve"]["endAddress"],
         price: json["Reserve"]["price"].toDouble(),
-        driverPercent: json["Reserve"]["driverPercent"],
         silverPercent: json["Reserve"]["silverPercent"],
         userName: json["Reserve"]["User"]["name"] ?? "no-name",
         userLastName: json["Reserve"]["User"]["lastName"] ?? "no-lastName",
-        enterpriseName: json["Reserve"]["Enterprise"]["name"],
+        enterpriseName: json["Reserve"]["Enterprise"] == null ? null : json["Reserve"]["Enterprise"]["name"],
         driverName: json["Reserve"]["Driver"] != null
             ? json["Reserve"]["Driver"]["name"] ?? 'no-name'
             : 'no-name',

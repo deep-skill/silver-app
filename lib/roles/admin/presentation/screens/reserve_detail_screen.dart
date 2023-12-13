@@ -144,18 +144,25 @@ class ReserveInfo extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     BoxReserveDetail(
-                                        icon: Icons.hail,
-                                        label: 'Pasajero',
-                                        text:
-                                            '${reserve.name} ${reserve.lastName}'),
+                                      icon: Icons.hail,
+                                      label: 'Pasajero',
+                                      text:
+                                          '${reserve.name} ${reserve.lastName}',
+                                      row: true,
+                                      rowTriple: true,
+                                    ),
                                     BoxReserveDetail(
-                                        icon: Icons.domain,
-                                        label: 'Empresa',
-                                        text: reserve.enterpriseName),
+                                      icon: Icons.domain,
+                                      label: 'Empresa',
+                                      text: reserve.enterpriseName,
+                                      row: true,
+                                    ),
                                     BoxReserveDetail(
-                                        icon: Icons.business_center_outlined,
-                                        label: 'Tipo de Servicio',
-                                        text: reserve.serviceType),
+                                      icon: Icons.business_center_outlined,
+                                      label: 'Tipo de Servicio',
+                                      text: reserve.serviceType,
+                                      row: true,
+                                    ),
                                   ],
                                 ),
                                 SizedBox(height: size.height * .03),
@@ -179,54 +186,58 @@ class ReserveInfo extends StatelessWidget {
                                             CrossAxisAlignment.start,
                                         children: [
                                           BoxReserveDetail(
-                                              icon: Icons.person_2_outlined,
-                                              label: 'Conductor',
-                                              text: reserve.driverName != null
-                                                  ? '${reserve.driverName} ${reserve.driverLastName}'
-                                                  : '-'),
+                                            icon: Icons.person_2_outlined,
+                                            label: 'Conductor',
+                                            text: reserve.driverName != null
+                                                ? '${reserve.driverName} ${reserve.driverLastName}'
+                                                : '-',
+                                            row: true,
+                                          ),
                                           SizedBox(width: size.width * .08),
                                           BoxReserveDetail(
-                                              icon: Icons.drive_eta_rounded,
-                                              label: 'Marca/ modelo/ color',
-                                              text: (reserve.brand != '' &&
-                                                      reserve.model != '' &&
-                                                      reserve.color != '')
-                                                  ? '${reserve.brand}/ ${reserve.model}/ ${reserve.color}'
-                                                  : ' - '),
+                                            icon: Icons.drive_eta_rounded,
+                                            label: 'Marca/ modelo/ color',
+                                            text: (reserve.brand != '' &&
+                                                    reserve.model != '' &&
+                                                    reserve.color != '')
+                                                ? '${reserve.brand}/ ${reserve.model}/ ${reserve.color}'
+                                                : ' - ',
+                                            row: true,
+                                          ),
                                         ],
                                       ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: size.height * .03),
+                                SizedBox(height: size.height * .01),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     BoxReserveDetail(
-                                        icon: Icons.money,
-                                        label: 'Placa',
-                                        text: (reserve.licensePlate != ''
-                                            ? '${reserve.licensePlate}'
-                                            : ' - ')),
+                                      icon: Icons.money,
+                                      label: 'Placa',
+                                      text: (reserve.licensePlate != ''
+                                          ? '${reserve.licensePlate}'
+                                          : ' - '),
+                                      row: true,
+                                    ),
                                     SizedBox(width: size.width * .15),
-                                    Expanded(
-                                      child: Stack(
-                                        children: [
-                                          ClipOval(
-                                              child: Image.asset(
-                                            'assets/images/driver_img_example.png',
-                                            scale: 0.7,
-                                          )),
-                                          Positioned(
-                                            bottom: 0,
-                                            left: 0,
+                                    Stack(
+                                      children: [
+                                        ClipOval(
                                             child: Image.asset(
-                                              'assets/images/vehiculo_home_admin.png',
-                                              scale: 0.9,
-                                            ),
+                                          'assets/images/driver_img_example.png',
+                                          scale: 0.7,
+                                        )),
+                                        Positioned(
+                                          bottom: 0,
+                                          left: 0,
+                                          child: Image.asset(
+                                            'assets/images/vehiculo_home_admin.png',
+                                            scale: 0.9,
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -238,13 +249,16 @@ class ReserveInfo extends StatelessWidget {
                                   children: [
                                     BoxReservePayment(
                                         label: 'Tarifa base',
-                                        text: 'S/${reserve.price.toStringAsFixed(2)}'),
+                                        text:
+                                            'S/${reserve.price.toStringAsFixed(2)}'),
                                     BoxReservePayment(
                                         label: 'Pago Silver',
-                                        text: 'S/${silverPercent.toStringAsFixed(2)}'),
+                                        text:
+                                            'S/${silverPercent.toStringAsFixed(2)}'),
                                     BoxReservePayment(
                                         label: 'Pago conductor',
-                                        text: 'S/${driverPayment.toStringAsFixed(2)}'),
+                                        text:
+                                            'S/${driverPayment.toStringAsFixed(2)}'),
                                     BoxReservePayment(
                                         label: 'Porcentaje Silver',
                                         text: '${reserve.silverPercent}%'),
@@ -276,16 +290,20 @@ class ReserveInfo extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: BoxReserveDetail(
-                                          icon: Icons.today,
-                                          label: 'Fecha de Reserva',
-                                          text:
-                                              '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}'),
+                                        icon: Icons.today,
+                                        label: 'Fecha de Reserva',
+                                        text:
+                                            '${reserve.startTime.day}/${reserve.startTime.month}/${reserve.startTime.year}',
+                                        row: true,
+                                      ),
                                     ),
                                     Expanded(
                                       child: BoxReserveDetail(
-                                          label: 'Hora de reserva',
-                                          text:
-                                              '${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}'),
+                                        label: 'Hora de reserva',
+                                        text:
+                                            '${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
+                                        row: true,
+                                      ),
                                     )
                                   ],
                                 ),
@@ -294,9 +312,11 @@ class ReserveInfo extends StatelessWidget {
                                   children: [
                                     Expanded(
                                       child: BoxReserveDetail(
-                                          icon: Icons.timeline,
-                                          label: 'Tipo de viaje',
-                                          text: reserve.tripType),
+                                        icon: Icons.timeline,
+                                        label: 'Tipo de viaje',
+                                        text: reserve.tripType,
+                                        row: true,
+                                      ),
                                     ),
                                     Expanded(
                                       child: BoxStatusReserveDetail(
@@ -315,11 +335,11 @@ class ReserveInfo extends StatelessWidget {
                                         text: reserve.startAddress),
                                     SizedBox(height: size.height * .03),
                                     reserve.endAddress == null
-                                    ? const SizedBox()
-                                    :BoxReserveDetail(
-                                        icon: Icons.trip_origin_outlined,
-                                        label: 'Punto de destino',
-                                        text: '${reserve.endAddress}'),
+                                        ? const SizedBox()
+                                        : BoxReserveDetail(
+                                            icon: Icons.trip_origin_outlined,
+                                            label: 'Punto de destino',
+                                            text: '${reserve.endAddress}'),
                                   ],
                                 ),
                               ],
@@ -535,11 +555,11 @@ class ReserveInfo extends StatelessWidget {
                           label: 'Punto de recojo',
                           text: reserve.startAddress),
                       reserve.endAddress == null
-                      ? const SizedBox()
-                      : BoxReserveDetail(
-                          icon: Icons.trip_origin_outlined,
-                          label: 'Punto de destino',
-                          text: '${reserve.endAddress}'),
+                          ? const SizedBox()
+                          : BoxReserveDetail(
+                              icon: Icons.trip_origin_outlined,
+                              label: 'Punto de destino',
+                              text: '${reserve.endAddress}'),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -608,9 +628,11 @@ class ReserveInfo extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           BoxReservePayment(
-                              label: 'Tarifa base', text: 'S/${reserve.price.toStringAsFixed(2)}'),
+                              label: 'Tarifa base',
+                              text: 'S/${reserve.price.toStringAsFixed(2)}'),
                           BoxReservePayment(
-                              label: 'Pago Silver', text: 'S/${silverPercent.toStringAsFixed(2)}'),
+                              label: 'Pago Silver',
+                              text: 'S/${silverPercent.toStringAsFixed(2)}'),
                           BoxReservePayment(
                               label: 'Pago conductor',
                               text: 'S/${driverPayment.toStringAsFixed(2)}'),
@@ -683,11 +705,11 @@ class ReserveInfo extends StatelessWidget {
                                           deleteReserve();
                                           context.go("/admin");
                                           ScaffoldMessenger.of(context)
-                                        .clearSnackBars();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content:
-                                                Text("Reserva eliminada")));
+                                              .clearSnackBars();
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "Reserva eliminada")));
                                         },
                                       ),
                                       TextButton(

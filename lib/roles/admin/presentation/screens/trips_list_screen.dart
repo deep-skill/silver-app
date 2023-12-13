@@ -50,9 +50,6 @@ class TripListViewState extends ConsumerState<TripListView> {
           'query_searched': querySearched,
           'amount_reserves_returned': amountTripsReturned
         });
-
-    print(
-        'admin search reserves list $querySearched  amount: $amountTripsReturned');
   }
 
   @override

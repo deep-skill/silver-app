@@ -50,9 +50,6 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
           'query_searched': querySearched,
           'amount_reserves_returned': amountReservesReturned
         });
-
-    print(
-        'admin search reserves list $querySearched  amount: $amountReservesReturned');
   }
 
   @override

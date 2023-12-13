@@ -30,9 +30,6 @@ String getDifferenceBetweenTimes(DateTime arrivedDriver, DateTime tripEnded) {
   int seconds = difference.inSeconds % 60;
   String formattedMinutes = minutes.toString().padLeft(2, '0');
   String formattedSeconds = seconds.toString().padLeft(2, '0');
-  print('amount of time $formattedMinutes:$formattedSeconds');
-  print('start $arrivedDriver');
-  print('trip ended $tripEnded');
   return '$formattedMinutes:$formattedSeconds';
 }
 

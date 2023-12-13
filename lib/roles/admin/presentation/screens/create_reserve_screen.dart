@@ -59,9 +59,6 @@ String getDifferenceBetweenTimes(DateTime screenLoad, DateTime reserveCreated) {
   int seconds = difference.inSeconds % 60;
   String formattedMinutes = minutes.toString().padLeft(2, '0');
   String formattedSeconds = seconds.toString().padLeft(2, '0');
-  print('amount of time $formattedMinutes:$formattedSeconds');
-  print('start $screenLoad');
-  print('reserve created $reserveCreated');
   return '$formattedMinutes:$formattedSeconds';
 }
 
@@ -93,7 +90,6 @@ class CreateReserveView extends ConsumerWidget {
 
     Credentials? credentials = ref.watch(authProvider).credentials;
     final String? adminEmail = credentials?.user.email;
-    print('first hour $screenLoadTime');
     void sendEventCreatedReserve(
         {String? adminEmail,
         required String amountMinutesCreating,
@@ -116,8 +112,6 @@ class CreateReserveView extends ConsumerWidget {
           'silver_percent': silverPercent == '' ? 20 : silverPercent
         },
       );
-      print(
-          '$adminEmail $amountMinutesCreating $driverId $userId $serviceType $tripType $reservePrice $silverPercent');
     }
 
     return kIsWeb

@@ -53,9 +53,6 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
             'query_searched': querySearched,
             'amount_trips_returned': amountTripsReturned
           });
-
-      print(
-          'driver search reserves list $querySearched  amount: $amountTripsReturned');
     }
 
     return Padding(

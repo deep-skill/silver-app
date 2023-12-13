@@ -76,7 +76,6 @@ class HomeViewState extends ConsumerState<HomeView> {
           'hour_logged': hourAndMinutes,
         },
       );
-      print('driver home open $userEmail $hourAndMinutes');
     }
   }
 

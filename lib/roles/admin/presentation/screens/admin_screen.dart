@@ -34,7 +34,6 @@ class AdminScreen extends ConsumerWidget {
         'hour_logged': hourAndMinutes,
         'is_web': kIsWeb ? 'true' : 'false',
       });
-      print('admin home open $userEmail $hourAndMinutes');
     }
 
 //    AuthState? authState = ref.watch(authProvider);

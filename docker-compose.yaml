@@ -23,12 +23,12 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - DB_HOST=db_api
-      - DB_PORT=5432
-      - DB_NAME=silver
-      - PORT=3001
+      - DB_USER=${DOCKER_DB_USER}
+      - DB_PASSWORD=${DOCKER_DB_PASSWORD}
+      - DB_HOST=${DOCKER_DB_HOST}
+      - DB_PORT=${DOCKER_DB_PORT}
+      - DB_NAME=${DOCKER_DB_NAME}
+      - PORT=${DOCKER_DB_PORT}
     depends_on:
       - db_api
     restart: always
@@ -39,9 +39,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=silver
+      - POSTGRES_USER=${DOCKER_DB_USER}
+      - POSTGRES_PASSWORD=${DOCKER_DB_PASSWORD}
+      - POSTGRES_DB=${DOCKER_DB_NAME}
     volumes:
       - db-compose_data:/var/lib/postgresql/data
 

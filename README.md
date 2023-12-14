@@ -33,7 +33,7 @@ flutter build web
 ```
 Then rename C:\Users\Popis\Desktop\silver\silver-app\build\web\assets\.env without a leading "."
 
-Next, in the top directory, copy the .env file and the docker-compose.yml file.
+Next, in the top directory, copy the .env file (from the api or app folder) and the docker-compose.yml file.
 
 Finally, open a terminal in the main directory and run:
 

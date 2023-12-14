@@ -132,7 +132,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     if (!state.isFormValid) return false;
 
     if (onSubmitCallback == null) return false;
-
     final Map<String, dynamic> reserveLike = {
       "enterprise_id": state.enterpriseId?.value == 0 ||
               state.serviceType.value != 'Empresarial'
@@ -148,21 +147,13 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "start_address": state.startAddress.value,
       "start_address_lat": state.startAddressLat,
       "start_address_lon": state.startAddressLon,
-      "end_address":
-          state.endAddress?.value == 'Seleccione el punto de destino' ||
-                  state.tripType.value != 'Punto a punto'
-              ? null
-              : state.endAddress?.value,
+      "end_address": state.tripType.value != 'Punto a punto'
+          ? null
+          : state.endAddress?.value,
       "end_address_lat":
-          state.endAddress?.value == 'Seleccione el punto de destino' ||
-                  state.tripType.value != 'Punto a punto'
-              ? null
-              : state.endAddressLat,
+          state.tripType.value != 'Punto a punto' ? null : state.endAddressLat,
       "end_address_lon":
-          state.endAddress?.value == 'Seleccione el punto de destino' ||
-                  state.tripType.value != 'Punto a punto'
-              ? null
-              : state.endAddressLon,
+          state.tripType.value != 'Punto a punto' ? null : state.endAddressLon,
       "driver_id": state.driverId?.value == 0 || state.driverId?.value == null
           ? null
           : state.driverId?.value,

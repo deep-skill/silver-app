@@ -115,25 +115,28 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             BoxReserveDetail(
-                                              label: "Pasajero",
-                                              text:
-                                                  "${trip.userName} ${trip.userLastName}",
-                                              icon: Icons.hail,
-                                            ),
+                                                label: "Pasajero",
+                                                text:
+                                                    "${trip.userName} ${trip.userLastName}",
+                                                icon: Icons.hail,
+                                                row: true),
                                             BoxReserveDetail(
-                                              label: "Empresa",
-                                             text: trip.enterpriseName == null
-                                             ? 'Viaje Personal'
-                                             : trip.enterpriseName.toString(),
-                                              icon: Icons.domain,
-                                            ),
+                                                label: "Empresa",
+                                                text:
+                                                    trip.enterpriseName == null
+                                                        ? 'Viaje Personal'
+                                                        : trip.enterpriseName
+                                                            .toString(),
+                                                icon: Icons.domain,
+                                                row: true),
                                             BoxReserveDetail(
-                                              label: "Tipo de servicio",
-                                              text: capitalizeFirst(
-                                                  trip.serviceType.toString()),
-                                              icon: Icons
-                                                  .business_center_outlined,
-                                            ),
+                                                label: "Tipo de servicio",
+                                                text: capitalizeFirst(trip
+                                                    .serviceType
+                                                    .toString()),
+                                                icon: Icons
+                                                    .business_center_outlined,
+                                                row: true),
                                           ],
                                         ),
                                       ],
@@ -160,12 +163,12 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                             .start,
                                                     children: [
                                                       BoxReserveDetail(
-                                                        label: "Conductor",
-                                                        text:
-                                                            "${trip.driverName} ${trip.driverLastName}",
-                                                        icon: Icons
-                                                            .person_2_outlined,
-                                                      ),
+                                                          label: "Conductor",
+                                                          text:
+                                                              "${trip.driverName} ${trip.driverLastName}",
+                                                          icon: Icons
+                                                              .person_2_outlined,
+                                                          row: true),
                                                       SizedBox(
                                                           width: MediaQuery.of(
                                                                       context)
@@ -173,13 +176,13 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                                   .width *
                                                               .07),
                                                       BoxReserveDetail(
-                                                        label:
-                                                            "Marca/ modelo/ color",
-                                                        text:
-                                                            "${trip.brand} ${trip.model} ${trip.color}",
-                                                        icon: Icons
-                                                            .person_2_outlined,
-                                                      ),
+                                                          label:
+                                                              "Marca/ modelo/ color",
+                                                          text:
+                                                              "${trip.brand} ${trip.model} ${trip.color}",
+                                                          icon: Icons
+                                                              .person_2_outlined,
+                                                          row: true),
                                                     ],
                                                   ),
                                                   SizedBox(
@@ -190,39 +193,37 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                               .03),
                                                   Row(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.end,
+                                                        MainAxisAlignment.start,
                                                     children: [
                                                       BoxReserveDetail(
-                                                        label: "Placa",
-                                                        text: trip.licensePlate,
-                                                        icon: Icons.money,
-                                                      ),
+                                                          label: "Placa",
+                                                          text:
+                                                              trip.licensePlate,
+                                                          icon: Icons.money,
+                                                          row: true),
                                                       SizedBox(
                                                           width: MediaQuery.of(
                                                                       context)
                                                                   .size
                                                                   .width *
                                                               .15),
-                                                      Expanded(
-                                                        child: Stack(
-                                                          children: [
-                                                            ClipOval(
-                                                                child:
-                                                                    Image.asset(
-                                                              'assets/images/driver_img_example.png',
-                                                              scale: 0.7,
-                                                            )),
-                                                            Positioned(
-                                                              bottom: 0,
-                                                              left: 0,
+                                                      Stack(
+                                                        children: [
+                                                          ClipOval(
                                                               child:
                                                                   Image.asset(
-                                                                'assets/images/vehiculo_home_admin.png',
-                                                                scale: 0.9,
-                                                              ),
+                                                            'assets/images/driver_img_example.png',
+                                                            scale: 0.7,
+                                                          )),
+                                                          Positioned(
+                                                            bottom: 0,
+                                                            left: 0,
+                                                            child: Image.asset(
+                                                              'assets/images/vehiculo_home_admin.png',
+                                                              scale: 0.9,
                                                             ),
-                                                          ],
-                                                        ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ],
                                                   ),
@@ -279,22 +280,22 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                       children: [
                                         Expanded(
                                           child: BoxReserveDetail(
-                                            label: "Fecha de inicio",
-                                            text:
-                                                '${trip.onWayDriver.day}/${trip.onWayDriver.month}/${trip.onWayDriver.year}',
-                                            icon: Icons.today,
-                                          ),
+                                              label: "Fecha de inicio",
+                                              text:
+                                                  '${trip.onWayDriver.day}/${trip.onWayDriver.month}/${trip.onWayDriver.year}',
+                                              icon: Icons.today,
+                                              row: true),
                                         ),
                                         const SizedBox(
                                           width: 10,
                                         ),
                                         Expanded(
                                           child: BoxReserveDetail(
-                                            label: "Hora de reserva",
-                                            text:
-                                                '${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
-                                            icon: Icons.alarm,
-                                          ),
+                                              label: "Hora de reserva",
+                                              text:
+                                                  '${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
+                                              icon: Icons.alarm,
+                                              row: true),
                                         ),
                                       ],
                                     ),
@@ -305,11 +306,11 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                       children: [
                                         Expanded(
                                           child: BoxReserveDetail(
-                                            label: "Tipo de viaje",
-                                            text:
-                                                capitalizeFirst(trip.tripType),
-                                            icon: Icons.timeline,
-                                          ),
+                                              label: "Tipo de viaje",
+                                              text: capitalizeFirst(
+                                                  trip.tripType),
+                                              icon: Icons.timeline,
+                                              row: true),
                                         ),
                                         const SizedBox(
                                           width: 10,
@@ -457,8 +458,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         BoxReserveDetail(
                           label: "Empresa",
                           text: trip.enterpriseName == null
-                          ? 'Viaje Personal'
-                          : trip.enterpriseName.toString(),
+                              ? 'Viaje Personal'
+                              : trip.enterpriseName.toString(),
                           icon: Icons.domain,
                         ),
                         const SizedBox(height: 12),
@@ -491,7 +492,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                               child: BoxReserveDetail(
                                 label: "Hora de reserva",
                                 text:
-                                    '${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
+                                    '${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
                                 icon: Icons.alarm,
                               ),
                             ),

@@ -16,11 +16,16 @@ final reservesHomeProvider =
   Future<List<ReserveHome>> getReserves({int page = 0}) async {
     Credentials? credentials = ref.watch(authProvider).credentials;
 
-    final response = await dio(credentials!.accessToken)
-        .get('reserves/admin-home', queryParameters: {
-      'page': page,
-    });
-    return _jsonToReserves(response.data);
+    if (credentials != null) {
+      final response = await dio(credentials.accessToken)
+          .get('reserves/admin-home', queryParameters: {
+        'page': page,
+      });
+      return _jsonToReserves(response.data);
+    } else {
+      final List<ReserveHome> reserves = [];
+      return reserves;
+    }
   }
 
   final fetchMoreReserves = getReserves;
@@ -46,7 +51,7 @@ class ReservesNotifier extends StateNotifier<List<ReserveHome>> {
     isLoading = true;
     final List<ReserveHome> reserves =
         await fetchMoreReserves(page: currentPage);
-    if(reserves.isEmpty) {
+    if (reserves.isEmpty) {
       lastPage = true;
     }
     currentPage++;

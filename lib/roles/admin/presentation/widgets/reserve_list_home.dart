@@ -121,27 +121,34 @@ class _Slide extends StatelessWidget {
                             '${reserve.name} ${reserve.lastName}',
                             style: const TextStyle(
                                 fontSize: 17, fontFamily: 'Montserrat-Bold'),
-                                overflow: TextOverflow.ellipsis,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(height: 9),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.account_balance_outlined,
-                        size: 20,
-                      ),
-                      Text(
-                        ' ${reserve.entrepriseName}',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Medium',
-                            fontWeight: FontWeight.w700),
-                      ),
-                    ],
+                  SizedBox(
+                    width: size.width * 0.45,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.account_balance_outlined,
+                          size: 20,
+                        ),
+                        Expanded(
+                          child: Text(
+                            reserve.entrepriseName,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Medium',
+                              fontWeight: FontWeight.w700,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 5),
                   Row(

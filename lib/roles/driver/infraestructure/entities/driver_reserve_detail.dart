@@ -38,7 +38,7 @@ class DriverReserveDetail {
         price: json["price"].toDouble(),
         name: json["User"]["name"],
         lastName: json["User"]["lastName"],
-        state: (json["Trip"] == null) ? null : json["Trip"]["state"],
+        state: (json["Trip"] == null) ? null : json["Trip"]["status"],
         enterpriseName: json["Reserve"] == null
             ? null
             : json["Reserve"]["Enterprise"]["name"],

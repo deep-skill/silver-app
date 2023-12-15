@@ -154,6 +154,7 @@ class WebLoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
       Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,8 +167,8 @@ class WebLoginView extends StatelessWidget {
                 width: size.width * .20,
               ),
             ),
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: size.height * .01,
             ),
             SizedBox(
               width: size.width * .50,
@@ -178,14 +179,14 @@ class WebLoginView extends StatelessWidget {
                   style: TextStyle(
                     height: 1.2,
                     color: colors.onPrimary,
-                    fontSize: 60,
+                    fontSize: size.height * .07,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
-            const SizedBox(
-              height: 70,
+            SizedBox(
+              height: size.height * .08,
             ),
             SizedBox(
               width: size.width * .5,
@@ -201,7 +202,7 @@ class WebLoginView extends StatelessWidget {
                     'Ingresar',
                     style: TextStyle(
                       color: colors.onBackground,
-                      fontSize: 30,
+                      fontSize: size.height * .035,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

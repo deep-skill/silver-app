@@ -26,7 +26,7 @@ flutter run -d chrome --web-port 3000 --web-renderer html
 ```
 ### 🐳 Docker Web and API
 
-First open the terminal and build the  web project build with flutter with the following command line on the silver-app folder.
+First open the terminal and build the web project build with flutter with the following command line on the silver-app folder.
 
 ```sh
 flutter build web

@@ -150,14 +150,17 @@ class TripSlide extends StatelessWidget {
                           Icons.hail,
                           size: 20,
                         ),
-                        Text(
-                          '${trip.userName} ${trip.userLastName}',
-                          style: const TextStyle(
-                            fontSize: 17,
-                            fontFamily: 'Montserrat-Bold',
+                        SizedBox(
+                          width: size.width * .4,
+                          child: Text(
+                            '${trip.userName} ${trip.userLastName}',
+                            style: const TextStyle(
+                              fontSize: 17,
+                              fontFamily: 'Montserrat-Bold',
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -192,7 +195,7 @@ class TripSlide extends StatelessWidget {
                           size: 20,
                         ),
                         Text(
-                          ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
+                          ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
                           style: const TextStyle(
                               fontSize: 12,
                               fontFamily: 'Montserrat-Medium',

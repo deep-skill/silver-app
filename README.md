@@ -24,6 +24,22 @@ Ensure you have at least one emulator running. If you have multiple running, the
 ```sh
 flutter run -d chrome --web-port 3000 --web-renderer html
 ```
+### 🐳 Docker Web and API
+
+First open the terminal and build the web project build with flutter with the following command line on the silver-app folder.
+
+```sh
+flutter build web
+```
+Then rename C:\Users\Popis\Desktop\silver\silver-app\build\web\assets\.env without a leading "."
+
+Next, in the top directory, copy the .env file (from the api or app folder) and the docker-compose.yml file.
+
+Finally, open a terminal in the main directory and run:
+
+```sh
+docker compose up
+```
 
 ## Completed Tasks
 

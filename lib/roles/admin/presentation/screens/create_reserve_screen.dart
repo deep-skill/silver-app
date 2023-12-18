@@ -379,7 +379,7 @@ class CreateReserveView extends ConsumerWidget {
                                                     reserveFormProvider(reserve)
                                                         .notifier)
                                                 .onStartTimeChanged(
-                                                    '${pickedTime.toString().substring(10, 12)}:${pickedTime.toString().substring(13, 15)}');
+                                                    '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}');
                                           } else {}
                                         },
                                         child: Padding(

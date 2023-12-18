@@ -64,7 +64,7 @@ class SearchCarDelegate extends SearchDelegate<SearchCar?> {
   }
 
   @override
-  String get searchFieldLabel => 'Buscar Conductor';
+  String get searchFieldLabel => 'Buscar vehículo';
 
   @override
   List<Widget>? buildActions(BuildContext context) {

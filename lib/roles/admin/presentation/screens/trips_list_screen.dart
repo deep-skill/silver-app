@@ -127,6 +127,27 @@ class TripListViewState extends ConsumerState<TripListView> {
                         )),
                   ),
                   const SizedBox(height: 15),
+                  Container(
+                    width: size.width * .8,
+                    padding: const EdgeInsets.all(15),
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+                        const Text('Actualizar',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xff364356),
+                              fontWeight: FontWeight.bold,
+                            )),
+                        IconButton(
+                          icon: const Icon(Icons.refresh_outlined),
+                          onPressed: () {
+                            ref.read(tripsListProvider.notifier).reloadData();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                   TripsList(
                     trips: trips,
                     loadNextPage: () {

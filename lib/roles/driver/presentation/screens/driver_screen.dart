@@ -130,12 +130,12 @@ class HomeViewState extends ConsumerState<HomeView> {
     }
 
     return RefreshIndicator(
+      triggerMode: RefreshIndicatorTriggerMode.anywhere,
       onRefresh: () {
         ref.invalidate(driverInfoProvider);
         return ref.read(driverReservesHomeProvider.notifier).reloadData();
       },
       child: Stack(children: <Widget>[
-        ListView(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Column(
@@ -335,7 +335,8 @@ class HomeViewState extends ConsumerState<HomeView> {
               ),
             ],
           ),
-        )
+        ),
+        SizedBox(height: size.height * .25, child: ListView()),
       ]),
     );
   }

@@ -49,28 +49,40 @@ class ReservesNotifier extends StateNotifier<List<DriverReserveHome>> {
   }) : super([]);
 
   Future<void> loadNextPage() async {
-    if (isLoading) return;
-    //print('Loading new pages');
+    if (isLoading || !mounted) return;
     isLoading = true;
-    final List<DriverReserveHome> reserves = await fetchMoreReserves(
-      page: currentPage,
-    );
-    currentPage++;
-    state = [...state, ...reserves];
-    await Future.delayed(const Duration(milliseconds: 400));
-    isLoading = false;
+    try {
+      final List<DriverReserveHome> reserves = await fetchMoreReserves(
+        page: currentPage,
+      );
+      currentPage++;
+      state = [...state, ...reserves];
+      await Future.delayed(const Duration(milliseconds: 400));
+    } catch (e) {
+      print(e);
+    } finally {
+      if (mounted) {
+        isLoading = false;
+      }
+    }
   }
 
   Future<void> reloadData() async {
-    if (isLoading) return;
-    //print('Loading new pages');
+    if (isLoading || !mounted) return;
     currentPage = 0;
     isLoading = true;
-    final List<DriverReserveHome> reserves =
-        await fetchMoreReserves(page: currentPage);
-    currentPage++;
-    state = [...reserves];
-    await Future.delayed(const Duration(milliseconds: 400));
-    isLoading = false;
+    try {
+      final List<DriverReserveHome> reserves =
+          await fetchMoreReserves(page: currentPage);
+      currentPage++;
+      state = [...reserves];
+      await Future.delayed(const Duration(milliseconds: 400));
+    } catch (e) {
+      print(e);
+    } finally {
+      if (mounted) {
+        isLoading = false;
+      }
+    }
   }
 }

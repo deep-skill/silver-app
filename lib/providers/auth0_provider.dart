@@ -84,7 +84,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       if (kIsWeb) {
         return auth0Web.loginWithRedirect(
-          redirectUrl: 'http://localhost:3000',
+          redirectUrl: dotenv.env['ENVIRONMENT'] == 'dev' ? 'http://localhost:3000' : 'admin.silverexpress.pe',
           audience: 'http://localhost:5000',
           scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
         );
@@ -118,7 +118,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     );
     try {
       if (kIsWeb) {
-        await auth0Web.logout(returnToUrl: 'http://localhost:3000');
+        await auth0Web.logout(returnToUrl: dotenv.env['ENVIRONMENT'] == 'dev' ? 'http://localhost:3000' : 'admin.silverexpress.pe');
       } else {
         await auth0
             .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])

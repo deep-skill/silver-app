@@ -102,7 +102,7 @@ class HomeViewState extends ConsumerState<HomeView> {
       'Septiembre',
       'Octubre',
       'Noviembre',
-      'Deciembre'
+      'Diciembre'
     ];
     final driverInfo = ref.watch(driverInfoProvider);
     final tripsSummaryDriver = ref.watch(tripsSummaryDriverProvider);

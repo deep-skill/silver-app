@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/auth0/mapa_prueba.dart';
 
 import '../providers/auth0_provider.dart';
 
@@ -136,6 +137,29 @@ class AppLoginView extends StatelessWidget {
           ),
         ),
       ),
+      SizedBox(
+        height: size.height * .06,
+        width: size.width * .8,
+        child: ElevatedButton(
+          onPressed: () async {
+                final result = await Navigator.of(context).push<String>(
+                  MaterialPageRoute(builder: (context) => const MapSample()),
+                );
+                if (result != null) {
+                  print(result);
+                 
+                }
+              },
+          child: Text(
+            'Mostrar mapita! XD',
+            style: TextStyle(
+              color: colors.onBackground,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
     ]);
   }
 }
@@ -209,6 +233,29 @@ class WebLoginView extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(
+        height: size.height * .06,
+        width: size.width * .8,
+        child: ElevatedButton(
+          onPressed: () async {
+                final result = await Navigator.of(context).push<String>(
+                  MaterialPageRoute(builder: (context) => const MapSample()),
+                );
+                if (result != null) {
+                  print(result);
+                 
+                }
+              },
+          child: Text(
+            'Mostrar mapita! XD',
+            style: TextStyle(
+              color: colors.onBackground,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
             const SizedBox(
               height: 80,
             )

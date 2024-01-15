@@ -39,9 +39,8 @@ class DriverReserveDetail {
         name: json["User"]["name"],
         lastName: json["User"]["lastName"],
         state: (json["Trip"] == null) ? null : json["Trip"]["status"],
-        enterpriseName: json["Reserve"] == null
-            ? null
-            : json["Reserve"]["Enterprise"]["name"],
+        enterpriseName:
+            json["Enterprise"] == null ? null : json["Enterprise"]["name"],
         silverPercent: json["silverPercent"],
       );
 }

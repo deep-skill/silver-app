@@ -51,7 +51,7 @@ class MapGoogleState extends State<MapGoogle> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Seleccione una Ubicación"),
-          content: Container(
+          content: SizedBox(
             width: double.maxFinite,
             child: ListView.builder(
               shrinkWrap: true,
@@ -105,45 +105,68 @@ class MapGoogleState extends State<MapGoogle> {
       appBar: AppBar(
         title: const Text('Mapa'),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _searchController,
-              decoration: InputDecoration(
-                hintText: 'Ingrese una dirección',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () => _searchAndNavigate(_searchController.text),
+          GoogleMap(
+            mapType: MapType.normal,
+            initialCameraPosition: _kGooglePlex,
+            markers: _markers,
+            onMapCreated: (controller) => _controller.complete(controller),
+          ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                  controller: _searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Ingrese una dirección',
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.search),
+                      onPressed: () =>
+                          _searchAndNavigate(_searchController.text),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: GoogleMap(
-              mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
-              markers: _markers,
-              onMapCreated: (controller) => _controller.complete(controller),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: selectedLocation != null
-                ? () {
-                    List<String> locationParts = selectedLocation!.split(', ');
-                    double lat = double.parse(locationParts[0]);
-                    double lng = double.parse(locationParts[1]);
-                    String address = locationParts.sublist(2).join(', ');
+              const Spacer(),
+              Container(
+                margin: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.all(5)),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        const Color(0xFF23A5CD)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  ),
+                  onPressed: selectedLocation != null
+                      ? () {
+                          List<String> locationParts =
+                              selectedLocation!.split(', ');
+                          double lat = double.parse(locationParts[0]);
+                          double lng = double.parse(locationParts[1]);
+                          String address = locationParts.sublist(2).join(', ');
 
-                    Navigator.of(context).pop(LocationData(
-                      latitude: lat,
-                      longitude: lng,
-                      address: address,
-                    ));
-                  }
-                : null,
-            child: const Text('Confirmar Ubicación'),
+                          Navigator.of(context).pop(LocationData(
+                            latitude: lat,
+                            longitude: lng,
+                            address: address,
+                          ));
+                        }
+                      : null,
+                  child: const Text('Confirmar Ubicación',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontFamily: "Monserrat")),
+                ),
+              ),
+            ],
           ),
         ],
       ),

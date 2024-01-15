@@ -2,16 +2,16 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:silverapp/google_maps/location_data.dart';
 
-class MapSample extends StatefulWidget {
-  const MapSample({super.key});
-
+class MapGoogle extends StatefulWidget {
+  const MapGoogle({super.key});
 
   @override
-  State<MapSample> createState() => MapSampleState();
+  State<MapGoogle> createState() => MapGoogleState();
 }
 
-class MapSampleState extends State<MapSample> {
+class MapGoogleState extends State<MapGoogle> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   final TextEditingController _searchController = TextEditingController();
@@ -50,7 +50,7 @@ class MapSampleState extends State<MapSample> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Seleccione una Ubicación"),
+          title: const Text("Seleccione una Ubicación"),
           content: Container(
             width: double.maxFinite,
             child: ListView.builder(
@@ -114,7 +114,7 @@ class MapSampleState extends State<MapSample> {
               decoration: InputDecoration(
                 hintText: 'Ingrese una dirección',
                 suffixIcon: IconButton(
-                  icon: Icon(Icons.search),
+                  icon: const Icon(Icons.search),
                   onPressed: () => _searchAndNavigate(_searchController.text),
                 ),
               ),
@@ -134,10 +134,19 @@ class MapSampleState extends State<MapSample> {
           ElevatedButton(
             onPressed: selectedLocation != null
                 ? () {
-                    Navigator.of(context).pop(selectedLocation);
+                    List<String> locationParts = selectedLocation!.split(', ');
+                    double lat = double.parse(locationParts[0]);
+                    double lng = double.parse(locationParts[1]);
+                    String address = locationParts.sublist(2).join(', ');
+
+                    Navigator.of(context).pop(LocationData(
+                      latitude: lat,
+                      longitude: lng,
+                      address: address,
+                    ));
                   }
                 : null,
-            child: Text('Confirmar Ubicación'),
+            child: const Text('Confirmar Ubicación'),
           ),
         ],
       ),
@@ -145,6 +154,22 @@ class MapSampleState extends State<MapSample> {
   }
 
   void _onMapTapped(LatLng location) async {
-    // Código para obtener la dirección formateada usando la API de Geocodificación inversa
+    try {
+      var response = await Dio().get(
+        'https://maps.googleapis.com/maps/api/geocode/json',
+        queryParameters: {
+          'latlng': '${location.latitude},${location.longitude}',
+          'key': 'AIzaSyAA6KXYXkm6KJ84V1apLQguQKXBoKx0NtE',
+        },
+      );
+
+      if (response.statusCode == 200 && response.data['results'].length > 0) {
+        String formattedAddress =
+            response.data['results'][0]['formatted_address'];
+        _updateMapLocation(location, formattedAddress);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 }

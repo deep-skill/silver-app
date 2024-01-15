@@ -115,16 +115,35 @@ class MapGoogleState extends State<MapGoogle> {
           ),
           Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: 'Ingrese una dirección',
-                    suffixIcon: IconButton(
-                      icon: const Icon(Icons.search),
-                      onPressed: () =>
-                          _searchAndNavigate(_searchController.text),
+              Container(
+                margin: const EdgeInsets.all(8.0),
+                child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    color: Color(0xffFFFFFF),
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Ingrese una dirección',
+                        suffixIcon: SizedBox(
+                          child: DecoratedBox(
+                            decoration: const BoxDecoration(
+                              color: Color(0xff03132A),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12)),
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.search,
+                                  color: Color(0xffFFFFFF)),
+                              onPressed: () =>
+                                  _searchAndNavigate(_searchController.text),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ),

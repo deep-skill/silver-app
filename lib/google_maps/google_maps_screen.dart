@@ -125,9 +125,6 @@ class MapGoogleState extends State<MapGoogle> {
               mapType: MapType.normal,
               initialCameraPosition: _kGooglePlex,
               markers: _markers,
-              onTap: (LatLng location) {
-                _onMapTapped(location);
-              },
               onMapCreated: (controller) => _controller.complete(controller),
             ),
           ),
@@ -151,25 +148,5 @@ class MapGoogleState extends State<MapGoogle> {
         ],
       ),
     );
-  }
-
-  void _onMapTapped(LatLng location) async {
-    try {
-      var response = await Dio().get(
-        'https://maps.googleapis.com/maps/api/geocode/json',
-        queryParameters: {
-          'latlng': '${location.latitude},${location.longitude}',
-          'key': 'AIzaSyAA6KXYXkm6KJ84V1apLQguQKXBoKx0NtE',
-        },
-      );
-
-      if (response.statusCode == 200 && response.data['results'].length > 0) {
-        String formattedAddress =
-            response.data['results'][0]['formatted_address'];
-        _updateMapLocation(location, formattedAddress);
-      }
-    } catch (e) {
-      print(e);
-    }
   }
 }

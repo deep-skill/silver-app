@@ -538,7 +538,6 @@ class CreateReserveView extends ConsumerWidget {
                                               builder: (context) =>
                                                   const MapGoogle()),
                                         );
-                                        print(result);
                                         ref
                                             .read(reserveFormProvider(reserve)
                                                 .notifier)
@@ -602,40 +601,20 @@ class CreateReserveView extends ConsumerWidget {
                                                       fontSize: 16)),
                                         ),
                                         onPressed: () async {
-                                          determinePosition()
-                                              .then((position) => {
-                                                    showModalBottomSheet<
-                                                            String>(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return OpenStreetMapSearchAndPick(
-                                                              locationPinText:
-                                                                  '',
-                                                              center: LatLong(
-                                                                  position
-                                                                      .latitude,
-                                                                  position
-                                                                      .longitude),
-                                                              buttonColor:
-                                                                  Colors.blue,
-                                                              buttonText:
-                                                                  'Seleccionar punto de destino',
-                                                              onPicked:
-                                                                  (pickedData) async {
-                                                                ref.read(reserveFormProvider(reserve).notifier).onEndAddressChanged(
-                                                                    pickedData
-                                                                        .addressName,
-                                                                    pickedData
-                                                                        .latLong
-                                                                        .latitude,
-                                                                    pickedData
-                                                                        .latLong
-                                                                        .longitude);
-                                                                context.pop();
-                                                              });
-                                                        })
-                                                  });
+                                          final result =
+                                              await Navigator.of(context)
+                                                  .push<LocationData>(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const MapGoogle()),
+                                          );
+                                          ref
+                                              .read(reserveFormProvider(reserve)
+                                                  .notifier)
+                                              .onEndAddressChanged(
+                                                  result!.address,
+                                                  result.latitude,
+                                                  result.longitude);
                                         },
                                       ),
                                     ],

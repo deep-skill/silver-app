@@ -1048,8 +1048,7 @@ class CreateReserveView extends ConsumerWidget {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                SizedBox(
-                                  width: size.width * .75,
+                                Expanded(
                                   child: DropdownButton<String>(
                                     isExpanded: true,
                                     iconSize: 40,
@@ -1122,38 +1121,41 @@ class CreateReserveView extends ConsumerWidget {
                                 child: Row(
                                   children: [
                                     const Icon(Icons.today_outlined),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        DateTime? pickedDate =
-                                            await showDatePicker(
-                                                context: context,
-                                                initialDate: DateTime.now(),
-                                                firstDate: DateTime.now(),
-                                                lastDate: DateTime(2100));
-                                        if (pickedDate != null) {
-                                          ref
-                                              .read(reserveFormProvider(reserve)
-                                                  .notifier)
-                                              .onStartDateChanged(pickedDate
-                                                  .toString()
-                                                  .substring(0, 10));
-                                        } else {}
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                            '${reserveForm.startDate.value.substring(8, 10)}/${reserveForm.startDate.value.substring(5, 7)}/${reserveForm.startDate.value.substring(0, 4)}',
-                                            style: reserveForm
-                                                        .startDate.value ==
-                                                    '2023-09-26'
-                                                ? const TextStyle(
-                                                    color: Color(0xffB5B9C2),
-                                                    fontSize: 16,
-                                                    fontFamily:
-                                                        'Montserrat-Regular')
-                                                : const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16)),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          DateTime? pickedDate =
+                                              await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime.now(),
+                                                  lastDate: DateTime(2100));
+                                          if (pickedDate != null) {
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onStartDateChanged(pickedDate
+                                                    .toString()
+                                                    .substring(0, 10));
+                                          } else {}
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                              '${reserveForm.startDate.value.substring(8, 10)}/${reserveForm.startDate.value.substring(5, 7)}/${reserveForm.startDate.value.substring(0, 4)}',
+                                              style: reserveForm
+                                                          .startDate.value ==
+                                                      '2023-09-26'
+                                                  ? const TextStyle(
+                                                      color: Color(0xffB5B9C2),
+                                                      fontSize: 16,
+                                                      fontFamily:
+                                                          'Montserrat-Regular')
+                                                  : const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 16)),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -1239,8 +1241,7 @@ class CreateReserveView extends ConsumerWidget {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                SizedBox(
-                                  width: size.width * .75,
+                                Expanded(
                                   child: DropdownButton<String>(
                                     iconSize: 40,
                                     isExpanded: true,
@@ -1302,60 +1303,67 @@ class CreateReserveView extends ConsumerWidget {
                             child: Row(
                               children: [
                                 const Icon(Icons.location_on_outlined),
-                                TextButton(
-                                  style: ButtonStyle(
-                                    overlayColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    shadowColor: MaterialStateProperty.all(
-                                        Colors.transparent),
+                                Expanded(
+                                  child: TextButton(
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.transparent),
+                                      shadowColor: MaterialStateProperty.all(
+                                          Colors.transparent),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Text(
+                                          reserveForm.startAddress.value,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: reserveForm
+                                                      .startAddress.value ==
+                                                  'Seleccione el punto de recojo'
+                                              ? const TextStyle(
+                                                  color: Color(0xffB5B9C2),
+                                                  fontSize: 16,
+                                                  fontFamily:
+                                                      'Montserrat-Regular')
+                                              : const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16)),
+                                    ),
+                                    onPressed: () async {
+                                      determinePosition().then((position) => {
+                                            showModalBottomSheet<String>(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return OpenStreetMapSearchAndPick(
+                                                      locationPinText: '',
+                                                      center: LatLong(
+                                                          position.latitude,
+                                                          position.longitude),
+                                                      buttonColor: Colors.blue,
+                                                      buttonText:
+                                                          'Seleccionar punto de recojo',
+                                                      onPicked:
+                                                          (pickedData) async {
+                                                        ref
+                                                            .read(
+                                                                reserveFormProvider(
+                                                                        reserve)
+                                                                    .notifier)
+                                                            .onStartAddressChanged(
+                                                                pickedData
+                                                                    .addressName,
+                                                                pickedData
+                                                                    .latLong
+                                                                    .latitude,
+                                                                pickedData
+                                                                    .latLong
+                                                                    .longitude);
+                                                        context.pop();
+                                                      });
+                                                })
+                                          });
+                                    },
                                   ),
-                                  child: SizedBox(
-                                    width: size.width * .7,
-                                    child: Text(reserveForm.startAddress.value,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: reserveForm.startAddress.value ==
-                                                'Seleccione el punto de recojo'
-                                            ? const TextStyle(
-                                                color: Color(0xffB5B9C2),
-                                                fontSize: 16,
-                                                fontFamily:
-                                                    'Montserrat-Regular')
-                                            : const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16)),
-                                  ),
-                                  onPressed: () async {
-                                    determinePosition().then((position) => {
-                                          showModalBottomSheet<String>(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return OpenStreetMapSearchAndPick(
-                                                    locationPinText: '',
-                                                    center: LatLong(
-                                                        position.latitude,
-                                                        position.longitude),
-                                                    buttonColor: Colors.blue,
-                                                    buttonText:
-                                                        'Seleccionar punto de recojo',
-                                                    onPicked:
-                                                        (pickedData) async {
-                                                      ref
-                                                          .read(
-                                                              reserveFormProvider(
-                                                                      reserve)
-                                                                  .notifier)
-                                                          .onStartAddressChanged(
-                                                              pickedData
-                                                                  .addressName,
-                                                              pickedData.latLong
-                                                                  .latitude,
-                                                              pickedData.latLong
-                                                                  .longitude);
-                                                      context.pop();
-                                                    });
-                                              })
-                                        });
-                                  },
                                 ),
                               ],
                             ),
@@ -1381,64 +1389,67 @@ class CreateReserveView extends ConsumerWidget {
                               child: Row(
                                 children: [
                                   const Icon(Icons.trip_origin_outlined),
-                                  TextButton(
-                                    style: ButtonStyle(
-                                      overlayColor: MaterialStateProperty.all(
-                                          Colors.transparent),
-                                      shadowColor: MaterialStateProperty.all(
-                                          Colors.transparent),
+                                  Expanded(
+                                    child: TextButton(
+                                      style: ButtonStyle(
+                                        overlayColor: MaterialStateProperty.all(
+                                            Colors.transparent),
+                                        shadowColor: MaterialStateProperty.all(
+                                            Colors.transparent),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                            reserveForm.endAddress!.value,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: reserveForm
+                                                        .endAddress!.value ==
+                                                    'Seleccione el punto de destino'
+                                                ? const TextStyle(
+                                                    color: Color(0xffB5B9C2),
+                                                    fontSize: 16,
+                                                    fontFamily:
+                                                        'Montserrat-Regular')
+                                                : const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16)),
+                                      ),
+                                      onPressed: () async {
+                                        determinePosition().then((position) => {
+                                              showModalBottomSheet<String>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return OpenStreetMapSearchAndPick(
+                                                        locationPinText: '',
+                                                        center: LatLong(
+                                                            position.latitude,
+                                                            position.longitude),
+                                                        buttonColor:
+                                                            Colors.blue,
+                                                        buttonText:
+                                                            'Seleccionar punto de destino',
+                                                        onPicked:
+                                                            (pickedData) async {
+                                                          ref
+                                                              .read(reserveFormProvider(
+                                                                      reserve)
+                                                                  .notifier)
+                                                              .onEndAddressChanged(
+                                                                  pickedData
+                                                                      .addressName,
+                                                                  pickedData
+                                                                      .latLong
+                                                                      .latitude,
+                                                                  pickedData
+                                                                      .latLong
+                                                                      .longitude);
+                                                          context.pop();
+                                                        });
+                                                  })
+                                            });
+                                      },
                                     ),
-                                    child: SizedBox(
-                                      width: size.width * .7,
-                                      child: Text(reserveForm.endAddress!.value,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: reserveForm
-                                                      .endAddress!.value ==
-                                                  'Seleccione el punto de destino'
-                                              ? const TextStyle(
-                                                  color: Color(0xffB5B9C2),
-                                                  fontSize: 16,
-                                                  fontFamily:
-                                                      'Montserrat-Regular')
-                                              : const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16)),
-                                    ),
-                                    onPressed: () async {
-                                      determinePosition().then((position) => {
-                                            showModalBottomSheet<String>(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return OpenStreetMapSearchAndPick(
-                                                      locationPinText: '',
-                                                      center: LatLong(
-                                                          position.latitude,
-                                                          position.longitude),
-                                                      buttonColor: Colors.blue,
-                                                      buttonText:
-                                                          'Seleccionar punto de destino',
-                                                      onPicked:
-                                                          (pickedData) async {
-                                                        ref
-                                                            .read(
-                                                                reserveFormProvider(
-                                                                        reserve)
-                                                                    .notifier)
-                                                            .onEndAddressChanged(
-                                                                pickedData
-                                                                    .addressName,
-                                                                pickedData
-                                                                    .latLong
-                                                                    .latitude,
-                                                                pickedData
-                                                                    .latLong
-                                                                    .longitude);
-                                                        context.pop();
-                                                      });
-                                                })
-                                          });
-                                    },
                                   ),
                                 ],
                               ),
@@ -1524,47 +1535,51 @@ class CreateReserveView extends ConsumerWidget {
                           child: Row(
                             children: [
                               const Icon(Icons.local_taxi_outlined),
-                              TextButton(
-                                style: ButtonStyle(
-                                    overlayColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    shadowColor: MaterialStateProperty.all(
-                                        Colors.transparent)),
-                                child: SizedBox(
-                                  width: size.width * .7,
-                                  child: Text(
-                                      '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
-                                      style: reserveForm.brand == 'Ejem. Toyota'
-                                          ? const TextStyle(
-                                              overflow: TextOverflow.ellipsis,
-                                              color: Color(0xffB5B9C2),
-                                              fontSize: 16,
-                                              fontFamily: 'Montserrat-Regular')
-                                          : const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16)),
+                              Expanded(
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.transparent),
+                                      shadowColor: MaterialStateProperty.all(
+                                          Colors.transparent)),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                        '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
+                                        style: reserveForm.brand ==
+                                                'Ejem. Toyota'
+                                            ? const TextStyle(
+                                                overflow: TextOverflow.ellipsis,
+                                                color: Color(0xffB5B9C2),
+                                                fontSize: 16,
+                                                fontFamily:
+                                                    'Montserrat-Regular')
+                                            : const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16)),
+                                  ),
+                                  onPressed: () {
+                                    final searchedCars =
+                                        ref.read(searchedCarsProvider);
+                                    final searchQuery =
+                                        ref.read(searchCarsProvider);
+                                    final changeCallback = ref
+                                        .read(reserveFormProvider(reserve)
+                                            .notifier)
+                                        .onCarIdChanged;
+                                    showSearch<SearchCar?>(
+                                            query: searchQuery,
+                                            context: context,
+                                            delegate: SearchCarDelegate(
+                                                callback: changeCallback,
+                                                initialCars: searchedCars,
+                                                searchCars: ref
+                                                    .read(searchedCarsProvider
+                                                        .notifier)
+                                                    .searchCarsByQuery))
+                                        .then((driver) {});
+                                  },
                                 ),
-                                onPressed: () {
-                                  final searchedCars =
-                                      ref.read(searchedCarsProvider);
-                                  final searchQuery =
-                                      ref.read(searchCarsProvider);
-                                  final changeCallback = ref
-                                      .read(
-                                          reserveFormProvider(reserve).notifier)
-                                      .onCarIdChanged;
-                                  showSearch<SearchCar?>(
-                                          query: searchQuery,
-                                          context: context,
-                                          delegate: SearchCarDelegate(
-                                              callback: changeCallback,
-                                              initialCars: searchedCars,
-                                              searchCars: ref
-                                                  .read(searchedCarsProvider
-                                                      .notifier)
-                                                  .searchCarsByQuery))
-                                      .then((driver) {});
-                                },
                               ),
                             ],
                           ),

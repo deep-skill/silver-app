@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -43,39 +44,40 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAmmTTx-KXe-F_RJ1BmY4qzQCGUh0rorn0',
+//'http://${dotenv.env['YOUR_IP']}:${dotenv.env['SERVER_PORT']}/silver-api/'
+  static FirebaseOptions web = FirebaseOptions(
+    apiKey: '${dotenv.env['FIREBASE_OPTIONS_WEB']}',
     appId: '1:186537693375:web:becb5f544d1677e14d760a',
     messagingSenderId: '186537693375',
-    projectId: 'silver-express-8fa19',
-    authDomain: 'silver-express-8fa19.firebaseapp.com',
-    storageBucket: 'silver-express-8fa19.appspot.com',
+    projectId: '${dotenv.env['PROJECT_ID']}',
+    authDomain: '${dotenv.env['PROJECT_ID']}.firebaseapp.com',
+    storageBucket: '${dotenv.env['PROJECT_ID']}.appspot.com',
     measurementId: 'G-Y2688NFN2T',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBOpl6QvUmlB-63jNFUPusLtUeZkUwLDKY',
+  static FirebaseOptions android = FirebaseOptions(
+    apiKey: '${dotenv.env['FIREBASE_OPTIONS_ANDROID']}',
     appId: '1:186537693375:android:fcd60c05ee6ea3484d760a',
     messagingSenderId: '186537693375',
-    projectId: 'silver-express-8fa19',
-    storageBucket: 'silver-express-8fa19.appspot.com',
+    projectId: '${dotenv.env['PROJECT_ID']}',
+    storageBucket: '${dotenv.env['PROJECT_ID']}.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDKoxqubvUjynUCot4aoAw7Nj8Z61MBVPI',
+  static FirebaseOptions ios = FirebaseOptions(
+    apiKey: '${dotenv.env['FIREBASE_OPTIONS_IOS']}',
     appId: '1:186537693375:ios:3988be5db077ff774d760a',
     messagingSenderId: '186537693375',
-    projectId: 'silver-express-8fa19',
-    storageBucket: 'silver-express-8fa19.appspot.com',
+    projectId: '${dotenv.env['PROJECT_ID']}',
+    storageBucket: '${dotenv.env['PROJECT_ID']}.appspot.com',
     iosBundleId: 'com.example.silverapp',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDKoxqubvUjynUCot4aoAw7Nj8Z61MBVPI',
+  static FirebaseOptions macos = FirebaseOptions(
+    apiKey: '${dotenv.env['FIREBASE_OPTIONS_IOS']}',
     appId: '1:186537693375:ios:2ea7666a30afbbea4d760a',
     messagingSenderId: '186537693375',
-    projectId: 'silver-express-8fa19',
-    storageBucket: 'silver-express-8fa19.appspot.com',
+    projectId: '${dotenv.env['PROJECT_ID']}',
+    storageBucket: '${dotenv.env['PROJECT_ID']}.appspot.com',
     iosBundleId: 'com.example.silverapp.RunnerTests',
   );
 }

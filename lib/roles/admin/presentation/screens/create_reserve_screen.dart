@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
-import 'package:silverapp/position/determine_position_helper.dart';
+import 'package:silverapp/google_maps/google_maps_screen.dart';
+import 'package:silverapp/google_maps/location_data.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/search_car.dart';
@@ -529,39 +529,22 @@ class CreateReserveView extends ConsumerWidget {
                                                     fontSize: 16)),
                                       ),
                                       onPressed: () async {
-                                        determinePosition().then((position) => {
-                                              showModalBottomSheet<String>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return OpenStreetMapSearchAndPick(
-                                                        locationPinText: '',
-                                                        center: LatLong(
-                                                            position.latitude,
-                                                            position.longitude),
-                                                        buttonColor:
-                                                            Colors.blue,
-                                                        buttonText:
-                                                            'Seleccionar punto de recojo',
-                                                        onPicked:
-                                                            (pickedData) async {
-                                                          ref
-                                                              .read(reserveFormProvider(
-                                                                      reserve)
-                                                                  .notifier)
-                                                              .onStartAddressChanged(
-                                                                  pickedData
-                                                                      .addressName,
-                                                                  pickedData
-                                                                      .latLong
-                                                                      .latitude,
-                                                                  pickedData
-                                                                      .latLong
-                                                                      .longitude);
-                                                          context.pop();
-                                                        });
-                                                  })
-                                            });
+                                        final result =
+                                            await Navigator.of(context)
+                                                .push<LocationData>(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MapGoogle()),
+                                        );
+                                        if (result != null) {
+                                          ref
+                                              .read(reserveFormProvider(reserve)
+                                                  .notifier)
+                                              .onStartAddressChanged(
+                                                  result.address,
+                                                  result.latitude,
+                                                  result.longitude);
+                                        }
                                       },
                                     ),
                                   ],
@@ -618,40 +601,23 @@ class CreateReserveView extends ConsumerWidget {
                                                       fontSize: 16)),
                                         ),
                                         onPressed: () async {
-                                          determinePosition()
-                                              .then((position) => {
-                                                    showModalBottomSheet<
-                                                            String>(
-                                                        context: context,
-                                                        builder: (BuildContext
-                                                            context) {
-                                                          return OpenStreetMapSearchAndPick(
-                                                              locationPinText:
-                                                                  '',
-                                                              center: LatLong(
-                                                                  position
-                                                                      .latitude,
-                                                                  position
-                                                                      .longitude),
-                                                              buttonColor:
-                                                                  Colors.blue,
-                                                              buttonText:
-                                                                  'Seleccionar punto de destino',
-                                                              onPicked:
-                                                                  (pickedData) async {
-                                                                ref.read(reserveFormProvider(reserve).notifier).onEndAddressChanged(
-                                                                    pickedData
-                                                                        .addressName,
-                                                                    pickedData
-                                                                        .latLong
-                                                                        .latitude,
-                                                                    pickedData
-                                                                        .latLong
-                                                                        .longitude);
-                                                                context.pop();
-                                                              });
-                                                        })
-                                                  });
+                                          final result =
+                                              await Navigator.of(context)
+                                                  .push<LocationData>(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const MapGoogle()),
+                                          );
+                                          if (result != null) {
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onEndAddressChanged(
+                                                    result.address,
+                                                    result.latitude,
+                                                    result.longitude);
+                                          }
                                         },
                                       ),
                                     ],
@@ -1278,36 +1244,21 @@ class CreateReserveView extends ConsumerWidget {
                                                 fontSize: 16)),
                                   ),
                                   onPressed: () async {
-                                    determinePosition().then((position) => {
-                                          showModalBottomSheet<String>(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return OpenStreetMapSearchAndPick(
-                                                    locationPinText: '',
-                                                    center: LatLong(
-                                                        position.latitude,
-                                                        position.longitude),
-                                                    buttonColor: Colors.blue,
-                                                    buttonText:
-                                                        'Seleccionar punto de recojo',
-                                                    onPicked:
-                                                        (pickedData) async {
-                                                      ref
-                                                          .read(
-                                                              reserveFormProvider(
-                                                                      reserve)
-                                                                  .notifier)
-                                                          .onStartAddressChanged(
-                                                              pickedData
-                                                                  .addressName,
-                                                              pickedData.latLong
-                                                                  .latitude,
-                                                              pickedData.latLong
-                                                                  .longitude);
-                                                      context.pop();
-                                                    });
-                                              })
-                                        });
+                                    final result = await Navigator.of(context)
+                                        .push<LocationData>(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const MapGoogle()),
+                                    );
+                                    if (result != null) {
+                                      ref
+                                          .read(reserveFormProvider(reserve)
+                                              .notifier)
+                                          .onStartAddressChanged(
+                                              result.address,
+                                              result.latitude,
+                                              result.longitude);
+                                    }
                                   },
                                 ),
                               ],
@@ -1358,39 +1309,21 @@ class CreateReserveView extends ConsumerWidget {
                                                   fontSize: 16)),
                                     ),
                                     onPressed: () async {
-                                      determinePosition().then((position) => {
-                                            showModalBottomSheet<String>(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) {
-                                                  return OpenStreetMapSearchAndPick(
-                                                      locationPinText: '',
-                                                      center: LatLong(
-                                                          position.latitude,
-                                                          position.longitude),
-                                                      buttonColor: Colors.blue,
-                                                      buttonText:
-                                                          'Seleccionar punto de destino',
-                                                      onPicked:
-                                                          (pickedData) async {
-                                                        ref
-                                                            .read(
-                                                                reserveFormProvider(
-                                                                        reserve)
-                                                                    .notifier)
-                                                            .onEndAddressChanged(
-                                                                pickedData
-                                                                    .addressName,
-                                                                pickedData
-                                                                    .latLong
-                                                                    .latitude,
-                                                                pickedData
-                                                                    .latLong
-                                                                    .longitude);
-                                                        context.pop();
-                                                      });
-                                                })
-                                          });
+                                      final result = await Navigator.of(context)
+                                          .push<LocationData>(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MapGoogle()),
+                                      );
+                                      if (result != null) {
+                                        ref
+                                            .read(reserveFormProvider(reserve)
+                                                .notifier)
+                                            .onEndAddressChanged(
+                                                result.address,
+                                                result.latitude,
+                                                result.longitude);
+                                      }
                                     },
                                   ),
                                 ],

@@ -151,50 +151,58 @@ class CreateReserveView extends ConsumerWidget {
                                   child: Row(
                                     children: [
                                       const Icon(Icons.person_outlined),
-                                      TextButton(
-                                        style: ButtonStyle(
-                                            overlayColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.transparent),
-                                            shadowColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.transparent)),
-                                        child: Text(
-                                            '${reserveForm.userName} ${reserveForm.userLastName}',
-                                            style: reserveForm.userName ==
-                                                    'Ejem. Carla'
-                                                ? const TextStyle(
-                                                    color: Color(0xffB5B9C2),
-                                                    fontSize: 16,
-                                                    fontFamily:
-                                                        'Montserrat-Regular')
-                                                : const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16)),
-                                        onPressed: () {
-                                          final searchedPassengers = ref
-                                              .read(searchedPassengersProvider);
-                                          final searchQuery = ref
-                                              .read(searchPassengersProvider);
-                                          final changeCallback = ref
-                                              .read(reserveFormProvider(reserve)
-                                                  .notifier)
-                                              .onUserIdChanged;
+                                      Expanded(
+                                        child: TextButton(
+                                          style: ButtonStyle(
+                                              overlayColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.transparent),
+                                              shadowColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.transparent)),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                                '${reserveForm.userName} ${reserveForm.userLastName}',
+                                                style: reserveForm.userName ==
+                                                        'Ejem. Carla'
+                                                    ? const TextStyle(
+                                                        color:
+                                                            Color(0xffB5B9C2),
+                                                        fontSize: 16,
+                                                        fontFamily:
+                                                            'Montserrat-Regular')
+                                                    : const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16)),
+                                          ),
+                                          onPressed: () {
+                                            final searchedPassengers = ref.read(
+                                                searchedPassengersProvider);
+                                            final searchQuery = ref
+                                                .read(searchPassengersProvider);
+                                            final changeCallback = ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onUserIdChanged;
 
-                                          showSearch<SearchPassenger?>(
-                                                  query: searchQuery,
-                                                  context: context,
-                                                  delegate: SearchPassengerDelegate(
-                                                      callback: changeCallback,
-                                                      initialPassengers:
-                                                          searchedPassengers,
-                                                      searchPassengers: ref
-                                                          .read(
-                                                              searchedPassengersProvider
-                                                                  .notifier)
-                                                          .searchMoviesByQuery))
-                                              .then((passenger) {});
-                                        },
+                                            showSearch<SearchPassenger?>(
+                                                    query: searchQuery,
+                                                    context: context,
+                                                    delegate: SearchPassengerDelegate(
+                                                        callback:
+                                                            changeCallback,
+                                                        initialPassengers:
+                                                            searchedPassengers,
+                                                        searchPassengers: ref
+                                                            .read(
+                                                                searchedPassengersProvider
+                                                                    .notifier)
+                                                            .searchMoviesByQuery))
+                                                .then((passenger) {});
+                                          },
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -218,14 +226,12 @@ class CreateReserveView extends ConsumerWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       const Icon(
                                           Icons.business_center_outlined),
                                       const SizedBox(width: 15),
-                                      SizedBox(
-                                        width: size.width * 0.25,
+                                      Expanded(
                                         child: DropdownButton<String>(
                                           isExpanded: true,
                                           iconSize: 40,
@@ -309,39 +315,42 @@ class CreateReserveView extends ConsumerWidget {
                                   child: Row(
                                     children: [
                                       const Icon(Icons.today_outlined),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          DateTime? pickedDate =
-                                              await showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime.now(),
-                                                  lastDate: DateTime(2100));
-                                          if (pickedDate != null) {
-                                            ref
-                                                .read(
-                                                    reserveFormProvider(reserve)
-                                                        .notifier)
-                                                .onStartDateChanged(pickedDate
-                                                    .toString()
-                                                    .substring(0, 10));
-                                          } else {}
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                              '${reserveForm.startDate.value.substring(8, 10)}/${reserveForm.startDate.value.substring(5, 7)}/${reserveForm.startDate.value.substring(0, 4)}',
-                                              style: reserveForm
-                                                          .startDate.value ==
-                                                      '2023-09-26'
-                                                  ? const TextStyle(
-                                                      color: Color(0xffB5B9C2),
-                                                      fontSize: 16,
-                                                      fontFamily:
-                                                          'Montserrat-Regular')
-                                                  : const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 16)),
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            DateTime? pickedDate =
+                                                await showDatePicker(
+                                                    context: context,
+                                                    initialDate: DateTime.now(),
+                                                    firstDate: DateTime.now(),
+                                                    lastDate: DateTime(2100));
+                                            if (pickedDate != null) {
+                                              ref
+                                                  .read(reserveFormProvider(
+                                                          reserve)
+                                                      .notifier)
+                                                  .onStartDateChanged(pickedDate
+                                                      .toString()
+                                                      .substring(0, 10));
+                                            } else {}
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                                '${reserveForm.startDate.value.substring(8, 10)}/${reserveForm.startDate.value.substring(5, 7)}/${reserveForm.startDate.value.substring(0, 4)}',
+                                                style: reserveForm
+                                                            .startDate.value ==
+                                                        '2023-09-26'
+                                                    ? const TextStyle(
+                                                        color:
+                                                            Color(0xffB5B9C2),
+                                                        fontSize: 16,
+                                                        fontFamily:
+                                                            'Montserrat-Regular')
+                                                    : const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16)),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -365,38 +374,43 @@ class CreateReserveView extends ConsumerWidget {
                                   child: Row(
                                     children: [
                                       const Icon(Icons.alarm),
-                                      GestureDetector(
-                                        onTap: () async {
-                                          TimeOfDay? pickedTime =
-                                              await showTimePicker(
-                                                  context: context,
-                                                  initialTime: const TimeOfDay(
-                                                      hour: 00, minute: 00));
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () async {
+                                            TimeOfDay? pickedTime =
+                                                await showTimePicker(
+                                                    context: context,
+                                                    initialTime:
+                                                        const TimeOfDay(
+                                                            hour: 00,
+                                                            minute: 00));
 
-                                          if (pickedTime != null) {
-                                            ref
-                                                .read(
-                                                    reserveFormProvider(reserve)
-                                                        .notifier)
-                                                .onStartTimeChanged(
-                                                    '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}');
-                                          } else {}
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                              reserveForm.startTime.value,
-                                              style: reserveForm
-                                                          .startTime.value ==
-                                                      '00:00'
-                                                  ? const TextStyle(
-                                                      color: Color(0xffB5B9C2),
-                                                      fontSize: 16,
-                                                      fontFamily:
-                                                          'Montserrat-Regular')
-                                                  : const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 16)),
+                                            if (pickedTime != null) {
+                                              ref
+                                                  .read(reserveFormProvider(
+                                                          reserve)
+                                                      .notifier)
+                                                  .onStartTimeChanged(
+                                                      '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}');
+                                            } else {}
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                                reserveForm.startTime.value,
+                                                style: reserveForm
+                                                            .startTime.value ==
+                                                        '00:00'
+                                                    ? const TextStyle(
+                                                        color:
+                                                            Color(0xffB5B9C2),
+                                                        fontSize: 16,
+                                                        fontFamily:
+                                                            'Montserrat-Regular')
+                                                    : const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16)),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -418,68 +432,62 @@ class CreateReserveView extends ConsumerWidget {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
-                                  child: SizedBox(
-                                    width: size.width * .9,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Icon(Icons.timeline_outlined),
-                                        const SizedBox(
-                                          width: 10,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const Icon(Icons.timeline_outlined),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Expanded(
+                                        child: DropdownButton<String>(
+                                          iconSize: 40,
+                                          isExpanded: true,
+                                          value: reserveForm.tripType.value,
+                                          style: reserveForm.tripType.value ==
+                                                  'Seleccione el tipo de viaje'
+                                              ? const TextStyle(
+                                                  color: Color(0xffB5B9C2),
+                                                  fontSize: 16,
+                                                  fontFamily:
+                                                      'Montserrat-Regular')
+                                              : const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16),
+                                          items: [
+                                            'Por hora',
+                                            'Punto a punto',
+                                            'Seleccione el tipo de viaje'
+                                          ]
+                                              .map((option) => DropdownMenuItem(
+                                                    value: option,
+                                                    child: Text(
+                                                      option,
+                                                      style: option ==
+                                                              'Seleccione el tipo de viaje'
+                                                          ? const TextStyle(
+                                                              color:
+                                                                  Colors.grey,
+                                                              fontSize: 16)
+                                                          : const TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 16),
+                                                    ),
+                                                  ))
+                                              .toList(),
+                                          onChanged: (newValue) {
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onTripTypeChanged(newValue!);
+                                          },
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_down),
                                         ),
-                                        SizedBox(
-                                          width: size.width * .25,
-                                          child: DropdownButton<String>(
-                                            iconSize: 40,
-                                            isExpanded: true,
-                                            value: reserveForm.tripType.value,
-                                            style: reserveForm.tripType.value ==
-                                                    'Seleccione el tipo de viaje'
-                                                ? const TextStyle(
-                                                    color: Color(0xffB5B9C2),
-                                                    fontSize: 16,
-                                                    fontFamily:
-                                                        'Montserrat-Regular')
-                                                : const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16),
-                                            items: [
-                                              'Por hora',
-                                              'Punto a punto',
-                                              'Seleccione el tipo de viaje'
-                                            ]
-                                                .map((option) =>
-                                                    DropdownMenuItem(
-                                                      value: option,
-                                                      child: Text(
-                                                        option,
-                                                        style: option ==
-                                                                'Seleccione el tipo de viaje'
-                                                            ? const TextStyle(
-                                                                color:
-                                                                    Colors.grey,
-                                                                fontSize: 16)
-                                                            : const TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 16),
-                                                      ),
-                                                    ))
-                                                .toList(),
-                                            onChanged: (newValue) {
-                                              ref
-                                                  .read(reserveFormProvider(
-                                                          reserve)
-                                                      .notifier)
-                                                  .onTripTypeChanged(newValue!);
-                                            },
-                                            icon: const Icon(
-                                                Icons.keyboard_arrow_down),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ]),
@@ -502,50 +510,56 @@ class CreateReserveView extends ConsumerWidget {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     const Icon(Icons.location_on_outlined),
-                                    TextButton(
-                                      style: ButtonStyle(
-                                        overlayColor: MaterialStateProperty.all(
-                                            Colors.transparent),
-                                        shadowColor: MaterialStateProperty.all(
-                                            Colors.transparent),
+                                    Expanded(
+                                      child: TextButton(
+                                        style: ButtonStyle(
+                                          overlayColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.transparent),
+                                          shadowColor:
+                                              MaterialStateProperty.all(
+                                                  Colors.transparent),
+                                        ),
+                                        child: Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                              reserveForm.startAddress.value,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: reserveForm
+                                                          .startAddress.value ==
+                                                      'Seleccione el punto de recojo'
+                                                  ? const TextStyle(
+                                                      color: Color(0xffB5B9C2),
+                                                      fontSize: 16,
+                                                      fontFamily:
+                                                          'Montserrat-Regular')
+                                                  : const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 16)),
+                                        ),
+                                        onPressed: () async {
+                                          final result =
+                                              await Navigator.of(context)
+                                                  .push<LocationData>(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const MapGoogle()),
+                                          );
+                                          if (result != null) {
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onStartAddressChanged(
+                                                    result.address,
+                                                    result.latitude,
+                                                    result.longitude);
+                                          }
+                                        },
                                       ),
-                                      child: SizedBox(
-                                        width: size.width * .3,
-                                        child: Text(
-                                            reserveForm.startAddress.value,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: reserveForm
-                                                        .startAddress.value ==
-                                                    'Seleccione el punto de recojo'
-                                                ? const TextStyle(
-                                                    color: Color(0xffB5B9C2),
-                                                    fontSize: 16,
-                                                    fontFamily:
-                                                        'Montserrat-Regular')
-                                                : const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16)),
-                                      ),
-                                      onPressed: () async {
-                                        final result =
-                                            await Navigator.of(context)
-                                                .push<LocationData>(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MapGoogle()),
-                                        );
-                                        if (result != null) {
-                                          ref
-                                              .read(reserveFormProvider(reserve)
-                                                  .notifier)
-                                              .onStartAddressChanged(
-                                                  result.address,
-                                                  result.latitude,
-                                                  result.longitude);
-                                        }
-                                      },
                                     ),
                                   ],
                                 ),
@@ -572,53 +586,57 @@ class CreateReserveView extends ConsumerWidget {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       const Icon(Icons.trip_origin_outlined),
-                                      TextButton(
-                                        style: ButtonStyle(
-                                          overlayColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.transparent),
-                                          shadowColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.transparent),
+                                      Expanded(
+                                        child: TextButton(
+                                          style: ButtonStyle(
+                                            overlayColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.transparent),
+                                            shadowColor:
+                                                MaterialStateProperty.all(
+                                                    Colors.transparent),
+                                          ),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                                reserveForm.endAddress!.value,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: reserveForm.endAddress!
+                                                            .value ==
+                                                        'Seleccione el punto de destino'
+                                                    ? const TextStyle(
+                                                        color:
+                                                            Color(0xffB5B9C2),
+                                                        fontSize: 16,
+                                                        fontFamily:
+                                                            'Montserrat-Regular')
+                                                    : const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16)),
+                                          ),
+                                          onPressed: () async {
+                                            final result =
+                                                await Navigator.of(context)
+                                                    .push<LocationData>(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const MapGoogle()),
+                                            );
+                                            if (result != null) {
+                                              ref
+                                                  .read(reserveFormProvider(
+                                                          reserve)
+                                                      .notifier)
+                                                  .onEndAddressChanged(
+                                                      result.address,
+                                                      result.latitude,
+                                                      result.longitude);
+                                            }
+                                          },
                                         ),
-                                        child: SizedBox(
-                                          width: size.width * .3,
-                                          child: Text(
-                                              reserveForm.endAddress!.value,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: reserveForm
-                                                          .endAddress!.value ==
-                                                      'Seleccione el punto de destino'
-                                                  ? const TextStyle(
-                                                      color: Color(0xffB5B9C2),
-                                                      fontSize: 16,
-                                                      fontFamily:
-                                                          'Montserrat-Regular')
-                                                  : const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 16)),
-                                        ),
-                                        onPressed: () async {
-                                          final result =
-                                              await Navigator.of(context)
-                                                  .push<LocationData>(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const MapGoogle()),
-                                          );
-                                          if (result != null) {
-                                            ref
-                                                .read(
-                                                    reserveFormProvider(reserve)
-                                                        .notifier)
-                                                .onEndAddressChanged(
-                                                    result.address,
-                                                    result.latitude,
-                                                    result.longitude);
-                                          }
-                                        },
                                       ),
                                     ],
                                   ),
@@ -649,54 +667,62 @@ class CreateReserveView extends ConsumerWidget {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           const Icon(Icons.car_rental),
-                                          TextButton(
-                                            style: ButtonStyle(
-                                                overlayColor:
-                                                    MaterialStateProperty.all(
-                                                        Colors.transparent),
-                                                shadowColor:
-                                                    MaterialStateProperty.all(
-                                                        Colors.transparent)),
-                                            child: Text(
-                                                '${reserveForm.driverName} ${reserveForm.driverLastName}',
-                                                style: reserveForm.driverName ==
-                                                        'Ejem. Luis'
-                                                    ? const TextStyle(
-                                                        color:
-                                                            Color(0xffB5B9C2),
-                                                        fontSize: 16,
-                                                        fontFamily:
-                                                            'Montserrat-Regular')
-                                                    : const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 16)),
-                                            onPressed: () {
-                                              final searchedDrivers = ref.read(
-                                                  searchedDriversProvider);
-                                              final searchQuery = ref
-                                                  .read(searchDriversProvider);
-                                              final changeCallback = ref
-                                                  .read(reserveFormProvider(
-                                                          reserve)
-                                                      .notifier)
-                                                  .onDriverIdChanged;
-                                              showSearch<SearchDriver?>(
-                                                      query: searchQuery,
-                                                      context: context,
-                                                      delegate: SearchDriverDelegate(
-                                                          callback:
-                                                              changeCallback,
-                                                          initialDrivers:
-                                                              searchedDrivers,
-                                                          searchDrivers: ref
-                                                              .read(
-                                                                  searchedDriversProvider
-                                                                      .notifier)
-                                                              .searchDriversByQuery))
-                                                  .then((driver) {});
-                                            },
+                                          SizedBox(
+                                            width: size.width * .3,
+                                            child: TextButton(
+                                              style: ButtonStyle(
+                                                  overlayColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.transparent),
+                                                  shadowColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.transparent)),
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Text(
+                                                    '${reserveForm.driverName} ${reserveForm.driverLastName}',
+                                                    style: reserveForm
+                                                                .driverName ==
+                                                            'Ejem. Luis'
+                                                        ? const TextStyle(
+                                                            color: Color(
+                                                                0xffB5B9C2),
+                                                            fontSize: 16,
+                                                            fontFamily:
+                                                                'Montserrat-Regular')
+                                                        : const TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 16)),
+                                              ),
+                                              onPressed: () {
+                                                final searchedDrivers = ref.read(
+                                                    searchedDriversProvider);
+                                                final searchQuery = ref.read(
+                                                    searchDriversProvider);
+                                                final changeCallback = ref
+                                                    .read(reserveFormProvider(
+                                                            reserve)
+                                                        .notifier)
+                                                    .onDriverIdChanged;
+                                                showSearch<SearchDriver?>(
+                                                        query: searchQuery,
+                                                        context: context,
+                                                        delegate: SearchDriverDelegate(
+                                                            callback:
+                                                                changeCallback,
+                                                            initialDrivers:
+                                                                searchedDrivers,
+                                                            searchDrivers: ref
+                                                                .read(searchedDriversProvider
+                                                                    .notifier)
+                                                                .searchDriversByQuery))
+                                                    .then((driver) {});
+                                              },
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -720,51 +746,60 @@ class CreateReserveView extends ConsumerWidget {
                                   child: Row(
                                     children: [
                                       const Icon(Icons.local_taxi_outlined),
-                                      TextButton(
-                                        style: ButtonStyle(
-                                            overlayColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.transparent),
-                                            shadowColor:
-                                                MaterialStateProperty.all(
-                                                    Colors.transparent)),
-                                        child: Text(
-                                            '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
-                                            style: reserveForm.brand ==
-                                                    'Ejem. Toyota'
-                                                ? const TextStyle(
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    color: Color(0xffB5B9C2),
-                                                    fontSize: 16,
-                                                    fontFamily:
-                                                        'Montserrat-Regular')
-                                                : const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16)),
-                                        onPressed: () {
-                                          final searchedCars =
-                                              ref.read(searchedCarsProvider);
-                                          final searchQuery =
-                                              ref.read(searchCarsProvider);
-                                          final changeCallback = ref
-                                              .read(reserveFormProvider(reserve)
-                                                  .notifier)
-                                              .onCarIdChanged;
+                                      Expanded(
+                                        child: TextButton(
+                                          style: ButtonStyle(
+                                              overlayColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.transparent),
+                                              shadowColor:
+                                                  MaterialStateProperty.all(
+                                                      Colors.transparent)),
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                                '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
+                                                style: reserveForm.brand ==
+                                                        'Ejem. Toyota'
+                                                    ? const TextStyle(
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        color:
+                                                            Color(0xffB5B9C2),
+                                                        fontSize: 16,
+                                                        fontFamily:
+                                                            'Montserrat-Regular')
+                                                    : const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16)),
+                                          ),
+                                          onPressed: () {
+                                            final searchedCars =
+                                                ref.read(searchedCarsProvider);
+                                            final searchQuery =
+                                                ref.read(searchCarsProvider);
+                                            final changeCallback = ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onCarIdChanged;
 
-                                          showSearch<SearchCar?>(
-                                                  query: searchQuery,
-                                                  context: context,
-                                                  delegate: SearchCarDelegate(
-                                                      callback: changeCallback,
-                                                      initialCars: searchedCars,
-                                                      searchCars: ref
-                                                          .read(
-                                                              searchedCarsProvider
-                                                                  .notifier)
-                                                          .searchCarsByQuery))
-                                              .then((driver) {});
-                                        },
+                                            showSearch<SearchCar?>(
+                                                    query: searchQuery,
+                                                    context: context,
+                                                    delegate: SearchCarDelegate(
+                                                        callback:
+                                                            changeCallback,
+                                                        initialCars:
+                                                            searchedCars,
+                                                        searchCars: ref
+                                                            .read(
+                                                                searchedCarsProvider
+                                                                    .notifier)
+                                                            .searchCarsByQuery))
+                                                .then((driver) {});
+                                          },
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -906,45 +941,53 @@ class CreateReserveView extends ConsumerWidget {
                           child: Row(
                             children: [
                               const Icon(Icons.person_outlined),
-                              TextButton(
-                                style: ButtonStyle(
-                                    overlayColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    shadowColor: MaterialStateProperty.all(
-                                        Colors.transparent)),
-                                child: Text(
-                                    '${reserveForm.userName} ${reserveForm.userLastName}',
-                                    style: reserveForm.userName == 'Ejem. Carla'
-                                        ? const TextStyle(
-                                            color: Color(0xffB5B9C2),
-                                            fontSize: 16,
-                                            fontFamily: 'Montserrat-Regular')
-                                        : const TextStyle(
-                                            color: Colors.black, fontSize: 16)),
-                                onPressed: () {
-                                  final searchedPassengers =
-                                      ref.read(searchedPassengersProvider);
-                                  final searchQuery =
-                                      ref.read(searchPassengersProvider);
-                                  final changeCallback = ref
-                                      .read(
-                                          reserveFormProvider(reserve).notifier)
-                                      .onUserIdChanged;
+                              Expanded(
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.transparent),
+                                      shadowColor: MaterialStateProperty.all(
+                                          Colors.transparent)),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                        '${reserveForm.userName} ${reserveForm.userLastName}',
+                                        style: reserveForm.userName ==
+                                                'Ejem. Carla'
+                                            ? const TextStyle(
+                                                color: Color(0xffB5B9C2),
+                                                fontSize: 16,
+                                                fontFamily:
+                                                    'Montserrat-Regular')
+                                            : const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16)),
+                                  ),
+                                  onPressed: () {
+                                    final searchedPassengers =
+                                        ref.read(searchedPassengersProvider);
+                                    final searchQuery =
+                                        ref.read(searchPassengersProvider);
+                                    final changeCallback = ref
+                                        .read(reserveFormProvider(reserve)
+                                            .notifier)
+                                        .onUserIdChanged;
 
-                                  showSearch<SearchPassenger?>(
-                                          query: searchQuery,
-                                          context: context,
-                                          delegate: SearchPassengerDelegate(
-                                              callback: changeCallback,
-                                              initialPassengers:
-                                                  searchedPassengers,
-                                              searchPassengers: ref
-                                                  .read(
-                                                      searchedPassengersProvider
-                                                          .notifier)
-                                                  .searchMoviesByQuery))
-                                      .then((passenger) {});
-                                },
+                                    showSearch<SearchPassenger?>(
+                                            query: searchQuery,
+                                            context: context,
+                                            delegate: SearchPassengerDelegate(
+                                                callback: changeCallback,
+                                                initialPassengers:
+                                                    searchedPassengers,
+                                                searchPassengers: ref
+                                                    .read(
+                                                        searchedPassengersProvider
+                                                            .notifier)
+                                                    .searchMoviesByQuery))
+                                        .then((passenger) {});
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -971,8 +1014,7 @@ class CreateReserveView extends ConsumerWidget {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                SizedBox(
-                                  width: size.width * .75,
+                                Expanded(
                                   child: DropdownButton<String>(
                                     isExpanded: true,
                                     iconSize: 40,
@@ -1045,38 +1087,41 @@ class CreateReserveView extends ConsumerWidget {
                                 child: Row(
                                   children: [
                                     const Icon(Icons.today_outlined),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        DateTime? pickedDate =
-                                            await showDatePicker(
-                                                context: context,
-                                                initialDate: DateTime.now(),
-                                                firstDate: DateTime.now(),
-                                                lastDate: DateTime(2100));
-                                        if (pickedDate != null) {
-                                          ref
-                                              .read(reserveFormProvider(reserve)
-                                                  .notifier)
-                                              .onStartDateChanged(pickedDate
-                                                  .toString()
-                                                  .substring(0, 10));
-                                        } else {}
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                            '${reserveForm.startDate.value.substring(8, 10)}/${reserveForm.startDate.value.substring(5, 7)}/${reserveForm.startDate.value.substring(0, 4)}',
-                                            style: reserveForm
-                                                        .startDate.value ==
-                                                    '2023-09-26'
-                                                ? const TextStyle(
-                                                    color: Color(0xffB5B9C2),
-                                                    fontSize: 16,
-                                                    fontFamily:
-                                                        'Montserrat-Regular')
-                                                : const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16)),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          DateTime? pickedDate =
+                                              await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime.now(),
+                                                  lastDate: DateTime(2100));
+                                          if (pickedDate != null) {
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onStartDateChanged(pickedDate
+                                                    .toString()
+                                                    .substring(0, 10));
+                                          } else {}
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                              '${reserveForm.startDate.value.substring(8, 10)}/${reserveForm.startDate.value.substring(5, 7)}/${reserveForm.startDate.value.substring(0, 4)}',
+                                              style: reserveForm
+                                                          .startDate.value ==
+                                                      '2023-09-26'
+                                                  ? const TextStyle(
+                                                      color: Color(0xffB5B9C2),
+                                                      fontSize: 16,
+                                                      fontFamily:
+                                                          'Montserrat-Regular')
+                                                  : const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 16)),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -1100,36 +1145,40 @@ class CreateReserveView extends ConsumerWidget {
                                 child: Row(
                                   children: [
                                     const Icon(Icons.alarm),
-                                    GestureDetector(
-                                      onTap: () async {
-                                        TimeOfDay? pickedTime =
-                                            await showTimePicker(
-                                                context: context,
-                                                initialTime: const TimeOfDay(
-                                                    hour: 00, minute: 00));
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          TimeOfDay? pickedTime =
+                                              await showTimePicker(
+                                                  context: context,
+                                                  initialTime: const TimeOfDay(
+                                                      hour: 00, minute: 00));
 
-                                        if (pickedTime != null) {
-                                          ref
-                                              .read(reserveFormProvider(reserve)
-                                                  .notifier)
-                                              .onStartTimeChanged(
-                                                  '${pickedTime.toString().substring(10, 12)}:${pickedTime.toString().substring(13, 15)}');
-                                        } else {}
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(reserveForm.startTime.value,
-                                            style: reserveForm
-                                                        .startTime.value ==
-                                                    '00:00'
-                                                ? const TextStyle(
-                                                    color: Color(0xffB5B9C2),
-                                                    fontSize: 16,
-                                                    fontFamily:
-                                                        'Montserrat-Regular')
-                                                : const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 16)),
+                                          if (pickedTime != null) {
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onStartTimeChanged(
+                                                    '${pickedTime.toString().substring(10, 12)}:${pickedTime.toString().substring(13, 15)}');
+                                          } else {}
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                              reserveForm.startTime.value,
+                                              style: reserveForm
+                                                          .startTime.value ==
+                                                      '00:00'
+                                                  ? const TextStyle(
+                                                      color: Color(0xffB5B9C2),
+                                                      fontSize: 16,
+                                                      fontFamily:
+                                                          'Montserrat-Regular')
+                                                  : const TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 16)),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -1158,8 +1207,7 @@ class CreateReserveView extends ConsumerWidget {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                SizedBox(
-                                  width: size.width * .75,
+                                Expanded(
                                   child: DropdownButton<String>(
                                     iconSize: 40,
                                     isExpanded: true,
@@ -1221,45 +1269,49 @@ class CreateReserveView extends ConsumerWidget {
                             child: Row(
                               children: [
                                 const Icon(Icons.location_on_outlined),
-                                TextButton(
-                                  style: ButtonStyle(
-                                    overlayColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    shadowColor: MaterialStateProperty.all(
-                                        Colors.transparent),
+                                Expanded(
+                                  child: TextButton(
+                                    style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.transparent),
+                                      shadowColor: MaterialStateProperty.all(
+                                          Colors.transparent),
+                                    ),
+                                    child: Align(
+                                      alignment: Alignment.bottomLeft,
+                                      child: Text(
+                                          reserveForm.startAddress.value,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: reserveForm
+                                                      .startAddress.value ==
+                                                  'Seleccione el punto de recojo'
+                                              ? const TextStyle(
+                                                  color: Color(0xffB5B9C2),
+                                                  fontSize: 16,
+                                                  fontFamily:
+                                                      'Montserrat-Regular')
+                                              : const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16)),
+                                    ),
+                                    onPressed: () async {
+                                      final result = await Navigator.of(context)
+                                          .push<LocationData>(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const MapGoogle()),
+                                      );
+                                      if (result != null) {
+                                        ref
+                                            .read(reserveFormProvider(reserve)
+                                                .notifier)
+                                            .onStartAddressChanged(
+                                                result.address,
+                                                result.latitude,
+                                                result.longitude);
+                                      }
+                                    },
                                   ),
-                                  child: SizedBox(
-                                    width: size.width * .7,
-                                    child: Text(reserveForm.startAddress.value,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: reserveForm.startAddress.value ==
-                                                'Seleccione el punto de recojo'
-                                            ? const TextStyle(
-                                                color: Color(0xffB5B9C2),
-                                                fontSize: 16,
-                                                fontFamily:
-                                                    'Montserrat-Regular')
-                                            : const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 16)),
-                                  ),
-                                  onPressed: () async {
-                                    final result = await Navigator.of(context)
-                                        .push<LocationData>(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const MapGoogle()),
-                                    );
-                                    if (result != null) {
-                                      ref
-                                          .read(reserveFormProvider(reserve)
-                                              .notifier)
-                                          .onStartAddressChanged(
-                                              result.address,
-                                              result.latitude,
-                                              result.longitude);
-                                    }
-                                  },
                                 ),
                               ],
                             ),
@@ -1285,46 +1337,50 @@ class CreateReserveView extends ConsumerWidget {
                               child: Row(
                                 children: [
                                   const Icon(Icons.trip_origin_outlined),
-                                  TextButton(
-                                    style: ButtonStyle(
-                                      overlayColor: MaterialStateProperty.all(
-                                          Colors.transparent),
-                                      shadowColor: MaterialStateProperty.all(
-                                          Colors.transparent),
+                                  Expanded(
+                                    child: TextButton(
+                                      style: ButtonStyle(
+                                        overlayColor: MaterialStateProperty.all(
+                                            Colors.transparent),
+                                        shadowColor: MaterialStateProperty.all(
+                                            Colors.transparent),
+                                      ),
+                                      child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                            reserveForm.endAddress!.value,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: reserveForm
+                                                        .endAddress!.value ==
+                                                    'Seleccione el punto de destino'
+                                                ? const TextStyle(
+                                                    color: Color(0xffB5B9C2),
+                                                    fontSize: 16,
+                                                    fontFamily:
+                                                        'Montserrat-Regular')
+                                                : const TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16)),
+                                      ),
+                                      onPressed: () async {
+                                        final result =
+                                            await Navigator.of(context)
+                                                .push<LocationData>(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MapGoogle()),
+                                        );
+                                        if (result != null) {
+                                          ref
+                                              .read(reserveFormProvider(reserve)
+                                                  .notifier)
+                                              .onEndAddressChanged(
+                                                  result.address,
+                                                  result.latitude,
+                                                  result.longitude);
+                                        }
+                                      },
                                     ),
-                                    child: SizedBox(
-                                      width: size.width * .7,
-                                      child: Text(reserveForm.endAddress!.value,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: reserveForm
-                                                      .endAddress!.value ==
-                                                  'Seleccione el punto de destino'
-                                              ? const TextStyle(
-                                                  color: Color(0xffB5B9C2),
-                                                  fontSize: 16,
-                                                  fontFamily:
-                                                      'Montserrat-Regular')
-                                              : const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16)),
-                                    ),
-                                    onPressed: () async {
-                                      final result = await Navigator.of(context)
-                                          .push<LocationData>(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const MapGoogle()),
-                                      );
-                                      if (result != null) {
-                                        ref
-                                            .read(reserveFormProvider(reserve)
-                                                .notifier)
-                                            .onEndAddressChanged(
-                                                result.address,
-                                                result.latitude,
-                                                result.longitude);
-                                      }
-                                    },
                                   ),
                                 ],
                               ),
@@ -1347,43 +1403,51 @@ class CreateReserveView extends ConsumerWidget {
                           child: Row(
                             children: [
                               const Icon(Icons.car_rental),
-                              TextButton(
-                                style: ButtonStyle(
-                                    overlayColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    shadowColor: MaterialStateProperty.all(
-                                        Colors.transparent)),
-                                child: Text(
-                                    '${reserveForm.driverName} ${reserveForm.driverLastName}',
-                                    style: reserveForm.driverName ==
-                                            'Ejem. Luis'
-                                        ? const TextStyle(
-                                            color: Color(0xffB5B9C2),
-                                            fontSize: 16,
-                                            fontFamily: 'Montserrat-Regular')
-                                        : const TextStyle(
-                                            color: Colors.black, fontSize: 16)),
-                                onPressed: () {
-                                  final searchedDrivers =
-                                      ref.read(searchedDriversProvider);
-                                  final searchQuery =
-                                      ref.read(searchDriversProvider);
-                                  final changeCallback = ref
-                                      .read(
-                                          reserveFormProvider(reserve).notifier)
-                                      .onDriverIdChanged;
-                                  showSearch<SearchDriver?>(
-                                          query: searchQuery,
-                                          context: context,
-                                          delegate: SearchDriverDelegate(
-                                              callback: changeCallback,
-                                              initialDrivers: searchedDrivers,
-                                              searchDrivers: ref
-                                                  .read(searchedDriversProvider
-                                                      .notifier)
-                                                  .searchDriversByQuery))
-                                      .then((driver) {});
-                                },
+                              Expanded(
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.transparent),
+                                      shadowColor: MaterialStateProperty.all(
+                                          Colors.transparent)),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                        '${reserveForm.driverName} ${reserveForm.driverLastName}',
+                                        style: reserveForm.driverName ==
+                                                'Ejem. Luis'
+                                            ? const TextStyle(
+                                                color: Color(0xffB5B9C2),
+                                                fontSize: 16,
+                                                fontFamily:
+                                                    'Montserrat-Regular')
+                                            : const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16)),
+                                  ),
+                                  onPressed: () {
+                                    final searchedDrivers =
+                                        ref.read(searchedDriversProvider);
+                                    final searchQuery =
+                                        ref.read(searchDriversProvider);
+                                    final changeCallback = ref
+                                        .read(reserveFormProvider(reserve)
+                                            .notifier)
+                                        .onDriverIdChanged;
+                                    showSearch<SearchDriver?>(
+                                            query: searchQuery,
+                                            context: context,
+                                            delegate: SearchDriverDelegate(
+                                                callback: changeCallback,
+                                                initialDrivers: searchedDrivers,
+                                                searchDrivers: ref
+                                                    .read(
+                                                        searchedDriversProvider
+                                                            .notifier)
+                                                    .searchDriversByQuery))
+                                        .then((driver) {});
+                                  },
+                                ),
                               ),
                             ],
                           ),
@@ -1402,47 +1466,51 @@ class CreateReserveView extends ConsumerWidget {
                           child: Row(
                             children: [
                               const Icon(Icons.local_taxi_outlined),
-                              TextButton(
-                                style: ButtonStyle(
-                                    overlayColor: MaterialStateProperty.all(
-                                        Colors.transparent),
-                                    shadowColor: MaterialStateProperty.all(
-                                        Colors.transparent)),
-                                child: SizedBox(
-                                  width: size.width * .7,
-                                  child: Text(
-                                      '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
-                                      style: reserveForm.brand == 'Ejem. Toyota'
-                                          ? const TextStyle(
-                                              overflow: TextOverflow.ellipsis,
-                                              color: Color(0xffB5B9C2),
-                                              fontSize: 16,
-                                              fontFamily: 'Montserrat-Regular')
-                                          : const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16)),
+                              Expanded(
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty.all(
+                                          Colors.transparent),
+                                      shadowColor: MaterialStateProperty.all(
+                                          Colors.transparent)),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                        '${reserveForm.brand}, ${reserveForm.model}, ${reserveForm.color}, ${reserveForm.licensePlate}',
+                                        style: reserveForm.brand ==
+                                                'Ejem. Toyota'
+                                            ? const TextStyle(
+                                                overflow: TextOverflow.ellipsis,
+                                                color: Color(0xffB5B9C2),
+                                                fontSize: 16,
+                                                fontFamily:
+                                                    'Montserrat-Regular')
+                                            : const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16)),
+                                  ),
+                                  onPressed: () {
+                                    final searchedCars =
+                                        ref.read(searchedCarsProvider);
+                                    final searchQuery =
+                                        ref.read(searchCarsProvider);
+                                    final changeCallback = ref
+                                        .read(reserveFormProvider(reserve)
+                                            .notifier)
+                                        .onCarIdChanged;
+                                    showSearch<SearchCar?>(
+                                            query: searchQuery,
+                                            context: context,
+                                            delegate: SearchCarDelegate(
+                                                callback: changeCallback,
+                                                initialCars: searchedCars,
+                                                searchCars: ref
+                                                    .read(searchedCarsProvider
+                                                        .notifier)
+                                                    .searchCarsByQuery))
+                                        .then((driver) {});
+                                  },
                                 ),
-                                onPressed: () {
-                                  final searchedCars =
-                                      ref.read(searchedCarsProvider);
-                                  final searchQuery =
-                                      ref.read(searchCarsProvider);
-                                  final changeCallback = ref
-                                      .read(
-                                          reserveFormProvider(reserve).notifier)
-                                      .onCarIdChanged;
-                                  showSearch<SearchCar?>(
-                                          query: searchQuery,
-                                          context: context,
-                                          delegate: SearchCarDelegate(
-                                              callback: changeCallback,
-                                              initialCars: searchedCars,
-                                              searchCars: ref
-                                                  .read(searchedCarsProvider
-                                                      .notifier)
-                                                  .searchCarsByQuery))
-                                      .then((driver) {});
-                                },
                               ),
                             ],
                           ),

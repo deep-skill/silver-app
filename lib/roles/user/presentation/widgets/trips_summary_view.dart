@@ -27,7 +27,7 @@ class TripsSummaryView extends StatelessWidget {
       'Septiembre',
       'Octubre',
       'Noviembre',
-      'Deciembre'
+      'Diciembre'
     ];
 
     final date = DateTime.now().month - 1;

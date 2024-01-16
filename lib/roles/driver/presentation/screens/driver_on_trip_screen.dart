@@ -207,7 +207,7 @@ class TripInfo extends ConsumerWidget {
                     ),
                   ),
                   child: const Text(
-                    "El pasajero no se presento",
+                    "El pasajero no se presentó",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 16,

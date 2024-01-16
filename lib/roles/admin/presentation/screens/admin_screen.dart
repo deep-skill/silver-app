@@ -112,7 +112,7 @@ class HomeViewState extends ConsumerState<HomeView> {
       'Septiembre',
       'Octubre',
       'Noviembre',
-      'Deciembre'
+      'Diciembre'
     ];
     final reserves = ref.watch(reservesHomeProvider);
     final date = DateTime.now().month - 1;

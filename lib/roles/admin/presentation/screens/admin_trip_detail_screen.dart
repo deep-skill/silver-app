@@ -111,8 +111,10 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                           height: 10,
                                         ),
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment: trip.serviceType ==
+                                                  "PERSONAL"
+                                              ? MainAxisAlignment.spaceAround
+                                              : MainAxisAlignment.spaceBetween,
                                           children: [
                                             BoxReserveDetail(
                                                 label: "Pasajero",
@@ -120,15 +122,19 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                     "${trip.userName} ${trip.userLastName}",
                                                 icon: Icons.hail,
                                                 row: true),
-                                            BoxReserveDetail(
-                                                label: "Empresa",
-                                                text:
-                                                    trip.enterpriseName == null
+                                            trip.serviceType != "PERSONAL"
+                                                ? BoxReserveDetail(
+                                                    label: "Empresa",
+                                                    text: trip.enterpriseName ==
+                                                            null
                                                         ? 'Viaje Personal'
                                                         : trip.enterpriseName
                                                             .toString(),
-                                                icon: Icons.domain,
-                                                row: true),
+                                                    icon: Icons.domain,
+                                                    row: true)
+                                                : const SizedBox(
+                                                    height: 10,
+                                                  ),
                                             BoxReserveDetail(
                                                 label: "Tipo de servicio",
                                                 text: capitalizeFirst(trip
@@ -455,13 +461,15 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           icon: Icons.hail,
                         ),
                         const SizedBox(height: 12),
-                        BoxReserveDetail(
-                          label: "Empresa",
-                          text: trip.enterpriseName == null
-                              ? 'Viaje Personal'
-                              : trip.enterpriseName.toString(),
-                          icon: Icons.domain,
-                        ),
+                        trip.serviceType != "PERSONAL"
+                            ? BoxReserveDetail(
+                                label: "Empresa",
+                                text: trip.enterpriseName == null
+                                    ? 'Viaje Personal'
+                                    : trip.enterpriseName.toString(),
+                                icon: Icons.domain,
+                              )
+                            : const SizedBox(),
                         const SizedBox(height: 12),
                         BoxReserveDetail(
                           label: "Tipo de servicio",

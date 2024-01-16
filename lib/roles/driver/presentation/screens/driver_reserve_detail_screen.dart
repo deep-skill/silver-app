@@ -91,11 +91,13 @@ class ReserveInfo extends StatelessWidget {
                 text: "${reserve.name} ${reserve.lastName}",
                 row: false),
             const SizedBox(height: 8),
-            BoxReserveDetail(
-                icon: Icons.domain,
-                label: "Empresa",
-                text: reserve.enterpriseName ?? "Personal",
-                row: false),
+            reserve.serviceType != "PERSONAL"
+                ? BoxReserveDetail(
+                    icon: Icons.domain,
+                    label: "Empresa",
+                    text: reserve.enterpriseName ?? "Personal",
+                    row: false)
+                : const SizedBox(),
             const SizedBox(height: 8),
             BoxReserveDetail(
                 icon: Icons.business_center_outlined,

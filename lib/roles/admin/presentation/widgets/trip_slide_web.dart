@@ -171,7 +171,7 @@ class TripSlideWeb extends StatelessWidget {
                           child: Text(
                             trip.enterpriseName != null
                                 ? ' ${trip.enterpriseName}'
-                                : 'No enterprise name',
+                                : 'Viaje Personal',
                             style: const TextStyle(
                                 fontSize: 12,
                                 fontFamily: 'Montserrat-Medium',

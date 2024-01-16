@@ -536,13 +536,15 @@ class CreateReserveView extends ConsumerWidget {
                                               builder: (context) =>
                                                   const MapGoogle()),
                                         );
-                                        ref
-                                            .read(reserveFormProvider(reserve)
-                                                .notifier)
-                                            .onStartAddressChanged(
-                                                result!.address,
-                                                result.latitude,
-                                                result.longitude);
+                                        if (result != null) {
+                                          ref
+                                              .read(reserveFormProvider(reserve)
+                                                  .notifier)
+                                              .onStartAddressChanged(
+                                                  result.address,
+                                                  result.latitude,
+                                                  result.longitude);
+                                        }
                                       },
                                     ),
                                   ],
@@ -606,13 +608,16 @@ class CreateReserveView extends ConsumerWidget {
                                                 builder: (context) =>
                                                     const MapGoogle()),
                                           );
-                                          ref
-                                              .read(reserveFormProvider(reserve)
-                                                  .notifier)
-                                              .onEndAddressChanged(
-                                                  result!.address,
-                                                  result.latitude,
-                                                  result.longitude);
+                                          if (result != null) {
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onEndAddressChanged(
+                                                    result.address,
+                                                    result.latitude,
+                                                    result.longitude);
+                                          }
                                         },
                                       ),
                                     ],
@@ -1245,11 +1250,15 @@ class CreateReserveView extends ConsumerWidget {
                                           builder: (context) =>
                                               const MapGoogle()),
                                     );
-                                    ref
-                                        .read(reserveFormProvider(reserve)
-                                            .notifier)
-                                        .onStartAddressChanged(result!.address,
-                                            result.latitude, result.longitude);
+                                    if (result != null) {
+                                      ref
+                                          .read(reserveFormProvider(reserve)
+                                              .notifier)
+                                          .onStartAddressChanged(
+                                              result.address,
+                                              result.latitude,
+                                              result.longitude);
+                                    }
                                   },
                                 ),
                               ],
@@ -1306,13 +1315,15 @@ class CreateReserveView extends ConsumerWidget {
                                             builder: (context) =>
                                                 const MapGoogle()),
                                       );
-                                      ref
-                                          .read(reserveFormProvider(reserve)
-                                              .notifier)
-                                          .onEndAddressChanged(
-                                              result!.address,
-                                              result.latitude,
-                                              result.longitude);
+                                      if (result != null) {
+                                        ref
+                                            .read(reserveFormProvider(reserve)
+                                                .notifier)
+                                            .onEndAddressChanged(
+                                                result.address,
+                                                result.latitude,
+                                                result.longitude);
+                                      }
                                     },
                                   ),
                                 ],

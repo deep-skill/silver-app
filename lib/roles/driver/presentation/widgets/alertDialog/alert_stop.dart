@@ -27,8 +27,12 @@ class AlertStops extends StatelessWidget {
                 final result = await Navigator.of(context).push<LocationData>(
                   MaterialPageRoute(builder: (context) => const MapGoogle()),
                 );
-                addStops(result!.address, result.latitude, result.longitude);
-                context.pop();
+                if (result != null) {
+                  addStops(result.address, result.latitude, result.longitude);
+                }
+                if (context.mounted) {
+                  context.pop();
+                }
               },
               child: const Text('Buscar parada'),
             ),

@@ -97,16 +97,19 @@ class TripEndedInfo extends StatelessWidget {
               label: "Pasajero",
               text: "${trip.userName} ${trip.userLastName}",
               row: false),
-          BoxReserveDetail(
-              icon: Icons.domain,
-              label: "Empresa",
-              text: trip.enterpriseName ?? 'Viaje Personal',
-              row: false),
+          trip.serviceType != "PERSONAL"
+              ? BoxReserveDetail(
+                  icon: Icons.domain,
+                  label: "Empresa",
+                  text: trip.enterpriseName ?? 'Viaje Personal',
+                  row: false)
+              : const SizedBox(height: 10),
           BoxReserveDetail(
               icon: Icons.business_center_outlined,
               label: "Tipo de servicio",
               text: capitalizeFirst(trip.serviceType),
               row: false),
+          const SizedBox(height: 10),
           const TitleReserveDetail(text: "Datos del viaje"),
           const SizedBox(
             height: 10,

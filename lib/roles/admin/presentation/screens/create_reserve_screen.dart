@@ -870,24 +870,45 @@ class CreateReserveView extends ConsumerWidget {
                           child: TextButton(
                             onPressed: () async {
                               ref
-                                  .read(reserveFormProvider(reserve).notifier)
-                                  .onFormSubmit(reserve.id!, reserve.tripId)
-                                  .then((value) {
-                                if (!value) return;
-                                if (reserve.id! != 0) {
-                                  ref
-                                      .read(reserveDetailProvider.notifier)
-                                      .updateReserveDetail(
-                                          reserve.id!.toString());
-                                }
-                                showSnackbar(context, reserve.id!);
-
+                                .read(reserveFormProvider(reserve).notifier)
+                                .onFormSubmit(reserve.id!, reserve.tripId)
+                                .then((value) {
+                              if (!value) return;
+                              if (reserve.id! != 0) {
                                 ref
-                                    .read(reservesHomeProvider.notifier)
-                                    .reloadData();
+                                    .read(reserveDetailProvider.notifier)
+                                    .updateReserveDetail(
+                                        reserve.id!.toString());
+                                if (reserve.tripId != null) {
+                                  ref
+                                      .read(tripAdminStatusProvider.notifier)
+                                      .updateTripStatus(
+                                          reserve.tripId!.toString());
+                                }
+                              } else {
+                                final String time = getDifferenceBetweenTimes(
+                                    screenLoadTime, DateTime.now());
+                                sendEventCreatedReserve(
+                                    adminEmail: adminEmail,
+                                    amountMinutesCreating: time,
+                                    driverId: reserveForm.driverId?.value ?? 0,
+                                    serviceType: reserveForm.serviceType.value,
+                                    tripType: reserveForm.tripType.value,
+                                    userId: reserveForm.userId.value,
+                                    reservePrice: reserveForm.price.value,
+                                    silverPercent:
+                                        reserveForm.silverPercent.value == ''
+                                            ? '20'
+                                            : reserveForm.silverPercent.value);
+                              }
+                              showSnackbar(context, reserve.id!);
 
-                                context.pop();
-                              });
+                              ref
+                                  .read(reservesHomeProvider.notifier)
+                                  .reloadData();
+
+                              context.pop();
+                            });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all<

@@ -23,7 +23,7 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
     .family<ReserveFormNotifier, ReserveFormState, CreateReserve>(
         (ref, reserve) {
   Future<bool> createCallback(Map<String, dynamic> reserveLike) async {
-    if (reserveLike['trip_id'] != null && reserveLike['id'] != null) {
+    if (reserveLike['trip_id'] != 'null' && reserveLike['id'] != 'null') {
       try {
         final String? tripId = reserveLike['trip_id'];
         Credentials? credentials = ref.watch(authProvider).credentials;

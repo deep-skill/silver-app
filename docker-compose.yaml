@@ -29,6 +29,9 @@ services:
       - DB_PORT=${DOCKER_DB_PORT}
       - DB_NAME=${DOCKER_DB_NAME}
       - PORT=${DOCKER_PORT}
+      - AUDIENCE=${AUDIENCE}
+      - ISSUERBASEURL=${ISSUERBASEURL}
+      - TOKENSIGNINGALG=${TOKENSIGNINGALG}
     depends_on:
       - db_api
     restart: always

@@ -286,29 +286,69 @@ class HomeViewState extends ConsumerState<HomeView> {
                                       },
                                     );
                                   }
+                                  if (nearestReserve.tripId != null) {
+                                    context.push(
+                                        '/driver/trips/on-trip/${nearestReserve.tripId}');
+                                  }
                                 },
-                                style: ButtonStyle(
-                                  shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  )),
-                                  fixedSize: MaterialStateProperty.all(
-                                      Size(size.width * .8, size.height * .06)),
-                                  backgroundColor: nearestReserve.startTime
-                                                  .difference(date)
-                                                  .inHours <
-                                              2 &&
-                                          nearestReserve.tripId == null
-                                      ? MaterialStateProperty.all(
-                                          const Color(0xFF23A5CD))
-                                      : MaterialStateProperty.all(
-                                          const Color(0xFF9E9E9E)),
-                                ),
-                                child: const Text('Voy en camino',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    )),
+                                style: nearestReserve.startTime
+                                            .difference(date)
+                                            .inHours <
+                                        2
+                                    ? ButtonStyle(
+                                        shape: MaterialStateProperty.all<
+                                                RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                        fixedSize: MaterialStateProperty.all(
+                                            Size(size.width * .8,
+                                                size.height * .06)),
+                                        backgroundColor:
+                                            nearestReserve.tripId == null
+                                                ? MaterialStateProperty.all(
+                                                    const Color(0xFF23A5CD))
+                                                : MaterialStateProperty.all(
+                                                    const Color(0xFF4DD13F)),
+                                      )
+                                    : ButtonStyle(
+                                        shape:
+                                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                        fixedSize: nearestReserve.startTime
+                                                    .difference(date)
+                                                    .inHours <
+                                                2
+                                            ? MaterialStateProperty.all(Size(
+                                                size.width * .8,
+                                                size.height * .06))
+                                            : MaterialStateProperty.all(
+                                                const Size(0.0, 0.0)),
+                                        backgroundColor: nearestReserve.tripId ==
+                                                null
+                                            ? nearestReserve.startTime
+                                                        .difference(date)
+                                                        .inHours <
+                                                    2
+                                                ? MaterialStateProperty.all(const Color(0xFF23A5CD))
+                                                : MaterialStateProperty.all(const Color(0xFFFDFDFD))
+                                            : MaterialStateProperty.all(const Color(0xFF4DD13F))),
+                                child: nearestReserve.startTime
+                                            .difference(date)
+                                            .inHours <
+                                        2
+                                    ? Text(
+                                        nearestReserve.tripId == null
+                                            ? 'Voy en camino'
+                                            : 'Ver viaje en curso',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ))
+                                    : const SizedBox(),
                               ),
                             ),
                           ],

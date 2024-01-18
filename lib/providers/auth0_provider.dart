@@ -3,6 +3,8 @@ import 'package:auth0_flutter/auth0_flutter_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 
 //Auth0 Provider
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
@@ -22,7 +24,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     //Initializes Auth0 on Web and get stored credentials
     if (kIsWeb) {
       auth0Web.onLoad(
-        audience: 'http://localhost:5000',
+        audience: '${dotenv.env['APP_AUDIENCE']}',
         scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
       ).then((final credentials) {
         if (credentials != null) {
@@ -84,8 +86,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       if (kIsWeb) {
         return auth0Web.loginWithRedirect(
-          redirectUrl: 'http://localhost:3000',
-          audience: 'http://localhost:5000',
+          redirectUrl: '${dotenv.env['APP_REDIRECT_URL']}',
+          audience: '${dotenv.env['APP_AUDIENCE']}',
           scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
         );
       }
@@ -93,7 +95,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       var credentials = await auth0
           .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
           .login(
-        audience: 'http://localhost:5000',
+        audience: '${dotenv.env['APP_AUDIENCE']}',
         scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
       );
       state = state.copyWith(
@@ -118,7 +120,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     );
     try {
       if (kIsWeb) {
-        await auth0Web.logout(returnToUrl: 'http://localhost:3000');
+        await auth0Web.logout(returnToUrl: '${dotenv.env['APP_REDIRECT_URL']}');
       } else {
         await auth0
             .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])

@@ -1,12 +1,33 @@
-AUTH0_DOMAIN=
-AUTH0_CLIENT_ID=
-AUTH0_CUSTOM_SCHEME=
-YOUR_IP=
-SERVER_PORT=
-ENVIRONMENT=
-DOCKER_DB_USER=
-DOCKER_DB_PASSWORD=
-DOCKER_DB_HOST=
-DOCKER_DB_PORT=
-DOCKER_DB_NAME=
-DOCKER_PORT=
+# Your Auth0 Domain.
+# 
+AUTH0_DOMAIN=dev-jnyecsm3rq2plckz.us.auth0.com
+
+#
+# The Client Id of your Auth0 application.
+#
+AUTH0_CLIENT_ID=7Jei19rdjyInifcXki5FX31kzayoI2w9
+#
+# The custom scheme for the Android callback and logout URLs.
+# Only set a value if you prefer not to use the default scheme (https).
+# If you set a value:
+# 1. Update the Android callback and logout URLs in the
+# settings page of your Auth0 application with the custom scheme value.
+# 2. Update the scheme value in android/app/src/main/res/values/strings.xml
+#
+AUTH0_CUSTOM_SCHEME=com.auth0.silverapp
+
+YOUR_IP=192.168.1.4
+
+SERVER_PORT=3001
+
+FIREBASE_OPTIONS_WEB=AIzaSyAmmTTx-KXe-F_RJ1BmY4qzQCGUh0rorn0
+FIREBASE_OPTIONS_ANDROID=AIzaSyBOpl6QvUmlB-63jNFUPusLtUeZkUwLDKY
+FIREBASE_OPTIONS_IOS=AIzaSyDKoxqubvUjynUCot4aoAw7Nj8Z61MBVPI
+FIREBASE_OPTIONS_MACOS=AIzaSyDKoxqubvUjynUCot4aoAw7Nj8Z61MBVPI
+
+PROJECT_ID=silver-express-8fa19
+
+ENVIRONMENT=dev
+
+APP_AUDIENCE=http://localhost:5000
+APP_REDIRECT_URL=http://localhost:3000

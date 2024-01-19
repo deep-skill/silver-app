@@ -3,8 +3,6 @@ import 'package:auth0_flutter/auth0_flutter_web.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 
 //Auth0 Provider
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {

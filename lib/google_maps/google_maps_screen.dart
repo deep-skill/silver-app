@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:silverapp/google_maps/location_data.dart';
 
@@ -18,6 +19,22 @@ class MapGoogleState extends State<MapGoogle> {
   Set<Marker> _markers = {};
   List<dynamic> searchResults = [];
   String? selectedLocation;
+  bool showSearchResults = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _searchController.addListener(() {
+      if (_searchController.text.isEmpty) {
+        setState(() {
+          showSearchResults = false;
+          searchResults = [];
+        });
+      }
+      _searchAndNavigate(_searchController.text);
+    });
+  }
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(-12.04967738829701, -77.09668506723912),
@@ -25,58 +42,31 @@ class MapGoogleState extends State<MapGoogle> {
   );
 
   Future<void> _searchAndNavigate(String address) async {
-    try {
-      var response = await Dio().get(
-        'https://maps.googleapis.com/maps/api/geocode/json',
-        queryParameters: {
-          'address': address,
-          'components': 'locality:Lima|country:PE',
-          'key': 'AIzaSyAA6KXYXkm6KJ84V1apLQguQKXBoKx0NtE',
-        },
-      );
-      if (response.statusCode == 200 && response.data['results'].length > 0) {
-        setState(() {
-          searchResults = response.data['results'];
-        });
-        _showSearchResults();
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  void _showSearchResults() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Seleccione una Ubicación"),
-          content: SizedBox(
-            width: double.maxFinite,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: searchResults.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  title: Text(searchResults[index]['formatted_address']),
-                  onTap: () {
-                    Navigator.of(context).pop();
-                    double lat =
-                        searchResults[index]['geometry']['location']['lat'];
-                    double lng =
-                        searchResults[index]['geometry']['location']['lng'];
-                    String addressName =
-                        searchResults[index]['formatted_address'];
-                    LatLng location = LatLng(lat, lng);
-                    _updateMapLocation(location, addressName);
-                  },
-                );
-              },
-            ),
-          ),
+    if (address.isNotEmpty) {
+      try {
+        var response = await Dio().get(
+          'https://maps.googleapis.com/maps/api/geocode/json',
+          queryParameters: {
+            'address': address,
+            'components': 'locality:Lima|country:PE',
+            'key': '${dotenv.env['GOOGLE_MAPS_KEY']}',
+          },
         );
-      },
-    );
+        if (response.statusCode == 200 && response.data['results'].length > 0) {
+          setState(() {
+            searchResults = response.data['results'];
+            showSearchResults = true;
+          });
+        }
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      setState(() {
+        searchResults = [];
+        showSearchResults = false;
+      });
+    }
   }
 
   void _updateMapLocation(LatLng location, String addressName) {
@@ -148,6 +138,40 @@ class MapGoogleState extends State<MapGoogle> {
                   ),
                 ),
               ),
+              if (showSearchResults)
+                Container(
+                  margin: const EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  height: searchResults.isNotEmpty
+                      ? (searchResults.length * 50.0)
+                      : 0,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: searchResults.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ListTile(
+                        title: Text(searchResults[index]['formatted_address']),
+                        onTap: () {
+                          double lat = searchResults[index]['geometry']
+                              ['location']['lat'];
+                          double lng = searchResults[index]['geometry']
+                              ['location']['lng'];
+                          String address_name =
+                              searchResults[index]['formatted_address'];
+                          LatLng location = LatLng(lat, lng);
+                          _updateMapLocation(location, address_name);
+
+                          setState(() {
+                            showSearchResults = false;
+                          });
+                        },
+                      );
+                    },
+                  ),
+                ),
               const Spacer(),
               Container(
                 margin: const EdgeInsets.all(8.0),

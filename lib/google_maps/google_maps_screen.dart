@@ -38,7 +38,7 @@ class MapGoogleState extends State<MapGoogle> {
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(-12.04967738829701, -77.09668506723912),
-    zoom: 25.00,
+    zoom: 17.00,
   );
 
   Future<void> _searchAndNavigate(String address) async {

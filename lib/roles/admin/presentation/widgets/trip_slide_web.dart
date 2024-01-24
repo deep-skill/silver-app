@@ -191,7 +191,7 @@ class TripSlideWeb extends StatelessWidget {
                       ),
                       const SizedBox(width: 9),
                       Text(
-                        ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}',
+                        ' ${trip.startTime.day} ${months[trip.startTime.month - 1]} ${trip.startTime.year} | ${trip.startTime.hour.toString().padLeft(2, '0')}:${trip.startTime.minute.toString().padLeft(2, '0')}',
                         style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'Montserrat-Medium',
@@ -213,7 +213,7 @@ class TripSlideWeb extends StatelessWidget {
                         width: size.width * .02,
                       ),
                       Text(
-                        'S/ \$${trip.totalPrice}',
+                        'S/${trip.totalPrice}',
                         style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'Montserrat-Bold',

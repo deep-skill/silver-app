@@ -109,7 +109,7 @@ class HomeViewState extends ConsumerState<HomeView> {
     final nearestReserve = ref.watch(nearestReserveProvider);
     Credentials? credentials = ref.watch(authProvider).credentials;
 
-    final date = DateTime.now();
+    final date = DateTime.now().toUtc();
     final reserves = ref.watch(driverReservesHomeProvider);
     Future createTrip(id, price) async {
       try {

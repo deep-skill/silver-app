@@ -26,36 +26,37 @@ class AdminTripEnd {
   List<Observations> observations;
   List<Parking> parkings;
   List<Toll> tolls;
+  DateTime reserveStartTime;
 
-  AdminTripEnd({
-    required this.id,
-    required this.reserveId,
-    required this.onWayDriver,
-    required this.status,
-    required this.totalPrice,
-    required this.arrivedDriver,
-    required this.startTime,
-    required this.endTime,
-    required this.startAddress,
-    required this.endAddress,
-    required this.price,
-    required this.silverPercent,
-    required this.userName,
-    required this.userLastName,
-    required this.enterpriseName,
-    required this.driverName,
-    required this.driverLastName,
-    required this.licensePlate,
-    required this.brand,
-    required this.model,
-    required this.color,
-    required this.tripType,
-    required this.serviceType,
-    required this.stops,
-    required this.observations,
-    required this.parkings,
-    required this.tolls,
-  });
+  AdminTripEnd(
+      {required this.id,
+      required this.reserveId,
+      required this.onWayDriver,
+      required this.status,
+      required this.totalPrice,
+      required this.arrivedDriver,
+      required this.startTime,
+      required this.endTime,
+      required this.startAddress,
+      required this.endAddress,
+      required this.price,
+      required this.silverPercent,
+      required this.userName,
+      required this.userLastName,
+      required this.enterpriseName,
+      required this.driverName,
+      required this.driverLastName,
+      required this.licensePlate,
+      required this.brand,
+      required this.model,
+      required this.color,
+      required this.tripType,
+      required this.serviceType,
+      required this.stops,
+      required this.observations,
+      required this.parkings,
+      required this.tolls,
+      required this.reserveStartTime});
 
   factory AdminTripEnd.fromJson(Map<String, dynamic> json) => AdminTripEnd(
         id: json["id"],
@@ -69,15 +70,18 @@ class AdminTripEnd {
         startTime: json["startTime"] == null
             ? null
             : DateTime.parse(json["startTime"]).toLocal(),
-        endTime:
-            json["endTime"] == null ? null : DateTime.parse(json["endTime"]).toLocal(),
+        endTime: json["endTime"] == null
+            ? null
+            : DateTime.parse(json["endTime"]).toLocal(),
         startAddress: json["Reserve"]["startAddress"],
         endAddress: json["Reserve"]["endAddress"],
         price: json["Reserve"]["price"].toDouble(),
         silverPercent: json["Reserve"]["silverPercent"],
         userName: json["Reserve"]["User"]["name"] ?? "no-name",
         userLastName: json["Reserve"]["User"]["lastName"] ?? "no-lastName",
-        enterpriseName: json["Reserve"]["Enterprise"] == null ? null : json["Reserve"]["Enterprise"]["name"],
+        enterpriseName: json["Reserve"]["Enterprise"] == null
+            ? null
+            : json["Reserve"]["Enterprise"]["name"],
         driverName: json["Reserve"]["Driver"] != null
             ? json["Reserve"]["Driver"]["name"] ?? 'no-name'
             : 'no-name',
@@ -98,6 +102,8 @@ class AdminTripEnd {
             json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
         tolls:
             List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
+        reserveStartTime:
+            DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
       );
 }
 

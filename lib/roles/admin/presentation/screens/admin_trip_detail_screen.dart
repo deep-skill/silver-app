@@ -299,7 +299,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                           child: BoxReserveDetail(
                                               label: "Hora de reserva",
                                               text:
-                                                  '${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
+                                                  '${trip.reserveStartTime.hour.toString().padLeft(2, '0')}:${trip.reserveStartTime.minute.toString().padLeft(2, '0')}',
                                               icon: Icons.alarm,
                                               row: true),
                                         ),
@@ -500,7 +500,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                               child: BoxReserveDetail(
                                 label: "Hora de reserva",
                                 text:
-                                    '${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
+                                    '${trip.reserveStartTime.hour.toString().padLeft(2, '0')}:${trip.reserveStartTime.minute.toString().padLeft(2, '0')}',
                                 icon: Icons.alarm,
                               ),
                             ),

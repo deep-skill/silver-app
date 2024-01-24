@@ -40,7 +40,7 @@ class _ReservesListHomeWebState extends State<ReservesListHomeWeb> {
     return Expanded(
         child: GridView.count(
       mainAxisSpacing: 5,
-      crossAxisSpacing: 30,
+      crossAxisSpacing: 40,
       childAspectRatio: 3.2,
       shrinkWrap: true,
       crossAxisCount: 2,
@@ -77,7 +77,7 @@ class _Slide extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(
           color: const Color(0xffFFFFFF),
@@ -94,7 +94,7 @@ class _Slide extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: size.width * .11,
+                width: size.width * .10,
                 decoration: const BoxDecoration(
                   color: Color(0xffF2F3F7),
                   borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -104,13 +104,14 @@ class _Slide extends StatelessWidget {
                   'Sin conductor',
                   style: TextStyle(
                     fontFamily: 'Montserrat-Regular',
-                    fontSize: 14,
+                    fontSize: 12,
                   ),
                 ))),
             Padding(
-              padding: const EdgeInsets.all(9),
+              padding: const EdgeInsets.all(4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Row(
                     children: [
@@ -118,7 +119,6 @@ class _Slide extends StatelessWidget {
                         Icons.hail,
                         size: 20,
                       ),
-                      const SizedBox(width: 10),
                       Text(
                         '${reserve.name} ${reserve.lastName}',
                         style: const TextStyle(
@@ -126,31 +126,34 @@ class _Slide extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.account_balance_outlined,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        ' ${reserve.entrepriseName}',
-                        style: const TextStyle(
-                            fontFamily: 'Montserrat-Medium',
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
+                  SizedBox(
+                    width: size.width * .1,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.account_balance_outlined,
+                          size: 20,
+                        ),
+                        Expanded(
+                          child: Text(
+                            ' ${reserve.entrepriseName}',
+                            style: const TextStyle(
+                                fontFamily: 'Montserrat-Medium',
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 5),
                   Row(
                     children: [
                       const Icon(
                         Icons.event_available_outlined,
                         size: 20,
                       ),
-                      const SizedBox(width: 10),
                       Text(
                         ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
                         style: const TextStyle(
@@ -160,14 +163,12 @@ class _Slide extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5),
                   Row(
                     children: [
                       const Icon(
                         Icons.timeline,
                         size: 20,
                       ),
-                      const SizedBox(width: 10),
                       Text(
                         ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
                         style: const TextStyle(

@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/google_maps/google_maps_screen.dart';
+import 'package:silverapp/google_maps/location_data.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_tolls.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_default.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_observation.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_parkin_lot.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_stop.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra_end.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/title_additional_information.dart';
@@ -197,7 +198,21 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     }
   }
 
+  Future<void> getStop() async {
+    LocationData? result;
+    result = await Navigator.of(context).push<LocationData>(
+      MaterialPageRoute(builder: (context) => const MapGoogle()),
+    );
+    if (result != null) {
+      addStops(result.address, result.latitude, result.longitude);
+    }
+  }
+
   void _showCustomDialog(String option) {
+    if (option == 'Paradas') {
+      getStop();
+      return;
+    }
     showDialog(
       context: context,
       builder: (context) {
@@ -207,8 +222,6 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                 addToll: addTolls,
                 dropdownItems: dropdownItems,
                 tollMapItems: tollMapItems);
-          case 'Paradas':
-            return AlertStops(addStops);
           case "Observaciones":
             return AlertObservations(addObservations);
           case "Estacionamiento":

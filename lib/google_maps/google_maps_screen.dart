@@ -95,41 +95,56 @@ class MapGoogleState extends State<MapGoogle> {
       appBar: AppBar(
         title: const Text('Mapa'),
       ),
-      body: Stack(
-        children: [
-          GoogleMap(
-            mapType: MapType.normal,
-            initialCameraPosition: _kGooglePlex,
-            markers: _markers,
-            onMapCreated: (controller) => _controller.complete(controller),
-          ),
-          Column(
-            children: [
-              Container(
-                margin: const EdgeInsets.all(8.0),
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.all(Radius.circular(12)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: _searchController,
-                      decoration: InputDecoration(
-                        hintText: 'Ingrese una dirección',
-                        suffixIcon: SizedBox(
-                          child: DecoratedBox(
-                            decoration: const BoxDecoration(
-                              color: Color(0xff03132A),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12)),
+      body: Container(
+        margin: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: const Color(0xffFFFFFF),
+        ),
+        child: Stack(
+          children: [
+            GoogleMap(
+              mapType: MapType.normal,
+              initialCameraPosition: _kGooglePlex,
+              markers: _markers,
+              onMapCreated: (controller) => _controller.complete(controller),
+            ),
+            Column(
+              children: [
+                Container(
+                  margin: const EdgeInsets.all(8.0),
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: _searchController,
+                        decoration: InputDecoration(
+                          hintText: 'Ingrese una dirección',
+                          contentPadding: const EdgeInsets.all(5),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5),
                             ),
-                            child: IconButton(
-                              icon: const Icon(Icons.search,
-                                  color: Color(0xffFFFFFF)),
-                              onPressed: () =>
-                                  _searchAndNavigate(_searchController.text),
+                          ),
+                          suffixIcon: SizedBox(
+                            child: DecoratedBox(
+                              decoration: const BoxDecoration(
+                                color: Color(0xff03132A),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12)),
+                              ),
+                              child: IconButton(
+                                icon: const Icon(Icons.search,
+                                    color: Color(0xffFFFFFF)),
+                                onPressed: () =>
+                                    _searchAndNavigate(_searchController.text),
+                              ),
                             ),
                           ),
                         ),
@@ -137,81 +152,83 @@ class MapGoogleState extends State<MapGoogle> {
                     ),
                   ),
                 ),
-              ),
-              if (showSearchResults)
-                Container(
-                  margin: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  height: searchResults.isNotEmpty
-                      ? (searchResults.length * 50.0)
-                      : 0,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: searchResults.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        title: Text(searchResults[index]['formatted_address']),
-                        onTap: () {
-                          double lat = searchResults[index]['geometry']
-                              ['location']['lat'];
-                          double lng = searchResults[index]['geometry']
-                              ['location']['lng'];
-                          String address_name =
-                              searchResults[index]['formatted_address'];
-                          LatLng location = LatLng(lat, lng);
-                          _updateMapLocation(location, address_name);
+                if (showSearchResults)
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    height: searchResults.isNotEmpty
+                        ? (searchResults.length * 50.0)
+                        : 0,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: searchResults.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListTile(
+                          title:
+                              Text(searchResults[index]['formatted_address']),
+                          onTap: () {
+                            double lat = searchResults[index]['geometry']
+                                ['location']['lat'];
+                            double lng = searchResults[index]['geometry']
+                                ['location']['lng'];
+                            String address_name =
+                                searchResults[index]['formatted_address'];
+                            LatLng location = LatLng(lat, lng);
+                            _updateMapLocation(location, address_name);
 
-                          setState(() {
-                            showSearchResults = false;
-                          });
-                        },
-                      );
-                    },
-                  ),
-                ),
-              const Spacer(),
-              Container(
-                margin: const EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                    padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.all(5)),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                        const Color(0xFF23A5CD)),
-                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
+                            setState(() {
+                              showSearchResults = false;
+                            });
+                          },
+                        );
+                      },
                     ),
                   ),
-                  onPressed: selectedLocation != null
-                      ? () {
-                          List<String> locationParts =
-                              selectedLocation!.split(', ');
-                          double lat = double.parse(locationParts[0]);
-                          double lng = double.parse(locationParts[1]);
-                          String address = locationParts.sublist(2).join(', ');
+                const Spacer(),
+                Container(
+                  margin: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                          const EdgeInsets.all(5)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xFF23A5CD)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                    onPressed: selectedLocation != null
+                        ? () {
+                            List<String> locationParts =
+                                selectedLocation!.split(', ');
+                            double lat = double.parse(locationParts[0]);
+                            double lng = double.parse(locationParts[1]);
+                            String address =
+                                locationParts.sublist(2).join(', ');
 
-                          Navigator.of(context).pop(LocationData(
-                            latitude: lat,
-                            longitude: lng,
-                            address: address,
-                          ));
-                        }
-                      : null,
-                  child: const Text('Confirmar Ubicación',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontFamily: "Monserrat")),
+                            Navigator.of(context).pop(LocationData(
+                              latitude: lat,
+                              longitude: lng,
+                              address: address,
+                            ));
+                          }
+                        : null,
+                    child: const Text('Confirmar Ubicación',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "Monserrat")),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

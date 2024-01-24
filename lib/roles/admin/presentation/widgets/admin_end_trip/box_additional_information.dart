@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/google_maps/google_maps_screen.dart';
+import 'package:silverapp/google_maps/location_data.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_default.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_observation.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_parkin_lot.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_stop.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_tolls.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra_end.dart';
@@ -176,7 +177,21 @@ class _AdminAdditionalInformationState
     }
   }
 
+  Future<void> getStop() async {
+    LocationData? result;
+    result = await Navigator.of(context).push<LocationData>(
+      MaterialPageRoute(builder: (context) => const MapGoogle()),
+    );
+    if (result != null) {
+      addStops(result.address, result.latitude, result.longitude);
+    }
+  }
+
   void _showCustomDialog(String option) {
+    if (option == 'Paradas') {
+      getStop();
+      return;
+    }
     showDialog(
       context: context,
       builder: (context) {
@@ -186,8 +201,6 @@ class _AdminAdditionalInformationState
                 addToll: addTools,
                 dropdownItems: dropdownItems,
                 tollMapItems: tollMapItems);
-          case 'Paradas':
-            return AlertStops(addStops);
           case "Observaciones":
             return AlertObservations(addObservations);
           case "Estacionamiento":

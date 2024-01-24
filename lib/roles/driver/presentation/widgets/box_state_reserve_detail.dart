@@ -19,7 +19,7 @@ class BoxStateReserveDetail extends StatelessWidget {
         return const Color(0xFF2FCF5C);
       case 'CANCELED':
         return const Color(0xFFFD3B3B);
-      case "IN_PROGRESS":
+      case "INPROGRESS":
         return const Color(0xFF23A5CD);
       default:
         return const Color.fromARGB(255, 12, 12, 12);
@@ -32,7 +32,7 @@ class BoxStateReserveDetail extends StatelessWidget {
         return 'Finalizado';
       case 'CANCELED':
         return 'Cancelado';
-      case "IN_PROGRESS":
+      case "INPROGRESS":
         return 'En progreso';
       default:
         return "----";

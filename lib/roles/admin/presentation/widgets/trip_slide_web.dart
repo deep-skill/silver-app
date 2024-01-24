@@ -213,7 +213,7 @@ class TripSlideWeb extends StatelessWidget {
                         width: size.width * .02,
                       ),
                       Text(
-                        'S/ \$${trip.totalPrice}',
+                        'S/${trip.totalPrice}',
                         style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'Montserrat-Bold',

@@ -5,8 +5,7 @@ import 'package:silverapp/roles/user/entities/reserves_home.dart';
 import 'package:silverapp/roles/user/models/reserves_paginated_response.dart';
 
 final dio = Dio(BaseOptions(
-  baseUrl:
-      'http://${dotenv.env['YOUR_IP']}:${dotenv.env['SERVER_PORT']}/silver-api/',
+  baseUrl: '${dotenv.env['HTTP_REQUEST']}',
 ));
 
 List<ReserveHome> _jsonToReserves(Map<String, dynamic> json) {

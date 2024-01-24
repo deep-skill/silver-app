@@ -44,7 +44,6 @@ class DefaultFirebaseOptions {
     }
   }
 
-//'http://${dotenv.env['YOUR_IP']}:${dotenv.env['SERVER_PORT']}/silver-api/'
   static FirebaseOptions web = FirebaseOptions(
     apiKey: '${dotenv.env['FIREBASE_OPTIONS_WEB']}',
     appId: '1:186537693375:web:becb5f544d1677e14d760a',

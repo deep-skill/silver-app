@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:open_street_map_search_and_pick/open_street_map_search_and_pick.dart';
-import 'package:silverapp/position/determine_position_helper.dart';
+import 'package:silverapp/google_maps/google_maps_screen.dart';
+import 'package:silverapp/google_maps/location_data.dart';
 
-class AlertStops extends StatefulWidget {
+class AlertStops extends StatelessWidget {
   const AlertStops(this.addStops, {super.key});
   final Function(String, double, double) addStops;
 
-  @override
-  State<AlertStops> createState() => _AlertParadasState();
-}
-
-class _AlertParadasState extends State<AlertStops> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -29,26 +24,15 @@ class _AlertParadasState extends State<AlertStops> {
           children: [
             TextButton(
               onPressed: () async {
-                determinePosition().then((position) => {
-                      showModalBottomSheet<String>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return OpenStreetMapSearchAndPick(
-                                locationPinText: '',
-                                center: LatLong(
-                                    position.latitude, position.longitude),
-                                buttonColor: Colors.blue,
-                                buttonText: 'Seleccionar parada',
-                                onPicked: (pickedData) async {
-                                  widget.addStops(
-                                      pickedData.addressName,
-                                      pickedData.latLong.latitude,
-                                      pickedData.latLong.longitude);
-                                  context.pop();
-                                  context.pop();
-                                });
-                          })
-                    });
+                final result = await Navigator.of(context).push<LocationData>(
+                  MaterialPageRoute(builder: (context) => const MapGoogle()),
+                );
+                if (result != null) {
+                  addStops(result.address, result.latitude, result.longitude);
+                }
+                if (context.mounted) {
+                  context.pop();
+                }
               },
               child: const Text('Buscar parada'),
             ),

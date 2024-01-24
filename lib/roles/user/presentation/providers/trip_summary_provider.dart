@@ -4,8 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/user/models/trip_summary_response.dart';
 
 final dio = Dio(BaseOptions(
-  baseUrl:
-      'http://${dotenv.env['YOUR_IP']}:${dotenv.env['SERVER_PORT']}/silver-api/',
+  baseUrl: '${dotenv.env['HTTP_REQUEST']}',
 ));
 
 final tripsSummaryProvider = FutureProvider<TripsSummaryResponse>((ref) async {

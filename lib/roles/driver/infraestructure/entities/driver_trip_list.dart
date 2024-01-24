@@ -11,7 +11,7 @@ class DriverTripList {
   int silverPercent;
   List<Toll> tolls;
   List<Parking> parkings;
-
+  DateTime startTime;
   DriverTripList(
       {required this.id,
       required this.onWayDriver,
@@ -22,7 +22,8 @@ class DriverTripList {
       this.enterpriseName,
       required this.silverPercent,
       required this.tolls,
-      required this.parkings});
+      required this.parkings,
+      required this.startTime});
 
   factory DriverTripList.fromJson(Map<String, dynamic> json) => DriverTripList(
         id: json["id"],
@@ -39,5 +40,6 @@ class DriverTripList {
             List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
         parkings: List<Parking>.from(
             json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
+        startTime: DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
       );
 }

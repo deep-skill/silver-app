@@ -36,9 +36,9 @@ class CustomTripSlide extends StatelessWidget {
     ];
 
     String getDate() {
-      final mont = months[trip.onWayDriver.month - 1];
+      final mont = months[trip.startTime.month - 1];
 
-      return "${trip.onWayDriver.day} $mont ${trip.onWayDriver.year} | ${trip.onWayDriver.hour}:${trip.onWayDriver.minute}";
+      return "${trip.startTime.day} $mont ${trip.startTime.year} | ${trip.startTime.hour.toString().padLeft(2, '0')}:${trip.startTime.minute.toString().padLeft(2, '0')}";
     }
 
     double calculateDriverPrice() {

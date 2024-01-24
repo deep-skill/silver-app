@@ -132,7 +132,7 @@ class SlideWeb extends StatelessWidget {
                         size: 20,
                       ),
                       Text(
-                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
+                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour.toString().padLeft(2, '0')}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
                         style: const TextStyle(
                             fontSize: 12,
                             fontFamily: 'Montserrat-Medium',

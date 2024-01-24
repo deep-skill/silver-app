@@ -123,28 +123,13 @@ class MapGoogleState extends State<MapGoogle> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextField(
                         controller: _searchController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Ingrese una dirección',
-                          contentPadding: const EdgeInsets.all(5),
-                          focusedBorder: const OutlineInputBorder(
+                          contentPadding: EdgeInsets.all(5),
+                          focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Colors.black),
                             borderRadius: BorderRadius.all(
                               Radius.circular(5),
-                            ),
-                          ),
-                          suffixIcon: SizedBox(
-                            child: DecoratedBox(
-                              decoration: const BoxDecoration(
-                                color: Color(0xff03132A),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                              ),
-                              child: IconButton(
-                                icon: const Icon(Icons.search,
-                                    color: Color(0xffFFFFFF)),
-                                onPressed: () =>
-                                    _searchAndNavigate(_searchController.text),
-                              ),
                             ),
                           ),
                         ),

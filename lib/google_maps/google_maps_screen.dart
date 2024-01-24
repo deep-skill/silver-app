@@ -16,7 +16,7 @@ class MapGoogleState extends State<MapGoogle> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   final TextEditingController _searchController = TextEditingController();
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
   List<dynamic> searchResults = [];
   String? selectedLocation;
   bool showSearchResults = false;
@@ -159,10 +159,10 @@ class MapGoogleState extends State<MapGoogle> {
                                 ['location']['lat'];
                             double lng = searchResults[index]['geometry']
                                 ['location']['lng'];
-                            String address_name =
+                            String addressName =
                                 searchResults[index]['formatted_address'];
                             LatLng location = LatLng(lat, lng);
-                            _updateMapLocation(location, address_name);
+                            _updateMapLocation(location, addressName);
 
                             setState(() {
                               showSearchResults = false;

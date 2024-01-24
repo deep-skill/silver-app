@@ -22,7 +22,7 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
       BuildContext context, int tripId, String credentials) async {
     try {
       await dio(credentials).patch('trips/driver-trip/$tripId',
-          data: {"arrivedDriver": DateTime.now().toIso8601String()});
+          data: {"arrivedDriver": DateTime.now().toUtc().toIso8601String()});
       widget.reload();
     } catch (e) {
       print(e);

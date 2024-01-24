@@ -70,14 +70,14 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     try {
       if (widget.tripType == "POR HORA") {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": DateTime.now().toIso8601String(),
+          "endTime": DateTime.now().toUtc().toIso8601String(),
           "status": "COMPLETED",
           "totalPrice":
               totalPricePerHour(widget.arrivedDriver!) * widget.totalPrice
         });
       } else {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": DateTime.now().toIso8601String(),
+          "endTime": DateTime.now().toUtc().toIso8601String(),
           "status": "COMPLETED"
         });
       }

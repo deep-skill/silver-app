@@ -60,12 +60,13 @@ class TripDriverStatus {
         onWayDriver: DateTime.parse(json["onWayDriver"]).toLocal(),
         arrivedDriver: json["arrivedDriver"] == null
             ? null
-            : DateTime.parse(json["arrivedDriver"]),
+            : DateTime.parse(json["arrivedDriver"]).toLocal(),
         startTime: json["startTime"] == null
             ? null
-            : DateTime.parse(json["startTime"]),
-        endTime:
-            json["endTime"] == null ? null : DateTime.parse(json["endTime"]),
+            : DateTime.parse(json["startTime"]).toLocal(),
+        endTime: json["endTime"] == null
+            ? null
+            : DateTime.parse(json["endTime"]).toLocal(),
         status: json["status"] ?? '',
         reserveId: json["reserveId"],
         startAddress: json["Reserve"]["startAddress"],

@@ -21,7 +21,7 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
   void patchStartTripDrive(BuildContext context, int tripId) async {
     try {
       await dio(widget.credentials).patch('trips/driver-trip/$tripId',
-          data: {"startTime": DateTime.now().toIso8601String()});
+          data: {"startTime": DateTime.now().toUtc().toIso8601String()});
       widget.reload();
     } catch (e) {
       print(e);

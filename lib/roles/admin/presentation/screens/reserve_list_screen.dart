@@ -58,7 +58,8 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
     final size = MediaQuery.of(context).size;
     return kIsWeb
         ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 220),
+            padding: EdgeInsets.symmetric(
+                horizontal: size.width >= 1200 ? 220 : size.width * .07),
             child: RefreshIndicator(
               onRefresh: () =>
                   ref.read(reservesListProvider.notifier).reloadData(),

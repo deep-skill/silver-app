@@ -114,24 +114,21 @@ class MapGoogleState extends State<MapGoogle> {
             Column(
               children: [
                 Container(
-                  margin: const EdgeInsets.all(8.0),
+                  margin: const EdgeInsets.all(4.0),
                   child: DecoratedBox(
                     decoration: const BoxDecoration(
                       color: Color(0xffFFFFFF),
                       borderRadius: BorderRadius.all(Radius.circular(12)),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextField(
-                        controller: _searchController,
-                        decoration: const InputDecoration(
-                          hintText: 'Ingrese una dirección',
-                          contentPadding: EdgeInsets.all(5),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: const InputDecoration(
+                        hintText: 'Ingrese una dirección',
+                        contentPadding: EdgeInsets.all(5),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
                           ),
                         ),
                       ),

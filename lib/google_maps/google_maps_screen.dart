@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -38,7 +39,7 @@ class MapGoogleState extends State<MapGoogle> {
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(-12.04967738829701, -77.09668506723912),
-    zoom: 17.00,
+    zoom: kIsWeb ? 17.0 : 15.00,
   );
 
   Future<void> _searchAndNavigate(String address) async {

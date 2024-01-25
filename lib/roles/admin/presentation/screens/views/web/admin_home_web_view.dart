@@ -33,7 +33,7 @@ class AdminHomeWebView extends StatelessWidget {
   Widget build(BuildContext context) {
     final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(230, 50, 230, 0),
+      padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
       child: Column(
         children: [
           TripsSummaryViewWeb(
@@ -90,6 +90,7 @@ class AdminHomeWebView extends StatelessWidget {
               });
             },
             child: SizedBox(
+                width: size.width * 0.8,
                 height: size.height * .07,
                 child: const DecoratedBox(
                   decoration: BoxDecoration(

@@ -137,7 +137,7 @@ class MapGoogleState extends State<MapGoogle> {
                 ),
                 if (showSearchResults)
                   Container(
-                    margin: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(4.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12.0),
@@ -150,8 +150,20 @@ class MapGoogleState extends State<MapGoogle> {
                       itemCount: searchResults.length,
                       itemBuilder: (BuildContext context, int index) {
                         return ListTile(
-                          title:
-                              Text(searchResults[index]['formatted_address']),
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                searchResults[index]['formatted_address'],
+                                style: const TextStyle(
+                                    fontFamily: "Monserrat",
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                            ],
+                          ),
                           onTap: () {
                             double lat = searchResults[index]['geometry']
                                 ['location']['lat'];

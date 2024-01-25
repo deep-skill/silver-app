@@ -23,9 +23,11 @@ class TripsSummaryViewWeb extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         height: size.height * .18,
-        width: size.width * .7,
+        width: size.width * .8,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -60,8 +62,8 @@ class TripsSummaryViewWeb extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: const Color(0xff031329),
                           borderRadius: BorderRadius.circular(7)),
-                      width: 140,
-                      height: 60,
+                      width: size.width * .10,
+                      height: size.height * 0.07,
                       child: Text('${tripsSummary.trips}',
                           style: const TextStyle(
                               color: Colors.white,
@@ -87,8 +89,8 @@ class TripsSummaryViewWeb extends StatelessWidget {
                         decoration: BoxDecoration(
                             color: const Color(0xff031329),
                             borderRadius: BorderRadius.circular(7)),
-                        width: 140,
-                        height: 60,
+                        width: size.width * .10,
+                        height: size.height * 0.07,
                         child: Text('S/ ${tripsSummary.income.toInt()}',
                             style: const TextStyle(
                                 fontFamily: 'Montserrat-Bold',
@@ -113,8 +115,8 @@ class TripsSummaryViewWeb extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: const Color(0xff031329),
                           borderRadius: BorderRadius.circular(7)),
-                      width: 140,
-                      height: 60,
+                      width: size.width * .10,
+                      height: size.height * 0.07,
                       child: Text('S/ ${tripsSummary.revenue.toInt()}',
                           style: const TextStyle(
                               color: Colors.white,

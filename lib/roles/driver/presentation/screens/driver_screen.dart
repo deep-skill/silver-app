@@ -198,7 +198,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ))
-                        : const Text('Reserva mas próxima',
+                        : const Text('Próxima reserva',
                             style: TextStyle(
                                 fontSize: 20, color: Color(0xff364356)));
                   },

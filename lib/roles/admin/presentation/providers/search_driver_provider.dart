@@ -19,7 +19,6 @@ final searchedDriversProvider =
     StateNotifierProvider<SearchedDriversNotifier, List<SearchDriver>>((ref) {
   Future<List<SearchDriver>> searchDriver(query) async {
     Credentials? credentials = ref.watch(authProvider).credentials;
-    if (query.isEmpty) return [];
     final response = await dio(credentials!.accessToken)
         .get('/drivers/drivers', queryParameters: {
       'query': query,

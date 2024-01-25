@@ -183,43 +183,47 @@ class MapGoogleState extends State<MapGoogle> {
                     ),
                   ),
                 const Spacer(),
-                Container(
-                  margin: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all<EdgeInsets>(
-                          const EdgeInsets.all(5)),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          const Color(0xFF23A5CD)),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                if (selectedLocation != null)
+                  Container(
+                    margin: const EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        padding: MaterialStateProperty.all<EdgeInsets>(
+                            const EdgeInsets.all(5)),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xFF23A5CD)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                         ),
                       ),
-                    ),
-                    onPressed: selectedLocation != null
-                        ? () {
-                            List<String> locationParts =
-                                selectedLocation!.split(', ');
-                            double lat = double.parse(locationParts[0]);
-                            double lng = double.parse(locationParts[1]);
-                            String address =
-                                locationParts.sublist(2).join(', ');
+                      onPressed: selectedLocation != null
+                          ? () {
+                              List<String> locationParts =
+                                  selectedLocation!.split(', ');
+                              double lat = double.parse(locationParts[0]);
+                              double lng = double.parse(locationParts[1]);
+                              String address =
+                                  locationParts.sublist(2).join(', ');
 
-                            Navigator.of(context).pop(LocationData(
-                              latitude: lat,
-                              longitude: lng,
-                              address: address,
-                            ));
-                          }
-                        : null,
-                    child: const Text('Confirmar Ubicación',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: "Monserrat")),
-                  ),
-                ),
+                              Navigator.of(context).pop(LocationData(
+                                latitude: lat,
+                                longitude: lng,
+                                address: address,
+                              ));
+                            }
+                          : null,
+                      child: const Text('Confirmar Ubicación',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontFamily: "Monserrat")),
+                    ),
+                  )
+                else
+                  const SizedBox(),
               ],
             ),
           ],

@@ -21,7 +21,6 @@ final searchedPassengersProvider =
         (ref) {
   Future<List<SearchPassenger>> searchPassenger(query) async {
     Credentials? credentials = ref.watch(authProvider).credentials;
-    if (query.isEmpty) return [];
 
     final response = await dio(credentials!.accessToken)
         .get('/users/passengers', queryParameters: {

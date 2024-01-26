@@ -8,7 +8,7 @@ GOOGLE MAPS
 		- google_maps_screen.dart
 		- location_data.dart
 
-	La implementacion nececita de un api key generada en Google Console. Esta key esta guardada en el archivo .env GOOGLE_MAPS_KEY=
+	La implementacion necesita de un api key generada en Google Console. Esta key esta guardada en el archivo .env GOOGLE_MAPS_KEY=
 	
 ```
 ``` 
@@ -37,7 +37,7 @@ Configuracion previa:
 ```
 
 ``` 
-En el archivos location_data.dart se encuentra la Class LocationData
+En el archivo location_data.dart se encuentra la Class LocationData
 	
 	class  LocationData {
 		final  double  latitude;
@@ -57,7 +57,8 @@ En el archivos location_data.dart se encuentra la Class LocationData
 
 En el archivo google_maps_screen.dart tenemos la screen en la que se implementa google maps:
 	
-	La constante 
+	La constante _kGooglePlex establece la posicion de la camara al iniciar la pantalla
+
 		static  const  CameraPosition  _kGooglePlex  =  CameraPosition(
 		target:  LatLng(-12.04967738829701, -77.09668506723912),
 		zoom:  kIsWeb  ?  17.0  :  15.00,);
@@ -72,7 +73,7 @@ En el archivo google_maps_screen.dart tenemos la screen en la que se implementa 
 			-realiza una petición usando dio a 'https://maps.googleapis.com/maps/api/geocode/json'
 				parametros ingresados:
 					-address : dato a buscar
-					-components: filtra resultados posibles a Lima Peru ingresando 'locality:Lima|country:PE'
+					-components: filtra resultados posibles exclusivamente a Lima Peru ingresando 'locality:Lima|country:PE'
 					-key: se agrega api key para la peticion
 					
 		En caso de peticion correcta guarda los resultados y los muestra. En caso contrario guarda un array vacio y no muestra el contenedor de resultados.

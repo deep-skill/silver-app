@@ -19,11 +19,11 @@
 
         -AUTH0_CLIENT_ID= Se obtiene en Aplications / silverapp / Settings , primer menu Client ID
 
-        -AUTH0_CUSTOM_SCHEME= Se obtiene en Aplications / silverapp / Settings , menu Application URIs debe conincidir con lo completado en el campo
+        -AUTH0_CUSTOM_SCHEME= Se obtiene en Aplications / silverapp / Settings , menu Application URIs debe coincidir con lo completado en el campo
 
         -APP_AUDIENCE= Se obtiene en Aplications / Express API / APIs ,  API Identifier: "debe coincidir con este campo". Se usa para pedir token de seguridad
 
-        -APP_REDIRECT_URL= Dirreccion de retorno para el inicio y cierre de sesion ,Se obtiene en Aplications / silverapp / Settings , menu Application URIs debe conincidir con lo completado en el campo
+        -APP_REDIRECT_URL= Dirreccion de retorno para el inicio y cierre de sesion .Se obtiene en Aplications / silverapp / Settings , menu Application URIs debe conincidir con lo completado en el campo
 
 ```
 
@@ -44,8 +44,8 @@
 
         propiedades:
             -redirectUrl: Dirrecion cargada en auth0 para volver despues del login/logout
-            -sudience: Ruta de la Api para obtener el token
-            -scopres: ingresa permisos a agregar en el token
+            -audience: Ruta de la Api para obtener el token
+            -scopes: ingresa permisos a agregar en el token
 
     Funcion logout():
 

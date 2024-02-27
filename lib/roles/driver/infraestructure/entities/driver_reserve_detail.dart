@@ -31,7 +31,9 @@ class DriverReserveDetail {
       DriverReserveDetail(
         id: json["id"],
         startTime: DateTime.parse(json["startTime"]).toLocal(),
-        serviceType: json["serviceType"],
+        serviceType: json["serviceType"] == "ENTERPRISE"
+            ? "Empresarial"
+            : json["serviceType"],
         tripType: json["tripType"],
         startAddress: json["startAddress"],
         endAddress: json["endAddress"],

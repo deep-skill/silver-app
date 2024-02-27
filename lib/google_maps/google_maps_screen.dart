@@ -191,7 +191,7 @@ class MapGoogleState extends State<MapGoogle> {
                         padding: MaterialStateProperty.all<EdgeInsets>(
                             const EdgeInsets.all(5)),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color(0xFF23A5CD)),
+                            const Color(0xFF031329)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

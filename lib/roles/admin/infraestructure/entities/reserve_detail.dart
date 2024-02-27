@@ -54,9 +54,7 @@ class ReserveDetail {
       driverId: json['Driver'] == null ? null : json['Driver']['id'],
       carId: json['Car'] == null ? null : json['Car']['id'],
       tripType: json['tripType'],
-      serviceType: json['serviceType'] == "ENTERPRISE"
-          ? "Empresarial"
-          : json['serviceType'],
+      serviceType: json['serviceType'],
       startAddress: json['startAddress'],
       endAddress: json['endAddress'],
       price: json['price'].toDouble(),

@@ -102,7 +102,9 @@ class ReserveInfo extends StatelessWidget {
             BoxReserveDetail(
                 icon: Icons.business_center_outlined,
                 label: "Tipo de servicio",
-                text: capitalizeFirst(reserve.serviceType),
+                text: reserve.serviceType == 'ENTERPRISE'
+                    ? 'Empresarial'
+                    : 'Personal',
                 row: false),
             const SizedBox(height: 5),
             const TitleReserveDetail(text: "Datos del viaje"),

@@ -164,8 +164,9 @@ class ReserveInfo extends StatelessWidget {
                                     BoxReserveDetail(
                                       icon: Icons.business_center_outlined,
                                       label: 'Tipo de Servicio',
-                                      text:
-                                          "${reserve.serviceType[0].toUpperCase()}${reserve.serviceType.substring(1).toLowerCase()}",
+                                      text: reserve.serviceType == 'ENTERPRISE'
+                                          ? 'Empresarial'
+                                          : 'Personal',
                                       row: true,
                                     ),
                                   ],
@@ -509,10 +510,12 @@ class ReserveInfo extends StatelessWidget {
                               text: reserve.enterpriseName)
                           : const SizedBox(),
                       BoxReserveDetail(
-                          icon: Icons.business_center_outlined,
-                          label: 'Tipo de Servicio',
-                          text:
-                              "${reserve.serviceType[0].toUpperCase()}${reserve.serviceType.substring(1).toLowerCase()}"),
+                        icon: Icons.business_center_outlined,
+                        label: 'Tipo de Servicio',
+                        text: reserve.serviceType == 'ENTERPRISE'
+                            ? 'Empresarial'
+                            : 'Personal',
+                      ),
                       const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [

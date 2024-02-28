@@ -18,6 +18,7 @@ import 'package:silverapp/roles/admin/presentation/providers/forms/reserve_form_
 import 'package:silverapp/roles/admin/presentation/providers/reserve_create_update_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_car_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
@@ -906,6 +907,9 @@ class CreateReserveView extends ConsumerWidget {
                               ref
                                   .read(reservesHomeProvider.notifier)
                                   .reloadData();
+                                  ref
+                                  .read(reservesListProvider.notifier)
+                                  .reloadData();
 
                               context.pop();
                             });
@@ -921,7 +925,7 @@ class CreateReserveView extends ConsumerWidget {
                               backgroundColor: MaterialStateProperty.all(
                                   const Color(0xFF03132A)),
                             ),
-                            child: Text(reserve.id == 0 ? "Crear" : "Editar",
+                            child: Text(reserve.id == 0 ? "Crear" : "Guardar cambios",
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Raleway-Semi-Bold',
@@ -1631,6 +1635,9 @@ class CreateReserveView extends ConsumerWidget {
                               ref
                                   .read(reservesHomeProvider.notifier)
                                   .reloadData();
+                              ref
+                                  .read(reservesListProvider.notifier)
+                                  .reloadData();
 
                               context.pop();
                             });
@@ -1645,7 +1652,7 @@ class CreateReserveView extends ConsumerWidget {
                             backgroundColor: MaterialStateProperty.all(
                                 const Color(0xFF23A5CD)),
                           ),
-                          child: Text(reserve.id == 0 ? "Crear" : "Editar",
+                          child: Text(reserve.id == 0 ? "Crear" : "Guardar cambios",
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Montserrat-Bold',

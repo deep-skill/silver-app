@@ -195,7 +195,7 @@ class TripSlide extends StatelessWidget {
                           size: 20,
                         ),
                         Text(
-                          ' ${trip.startTime.day} ${months[trip.startTime.month - 1]} ${trip.startTime.year} | ${trip.startTime.hour.toString().padLeft(2, '0')}:${trip.startTime.minute.toString().padLeft(2, '0')}',
+                          ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
                           style: const TextStyle(
                               fontSize: 12,
                               fontFamily: 'Montserrat-Medium',

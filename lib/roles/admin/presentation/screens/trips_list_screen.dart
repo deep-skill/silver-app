@@ -37,9 +37,7 @@ class TripListViewState extends ConsumerState<TripListView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(tripsListProvider.notifier).currentPage == 0) {
-      ref.read(tripsListProvider.notifier).loadNextPage();
-    }
+      ref.read(tripsListProvider.notifier).reloadData();
   }
 
   void sendEventAdminSearchTripsList(

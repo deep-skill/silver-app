@@ -36,9 +36,7 @@ class DriverReserveListViewState extends ConsumerState<DriverTripListView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(driverTripsListProvider.notifier).currentPage == 0) {
-      ref.read(driverTripsListProvider.notifier).loadNextPage();
-    }
+    ref.read(driverTripsListProvider.notifier).reloadData();
   }
 
   @override

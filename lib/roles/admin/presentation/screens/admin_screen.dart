@@ -93,9 +93,7 @@ class HomeViewState extends ConsumerState<HomeView> {
   @override
   void initState() {
     super.initState();
-    if (ref.read(reservesHomeProvider.notifier).currentPage == 0) {
-      ref.read(reservesHomeProvider.notifier).loadNextPage();
-    }
+    ref.read(reservesHomeProvider.notifier).reloadData();
   }
 
   @override

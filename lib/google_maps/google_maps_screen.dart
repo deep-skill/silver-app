@@ -185,13 +185,13 @@ class MapGoogleState extends State<MapGoogle> {
                 const Spacer(),
                 if (selectedLocation != null)
                   Container(
-                    margin: const EdgeInsets.all(8.0),
+                    margin: const EdgeInsets.all(12.0),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         padding: MaterialStateProperty.all<EdgeInsets>(
                             const EdgeInsets.all(5)),
                         backgroundColor: MaterialStateProperty.all<Color>(
-                            const Color(0xFF23A5CD)),
+                            const Color(0xFF031329)),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -215,11 +215,15 @@ class MapGoogleState extends State<MapGoogle> {
                               ));
                             }
                           : null,
-                      child: const Text('Confirmar Ubicación',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontFamily: "Monserrat")),
+                      child: Container(
+                        margin: const EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
+                        child: const Text('Confirmar Ubicación',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontFamily: "Monserrat")),
+                      ),
                     ),
                   )
                 else

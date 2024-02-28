@@ -13,7 +13,7 @@ class TripList {
   final String? driverLastName;
   final int? enterpriseId;
   final String? enterpriseName;
-  final DateTime startTime;
+  final DateTime? startTime;
   TripList({
     required this.id,
     this.totalPrice,
@@ -56,5 +56,7 @@ class TripList {
       enterpriseName: json['Reserve']['Enterprise'] == null
           ? null
           : json['Reserve']['Enterprise']['name'],
-      startTime: DateTime.parse(json['Reserve']['startTime']).toLocal());
+      startTime: json['Reserve']['startTime'] == null
+          ? null
+          : DateTime.parse(json['Reserve']['startTime']).toLocal());
 }

@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:silverapp/google_maps/google_maps_response.dart';
 import 'package:silverapp/google_maps/location_data.dart';
 
 class MapGoogle extends StatefulWidget {
@@ -18,7 +20,7 @@ class MapGoogleState extends State<MapGoogle> {
       Completer<GoogleMapController>();
   final TextEditingController _searchController = TextEditingController();
   final Set<Marker> _markers = {};
-  List<dynamic> searchResults = [];
+  List<ResultGoogle> searchResults = [];
   String? selectedLocation;
   bool showSearchResults = false;
 
@@ -53,9 +55,33 @@ class MapGoogleState extends State<MapGoogle> {
             'key': '${dotenv.env['GOOGLE_MAPS_KEY']}',
           },
         );
+        var googleRoute = await Dio().post(
+          "https://routes.googleapis.com/directions/v2:computeRoutes",
+          queryParameters: {
+            'key': 'AIzaSyDeQuPr7mCN9vfbpwjvmomgiLbKULl8oMw',
+          },
+          data: {
+            "origin": {
+              "address": "1800 Amphitheatre Parkway, Mountain View, CA 94043"
+            },
+            "destination": {
+              "address":
+                  "Sloat Blvd &, Upper Great Hwy, San Francisco, CA 94132"
+            },
+            "travelMode": "DRIVE"
+          },
+          options: Options(
+            headers: {
+              'X-Goog-FieldMask':
+                  'routes.duration,routes.distanceMeters,routes.polyline.encodedPolyline',
+            },
+          ),
+        );
+        print(googleRoute.toString());
         if (response.statusCode == 200 && response.data['results'].length > 0) {
           setState(() {
-            searchResults = response.data['results'];
+            searchResults =
+                googleResponseFromJson(json.encode(response.data)).results;
             showSearchResults = true;
           });
         }
@@ -155,7 +181,7 @@ class MapGoogleState extends State<MapGoogle> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                searchResults[index]['formatted_address'],
+                                searchResults[index].formattedAddress,
                                 style: const TextStyle(
                                     fontFamily: "Monserrat",
                                     fontSize: 14,
@@ -165,12 +191,12 @@ class MapGoogleState extends State<MapGoogle> {
                             ],
                           ),
                           onTap: () {
-                            double lat = searchResults[index]['geometry']
-                                ['location']['lat'];
-                            double lng = searchResults[index]['geometry']
-                                ['location']['lng'];
+                            double lat =
+                                searchResults[index].geometry.location.lat;
+                            double lng =
+                                searchResults[index].geometry.location.lng;
                             String addressName =
-                                searchResults[index]['formatted_address'];
+                                searchResults[index].formattedAddress;
                             LatLng location = LatLng(lat, lng);
                             _updateMapLocation(location, addressName);
 

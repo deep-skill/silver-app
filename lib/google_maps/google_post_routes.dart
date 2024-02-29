@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<dynamic> getGoogleRoute(String address) async {
   var googleRoute = await Dio().post(
     "https://routes.googleapis.com/directions/v2:computeRoutes",
     queryParameters: {
-      'key': 'AIzaSyDeQuPr7mCN9vfbpwjvmomgiLbKULl8oMw',
+      'key': '${dotenv.env['GOOGLE_ROUTES_API_KEY']}',
     },
     data: {
       "origin": {

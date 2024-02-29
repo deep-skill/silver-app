@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:silverapp/google_maps/google_maps_response.dart';
+import 'package:silverapp/google_maps/google_maps_response_entity.dart';
 import 'package:silverapp/google_maps/location_data.dart';
 
 class MapGoogle extends StatefulWidget {
@@ -58,7 +58,7 @@ class MapGoogleState extends State<MapGoogle> {
         var googleRoute = await Dio().post(
           "https://routes.googleapis.com/directions/v2:computeRoutes",
           queryParameters: {
-            'key': 'AIzaSyDeQuPr7mCN9vfbpwjvmomgiLbKULl8oMw',
+            'key': '${dotenv.env['GOOGLE_ROUTES_API_KEY']}',
           },
           data: {
             "origin": {

@@ -45,11 +45,13 @@ class ReserveCreteUpdateNotifier
       enterpriseId: 0,
       tripType: '',
       serviceType: '',
+      serviceCarType: '',
       startTime: '',
       startDate: '',
       startAddress: '',
       endAddress: '',
       price: '',
+      suggestedPrice: '',
       driverPercent: 0,
       silverPercent: '',
     );

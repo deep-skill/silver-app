@@ -14,12 +14,14 @@ class CreateReserve {
   String? driverName;
   String? driverLastName;
   String tripType;
+  String serviceCarType;
   String serviceType;
   String startTime;
   String startDate;
   String startAddress;
   String? endAddress;
   String price;
+  String? suggestedPrice;
   int driverPercent;
   String silverPercent;
 
@@ -39,12 +41,14 @@ class CreateReserve {
     this.model,
     this.color,
     required this.tripType,
+    required this.serviceCarType,
     required this.serviceType,
     required this.startTime,
     required this.startDate,
     required this.startAddress,
     this.endAddress,
     required this.price,
+    this.suggestedPrice,
     required this.driverPercent,
     required this.silverPercent,
   });
@@ -67,10 +71,12 @@ class CreateReserve {
         model: json['Car'] == null ? null : json['Car']['model'],
         color: json['Car'] == null ? null : json['Car']['color'],
         tripType: json['tripType'],
+        serviceCarType: json['serviceCarType'],
         serviceType: json['serviceType'],
         startAddress: json['startAddress'],
         endAddress: json['endAddress'],
         price: json['price'].toString(),
+        suggestedPrice: json['suggestedPrice'].toString(),
         driverPercent: 0,
         silverPercent: json['silverPercent'].toString(),
         startTime:

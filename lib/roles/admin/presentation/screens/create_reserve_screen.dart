@@ -293,6 +293,84 @@ class CreateReserveView extends ConsumerWidget {
                         const SizedBox(
                           height: 20,
                         ),
+                        SizedBox(
+                              width: size.width * 0.36,
+                              child: Stack(children: [
+                                CustomFormField(
+                                  label: 'Tipo de vehículo',
+                                  isTopField: true,
+                                  isBottomField: true,
+                                  errorMessage:
+                                      reserveForm.serviceType.errorMessage,
+                                  readOnly: true,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const Icon(
+                                          Icons.business_center_outlined),
+                                      const SizedBox(width: 15),
+                                      Expanded(
+                                        child: DropdownButton<String>(
+                                          isExpanded: true,
+                                          iconSize: 40,
+                                          value: reserveForm.serviceType.value,
+                                          style: reserveForm
+                                                      .serviceType.value ==
+                                                  'Seleccione el tipo de vehículo'
+                                              ? const TextStyle(
+                                                  color: Color(0xffB5B9C2),
+                                                  fontSize: 16,
+                                                  fontFamily:
+                                                      'Montserrat-Regular')
+                                              : const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16),
+                                          items: [
+                                            'Auto',
+                                            'Camioneta',
+                                            'Van',
+                                            'Seleccione el tipo de vehículo'
+                                          ]
+                                              .map((option) => DropdownMenuItem(
+                                                    value: option,
+                                                    child: Text(
+                                                      option,
+                                                      style: option ==
+                                                              'Seleccione el tipo de vehículo'
+                                                          ? const TextStyle(
+                                                              color:
+                                                                  Colors.grey,
+                                                              fontSize: 16)
+                                                          : const TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 16),
+                                                    ),
+                                                  ))
+                                              .toList(),
+                                          onChanged: (newValue) {
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onServiceTypeChanged(
+                                                    newValue!);
+                                          },
+                                          icon: const Icon(
+                                              Icons.keyboard_arrow_down),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ]),
+                            ),
+                            const SizedBox(
+                          height: 20,
+                        ),
                         const Text('Datos del viaje',
                             style: TextStyle(color: cyanColor)),
                         const Divider(color: cyanColor),

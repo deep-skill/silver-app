@@ -301,7 +301,7 @@ class CreateReserveView extends ConsumerWidget {
                                   isTopField: true,
                                   isBottomField: true,
                                   errorMessage:
-                                      reserveForm.serviceType.errorMessage,
+                                      reserveForm.serviceCarType.errorMessage,
                                   readOnly: true,
                                 ),
                                 Padding(
@@ -316,9 +316,9 @@ class CreateReserveView extends ConsumerWidget {
                                         child: DropdownButton<String>(
                                           isExpanded: true,
                                           iconSize: 40,
-                                          value: reserveForm.serviceType.value,
+                                          value: reserveForm.serviceCarType.value,
                                           style: reserveForm
-                                                      .serviceType.value ==
+                                                      .serviceCarType.value ==
                                                   'Seleccione el tipo de vehículo'
                                               ? const TextStyle(
                                                   color: Color(0xffB5B9C2),
@@ -356,7 +356,7 @@ class CreateReserveView extends ConsumerWidget {
                                                 .read(
                                                     reserveFormProvider(reserve)
                                                         .notifier)
-                                                .onServiceTypeChanged(
+                                                .onServiceCarTypeChanged(
                                                     newValue!);
                                           },
                                           icon: const Icon(

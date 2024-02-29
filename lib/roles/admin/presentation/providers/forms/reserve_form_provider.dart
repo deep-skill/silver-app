@@ -43,6 +43,7 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
           (reserveId == null) ? '/reserves/' : '/reserves/$reserveId';
       Credentials? credentials = ref.watch(authProvider).credentials;
       reserveLike.remove('id');
+      print(reserveLike);
       final response = await dio(credentials!.accessToken).request(url,
           data: jsonEncode(reserveLike), options: Options(method: method));
       final status = response.statusCode;
@@ -173,7 +174,9 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           : state.driverId?.value,
       "car_id": state.carId?.value == 0 ? null : state.carId?.value,
       "price": state.price.value,
-      "suggested_price": state.suggestedPrice.value,
+      "suggested_price": state.suggestedPrice.value == ''
+      ? null
+      : state.suggestedPrice.value,
       if (state.silverPercent.value != '')
         "silver_percent": state.silverPercent.value,
       if (id != 0) "id": id.toString(),
@@ -324,6 +327,25 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           StartTime.dirty(state.startTime.value),
           ServiceCarType.dirty(state.serviceCarType.value),
           StartDate.dirty(state.startDate.value),
+          StartAddress.dirty(state.startAddress.value),
+          state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
+          Price.dirty(state.price.value),
+          SilverPercent.dirty(state.silverPercent.value),
+        ]));
+  }
+
+    void onServiceCarTypeChanged(String value) {
+    state = state.copyWith(
+        serviceCarType: ServiceCarType.dirty(value),
+        isFormValid: Formz.validate([
+          ServiceType.dirty(value),
+          UserId.dirty(state.userId.value),
+          EnterpriseId.dirty(state.enterpriseId!.value),
+          TripType.dirty(state.tripType.value),
+          StartTime.dirty(state.startTime.value),
+          ServiceCarType.dirty(state.serviceCarType.value),
+          StartDate.dirty(state.startDate.value),
+          ServiceType.dirty(state.serviceType.value),
           StartAddress.dirty(state.startAddress.value),
           state.endAddress ?? EndAddress.dirty(state.endAddress!.value),
           Price.dirty(state.price.value),

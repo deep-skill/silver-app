@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/google_maps/google_maps_screen.dart';
+import 'package:silverapp/google_maps/google_post_routes.dart';
 import 'package:silverapp/google_maps/location_data.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
@@ -645,6 +646,31 @@ class CreateReserveView extends ConsumerWidget {
                               ],
                             ),
                           ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            try {
+                              print(reserveForm.startAddressLat);
+                              print(reserveForm.startAddressLon);
+
+                              var distance = await getGoogleRoute(
+                                reserveForm.startAddressLat,
+                                reserveForm.startAddressLon,
+                                reserveForm.endAddressLat,
+                                reserveForm.endAddressLon,
+                              );
+
+                              print(
+                                  distance.routes[0].distanceMeters.toString());
+                              print(distance.routes[0].distanceMeters / 1000);
+                              print(distance.routes[0].duration.toString());
+                              print(distance.routes[0].duration);
+                            } catch (e) {
+                              print("Error al calcular la ruta: $e");
+                            }
+                          },
+                          child: const Text("Calcular Ruta"),
+                        ),
+                        const SizedBox(height: 16),
                         const SizedBox(height: 16),
                         const Text('Datos del conductor y vehículo',
                             style: TextStyle(color: cyanColor)),
@@ -871,48 +897,51 @@ class CreateReserveView extends ConsumerWidget {
                           child: TextButton(
                             onPressed: () async {
                               ref
-                                .read(reserveFormProvider(reserve).notifier)
-                                .onFormSubmit(reserve.id!, reserve.tripId)
-                                .then((value) {
-                              if (!value) return;
-                              if (reserve.id! != 0) {
-                                ref
-                                    .read(reserveDetailProvider.notifier)
-                                    .updateReserveDetail(
-                                        reserve.id!.toString());
-                                if (reserve.tripId != null) {
+                                  .read(reserveFormProvider(reserve).notifier)
+                                  .onFormSubmit(reserve.id!, reserve.tripId)
+                                  .then((value) {
+                                if (!value) return;
+                                if (reserve.id! != 0) {
                                   ref
-                                      .read(tripAdminStatusProvider.notifier)
-                                      .updateTripStatus(
-                                          reserve.tripId!.toString());
+                                      .read(reserveDetailProvider.notifier)
+                                      .updateReserveDetail(
+                                          reserve.id!.toString());
+                                  if (reserve.tripId != null) {
+                                    ref
+                                        .read(tripAdminStatusProvider.notifier)
+                                        .updateTripStatus(
+                                            reserve.tripId!.toString());
+                                  }
+                                } else {
+                                  final String time = getDifferenceBetweenTimes(
+                                      screenLoadTime, DateTime.now());
+                                  sendEventCreatedReserve(
+                                      adminEmail: adminEmail,
+                                      amountMinutesCreating: time,
+                                      driverId:
+                                          reserveForm.driverId?.value ?? 0,
+                                      serviceType:
+                                          reserveForm.serviceType.value,
+                                      tripType: reserveForm.tripType.value,
+                                      userId: reserveForm.userId.value,
+                                      reservePrice: reserveForm.price.value,
+                                      silverPercent:
+                                          reserveForm.silverPercent.value == ''
+                                              ? '20'
+                                              : reserveForm
+                                                  .silverPercent.value);
                                 }
-                              } else {
-                                final String time = getDifferenceBetweenTimes(
-                                    screenLoadTime, DateTime.now());
-                                sendEventCreatedReserve(
-                                    adminEmail: adminEmail,
-                                    amountMinutesCreating: time,
-                                    driverId: reserveForm.driverId?.value ?? 0,
-                                    serviceType: reserveForm.serviceType.value,
-                                    tripType: reserveForm.tripType.value,
-                                    userId: reserveForm.userId.value,
-                                    reservePrice: reserveForm.price.value,
-                                    silverPercent:
-                                        reserveForm.silverPercent.value == ''
-                                            ? '20'
-                                            : reserveForm.silverPercent.value);
-                              }
-                              showSnackbar(context, reserve.id!);
+                                showSnackbar(context, reserve.id!);
 
-                              ref
-                                  .read(reservesHomeProvider.notifier)
-                                  .reloadData();
-                                  ref
-                                  .read(reservesListProvider.notifier)
-                                  .reloadData();
+                                ref
+                                    .read(reservesHomeProvider.notifier)
+                                    .reloadData();
+                                ref
+                                    .read(reservesListProvider.notifier)
+                                    .reloadData();
 
-                              context.pop();
-                            });
+                                context.pop();
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all<
@@ -925,7 +954,8 @@ class CreateReserveView extends ConsumerWidget {
                               backgroundColor: MaterialStateProperty.all(
                                   const Color(0xFF03132A)),
                             ),
-                            child: Text(reserve.id == 0 ? "Crear" : "Guardar cambios",
+                            child: Text(
+                                reserve.id == 0 ? "Crear" : "Guardar cambios",
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Raleway-Semi-Bold',
@@ -1652,7 +1682,8 @@ class CreateReserveView extends ConsumerWidget {
                             backgroundColor: MaterialStateProperty.all(
                                 const Color(0xFF23A5CD)),
                           ),
-                          child: Text(reserve.id == 0 ? "Crear" : "Guardar cambios",
+                          child: Text(
+                              reserve.id == 0 ? "Crear" : "Guardar cambios",
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Montserrat-Bold',

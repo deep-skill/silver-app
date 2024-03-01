@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/google_maps/google_post_routes.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/create_reserve.dart';
 import 'package:silverapp/roles/admin/infraestructure/inputs/car_id.dart';
@@ -94,8 +95,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
               : reserve.serviceCarType == 'CAR'
                   ? const ServiceCarType.dirty('Auto')
                   : reserve.serviceCarType == 'TRUCK'
-                  ? const ServiceCarType.dirty('Camioneta')
-                  : const ServiceCarType.dirty('Van')),
+                      ? const ServiceCarType.dirty('Camioneta')
+                      : const ServiceCarType.dirty('Van')),
           startAddress: reserve.startAddress == ''
               ? const StartAddress.pure()
               : StartAddress.dirty(reserve.startAddress),
@@ -155,8 +156,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "service_car_type": state.serviceCarType.value == 'Auto'
           ? 'CAR'
           : state.serviceCarType.value == 'Camioneta'
-          ? 'TRUCK'
-          : 'VAN',
+              ? 'TRUCK'
+              : 'VAN',
       "start_time":
           '${state.startDate.value}T${state.startTime.value}:00-05:00',
       "start_address": state.startAddress.value,
@@ -174,9 +175,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           : state.driverId?.value,
       "car_id": state.carId?.value == 0 ? null : state.carId?.value,
       "price": state.price.value,
-      "suggested_price": state.suggestedPrice.value == ''
-      ? null
-      : state.suggestedPrice.value,
+      "suggested_price":
+          state.suggestedPrice.value == '' ? null : state.suggestedPrice.value,
       if (state.silverPercent.value != '')
         "silver_percent": state.silverPercent.value,
       if (id != 0) "id": id.toString(),
@@ -334,7 +334,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         ]));
   }
 
-    void onServiceCarTypeChanged(String value) {
+  void onServiceCarTypeChanged(String value) {
     state = state.copyWith(
         serviceCarType: ServiceCarType.dirty(value),
         isFormValid: Formz.validate([
@@ -352,10 +352,61 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
-   void onSuggestedPriceChanged(String value) {
-    state = state.copyWith(
-        suggestedPrice: SuggestedPrice.dirty(value),
-        );
+
+  void onSuggestedPriceChanged() async {
+    if (state.startAddressLat == 0 ||
+        state.startAddressLon == 0 ||
+        state.endAddressLat == null ||
+        state.endAddressLon == null ||
+        state.serviceCarType.value == 'Seleccione el tipo de vehículo' ||
+        state.serviceCarType == 'Por hora' ||
+        state.startTime.value == '2023-09-26' ||
+        state.startDate.value == '00:00' ||
+        state.tripType.value == 'Seleccione el tipo de viaje' ||
+        state.tripType == 'Por hora') {
+      print(state.startAddressLat);
+      print(state.startAddressLon);
+      print(state.endAddressLat);
+      print(state.endAddressLon);
+      print(state.serviceCarType.value);
+      print(state.startDate.value);
+      print(state.startTime.value);
+      print(state.tripType);
+      print(state.tripType.value);
+      print('faltan datos');
+      return;
+    }
+    try {
+      /* print(reserveForm.startAddressLat);
+            print(reserveForm.startAddressLon);
+            print(reserveForm.endAddressLat);
+            print(reserveForm.endAddressLon);
+            print(reserveForm.serviceCarType);
+            print(reserveForm.startDate.value);
+            print(reserveForm.startTime.value);
+            print(reserveForm.tripType);
+            print(reserveForm.tripType.value);
+            print('En pripio no faltarían datos'); */
+      var distance = await getGoogleRoute(
+        state.startAddressLat,
+        state.startAddressLon,
+        state.endAddressLat,
+        state.endAddressLon,
+      );
+      var basePrice = calculateBasePrice(
+              distance.routes[0].distanceMeters,
+              distance.routes[0].getDurationInSeconds(),
+              state.serviceCarType.value,
+              isInDesiredTimeRange(state.startTime.value))
+          .toStringAsFixed(2);
+
+      print('S/ ${basePrice}');
+      state = state.copyWith(
+        suggestedPrice: SuggestedPrice.dirty(basePrice),
+      );
+    } catch (e) {
+      print("Error al calcular la ruta: $e");
+    }
   }
 
   void onStartTimeChanged(String value) {

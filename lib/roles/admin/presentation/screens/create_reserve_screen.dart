@@ -90,6 +90,64 @@ class CreateReserveView extends ConsumerWidget {
     final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     analytics.setAnalyticsCollectionEnabled(true);
 
+    void calculateSuggestedPrice() async {
+      if (reserveForm.startAddressLat == 0 ||
+          reserveForm.startAddressLon == 0 ||
+          reserveForm.endAddressLat == null ||
+          reserveForm.endAddressLon == null ||
+          reserveForm.serviceCarType.value ==
+              'Seleccione el tipo de vehículo' ||
+              reserveForm.serviceCarType ==
+              'Por hora' ||
+          reserveForm.startTime.value == '2023-09-26' ||
+          reserveForm.startDate.value == '00:00' ||
+          reserveForm.tripType.value == 'Seleccione el tipo de viaje' ||
+          reserveForm.tripType == 'Por hora' 
+          ) {
+            print(reserveForm.startAddressLat);
+            print(reserveForm.startAddressLon);
+            print(reserveForm.endAddressLat);
+            print(reserveForm.endAddressLon);
+            print(reserveForm.serviceCarType.value);
+            print(reserveForm.startDate.value);
+            print(reserveForm.startTime.value);
+            print(reserveForm.tripType);
+            print(reserveForm.tripType.value);
+            print('faltan datos');
+        return;
+      }
+      try {
+         /* print(reserveForm.startAddressLat);
+            print(reserveForm.startAddressLon);
+            print(reserveForm.endAddressLat);
+            print(reserveForm.endAddressLon);
+            print(reserveForm.serviceCarType);
+            print(reserveForm.startDate.value);
+            print(reserveForm.startTime.value);
+            print(reserveForm.tripType);
+            print(reserveForm.tripType.value);
+            print('En pripio no faltarían datos'); */
+        var distance = await getGoogleRoute(
+          reserveForm.startAddressLat,
+          reserveForm.startAddressLon,
+          reserveForm.endAddressLat,
+          reserveForm.endAddressLon,
+        );
+        var basePrice = calculateBasePrice(
+                distance.routes[0].distanceMeters,
+                distance.routes[0].getDurationInSeconds(),
+                reserveForm.serviceCarType.value,
+                isInDesiredTimeRange(reserveForm.startTime.value))
+            .toStringAsFixed(2);
+
+        print('S/ ${basePrice}');
+        ref
+            .read(reserveFormProvider(reserve).notifier)
+            .onSuggestedPriceChanged(basePrice);
+      } catch (e) {
+        print("Error al calcular la ruta: $e");
+      }
+    }
     Credentials? credentials = ref.watch(authProvider).credentials;
     final String? adminEmail = credentials?.user.email;
     void sendEventCreatedReserve(
@@ -351,6 +409,7 @@ class CreateReserveView extends ConsumerWidget {
                                             .read(reserveFormProvider(reserve)
                                                 .notifier)
                                             .onServiceCarTypeChanged(newValue!);
+                                            calculateSuggestedPrice();
                                       },
                                       icon:
                                           const Icon(Icons.keyboard_arrow_down),
@@ -405,6 +464,8 @@ class CreateReserveView extends ConsumerWidget {
                                                   .onStartDateChanged(pickedDate
                                                       .toString()
                                                       .substring(0, 10));
+                                                      calculateSuggestedPrice();
+                                                      
                                             } else {}
                                           },
                                           child: Padding(
@@ -465,6 +526,7 @@ class CreateReserveView extends ConsumerWidget {
                                                       .notifier)
                                                   .onStartTimeChanged(
                                                       '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}');
+                                                      calculateSuggestedPrice();
                                             } else {}
                                           },
                                           child: Padding(
@@ -555,6 +617,7 @@ class CreateReserveView extends ConsumerWidget {
                                                     reserveFormProvider(reserve)
                                                         .notifier)
                                                 .onTripTypeChanged(newValue!);
+                                                calculateSuggestedPrice();
                                           },
                                           icon: const Icon(
                                               Icons.keyboard_arrow_down),
@@ -630,6 +693,7 @@ class CreateReserveView extends ConsumerWidget {
                                                     result.address,
                                                     result.latitude,
                                                     result.longitude);
+                                                    calculateSuggestedPrice();
                                           }
                                         },
                                       ),
@@ -707,6 +771,7 @@ class CreateReserveView extends ConsumerWidget {
                                                       result.address,
                                                       result.latitude,
                                                       result.longitude);
+                                                      calculateSuggestedPrice();
                                             }
                                           },
                                         ),
@@ -717,40 +782,18 @@ class CreateReserveView extends ConsumerWidget {
                               ],
                             ),
                           ),
-                        if (reserveForm.endAddressLat != null && reserveForm.serviceCarType.value != 'Seleccione el tipo de vehículo')
+                        if (reserveForm.endAddressLat != null &&
+                            reserveForm.serviceCarType.value !=
+                                'Seleccione el tipo de vehículo')
                           SizedBox(height: size.height * .02),
-                        if (reserveForm.endAddressLat != null && reserveForm.serviceCarType.value != 'Seleccione el tipo de vehículo')
+                     
                           ElevatedButton(
-                            onPressed: () async {
-                              try {
-                                var distance = await getGoogleRoute(
-                                  reserveForm.startAddressLat,
-                                  reserveForm.startAddressLon,
-                                  reserveForm.endAddressLat,
-                                  reserveForm.endAddressLon,
-                                );
-                                var basePrice = calculateBasePrice(
-                                        distance.routes[0].distanceMeters,
-                                        distance.routes[0]
-                                            .getDurationInSeconds(),
-                                        reserveForm.serviceCarType.value,
-                                        isInDesiredTimeRange(
-                                            reserveForm.startTime.value))
-                                    .toStringAsFixed(2);
-
-                                print('S/ ${basePrice}');
-                                      ref
-                                      .read(
-                                          reserveFormProvider(reserve).notifier)
-                                          .onSuggestedPriceChanged(basePrice);
-                              } catch (e) {
-                                print("Error al calcular la ruta: $e");
-                              }
-                            },
+                            onPressed: calculateSuggestedPrice,
                             child: const Text("Calcular Ruta"),
                           ),
-                          if (reserveForm.suggestedPrice.value != '' )
-                          Text('El precio estimado es de S/ ${reserveForm.suggestedPrice.value}'),
+                        if (reserveForm.suggestedPrice.value != '')
+                          Text(
+                              'El precio estimado es de S/ ${reserveForm.suggestedPrice.value}'),
                         const SizedBox(height: 16),
                         const Text('Datos del conductor y vehículo',
                             style: TextStyle(color: cyanColor)),

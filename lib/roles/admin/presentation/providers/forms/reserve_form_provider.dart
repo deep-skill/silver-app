@@ -377,21 +377,15 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       return;
     }
     try {
-      /* print(reserveForm.startAddressLat);
-            print(reserveForm.startAddressLon);
-            print(reserveForm.endAddressLat);
-            print(reserveForm.endAddressLon);
-            print(reserveForm.serviceCarType);
-            print(reserveForm.startDate.value);
-            print(reserveForm.startTime.value);
-            print(reserveForm.tripType);
-            print(reserveForm.tripType.value);
-            print('En pripio no faltarían datos'); */
+      /* 
+            2024-10-15T15:01:23.045123456Z
+             */
       var distance = await getGoogleRoute(
         state.startAddressLat,
         state.startAddressLon,
         state.endAddressLat,
         state.endAddressLon,
+        '${state.startDate.value}T${state.startTime.value}:00-05:00Z',
       );
       var basePrice = calculateBasePrice(
               distance.routes[0].distanceMeters,

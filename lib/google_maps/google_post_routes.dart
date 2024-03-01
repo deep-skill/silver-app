@@ -7,7 +7,9 @@ Future<GoogleRoutes> getGoogleRoute(
     double startAddressLat,
     double startAddressLon,
     double? endAddressLat,
-    double? endAddressLon) async {
+    double? endAddressLon,
+    String departureTime) async {
+  print('${departureTime}');
   try {
     final response = await Dio().post(
       "https://routes.googleapis.com/directions/v2:computeRoutes",
@@ -30,6 +32,7 @@ Future<GoogleRoutes> getGoogleRoute(
         },
         "travelMode": "DRIVE",
         "routingPreference": "TRAFFIC_AWARE",
+        // "departureTime": departureTime,
         "departureTime": "2024-10-15T15:01:23.045123456Z",
         "computeAlternativeRoutes": false,
         "routeModifiers": {

@@ -82,7 +82,7 @@ double calculateBasePrice(
 ) {
   double distanceKilometers = calculateDistance(distanceMeters);
   double timeMinutes = calculateTime(durationSeconds);
-  if (type != 'CAR') {
+  if (type != 'Auto') {
     double truckBasePrice = 5 + 3.32 * distanceKilometers + 0.14 * timeMinutes;
     if (additional) return truckBasePrice * 1.1;
     return truckBasePrice;

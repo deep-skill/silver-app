@@ -352,6 +352,11 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           SilverPercent.dirty(state.silverPercent.value),
         ]));
   }
+   void onSuggestedPriceChanged(String value) {
+    state = state.copyWith(
+        suggestedPrice: SuggestedPrice.dirty(value),
+        );
+  }
 
   void onStartTimeChanged(String value) {
     state = state.copyWith(

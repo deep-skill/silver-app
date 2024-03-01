@@ -717,41 +717,40 @@ class CreateReserveView extends ConsumerWidget {
                               ],
                             ),
                           ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            try {
-                              var distance = await getGoogleRoute(
-                                reserveForm.startAddressLat,
-                                reserveForm.startAddressLon,
-                                reserveForm.endAddressLat,
-                                reserveForm.endAddressLon,
-                              );
+                        if (reserveForm.endAddressLat != null && reserveForm.serviceCarType.value != 'Seleccione el tipo de vehículo')
+                          SizedBox(height: size.height * .02),
+                        if (reserveForm.endAddressLat != null && reserveForm.serviceCarType.value != 'Seleccione el tipo de vehículo')
+                          ElevatedButton(
+                            onPressed: () async {
+                              try {
+                                var distance = await getGoogleRoute(
+                                  reserveForm.startAddressLat,
+                                  reserveForm.startAddressLon,
+                                  reserveForm.endAddressLat,
+                                  reserveForm.endAddressLon,
+                                );
+                                var basePrice = calculateBasePrice(
+                                        distance.routes[0].distanceMeters,
+                                        distance.routes[0]
+                                            .getDurationInSeconds(),
+                                        reserveForm.serviceCarType.value,
+                                        isInDesiredTimeRange(
+                                            reserveForm.startTime.value))
+                                    .toStringAsFixed(2);
 
-                              var distanceKm = calculateDistance(
-                                  distance.routes[0].distanceMeters);
-                              var minuts = calculateTime(
-                                  distance.routes[0].getDurationInSeconds());
-                              print(reserveForm.startTime.value.toString());
-                              var additional = isInDesiredTimeRange(
-                                  reserveForm.startTime.value);
-                              print(additional);
-                              var basePrice = calculateBasePrice(
-                                      distance.routes[0].distanceMeters,
-                                      distance.routes[0].getDurationInSeconds(),
-                                      reserveForm.tripType.value,
-                                      isInDesiredTimeRange(
-                                          reserveForm.startTime.value))
-                                  .toStringAsFixed(2);
-                              print('${distanceKm} km');
-                              print('${minuts} min');
-                              print('S/ ${basePrice}');
-                            } catch (e) {
-                              print("Error al calcular la ruta: $e");
-                            }
-                          },
-                          child: const Text("Calcular Ruta"),
-                        ),
-                        const SizedBox(height: 16),
+                                print('S/ ${basePrice}');
+                                      ref
+                                      .read(
+                                          reserveFormProvider(reserve).notifier)
+                                          .onSuggestedPriceChanged(basePrice);
+                              } catch (e) {
+                                print("Error al calcular la ruta: $e");
+                              }
+                            },
+                            child: const Text("Calcular Ruta"),
+                          ),
+                          if (reserveForm.suggestedPrice.value != '' )
+                          Text('El precio estimado es de S/ ${reserveForm.suggestedPrice.value}'),
                         const SizedBox(height: 16),
                         const Text('Datos del conductor y vehículo',
                             style: TextStyle(color: cyanColor)),

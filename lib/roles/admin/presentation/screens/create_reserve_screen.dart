@@ -294,81 +294,74 @@ class CreateReserveView extends ConsumerWidget {
                           height: 20,
                         ),
                         SizedBox(
-                              width: size.width * 0.36,
-                              child: Stack(children: [
-                                CustomFormField(
-                                  label: 'Tipo de vehículo',
-                                  isTopField: true,
-                                  isBottomField: true,
-                                  errorMessage:
-                                      reserveForm.serviceCarType.errorMessage,
-                                  readOnly: true,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      const Icon(
-                                          Icons.business_center_outlined),
-                                      const SizedBox(width: 15),
-                                      Expanded(
-                                        child: DropdownButton<String>(
-                                          isExpanded: true,
-                                          iconSize: 40,
-                                          value: reserveForm.serviceCarType.value,
-                                          style: reserveForm
-                                                      .serviceCarType.value ==
-                                                  'Seleccione el tipo de vehículo'
-                                              ? const TextStyle(
-                                                  color: Color(0xffB5B9C2),
-                                                  fontSize: 16,
-                                                  fontFamily:
-                                                      'Montserrat-Regular')
-                                              : const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16),
-                                          items: [
-                                            'Auto',
-                                            'Camioneta',
-                                            'Van',
-                                            'Seleccione el tipo de vehículo'
-                                          ]
-                                              .map((option) => DropdownMenuItem(
-                                                    value: option,
-                                                    child: Text(
-                                                      option,
-                                                      style: option ==
-                                                              'Seleccione el tipo de vehículo'
-                                                          ? const TextStyle(
-                                                              color:
-                                                                  Colors.grey,
-                                                              fontSize: 16)
-                                                          : const TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 16),
-                                                    ),
-                                                  ))
-                                              .toList(),
-                                          onChanged: (newValue) {
-                                            ref
-                                                .read(
-                                                    reserveFormProvider(reserve)
-                                                        .notifier)
-                                                .onServiceCarTypeChanged(
-                                                    newValue!);
-                                          },
-                                          icon: const Icon(
-                                              Icons.keyboard_arrow_down),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ]),
+                          width: size.width * 0.36,
+                          child: Stack(children: [
+                            CustomFormField(
+                              label: 'Tipo de vehículo',
+                              isTopField: true,
+                              isBottomField: true,
+                              errorMessage:
+                                  reserveForm.serviceCarType.errorMessage,
+                              readOnly: true,
                             ),
-                            const SizedBox(
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(Icons.business_center_outlined),
+                                  const SizedBox(width: 15),
+                                  Expanded(
+                                    child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      iconSize: 40,
+                                      value: reserveForm.serviceCarType.value,
+                                      style: reserveForm.serviceCarType.value ==
+                                              'Seleccione el tipo de vehículo'
+                                          ? const TextStyle(
+                                              color: Color(0xffB5B9C2),
+                                              fontSize: 16,
+                                              fontFamily: 'Montserrat-Regular')
+                                          : const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16),
+                                      items: [
+                                        'Auto',
+                                        'Camioneta',
+                                        'Van',
+                                        'Seleccione el tipo de vehículo'
+                                      ]
+                                          .map((option) => DropdownMenuItem(
+                                                value: option,
+                                                child: Text(
+                                                  option,
+                                                  style: option ==
+                                                          'Seleccione el tipo de vehículo'
+                                                      ? const TextStyle(
+                                                          color: Colors.grey,
+                                                          fontSize: 16)
+                                                      : const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 16),
+                                                ),
+                                              ))
+                                          .toList(),
+                                      onChanged: (newValue) {
+                                        ref
+                                            .read(reserveFormProvider(reserve)
+                                                .notifier)
+                                            .onServiceCarTypeChanged(newValue!);
+                                      },
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]),
+                        ),
+                        const SizedBox(
                           height: 20,
                         ),
                         const Text('Datos del viaje',
@@ -727,9 +720,6 @@ class CreateReserveView extends ConsumerWidget {
                         ElevatedButton(
                           onPressed: () async {
                             try {
-                              print(reserveForm.startAddressLat);
-                              print(reserveForm.startAddressLon);
-
                               var distance = await getGoogleRoute(
                                 reserveForm.startAddressLat,
                                 reserveForm.startAddressLon,
@@ -737,11 +727,24 @@ class CreateReserveView extends ConsumerWidget {
                                 reserveForm.endAddressLon,
                               );
 
-                              print(
-                                  distance.routes[0].distanceMeters.toString());
-                              print(distance.routes[0].distanceMeters / 1000);
-                              print(distance.routes[0].duration.toString());
-                              print(distance.routes[0].duration);
+                              var distanceKm = calculateDistance(
+                                  distance.routes[0].distanceMeters);
+                              var minuts = calculateTime(
+                                  distance.routes[0].getDurationInSeconds());
+                              print(reserveForm.startTime.value.toString());
+                              var additional = isInDesiredTimeRange(
+                                  reserveForm.startTime.value);
+                              print(additional);
+                              var basePrice = calculateBasePrice(
+                                      distance.routes[0].distanceMeters,
+                                      distance.routes[0].getDurationInSeconds(),
+                                      reserveForm.tripType.value,
+                                      isInDesiredTimeRange(
+                                          reserveForm.startTime.value))
+                                  .toStringAsFixed(2);
+                              print('${distanceKm} km');
+                              print('${minuts} min');
+                              print('S/ ${basePrice}');
                             } catch (e) {
                               print("Error al calcular la ruta: $e");
                             }

@@ -47,6 +47,11 @@ class Route {
         "duration": duration,
         "polyline": polyline.toJson(),
       };
+  int getDurationInSeconds() {
+    // Extraer los segundos de la cadena de duración
+    final secondsString = RegExp(r'\d+').firstMatch(duration)?.group(0);
+    return secondsString != null ? int.parse(secondsString) : 0;
+  }
 }
 
 class Polyline {

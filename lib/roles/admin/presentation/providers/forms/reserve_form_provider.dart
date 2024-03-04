@@ -45,7 +45,6 @@ final reserveFormProvider = StateNotifierProvider.autoDispose
           (reserveId == null) ? '/reserves/' : '/reserves/$reserveId';
       Credentials? credentials = ref.watch(authProvider).credentials;
       reserveLike.remove('id');
-      print(reserveLike);
       final response = await dio(credentials!.accessToken).request(url,
           data: jsonEncode(reserveLike), options: Options(method: method));
       final status = response.statusCode;

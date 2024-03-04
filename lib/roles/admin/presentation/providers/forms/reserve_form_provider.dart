@@ -360,21 +360,13 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         state.endAddressLat == null ||
         state.endAddressLon == null ||
         state.serviceCarType.value == 'Seleccione el tipo de vehículo' ||
-        state.serviceCarType == 'Por hora' ||
         state.startTime.value == '2023-09-26' ||
         state.startDate.value == '00:00' ||
         state.tripType.value == 'Seleccione el tipo de viaje' ||
-        state.tripType == 'Por hora') {
-      print(state.startAddressLat);
-      print(state.startAddressLon);
-      print(state.endAddressLat);
-      print(state.endAddressLon);
-      print(state.serviceCarType.value);
-      print(state.startDate.value);
-      print(state.startTime.value);
-      print(state.tripType);
-      print(state.tripType.value);
-      print('faltan datos');
+        state.tripType.value == 'Por hora') {
+      state = state.copyWith(
+        suggestedPrice: const SuggestedPrice.pure(),
+      );
       return;
     }
     try {
@@ -385,8 +377,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       dateTime = dateTime.add(const Duration(hours: 6));
       String formattedDateTime =
           DateFormat("yyyy-MM-ddTHH:mm:ss.SSSZ").format(dateTime);
-
-      print(formattedDateTime);
       var distance = await getGoogleRoute(
         state.startAddressLat,
         state.startAddressLon,
@@ -400,8 +390,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
               state.serviceCarType.value,
               isInDesiredTimeRange(state.startTime.value))
           .toStringAsFixed(2);
-
-      print('S/ ${basePrice}');
       state = state.copyWith(
         suggestedPrice: SuggestedPrice.dirty(basePrice),
       );

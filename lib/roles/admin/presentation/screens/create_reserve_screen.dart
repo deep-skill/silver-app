@@ -966,6 +966,15 @@ class CreateReserveView extends ConsumerWidget {
                             ),
                           ],
                         ),
+                        if (reserveForm.suggestedPrice.value != '')
+                          Row(children: [
+                            const Text(
+                                'Tarifa sugerida '),
+                            Text('S/ ${reserveForm.suggestedPrice.value}',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                )),
+                          ]),
                         const SizedBox(height: 30),
                         Center(
                           child: TextButton(

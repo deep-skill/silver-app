@@ -75,7 +75,7 @@ bool isInDesiredTimeRange(String stringTime) {
   return (hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 20);
 }
 
-double calculateBasePrice(
+int calculateBasePrice(
   int distanceMeters,
   int durationSeconds,
   String type,
@@ -85,11 +85,11 @@ double calculateBasePrice(
   double timeMinutes = calculateTime(durationSeconds);
   if (type != 'Auto') {
     double truckBasePrice = 5 + 3.32 * distanceKilometers + 0.14 * timeMinutes;
-    if (additional) return truckBasePrice * 1.1;
-    return truckBasePrice;
+    if (additional) return (truckBasePrice * 1.1).round();
+    return truckBasePrice.round();
   }
 
   double basePrice = 4 + 1.95 * distanceKilometers + 0.20 * timeMinutes;
-  if (additional) return basePrice * 1.1;
-  return basePrice;
+  if (additional) return (basePrice * 1.1).round();
+  return basePrice.round();
 }

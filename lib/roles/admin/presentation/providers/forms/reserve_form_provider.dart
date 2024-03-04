@@ -3,6 +3,7 @@ import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:formz/formz.dart';
+import 'package:intl/intl.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/google_maps/google_post_routes.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
@@ -377,15 +378,21 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       return;
     }
     try {
-      /* 
-            2024-10-15T15:01:23.045123456Z
-             */
+      String startDate = state.startDate.value;
+      String startTime = state.startTime.value;
+      String dateTimeString = "$startDate $startTime";
+      DateTime dateTime = DateTime.parse(dateTimeString);
+      dateTime = dateTime.add(const Duration(hours: 6));
+      String formattedDateTime =
+          DateFormat("yyyy-MM-ddTHH:mm:ss.SSSZ").format(dateTime);
+
+      print(formattedDateTime);
       var distance = await getGoogleRoute(
         state.startAddressLat,
         state.startAddressLon,
         state.endAddressLat,
         state.endAddressLon,
-        '${state.startDate.value}T${state.startTime.value}:00-05:00Z',
+        "${formattedDateTime}Z",
       );
       var basePrice = calculateBasePrice(
               distance.routes[0].distanceMeters,

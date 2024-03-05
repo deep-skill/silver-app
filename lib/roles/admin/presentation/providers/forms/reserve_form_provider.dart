@@ -140,11 +140,10 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           silverPercent: reserve.silverPercent == ''
               ? const SilverPercent.pure()
               : SilverPercent.dirty(reserve.silverPercent.toString()),
-              suggestedPrice: reserve.suggestedPrice == null
+          suggestedPrice: reserve.suggestedPrice == null
               ? const SuggestedPrice.pure()
               : SuggestedPrice.dirty(reserve.suggestedPrice.toString()),
-        )
-        );
+        ));
 
   Future<bool> onFormSubmit(int id, [int? tripId]) async {
     _touchedEverything();
@@ -362,14 +361,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
   }
 
   void onSuggestedPriceChanged() async {
-    print(state.serviceCarType.value);
-      print(state.tripType.value);
-      print(state.startTime.value);
-      print(state.startDate.value);
-      print(state.startAddressLat);
-      print(state.startAddressLon);
-      print(state.endAddressLat);
-      print(state.endAddressLon);
     if (state.startAddressLat == 0 ||
         state.startAddressLon == 0 ||
         state.endAddressLat == null ||

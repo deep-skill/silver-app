@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final googleRoutes = googleRoutesFromJson(jsonString);
-
 import 'dart:convert';
 
 GoogleRoutes googleRoutesFromJson(String str) =>
@@ -48,7 +44,6 @@ class Route {
         "polyline": polyline.toJson(),
       };
   int getDurationInSeconds() {
-    // Extraer los segundos de la cadena de duración
     final secondsString = RegExp(r'\d+').firstMatch(duration)?.group(0);
     return secondsString != null ? int.parse(secondsString) : 0;
   }

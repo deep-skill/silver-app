@@ -48,7 +48,6 @@ Future<GoogleRoutes> getGoogleRoute(
         },
       ),
     );
-
     final googleRoutes = GoogleRoutes.fromJson(response.data);
     return googleRoutes;
   } catch (e) {
@@ -69,9 +68,7 @@ double calculateTime(int durationSeconds) {
 bool isInDesiredTimeRange(String stringTime) {
   DateFormat format = DateFormat.Hm();
   DateTime dateTime = format.parse(stringTime);
-
   int hour = dateTime.hour;
-
   return (hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 20);
 }
 
@@ -88,7 +85,6 @@ int calculateBasePrice(
     if (additional) return (truckBasePrice * 1.1).round();
     return truckBasePrice.round();
   }
-
   double basePrice = 4 + 1.95 * distanceKilometers + 0.20 * timeMinutes;
   if (additional) return (basePrice * 1.1).round();
   return basePrice.round();

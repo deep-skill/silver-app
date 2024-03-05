@@ -19,7 +19,11 @@ class CreateReserve {
   String startTime;
   String startDate;
   String startAddress;
+  double startAddressLat;
+  double startAddressLon;
   String? endAddress;
+  double? endAddressLat;
+  double? endAddressLon;
   String price;
   String? suggestedPrice;
   int driverPercent;
@@ -46,7 +50,11 @@ class CreateReserve {
     required this.startTime,
     required this.startDate,
     required this.startAddress,
+    required this.startAddressLat,
+    required this.startAddressLon,
     this.endAddress,
+    this.endAddressLat,
+    this.endAddressLon,
     required this.price,
     this.suggestedPrice,
     required this.driverPercent,
@@ -74,7 +82,11 @@ class CreateReserve {
         serviceCarType: json['serviceCarType'],
         serviceType: json['serviceType'],
         startAddress: json['startAddress'],
+        startAddressLat: json['startAddressLat'],
+        startAddressLon: json['startAddressLon'],
         endAddress: json['endAddress'],
+        endAddressLat: json['endAddressLat'],
+        endAddressLon: json['endAddressLon'],
         price: json['price'].toString(),
         suggestedPrice: json['suggestedPrice'].toString(),
         driverPercent: 0,

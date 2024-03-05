@@ -1198,8 +1198,10 @@ class CreateReserveView extends ConsumerWidget {
                           ),
                         ),
                       ]),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       SizedBox(
-                        width: size.width * 0.36,
                         child: Stack(children: [
                           CustomFormField(
                             label: 'Tipo de vehículo',
@@ -1214,7 +1216,7 @@ class CreateReserveView extends ConsumerWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Icon(Icons.business_center_outlined),
+                                const Icon(Icons.car_rental_outlined),
                                 const SizedBox(width: 15),
                                 Expanded(
                                   child: DropdownButton<String>(

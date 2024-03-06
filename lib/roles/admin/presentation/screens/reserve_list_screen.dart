@@ -37,7 +37,7 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
   @override
   void initState() {
     super.initState();
-      ref.read(reservesListProvider.notifier).reloadData();
+    ref.read(reservesListProvider.notifier).reloadData();
   }
 
   void sendEventAdminSearchReservesList(

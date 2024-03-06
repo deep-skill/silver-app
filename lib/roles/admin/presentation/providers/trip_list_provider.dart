@@ -60,6 +60,7 @@ class TripsNotifier extends StateNotifier<List<TripList>> {
     isLoading = true;
     final List<TripList> trips = await fetchMoreTrips(page: currentPage);
     currentPage++;
+    state = [];
     state = [...trips];
     await Future.delayed(const Duration(milliseconds: 400));
     isLoading = false;

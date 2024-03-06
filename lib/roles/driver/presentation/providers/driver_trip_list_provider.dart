@@ -56,6 +56,7 @@ class DriverTripsNotifier extends StateNotifier<List<DriverTripList>> {
     isLoading = true;
     final List<DriverTripList> trips = await fetchMoreTrips(page: currentPage);
     currentPage++;
+    state = [];
     state = [...trips];
     await Future.delayed(const Duration(milliseconds: 400));
     isLoading = false;

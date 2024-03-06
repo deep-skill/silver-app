@@ -292,6 +292,81 @@ class CreateReserveView extends ConsumerWidget {
                         const SizedBox(
                           height: 20,
                         ),
+                        SizedBox(
+                          width: size.width * 0.75,
+                          child: Stack(children: [
+                            CustomFormField(
+                              label: 'Tipo de vehículo',
+                              isTopField: true,
+                              isBottomField: true,
+                              errorMessage:
+                                  reserveForm.serviceCarType.errorMessage,
+                              readOnly: true,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Icon(Icons.car_rental_outlined),
+                                  const SizedBox(width: 15),
+                                  Expanded(
+                                    child: DropdownButton<String>(
+                                      isExpanded: true,
+                                      iconSize: 40,
+                                      value: reserveForm.serviceCarType.value,
+                                      style: reserveForm.serviceCarType.value ==
+                                              'Seleccione el tipo de vehículo'
+                                          ? const TextStyle(
+                                              color: Color(0xffB5B9C2),
+                                              fontSize: 16,
+                                              fontFamily: 'Montserrat-Regular')
+                                          : const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16),
+                                      items: [
+                                        'Auto',
+                                        'Camioneta',
+                                        'Van',
+                                        'Seleccione el tipo de vehículo'
+                                      ]
+                                          .map((option) => DropdownMenuItem(
+                                                value: option,
+                                                child: Text(
+                                                  option,
+                                                  style: option ==
+                                                          'Seleccione el tipo de vehículo'
+                                                      ? const TextStyle(
+                                                          color: Colors.grey,
+                                                          fontSize: 16)
+                                                      : const TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 16),
+                                                ),
+                                              ))
+                                          .toList(),
+                                      onChanged: (newValue) {
+                                        ref
+                                            .read(reserveFormProvider(reserve)
+                                                .notifier)
+                                            .onServiceCarTypeChanged(newValue!);
+                                        ref
+                                            .read(reserveFormProvider(reserve)
+                                                .notifier)
+                                            .onSuggestedPriceChanged();
+                                      },
+                                      icon:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         const Text('Datos del viaje',
                             style: TextStyle(color: cyanColor)),
                         const Divider(color: cyanColor),
@@ -333,6 +408,11 @@ class CreateReserveView extends ConsumerWidget {
                                                   .onStartDateChanged(pickedDate
                                                       .toString()
                                                       .substring(0, 10));
+                                              ref
+                                                  .read(reserveFormProvider(
+                                                          reserve)
+                                                      .notifier)
+                                                  .onSuggestedPriceChanged();
                                             } else {}
                                           },
                                           child: Padding(
@@ -393,6 +473,11 @@ class CreateReserveView extends ConsumerWidget {
                                                       .notifier)
                                                   .onStartTimeChanged(
                                                       '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}');
+                                              ref
+                                                  .read(reserveFormProvider(
+                                                          reserve)
+                                                      .notifier)
+                                                  .onSuggestedPriceChanged();
                                             } else {}
                                           },
                                           child: Padding(
@@ -483,6 +568,11 @@ class CreateReserveView extends ConsumerWidget {
                                                     reserveFormProvider(reserve)
                                                         .notifier)
                                                 .onTripTypeChanged(newValue!);
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onSuggestedPriceChanged();
                                           },
                                           icon: const Icon(
                                               Icons.keyboard_arrow_down),
@@ -558,6 +648,11 @@ class CreateReserveView extends ConsumerWidget {
                                                     result.address,
                                                     result.latitude,
                                                     result.longitude);
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onSuggestedPriceChanged();
                                           }
                                         },
                                       ),
@@ -635,6 +730,11 @@ class CreateReserveView extends ConsumerWidget {
                                                       result.address,
                                                       result.latitude,
                                                       result.longitude);
+                                              ref
+                                                  .read(reserveFormProvider(
+                                                          reserve)
+                                                      .notifier)
+                                                  .onSuggestedPriceChanged();
                                             }
                                           },
                                         ),
@@ -866,53 +966,64 @@ class CreateReserveView extends ConsumerWidget {
                             ),
                           ],
                         ),
+                        if (reserveForm.suggestedPrice.value != '')
+                          Row(children: [
+                            const Text('Tarifa sugerida '),
+                            Text('S/ ${reserveForm.suggestedPrice.value}',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                )),
+                          ]),
                         const SizedBox(height: 30),
                         Center(
                           child: TextButton(
                             onPressed: () async {
                               ref
-                                .read(reserveFormProvider(reserve).notifier)
-                                .onFormSubmit(reserve.id!, reserve.tripId)
-                                .then((value) {
-                              if (!value) return;
-                              if (reserve.id! != 0) {
-                                ref
-                                    .read(reserveDetailProvider.notifier)
-                                    .updateReserveDetail(
-                                        reserve.id!.toString());
-                                if (reserve.tripId != null) {
+                                  .read(reserveFormProvider(reserve).notifier)
+                                  .onFormSubmit(reserve.id!, reserve.tripId)
+                                  .then((value) {
+                                if (!value) return;
+                                if (reserve.id! != 0) {
                                   ref
-                                      .read(tripAdminStatusProvider.notifier)
-                                      .updateTripStatus(
-                                          reserve.tripId!.toString());
+                                      .read(reserveDetailProvider.notifier)
+                                      .updateReserveDetail(
+                                          reserve.id!.toString());
+                                  if (reserve.tripId != null) {
+                                    ref
+                                        .read(tripAdminStatusProvider.notifier)
+                                        .updateTripStatus(
+                                            reserve.tripId!.toString());
+                                  }
+                                } else {
+                                  final String time = getDifferenceBetweenTimes(
+                                      screenLoadTime, DateTime.now());
+                                  sendEventCreatedReserve(
+                                      adminEmail: adminEmail,
+                                      amountMinutesCreating: time,
+                                      driverId:
+                                          reserveForm.driverId?.value ?? 0,
+                                      serviceType:
+                                          reserveForm.serviceType.value,
+                                      tripType: reserveForm.tripType.value,
+                                      userId: reserveForm.userId.value,
+                                      reservePrice: reserveForm.price.value,
+                                      silverPercent:
+                                          reserveForm.silverPercent.value == ''
+                                              ? '20'
+                                              : reserveForm
+                                                  .silverPercent.value);
                                 }
-                              } else {
-                                final String time = getDifferenceBetweenTimes(
-                                    screenLoadTime, DateTime.now());
-                                sendEventCreatedReserve(
-                                    adminEmail: adminEmail,
-                                    amountMinutesCreating: time,
-                                    driverId: reserveForm.driverId?.value ?? 0,
-                                    serviceType: reserveForm.serviceType.value,
-                                    tripType: reserveForm.tripType.value,
-                                    userId: reserveForm.userId.value,
-                                    reservePrice: reserveForm.price.value,
-                                    silverPercent:
-                                        reserveForm.silverPercent.value == ''
-                                            ? '20'
-                                            : reserveForm.silverPercent.value);
-                              }
-                              showSnackbar(context, reserve.id!);
+                                showSnackbar(context, reserve.id!);
 
-                              ref
-                                  .read(reservesHomeProvider.notifier)
-                                  .reloadData();
-                                  ref
-                                  .read(reservesListProvider.notifier)
-                                  .reloadData();
+                                ref
+                                    .read(reservesHomeProvider.notifier)
+                                    .reloadData();
+                                ref
+                                    .read(reservesListProvider.notifier)
+                                    .reloadData();
 
-                              context.pop();
-                            });
+                                context.pop();
+                              });
                             },
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all<
@@ -925,7 +1036,8 @@ class CreateReserveView extends ConsumerWidget {
                               backgroundColor: MaterialStateProperty.all(
                                   const Color(0xFF03132A)),
                             ),
-                            child: Text(reserve.id == 0 ? "Crear" : "Guardar cambios",
+                            child: Text(
+                                reserve.id == 0 ? "Crear" : "Guardar cambios",
                                 style: const TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Raleway-Semi-Bold',
@@ -1089,6 +1201,81 @@ class CreateReserveView extends ConsumerWidget {
                       const SizedBox(
                         height: 10,
                       ),
+                      SizedBox(
+                        child: Stack(children: [
+                          CustomFormField(
+                            label: 'Tipo de vehículo',
+                            isTopField: true,
+                            isBottomField: true,
+                            errorMessage:
+                                reserveForm.serviceCarType.errorMessage,
+                            readOnly: true,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Icon(Icons.car_rental_outlined),
+                                const SizedBox(width: 15),
+                                Expanded(
+                                  child: DropdownButton<String>(
+                                    isExpanded: true,
+                                    iconSize: 40,
+                                    value: reserveForm.serviceCarType.value,
+                                    style: reserveForm.serviceCarType.value ==
+                                            'Seleccione el tipo de vehículo'
+                                        ? const TextStyle(
+                                            color: Color(0xffB5B9C2),
+                                            fontSize: 16,
+                                            fontFamily: 'Montserrat-Regular')
+                                        : const TextStyle(
+                                            color: Colors.black, fontSize: 16),
+                                    items: [
+                                      'Auto',
+                                      'Camioneta',
+                                      'Van',
+                                      'Seleccione el tipo de vehículo'
+                                    ]
+                                        .map((option) => DropdownMenuItem(
+                                              value: option,
+                                              child: Text(
+                                                option,
+                                                style: option ==
+                                                        'Seleccione el tipo de vehículo'
+                                                    ? const TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 16)
+                                                    : const TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16),
+                                              ),
+                                            ))
+                                        .toList(),
+                                    onChanged: (newValue) {
+                                      ref
+                                          .read(reserveFormProvider(reserve)
+                                              .notifier)
+                                          .onServiceCarTypeChanged(newValue!);
+                                      ref
+                                          .read(reserveFormProvider(reserve)
+                                              .notifier)
+                                          .onSuggestedPriceChanged();
+                                    },
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ]),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       const Text('Datos del viaje',
                           style: TextStyle(color: cyanColor)),
                       const Divider(color: cyanColor),
@@ -1129,6 +1316,11 @@ class CreateReserveView extends ConsumerWidget {
                                                 .onStartDateChanged(pickedDate
                                                     .toString()
                                                     .substring(0, 10));
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onSuggestedPriceChanged();
                                           } else {}
                                         },
                                         child: Padding(
@@ -1185,7 +1377,12 @@ class CreateReserveView extends ConsumerWidget {
                                                     reserveFormProvider(reserve)
                                                         .notifier)
                                                 .onStartTimeChanged(
-                                                    '${pickedTime.toString().substring(10, 12)}:${pickedTime.toString().substring(13, 15)}');
+                                                    '${pickedTime.hour.toString().padLeft(2, '0')}:${pickedTime.minute.toString().padLeft(2, '0')}');
+                                            ref
+                                                .read(
+                                                    reserveFormProvider(reserve)
+                                                        .notifier)
+                                                .onSuggestedPriceChanged();
                                           } else {}
                                         },
                                         child: Padding(
@@ -1270,6 +1467,10 @@ class CreateReserveView extends ConsumerWidget {
                                           .read(reserveFormProvider(reserve)
                                               .notifier)
                                           .onTripTypeChanged(newValue!);
+                                      ref
+                                          .read(reserveFormProvider(reserve)
+                                              .notifier)
+                                          .onSuggestedPriceChanged();
                                     },
                                     icon: const Icon(Icons.keyboard_arrow_down),
                                   ),
@@ -1334,6 +1535,10 @@ class CreateReserveView extends ConsumerWidget {
                                                 result.address,
                                                 result.latitude,
                                                 result.longitude);
+                                        ref
+                                            .read(reserveFormProvider(reserve)
+                                                .notifier)
+                                            .onSuggestedPriceChanged();
                                       }
                                     },
                                   ),
@@ -1403,6 +1608,10 @@ class CreateReserveView extends ConsumerWidget {
                                                   result.address,
                                                   result.latitude,
                                                   result.longitude);
+                                          ref
+                                              .read(reserveFormProvider(reserve)
+                                                  .notifier)
+                                              .onSuggestedPriceChanged();
                                         }
                                       },
                                     ),
@@ -1594,6 +1803,14 @@ class CreateReserveView extends ConsumerWidget {
                           ),
                         ],
                       ),
+                      if (reserveForm.suggestedPrice.value != '')
+                        Row(children: [
+                          const Text('Tarifa sugerida '),
+                          Text('S/ ${reserveForm.suggestedPrice.value}',
+                              style: const TextStyle(
+                                fontSize: 18,
+                              )),
+                        ]),
                       const SizedBox(height: 30),
                       Center(
                         child: TextButton(
@@ -1652,7 +1869,8 @@ class CreateReserveView extends ConsumerWidget {
                             backgroundColor: MaterialStateProperty.all(
                                 const Color(0xFF23A5CD)),
                           ),
-                          child: Text(reserve.id == 0 ? "Crear" : "Guardar cambios",
+                          child: Text(
+                              reserve.id == 0 ? "Crear" : "Guardar cambios",
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontFamily: 'Montserrat-Bold',

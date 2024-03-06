@@ -68,6 +68,7 @@ class ReservesNotifier extends StateNotifier<List<ReserveHome>> {
     final List<ReserveHome> reserves =
         await fetchMoreReserves(page: currentPage);
     currentPage++;
+    state = [];
     state = [...reserves];
     await Future.delayed(const Duration(milliseconds: 400));
     isLoading = false;

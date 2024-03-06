@@ -31,11 +31,11 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("¿Está seguro qe deseas iniciar viaje?"),
+      title: const Text("¿Listo para iniciar el viaje?"),
       content: const Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("Marcar esta opcion solo si ya vas a iniciar el viaje"),
+          Text("Marcar esta opción para iniciar el viaje con el pasajero"),
         ],
       ),
       actions: <Widget>[

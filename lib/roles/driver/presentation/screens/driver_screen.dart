@@ -232,10 +232,10 @@ class HomeViewState extends ConsumerState<HomeView> {
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: const Text(
-                                              '¿Estás seguro de que vas en camino?',
+                                              '¿Listo para ir al punto de recojo?',
                                               textAlign: TextAlign.center),
                                           content: const Text(
-                                            'Marca esta opción solo si ya vas a aproximarte hasta el punto de origen.',
+                                            'Selecciona solo si vas en camino al punto de recojo',
                                             textAlign: TextAlign.center,
                                           ),
                                           actions: <Widget>[

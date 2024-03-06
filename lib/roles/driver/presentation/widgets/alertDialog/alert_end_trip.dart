@@ -95,7 +95,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
       content: const Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("Luego no podras volver a editar datos"),
+          Text("Confirmar para enviar datos. No se podrán editar luego"),
         ],
       ),
       actions: <Widget>[

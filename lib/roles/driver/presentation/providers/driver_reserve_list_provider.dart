@@ -60,6 +60,7 @@ class DriverReservesNotifier extends StateNotifier<List<DriverReserveList>> {
     final List<DriverReserveList> reserves =
         await fetchMoreReserves(page: currentPage);
     currentPage++;
+    state = [];
     state = [...reserves];
     await Future.delayed(const Duration(milliseconds: 400));
     isLoading = false;

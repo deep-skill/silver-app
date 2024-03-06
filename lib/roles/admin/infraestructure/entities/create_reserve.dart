@@ -88,7 +88,7 @@ class CreateReserve {
         endAddressLat: json['endAddressLat'],
         endAddressLon: json['endAddressLon'],
         price: json['price'].toString(),
-        suggestedPrice: json['suggestedPrice'].toString(),
+        suggestedPrice: json['suggestedPrice']?.toString(),
         driverPercent: 0,
         silverPercent: json['silverPercent'].toString(),
         startTime:

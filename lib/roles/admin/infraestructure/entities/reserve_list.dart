@@ -9,6 +9,7 @@ class ReserveList {
   final String driverLastName;
   final String carType;
   final int? tripId;
+  final String? driverImageUrl;
 
   ReserveList({
     required this.id,
@@ -20,6 +21,7 @@ class ReserveList {
     required this.driverName,
     required this.driverLastName,
     required this.carType,
+    this.driverImageUrl,
     this.tripId,
   });
   factory ReserveList.fromJson(Map<String, dynamic> json) => ReserveList(
@@ -36,5 +38,7 @@ class ReserveList {
             json['Driver'] == null ? '' : json['Driver']['lastName'],
         carType: json['Car'] == null ? '' : json['Car']['type'],
         tripId: json['Trip'] == null ? null : json['Trip']['id'],
+        driverImageUrl:
+            json['Driver'] == null ? null : json['Driver']['imageUrl'],
       );
 }

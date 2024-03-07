@@ -14,6 +14,7 @@ class TripList {
   final int? enterpriseId;
   final String? enterpriseName;
   final DateTime? startTime;
+  final String? driverImageUrl;
   TripList({
     required this.id,
     this.totalPrice,
@@ -30,33 +31,38 @@ class TripList {
     this.driverLastName,
     this.enterpriseId,
     this.enterpriseName,
+    this.driverImageUrl,
   });
   factory TripList.fromJson(Map<String, dynamic> json) => TripList(
-      id: json['id'],
-      onWayDriver: DateTime.parse(json['onWayDriver']).toLocal(),
-      totalPrice: json['totalPrice'].toDouble(),
-      status: json['status'],
-      reserveId: json['Reserve']['id'],
-      startAddress: json['Reserve']['startAddress'],
-      userId: json['Reserve']['User']['id'],
-      userName: json['Reserve']['User']['name'],
-      userLastName: json['Reserve']['User']['lastName'],
-      driverId: json['Reserve']['Driver'] == null
-          ? null
-          : json['Reserve']['Driver']['id'],
-      driverName: json['Reserve']['Driver'] == null
-          ? 'no-driver-name'
-          : json['Reserve']['Driver']['name'],
-      driverLastName: json['Reserve']['Driver'] == null
-          ? 'no-driver-lastName'
-          : json['Reserve']['Driver']['lastName'],
-      enterpriseId: json['Reserve']['Enterprise'] == null
-          ? null
-          : json['Reserve']['Enterprise']['id'],
-      enterpriseName: json['Reserve']['Enterprise'] == null
-          ? null
-          : json['Reserve']['Enterprise']['name'],
-      startTime: json['Reserve']['startTime'] == null
-          ? null
-          : DateTime.parse(json['Reserve']['startTime']).toLocal());
+        id: json['id'],
+        onWayDriver: DateTime.parse(json['onWayDriver']).toLocal(),
+        totalPrice: json['totalPrice'].toDouble(),
+        status: json['status'],
+        reserveId: json['Reserve']['id'],
+        startAddress: json['Reserve']['startAddress'],
+        userId: json['Reserve']['User']['id'],
+        userName: json['Reserve']['User']['name'],
+        userLastName: json['Reserve']['User']['lastName'],
+        driverId: json['Reserve']['Driver'] == null
+            ? null
+            : json['Reserve']['Driver']['id'],
+        driverName: json['Reserve']['Driver'] == null
+            ? 'no-driver-name'
+            : json['Reserve']['Driver']['name'],
+        driverLastName: json['Reserve']['Driver'] == null
+            ? 'no-driver-lastName'
+            : json['Reserve']['Driver']['lastName'],
+        enterpriseId: json['Reserve']['Enterprise'] == null
+            ? null
+            : json['Reserve']['Enterprise']['id'],
+        enterpriseName: json['Reserve']['Enterprise'] == null
+            ? null
+            : json['Reserve']['Enterprise']['name'],
+        startTime: json['Reserve']['startTime'] == null
+            ? null
+            : DateTime.parse(json['Reserve']['startTime']).toLocal(),
+        driverImageUrl: json['Reserve']['Driver'] == null
+            ? null
+            : json['Reserve']['Driver']['imageUrl'],
+      );
 }

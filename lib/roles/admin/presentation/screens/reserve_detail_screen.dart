@@ -231,13 +231,18 @@ class ReserveInfo extends StatelessWidget {
                                     Stack(
                                       children: [
                                         ClipOval(
-                                            child: Image.asset(
-                                          'assets/images/driver_img_example.png',
-                                          scale: 0.7,
-                                        )),
+                                            child: reserve.driverImageUrl !=
+                                                    null
+                                                ? Image.network(
+                                                    reserve.driverImageUrl!,
+                                                    width: 75,
+                                                    height: 75,
+                                                  )
+                                                : Image.asset(
+                                                    'assets/images/driver_img_example.png')),
                                         Positioned(
-                                          bottom: 0,
-                                          left: 0,
+                                          bottom: -10,
+                                          left: -2,
                                           child: Image.asset(
                                             'assets/images/vehiculo_home_admin.png',
                                             scale: 0.9,

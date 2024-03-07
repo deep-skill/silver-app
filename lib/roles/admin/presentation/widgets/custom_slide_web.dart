@@ -23,6 +23,7 @@ class SlideWeb extends StatelessWidget {
       'nov',
       'dec'
     ];
+    print(reserve.driverImageUrl);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(
@@ -68,8 +69,14 @@ class SlideWeb extends StatelessWidget {
                           const SizedBox(height: 8),
                           Stack(children: [
                             ClipOval(
-                                child: Image.asset(
-                                    'assets/images/driver_img_example.png')),
+                                child: reserve.driverImageUrl != null
+                                    ? Image.network(
+                                        reserve.driverImageUrl!,
+                                        width: 50,
+                                        height: 50,
+                                      )
+                                    : Image.asset(
+                                        'assets/images/driver_img_example.png')),
                           ]),
                         ],
                       )

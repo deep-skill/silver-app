@@ -73,6 +73,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
       return result;
     }
 
+    print(trip.serviceType);
     return kIsWeb
         ? Scaffold(
             appBar: AppBar(
@@ -137,9 +138,10 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                   ),
                                             BoxReserveDetail(
                                                 label: "Tipo de servicio",
-                                                text: capitalizeFirst(trip
-                                                    .serviceType
-                                                    .toString()),
+                                                text: trip.serviceType ==
+                                                        'ENTERPRISE'
+                                                    ? 'Empresarial'
+                                                    : 'Personal',
                                                 icon: Icons
                                                     .business_center_outlined,
                                                 row: true),
@@ -473,7 +475,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const SizedBox(height: 12),
                         BoxReserveDetail(
                           label: "Tipo de servicio",
-                          text: capitalizeFirst(trip.serviceType.toString()),
+                          text: trip.serviceType == 'ENTERPRISE'
+                              ? 'Empresarial'
+                              : 'Personal',
                           icon: Icons.business_center_outlined,
                         ),
                         const SizedBox(

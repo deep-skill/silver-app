@@ -104,7 +104,7 @@ class TripSlideWeb extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     color: Colors.white,
-                                    width: 5.0, // Ancho del borde blanco
+                                    width: 2.5, // Ancho del borde blanco
                                   ),
                                 ),
                                 child: trip.driverImageUrl != null

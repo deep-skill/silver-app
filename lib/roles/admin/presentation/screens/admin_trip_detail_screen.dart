@@ -73,7 +73,6 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
       return result;
     }
 
-    print(trip.serviceType);
     return kIsWeb
         ? Scaffold(
             appBar: AppBar(
@@ -228,10 +227,14 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                                           50,
                                                                     )
                                                                   : Image.asset(
+                                                                      width: 75,
+                                                                      height:
+                                                                          75,
                                                                       'assets/images/driver_img_example.png')),
                                                           Positioned(
-                                                            bottom: 0,
-                                                            left: 0,
+                                                            bottom: -4,
+                                                            left: 8,
+                                                            right: 4,
                                                             child: Image.asset(
                                                               'assets/images/vehiculo_home_admin.png',
                                                               scale: 0.9,
@@ -598,11 +601,12 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                               'assets/images/driver_img_example.png')),
                                 ),
                                 Positioned(
-                                  bottom: 0,
-                                  left: 0,
+                                  bottom: -4,
+                                  left: 8,
+                                  right: 4,
                                   child: Image.asset(
                                     'assets/images/vehiculo_home_admin.png',
-                                    scale: 0.7,
+                                    scale: 0.9,
                                   ),
                                 ),
                               ],

@@ -589,24 +589,24 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             ),
                             Stack(
                               children: [
-                                Center(
-                                  child: ClipOval(
-                                      child: trip.driverImageUrl != null
-                                          ? Image.network(
-                                              trip.driverImageUrl!,
-                                              width: 50,
-                                              height: 50,
-                                            )
-                                          : Image.asset(
-                                              'assets/images/driver_img_example.png')),
-                                ),
+                                ClipOval(
+                                    child: trip.driverImageUrl != null
+                                        ? Image.network(
+                                            trip.driverImageUrl!,
+                                            width: 50,
+                                            height: 50,
+                                          )
+                                        : Image.asset(
+                                            'assets/images/driver_img_example.png',
+                                            width: 50,
+                                            height: 50,
+                                          )),
                                 Positioned(
                                   bottom: -4,
                                   left: 8,
                                   right: 4,
                                   child: Image.asset(
                                     'assets/images/vehiculo_home_admin.png',
-                                    scale: 0.9,
                                   ),
                                 ),
                               ],

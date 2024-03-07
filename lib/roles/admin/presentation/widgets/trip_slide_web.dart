@@ -118,11 +118,11 @@ class TripSlideWeb extends StatelessWidget {
                               ),
                             ),
                             Positioned(
-                                bottom: -4,
+                                bottom: -12,
                                 left: -12,
                                 child: Image.asset(
                                   'assets/images/vehiculo_home_admin.png',
-                                  scale: 1,
+                                  scale: 0.9,
                                 ))
                           ]),
                         ],

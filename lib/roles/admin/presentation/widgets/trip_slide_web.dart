@@ -107,10 +107,14 @@ class TripSlideWeb extends StatelessWidget {
                                     width: 5.0, // Ancho del borde blanco
                                   ),
                                 ),
-                                child: Image.asset(
-                                  'assets/images/driver_img_example.png',
-                                  scale: 0.8,
-                                ),
+                                child: trip.driverImageUrl != null
+                                    ? Image.network(
+                                        trip.driverImageUrl!,
+                                        width: 50,
+                                        height: 50,
+                                      )
+                                    : Image.asset(
+                                        'assets/images/driver_img_example.png'),
                               ),
                             ),
                             Positioned(

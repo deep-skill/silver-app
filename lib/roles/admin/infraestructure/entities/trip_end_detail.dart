@@ -27,6 +27,7 @@ class AdminTripEnd {
   List<Parking> parkings;
   List<Toll> tolls;
   DateTime reserveStartTime;
+  final String? driverImageUrl;
 
   AdminTripEnd(
       {required this.id,
@@ -56,7 +57,8 @@ class AdminTripEnd {
       required this.observations,
       required this.parkings,
       required this.tolls,
-      required this.reserveStartTime});
+      required this.reserveStartTime,
+      this.driverImageUrl});
 
   factory AdminTripEnd.fromJson(Map<String, dynamic> json) => AdminTripEnd(
         id: json["id"],
@@ -104,6 +106,9 @@ class AdminTripEnd {
             List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
         reserveStartTime:
             DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
+        driverImageUrl: json["Reserve"]["Driver"] != null
+            ? json["Reserve"]["Driver"]["imageUrl"]
+            : null,
       );
 }
 

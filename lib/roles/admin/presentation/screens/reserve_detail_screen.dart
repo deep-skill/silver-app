@@ -235,15 +235,14 @@ class ReserveInfo extends StatelessWidget {
                                                     null
                                                 ? Image.network(
                                                     reserve.driverImageUrl!,
-                                                    width: 75,
-                                                    height: 75,
+                                                    width: 100,
+                                                    height: 100,
                                                   )
                                                 : Image.asset(
                                                     'assets/images/driver_img_example.png')),
                                         Positioned(
                                           bottom: -4,
-                                          left: 8,
-                                          right: 4,
+                                          left: -12,
                                           child: Image.asset(
                                             'assets/images/vehiculo_home_admin.png',
                                           ),

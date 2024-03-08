@@ -222,19 +222,20 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                                   ? Image
                                                                       .network(
                                                                       trip.driverImageUrl!,
-                                                                      width: 50,
+                                                                      width:
+                                                                          100,
                                                                       height:
-                                                                          50,
+                                                                          100,
                                                                     )
                                                                   : Image.asset(
-                                                                      width: 75,
+                                                                      width:
+                                                                          100,
                                                                       height:
-                                                                          75,
+                                                                          100,
                                                                       'assets/images/driver_img_example.png')),
                                                           Positioned(
                                                             bottom: -4,
-                                                            left: 8,
-                                                            right: 4,
+                                                            left: -12,
                                                             child: Image.asset(
                                                               'assets/images/vehiculo_home_admin.png',
                                                               scale: 0.9,

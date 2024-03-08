@@ -100,18 +100,11 @@ class TripSlideWeb extends StatelessWidget {
                           Stack(children: [
                             ClipOval(
                               child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 2.5, // Ancho del borde blanco
-                                  ),
-                                ),
                                 child: trip.driverImageUrl != null
                                     ? Image.network(
                                         trip.driverImageUrl!,
-                                        width: 50,
-                                        height: 50,
+                                        width: 80,
+                                        height: 80,
                                       )
                                     : Image.asset(
                                         'assets/images/driver_img_example.png'),

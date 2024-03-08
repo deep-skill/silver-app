@@ -631,9 +631,8 @@ class ReserveInfo extends StatelessWidget {
                                               'assets/images/driver_img_example.png')),
                                 ),
                                 Positioned(
-                                  bottom: -4,
-                                  left: 8,
-                                  right: 4,
+                                  bottom: 0,
+                                  left: 0,
                                   child: Image.asset(
                                     'assets/images/vehiculo_home_admin.png',
                                     scale: 0.7,

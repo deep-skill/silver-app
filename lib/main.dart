@@ -9,9 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 void main() async {
-  kIsWeb
-  ? await dotenv.load(fileName: "env")
-  : await dotenv.load();
+  kIsWeb ? await dotenv.load(fileName: "env") : await dotenv.load();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

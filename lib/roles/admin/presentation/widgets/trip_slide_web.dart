@@ -98,27 +98,28 @@ class TripSlideWeb extends StatelessWidget {
                             height: 10,
                           ),
                           Stack(children: [
-                            ClipOval(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 5.0, // Ancho del borde blanco
-                                  ),
-                                ),
-                                child: Image.asset(
-                                  'assets/images/driver_img_example.png',
-                                  scale: 0.8,
+                            SizedBox(
+                              width: 80,
+                              height: 80,
+                              child: ClipOval(
+                                child: Container(
+                                  child: trip.driverImageUrl != null
+                                      ? Image.network(
+                                          trip.driverImageUrl!,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.asset(
+                                          fit: BoxFit.cover,
+                                          'assets/images/driver_img_example.png'),
                                 ),
                               ),
                             ),
                             Positioned(
-                                bottom: -4,
+                                bottom: -12,
                                 left: -12,
                                 child: Image.asset(
                                   'assets/images/vehiculo_home_admin.png',
-                                  scale: 1,
+                                  scale: 0.9,
                                 ))
                           ]),
                         ],

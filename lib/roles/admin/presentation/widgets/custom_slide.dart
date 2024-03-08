@@ -68,9 +68,19 @@ class CustomSlide extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Stack(children: [
-                            ClipOval(
-                                child: Image.asset(
-                                    'assets/images/driver_img_example.png')),
+                            SizedBox(
+                              width: 80,
+                              height: 80,
+                              child: ClipOval(
+                                  child: reserve.driverImageUrl != null
+                                      ? Image.network(
+                                          reserve.driverImageUrl!,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : Image.asset(
+                                          fit: BoxFit.cover,
+                                          'assets/images/driver_img_example.png')),
+                            ),
                           ]),
                         ],
                       )

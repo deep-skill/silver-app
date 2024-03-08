@@ -137,9 +137,10 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                   ),
                                             BoxReserveDetail(
                                                 label: "Tipo de servicio",
-                                                text: capitalizeFirst(trip
-                                                    .serviceType
-                                                    .toString()),
+                                                text: trip.serviceType ==
+                                                        'ENTERPRISE'
+                                                    ? 'Empresarial'
+                                                    : 'Personal',
                                                 icon: Icons
                                                     .business_center_outlined,
                                                 row: true),
@@ -215,15 +216,26 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                               .15),
                                                       Stack(
                                                         children: [
-                                                          ClipOval(
-                                                              child:
-                                                                  Image.asset(
-                                                            'assets/images/driver_img_example.png',
-                                                            scale: 0.7,
-                                                          )),
+                                                          SizedBox(
+                                                            width: 100,
+                                                            height: 100,
+                                                            child: ClipOval(
+                                                                child: trip.driverImageUrl !=
+                                                                        null
+                                                                    ? Image
+                                                                        .network(
+                                                                        trip.driverImageUrl!,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      )
+                                                                    : Image.asset(
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        'assets/images/driver_img_example.png')),
+                                                          ),
                                                           Positioned(
-                                                            bottom: 0,
-                                                            left: 0,
+                                                            bottom: -4,
+                                                            left: -12,
                                                             child: Image.asset(
                                                               'assets/images/vehiculo_home_admin.png',
                                                               scale: 0.9,
@@ -473,7 +485,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const SizedBox(height: 12),
                         BoxReserveDetail(
                           label: "Tipo de servicio",
-                          text: capitalizeFirst(trip.serviceType.toString()),
+                          text: trip.serviceType == 'ENTERPRISE'
+                              ? 'Empresarial'
+                              : 'Personal',
                           icon: Icons.business_center_outlined,
                         ),
                         const SizedBox(
@@ -576,19 +590,26 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             ),
                             Stack(
                               children: [
-                                Center(
+                                SizedBox(
+                                  width: 100,
+                                  height: 100,
                                   child: ClipOval(
-                                      child: Image.asset(
-                                    'assets/images/driver_img_example.png',
-                                    scale: 0.5,
-                                  )),
+                                      child: trip.driverImageUrl != null
+                                          ? Image.network(
+                                              trip.driverImageUrl!,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.asset(
+                                              'assets/images/driver_img_example.png',
+                                              fit: BoxFit.cover,
+                                            )),
                                 ),
                                 Positioned(
-                                  bottom: 0,
-                                  left: 0,
+                                  bottom: -4,
+                                  left: 8,
+                                  right: 4,
                                   child: Image.asset(
                                     'assets/images/vehiculo_home_admin.png',
-                                    scale: 0.7,
                                   ),
                                 ),
                               ],

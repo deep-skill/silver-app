@@ -105,18 +105,20 @@ class TripSlide extends StatelessWidget {
                                     shape: BoxShape.circle,
                                     border: Border.all(
                                       color: Colors.white,
-                                      width: 5.0, // Ancho del borde blanco
+                                      width: 0, // Ancho del borde blanco
                                     ),
                                   ),
                                   child: ClipOval(
                                       child: trip.driverImageUrl != null
                                           ? Image.network(
                                               trip.driverImageUrl!,
-                                              width: 50,
-                                              height: 50,
+                                              width: 80,
+                                              height: 80,
                                             )
                                           : Image.asset(
-                                              'assets/images/driver_img_example.png')),
+                                              'assets/images/driver_img_example.png',
+                                              width: 80,
+                                              height: 80,)),
                                 ),
                               ),
                               Positioned(

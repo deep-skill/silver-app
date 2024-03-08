@@ -72,8 +72,8 @@ class CustomSlide extends StatelessWidget {
                                 child: reserve.driverImageUrl != null
                                     ? Image.network(
                                         reserve.driverImageUrl!,
-                                        width: 50,
-                                        height: 50,
+                                        width: 80,
+                                        height: 80,
                                       )
                                     : Image.asset(
                                         'assets/images/driver_img_example.png')),

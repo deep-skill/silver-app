@@ -593,8 +593,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                     child: trip.driverImageUrl != null
                                         ? Image.network(
                                             trip.driverImageUrl!,
-                                            width: 50,
-                                            height: 50,
+                                            width: 100,
+                                            height: 100,
                                           )
                                         : Image.asset(
                                             'assets/images/driver_img_example.png',

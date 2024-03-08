@@ -624,8 +624,8 @@ class ReserveInfo extends StatelessWidget {
                                       child: reserve.driverImageUrl != null
                                           ? Image.network(
                                               reserve.driverImageUrl!,
-                                              width: 50,
-                                              height: 50,
+                                              width: 120,
+                                              height: 120,
                                             )
                                           : Image.asset(
                                               'assets/images/driver_img_example.png')),

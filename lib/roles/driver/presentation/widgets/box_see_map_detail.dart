@@ -83,7 +83,11 @@ class SeeMap extends StatelessWidget {
                       channelId: 'dash_bubble_notification',
                       channelName: 'Dash Bubble Notification',
                     ),
-                    onTap: () => print('holi-holi'),
+                    onTap: () => {print('holi-holi'),
+                    launchWaze(
+                    "https://com.auth0.silverapp"),
+                    print('holi-holi3'),
+                    },
                     
                     
                     /* _logMessage(

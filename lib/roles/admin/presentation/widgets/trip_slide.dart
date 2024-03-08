@@ -108,17 +108,20 @@ class TripSlide extends StatelessWidget {
                                       width: 0, // Ancho del borde blanco
                                     ),
                                   ),
-                                  child: ClipOval(
-                                      child: trip.driverImageUrl != null
-                                          ? Image.network(
-                                              trip.driverImageUrl!,
-                                              width: 80,
-                                              height: 80,
-                                            )
-                                          : Image.asset(
-                                              'assets/images/driver_img_example.png',
-                                              width: 80,
-                                              height: 80,)),
+                                  child: SizedBox(
+                                    width: 80,
+                                    height: 80,
+                                    child: ClipOval(
+                                        child: trip.driverImageUrl != null
+                                            ? Image.network(
+                                                trip.driverImageUrl!,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                'assets/images/driver_img_example.png',
+                                                fit: BoxFit.cover,
+                                              )),
+                                  ),
                                 ),
                               ),
                               Positioned(

@@ -230,16 +230,20 @@ class ReserveInfo extends StatelessWidget {
                                     SizedBox(width: size.width * .15),
                                     Stack(
                                       children: [
-                                        ClipOval(
-                                            child: reserve.driverImageUrl !=
-                                                    null
-                                                ? Image.network(
-                                                    reserve.driverImageUrl!,
-                                                    width: 100,
-                                                    height: 100,
-                                                  )
-                                                : Image.asset(
-                                                    'assets/images/driver_img_example.png')),
+                                        SizedBox(
+                                          width: 100,
+                                          height: 100,
+                                          child: ClipOval(
+                                              child: reserve.driverImageUrl !=
+                                                      null
+                                                  ? Image.network(
+                                                      reserve.driverImageUrl!,
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : Image.asset(
+                                                      fit: BoxFit.cover,
+                                                      'assets/images/driver_img_example.png')),
+                                        ),
                                         Positioned(
                                           bottom: -4,
                                           left: -12,
@@ -619,15 +623,19 @@ class ReserveInfo extends StatelessWidget {
                             child: Stack(
                               children: [
                                 Center(
-                                  child: ClipOval(
-                                      child: reserve.driverImageUrl != null
-                                          ? Image.network(
-                                              reserve.driverImageUrl!,
-                                              width: 120,
-                                              height: 120,
-                                            )
-                                          : Image.asset(
-                                              'assets/images/driver_img_example.png')),
+                                  child: SizedBox(
+                                    width: 120,
+                                    height: 120,
+                                    child: ClipOval(
+                                        child: reserve.driverImageUrl != null
+                                            ? Image.network(
+                                                reserve.driverImageUrl!,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                fit: BoxFit.cover,
+                                                'assets/images/driver_img_example.png')),
+                                  ),
                                 ),
                                 Positioned(
                                   bottom: 0,

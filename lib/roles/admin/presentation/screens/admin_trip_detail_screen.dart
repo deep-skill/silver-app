@@ -216,23 +216,23 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                               .15),
                                                       Stack(
                                                         children: [
-                                                          ClipOval(
-                                                              child: trip.driverImageUrl !=
-                                                                      null
-                                                                  ? Image
-                                                                      .network(
-                                                                      trip.driverImageUrl!,
-                                                                      width:
-                                                                          100,
-                                                                      height:
-                                                                          100,
-                                                                    )
-                                                                  : Image.asset(
-                                                                      width:
-                                                                          100,
-                                                                      height:
-                                                                          100,
-                                                                      'assets/images/driver_img_example.png')),
+                                                          SizedBox(
+                                                            width: 100,
+                                                            height: 100,
+                                                            child: ClipOval(
+                                                                child: trip.driverImageUrl !=
+                                                                        null
+                                                                    ? Image
+                                                                        .network(
+                                                                        trip.driverImageUrl!,
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                      )
+                                                                    : Image.asset(
+                                                                        fit: BoxFit
+                                                                            .cover,
+                                                                        'assets/images/driver_img_example.png')),
+                                                          ),
                                                           Positioned(
                                                             bottom: -4,
                                                             left: -12,
@@ -590,18 +590,20 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             ),
                             Stack(
                               children: [
-                                ClipOval(
-                                    child: trip.driverImageUrl != null
-                                        ? Image.network(
-                                            trip.driverImageUrl!,
-                                            width: 100,
-                                            height: 100,
-                                          )
-                                        : Image.asset(
-                                            'assets/images/driver_img_example.png',
-                                            width: 50,
-                                            height: 50,
-                                          )),
+                                SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: ClipOval(
+                                      child: trip.driverImageUrl != null
+                                          ? Image.network(
+                                              trip.driverImageUrl!,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.asset(
+                                              'assets/images/driver_img_example.png',
+                                              fit: BoxFit.cover,
+                                            )),
+                                ),
                                 Positioned(
                                   bottom: -4,
                                   left: 8,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'dart:developer';
@@ -31,7 +30,7 @@ class SeeMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    launchWaze(String url) async {
+    launchCustomUrl(String url) async {
       if (await canLaunchUrl(Uri.parse(url))) {
         await launchUrl(Uri.parse(url));
       } else {
@@ -83,13 +82,7 @@ class SeeMap extends StatelessWidget {
                       channelId: 'dash_bubble_notification',
                       channelName: 'Dash Bubble Notification',
                     ),
-                    onTap: () => {print('holi-holi'),
-                    launchWaze(
-                    "https://com.auth0.silverapp"),
-                    print('holi-holi3'),
-                    },
-                    
-                    
+                    onTap: () => launchCustomUrl("backApp://backApp.com"),
                     /* _logMessage(
                       context: context,
                       message: 'Bubble Tapped',
@@ -110,7 +103,7 @@ class SeeMap extends StatelessWidget {
                           'Bubble Moved to: ${_getRoundedCoordinatesAsString(x, y)}',
                     ), */
                   );
-                  launchWaze(
+                  launchCustomUrl(
                     "https://waze.com/ul?ll=${startAddressLat.toString()},${startAddressLon.toString()}&navigate=yes");
               }
               if (arrivedDriver != null &&
@@ -168,7 +161,7 @@ class SeeMap extends StatelessWidget {
                           'Bubble Moved to: ${_getRoundedCoordinatesAsString(x, y)}',
                     ), */
                   );
-                  launchWaze(
+                  launchCustomUrl(
                     "https://waze.com/ul?ll=${endAddressLat.toString()},${endAddressLon.toString()}&navigate=yes");
               }
             }),

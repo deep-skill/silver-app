@@ -173,7 +173,7 @@ class SeeMap extends StatelessWidget {
       );
     }
 
-    Future<void> showBubble(BuildContext context) async {
+    Future<void> showBubble(BuildContext context, String lat, String lon) async {
       await runMethod(
         context,
         () async {
@@ -203,15 +203,17 @@ class SeeMap extends StatelessWidget {
                 notificationOptions: NotificationOptions(
                   id: 1,
                   title: 'Silver Express',
-                  body: 'Retornar a viaje en curso',
+                  body: 'Silver Express se está ejecutando en segundo plano',
                   channelId: 'dash_bubble_notification',
                   channelName: 'Dash Bubble Notification',
                   icon: 'app_logo',
                 ),
                 onTap: () => {
-                      launchCustomUrl("backapp://backapp.com"),
-                      stopBubble(context)
-                    });
+                  launchCustomUrl("backapp://backapp.com"),
+                  stopBubble(context)
+                  });
+                  launchCustomUrl(
+                    "https://waze.com/ul?ll=$lat,$lon&navigate=yes");
           }
         },
       );
@@ -235,16 +237,12 @@ class SeeMap extends StatelessWidget {
             ]),
             onPressed: () {
               if (arrivedDriver == null) {
-                showBubble(context);
-                launchCustomUrl(
-                    "https://waze.com/ul?ll=${startAddressLat.toString()},${startAddressLon.toString()}&navigate=yes");
+                showBubble(context, startAddressLat.toString(), startAddressLon.toString());
               }
               if (arrivedDriver != null &&
                   startTime != null &&
                   endAddress != null) {
-                showBubble(context);
-                launchCustomUrl(
-                    "https://waze.com/ul?ll=${endAddressLat.toString()},${endAddressLon.toString()}&navigate=yes");
+                showBubble(context, endAddressLat.toString(), endAddressLon.toString());
               }
             }),
       ]),

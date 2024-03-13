@@ -343,16 +343,13 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    TripAddressInfoWidget(
-                                      startAddress: trip.startAddress,
-                                      endAddress: trip.endAddress,
-                                      stops: trip.stops,
-                                    ),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     AdminAdditionalInformation(
                                       tripId: trip.id,
+                                      startAddress: trip.startAddress,
+                                      endAddress: trip.endAddress,
                                       observations: trip.observations,
                                       tolls: trip.tolls,
                                       parkings: trip.parkings,
@@ -538,13 +535,10 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        TripAddressInfoWidget(
-                          startAddress: trip.startAddress,
-                          endAddress: trip.endAddress,
-                          stops: trip.stops,
-                        ),
                         AdminAdditionalInformation(
                           tripId: trip.id,
+                          startAddress: trip.startAddress,
+                          endAddress: trip.endAddress,
                           observations: trip.observations,
                           tolls: trip.tolls,
                           parkings: trip.parkings,

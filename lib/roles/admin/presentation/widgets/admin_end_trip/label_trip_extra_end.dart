@@ -13,6 +13,10 @@ class LabelExtraTripEnd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey[300],
+      ),
       alignment: AlignmentDirectional.bottomStart,
       child: Row(
         children: [

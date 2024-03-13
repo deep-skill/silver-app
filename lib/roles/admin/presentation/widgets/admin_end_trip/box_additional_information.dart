@@ -11,10 +11,14 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertD
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra_end.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/title_additional_information.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/trip_address_info.dart';
 
 class AdminAdditionalInformation extends StatefulWidget {
   final String credentials;
   final int tripId;
+  final String startAddress;
+  final String endAddress;
   final VoidCallback reload;
   final List<Stop> stops;
   final List<Observations> observations;
@@ -25,6 +29,8 @@ class AdminAdditionalInformation extends StatefulWidget {
     Key? key,
     required this.credentials,
     required this.tripId,
+    required this.startAddress,
+    required this.endAddress,
     required this.reload,
     required this.stops,
     required this.observations,
@@ -40,6 +46,7 @@ class AdminAdditionalInformation extends StatefulWidget {
 class _AdminAdditionalInformationState
     extends State<AdminAdditionalInformation> {
   String selectedOption = 'Selecciona ítem';
+
   late List<Stop> stops;
   late List<Observations> observations;
   late List<Parking> parkings;
@@ -218,6 +225,33 @@ class _AdminAdditionalInformationState
       width: MediaQuery.of(context).size.width * 0.8,
       child: Column(
         children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              children: [
+                BoxReserveDetail(
+                  icon: Icons.location_on_outlined,
+                  label: "Punto de origen",
+                  text: widget.startAddress,
+                ),
+                Column(
+                  children: stops.asMap().entries.map((entry) {
+                    final stop = entry.value;
+
+                    return LabelExtraTripEnd(text: stop.location);
+                  }).toList(),
+                ),
+                BoxReserveDetail(
+                  icon: Icons.trip_origin,
+                  label: "Punto de destino",
+                  text: widget.endAddress,
+                ),
+                const SizedBox(
+                  height: 10.0,
+                ),
+              ],
+            ),
+          ),
           (boolValue)
               ? Container(
                   decoration: BoxDecoration(

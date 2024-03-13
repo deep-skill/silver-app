@@ -11,7 +11,6 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/trip_l
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/title_trip_detail.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/trip_address_info.dart';
 
 class AdminTripDetailScreen extends ConsumerStatefulWidget {
   const AdminTripDetailScreen({super.key, required this.tripId});
@@ -343,16 +342,13 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    TripAddressInfoWidget(
-                                      startAddress: trip.startAddress,
-                                      endAddress: trip.endAddress,
-                                      stops: trip.stops,
-                                    ),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     AdminAdditionalInformation(
                                       tripId: trip.id,
+                                      startAddress: trip.startAddress,
+                                      endAddress: trip.endAddress,
                                       observations: trip.observations,
                                       tolls: trip.tolls,
                                       parkings: trip.parkings,
@@ -538,13 +534,10 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           ],
                         ),
                         const SizedBox(height: 12),
-                        TripAddressInfoWidget(
-                          startAddress: trip.startAddress,
-                          endAddress: trip.endAddress,
-                          stops: trip.stops,
-                        ),
                         AdminAdditionalInformation(
                           tripId: trip.id,
+                          startAddress: trip.startAddress,
+                          endAddress: trip.endAddress,
                           observations: trip.observations,
                           tolls: trip.tolls,
                           parkings: trip.parkings,

@@ -9,7 +9,8 @@ class LabelExtraTrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-    alignment: AlignmentDirectional.bottomStart,
+      margin: const EdgeInsets.all(2.0),
+      alignment: AlignmentDirectional.bottomStart,
       padding: const EdgeInsets.all(0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -18,7 +19,12 @@ class LabelExtraTrip extends StatelessWidget {
       child: Row(
         children: [
           const SizedBox(width: 10),
-          Expanded (child: Text(text, overflow: TextOverflow.ellipsis, maxLines: 3,)),
+          Expanded(
+              child: Text(
+            text,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 3,
+          )),
           IconButton(
             onPressed: onPressed,
             icon: const Icon(Icons.cancel_outlined),

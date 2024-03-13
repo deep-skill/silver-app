@@ -13,7 +13,6 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra_end.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/title_additional_information.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/trip_address_info.dart';
 
 class AdminAdditionalInformation extends StatefulWidget {
   final String credentials;

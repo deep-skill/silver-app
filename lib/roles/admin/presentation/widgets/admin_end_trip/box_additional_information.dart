@@ -234,6 +234,19 @@ class _AdminAdditionalInformationState
                   label: "Punto de origen",
                   text: widget.startAddress,
                 ),
+                const SizedBox(
+                  height: 5.0,
+                ),
+                stops.isNotEmpty
+                    ? const Text(
+                        'Paradas:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                          color: Color(0xFF23A5CD),
+                        ),
+                      )
+                    : SizedBox(),
                 Column(
                   children: stops.asMap().entries.map((entry) {
                     final stop = entry.value;

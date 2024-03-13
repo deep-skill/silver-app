@@ -13,11 +13,11 @@ class LabelStopTripEnd extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * .2,
-      margin: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.all(4.0),
+      margin: const EdgeInsets.all(4.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.grey[300],
+        color: Colors.grey[100],
       ),
       alignment: AlignmentDirectional.bottomStart,
       child: Row(

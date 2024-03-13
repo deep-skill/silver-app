@@ -14,6 +14,7 @@ class LabelExtraTripEnd extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.all(4.0),
       alignment: AlignmentDirectional.bottomStart,
       child: Row(
         children: [

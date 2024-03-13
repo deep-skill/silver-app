@@ -246,7 +246,7 @@ class _AdminAdditionalInformationState
                           color: Color(0xFF23A5CD),
                         ),
                       )
-                    : SizedBox(),
+                    : const SizedBox(),
                 Column(
                   children: stops.asMap().entries.map((entry) {
                     final stop = entry.value;

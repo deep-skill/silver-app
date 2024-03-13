@@ -8,6 +8,7 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertD
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_observation.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_parkin_lot.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/alertDilog/alert_tolls.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_stop_trip.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_trip_extra_end.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/title_additional_information.dart';
@@ -238,7 +239,7 @@ class _AdminAdditionalInformationState
                   children: stops.asMap().entries.map((entry) {
                     final stop = entry.value;
 
-                    return LabelExtraTripEnd(text: stop.location);
+                    return LabelStopTripEnd(text: stop.location);
                   }).toList(),
                 ),
                 BoxReserveDetail(

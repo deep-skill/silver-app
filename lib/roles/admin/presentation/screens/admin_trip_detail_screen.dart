@@ -11,7 +11,6 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/trip_l
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/title_trip_detail.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/trip_address_info.dart';
 
 class AdminTripDetailScreen extends ConsumerStatefulWidget {
   const AdminTripDetailScreen({super.key, required this.tripId});

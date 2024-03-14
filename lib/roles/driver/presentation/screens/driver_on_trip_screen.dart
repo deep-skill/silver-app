@@ -66,7 +66,7 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
         appBar: AppBar(
           title: const Text('Viaje en curso'),
           centerTitle: true,
-          backgroundColor: Color(0xffF2F3F7),
+          backgroundColor: const Color(0xffF2F3F7),
         ),
         body: Container(
             width: MediaQuery.of(context).size.width,

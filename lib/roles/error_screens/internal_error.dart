@@ -74,8 +74,8 @@ class InternalErrorInfo extends StatelessWidget {
                     style: ButtonStyle(
                       fixedSize: MaterialStateProperty.all<Size>(
                           Size(size.width * .25, size.height * .02)),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Color(0xff23A5CD)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          const Color(0xff23A5CD)),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(7.0),

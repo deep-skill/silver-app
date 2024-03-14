@@ -53,6 +53,7 @@ class MapGoogleState extends State<MapGoogle> {
             'key': '${dotenv.env['GOOGLE_MAPS_KEY']}',
           },
         );
+        print(response.data['results']);
         if (response.statusCode == 200 && response.data['results'].length > 0) {
           setState(() {
             searchResults = response.data['results'];
@@ -173,9 +174,15 @@ class MapGoogleState extends State<MapGoogle> {
                                 searchResults[index]['formatted_address'];
                             LatLng location = LatLng(lat, lng);
                             _updateMapLocation(location, addressName);
-
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                    'Ubicación seleccionada: $addressName'),
+                              ),
+                            );
                             setState(() {
                               showSearchResults = false;
+                              _searchController.text = "";
                             });
                           },
                         );
@@ -185,7 +192,7 @@ class MapGoogleState extends State<MapGoogle> {
                 const Spacer(),
                 if (selectedLocation != null)
                   Container(
-                    margin: const EdgeInsets.all(12.0),
+                    margin: const EdgeInsets.all(40.0),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         padding: MaterialStateProperty.all<EdgeInsets>(

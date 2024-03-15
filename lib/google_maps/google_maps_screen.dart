@@ -2,8 +2,8 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:silverapp/env/env.dart';
 import 'package:silverapp/google_maps/location_data.dart';
 
 class MapGoogle extends StatefulWidget {
@@ -50,7 +50,7 @@ class MapGoogleState extends State<MapGoogle> {
           queryParameters: {
             'address': address,
             'components': 'locality:Lima|country:PE',
-            'key': '${dotenv.env['GOOGLE_MAPS_KEY']}',
+            'key': Env.googleMapsKey,
           },
         );
         if (response.statusCode == 200 && response.data['results'].length > 0) {

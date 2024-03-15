@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/env/env.dart';
 import 'package:silverapp/roles/user/models/trip_summary_response.dart';
 
 final dio = Dio(BaseOptions(
-  baseUrl: '${dotenv.env['HTTP_REQUEST']}',
+  baseUrl: Env.httpRequest,
 ));
 
 final tripsSummaryProvider = FutureProvider<TripsSummaryResponse>((ref) async {

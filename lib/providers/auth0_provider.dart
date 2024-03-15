@@ -1,8 +1,8 @@
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:auth0_flutter/auth0_flutter_web.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/env/env.dart';
 
 //Auth0 Provider
 final authProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
@@ -15,14 +15,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
   late Auth0Web auth0Web;
 
   AuthNotifier() : super(AuthState()) {
-    auth0 = Auth0(dotenv.env['AUTH0_DOMAIN']!, dotenv.env['AUTH0_CLIENT_ID']!);
+    auth0 = Auth0(Env.auth0Domain, Env.auth0ClientId);
     auth0Web =
-        Auth0Web(dotenv.env['AUTH0_DOMAIN']!, dotenv.env['AUTH0_CLIENT_ID']!);
+        Auth0Web(Env.auth0Domain, Env.auth0ClientId);
 
     //Initializes Auth0 on Web and get stored credentials
     if (kIsWeb) {
       auth0Web.onLoad(
-        audience: '${dotenv.env['APP_AUDIENCE']}',
+        audience: Env.appAudience,
         scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
       ).then((final credentials) {
         if (credentials != null) {
@@ -84,16 +84,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
     try {
       if (kIsWeb) {
         return auth0Web.loginWithRedirect(
-          redirectUrl: '${dotenv.env['APP_REDIRECT_URL']}',
-          audience: '${dotenv.env['APP_AUDIENCE']}',
+          redirectUrl: Env.appRedirectUrl,
+          audience: Env.appAudience,
           scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
         );
       }
 
       var credentials = await auth0
-          .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
+          .webAuthentication(scheme: Env.auth0CustomScheme)
           .login(
-        audience: '${dotenv.env['APP_AUDIENCE']}',
+        audience: Env.appAudience,
         scopes: {'openid', 'profile', 'email', 'admin', 'driver', 'user'},
       );
       state = state.copyWith(
@@ -118,10 +118,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
     );
     try {
       if (kIsWeb) {
-        await auth0Web.logout(returnToUrl: '${dotenv.env['APP_REDIRECT_URL']}');
+        await auth0Web.logout(returnToUrl: Env.appRedirectUrl);
       } else {
         await auth0
-            .webAuthentication(scheme: dotenv.env['AUTH0_CUSTOM_SCHEME'])
+            .webAuthentication(scheme: Env.auth0CustomScheme)
             .logout();
       }
       state = state.copyWith(

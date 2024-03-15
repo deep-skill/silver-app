@@ -3,7 +3,7 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:silverapp/env/env.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -45,38 +45,38 @@ class DefaultFirebaseOptions {
   }
 
   static FirebaseOptions web = FirebaseOptions(
-    apiKey: '${dotenv.env['FIREBASE_OPTIONS_WEB']}',
+    apiKey: Env.firebaseOptionsWeb,
     appId: '1:186537693375:web:becb5f544d1677e14d760a',
     messagingSenderId: '186537693375',
-    projectId: '${dotenv.env['PROJECT_ID']}',
-    authDomain: '${dotenv.env['PROJECT_ID']}.firebaseapp.com',
-    storageBucket: '${dotenv.env['PROJECT_ID']}.appspot.com',
+    projectId: Env.projectId,
+    authDomain: '${Env.projectId}.firebaseapp.com',
+    storageBucket: '${Env.projectId}.appspot.com',
     measurementId: 'G-Y2688NFN2T',
   );
 
   static FirebaseOptions android = FirebaseOptions(
-    apiKey: '${dotenv.env['FIREBASE_OPTIONS_ANDROID']}',
+    apiKey: Env.firebaseOptionsAndroid,
     appId: '1:186537693375:android:fcd60c05ee6ea3484d760a',
     messagingSenderId: '186537693375',
-    projectId: '${dotenv.env['PROJECT_ID']}',
-    storageBucket: '${dotenv.env['PROJECT_ID']}.appspot.com',
+    projectId: Env.projectId,
+    storageBucket: '${Env.projectId}.appspot.com',
   );
 
   static FirebaseOptions ios = FirebaseOptions(
-    apiKey: '${dotenv.env['FIREBASE_OPTIONS_IOS']}',
+    apiKey: Env.firebaseOptionsIos,
     appId: '1:186537693375:ios:3988be5db077ff774d760a',
     messagingSenderId: '186537693375',
-    projectId: '${dotenv.env['PROJECT_ID']}',
-    storageBucket: '${dotenv.env['PROJECT_ID']}.appspot.com',
+    projectId: Env.projectId,
+    storageBucket: '${Env.projectId}.appspot.com',
     iosBundleId: 'com.example.silverapp',
   );
 
   static FirebaseOptions macos = FirebaseOptions(
-    apiKey: '${dotenv.env['FIREBASE_OPTIONS_IOS']}',
+    apiKey: Env.firebaseOptionsMacos,
     appId: '1:186537693375:ios:2ea7666a30afbbea4d760a',
     messagingSenderId: '186537693375',
-    projectId: '${dotenv.env['PROJECT_ID']}',
-    storageBucket: '${dotenv.env['PROJECT_ID']}.appspot.com',
+    projectId: Env.projectId,
+    storageBucket: '${Env.projectId}.appspot.com',
     iosBundleId: 'com.example.silverapp.RunnerTests',
   );
 }

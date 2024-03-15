@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:silverapp/env/env.dart';
 import 'package:silverapp/google_maps/routes_data_entity.dart';
 
 Future<GoogleRoutes> getGoogleRoute(
@@ -13,7 +13,7 @@ Future<GoogleRoutes> getGoogleRoute(
     final response = await Dio().post(
       "https://routes.googleapis.com/directions/v2:computeRoutes",
       queryParameters: {
-        'key': '${dotenv.env['GOOGLE_ROUTES_API_KEY']}',
+        'key': Env.googleRoutesApiKey,
       },
       data: {
         "origin": {

@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/env/env.dart';
 import 'package:silverapp/roles/user/entities/reserves_home.dart';
 import 'package:silverapp/roles/user/models/reserves_paginated_response.dart';
 
 final dio = Dio(BaseOptions(
-  baseUrl: '${dotenv.env['HTTP_REQUEST']}',
+  baseUrl: Env.httpRequest,
 ));
 
 List<ReserveHome> _jsonToReserves(Map<String, dynamic> json) {

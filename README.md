@@ -15,6 +15,16 @@ Then, to create env variables run the command:
 dart run build_runner build
 ```
 
+When modifying the .env file, the generator might not pick up the change due to dart-lang/build#967. If that happens simply clean the build cache and run the generator again.
+
+```sh
+dart run build_runner clean
+```
+```sh
+dart run build_runner build --delete-conflicting-outputs
+```
+
+
 ### 📱 Mobile
 
 Press F5 on main.dart or you can use the [Flutter CLI's](https://docs.flutter.dev/reference/flutter-cli) `run` command.

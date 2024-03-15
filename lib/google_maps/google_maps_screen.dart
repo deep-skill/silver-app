@@ -173,9 +173,17 @@ class MapGoogleState extends State<MapGoogle> {
                                 searchResults[index]['formatted_address'];
                             LatLng location = LatLng(lat, lng);
                             _updateMapLocation(location, addressName);
-
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Ubicación: $addressName',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            );
                             setState(() {
                               showSearchResults = false;
+                              _searchController.text = "";
                             });
                           },
                         );
@@ -185,7 +193,7 @@ class MapGoogleState extends State<MapGoogle> {
                 const Spacer(),
                 if (selectedLocation != null)
                   Container(
-                    margin: const EdgeInsets.all(12.0),
+                    margin: const EdgeInsets.all(35.0),
                     child: ElevatedButton(
                       style: ButtonStyle(
                         padding: MaterialStateProperty.all<EdgeInsets>(

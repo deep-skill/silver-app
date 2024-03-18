@@ -55,43 +55,49 @@ class TripDriverStatus {
     this.endAddressLon,
   });
 
-  factory TripDriverStatus.fromJson(Map<String, dynamic> json) => TripDriverStatus(
-      id: json["id"],
-      totalPrice: json["totalPrice"].toDouble(),
-      onWayDriver: DateTime.parse(json["onWayDriver"]).toLocal(),
-      arrivedDriver: json["arrivedDriver"] == null
-          ? null
-          : DateTime.parse(json["arrivedDriver"]).toLocal(),
-      startTime: json["startTime"] == null
-          ? null
-          : DateTime.parse(json["startTime"]).toLocal(),
-      endTime: json["endTime"] == null
-          ? null
-          : DateTime.parse(json["endTime"]).toLocal(),
-      status: json["status"] ?? '',
-      reserveId: json["reserveId"],
-      startAddress: json["Reserve"]["startAddress"],
-      startAddressLat: json["Reserve"]["startAddressLat"],
-      startAddressLon: json["Reserve"]["startAddressLon"],
-      endAddress: json["Reserve"]["endAddress"],
-      endAddressLat: json["Reserve"]["endAddressLat"],
-      endAddressLon: json["Reserve"]["endAddressLon"],
-      stops: List<Stop>.from(json["Stops"]?.map((x) => Stop.fromJson(x)) ?? []),
-      observations: List<Observations>.from(
-          json["Observations"]?.map((x) => Observations.fromJson(x)) ?? []),
-      parkings: List<Parking>.from(
-          json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
-      tolls: List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
-      userName: json["Reserve"]["User"]["name"],
-      userLastName: json["Reserve"]["User"]["lastName"],
-      tripType: json["Reserve"]["tripType"],
-      serviceType: json["Reserve"]["serviceType"],
-      silverPercent: json["Reserve"]["silverPercent"],
-      enterpriseName: json["Reserve"]["Enterprise"] != null
-          ? json["Reserve"]["Enterprise"]["name"]
-          : null,
-      reserveStartTime: DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
-      waitingTimeExtra: json["waitingTimeExtra"].toDouble());
+  factory TripDriverStatus.fromJson(Map<String, dynamic> json) =>
+      TripDriverStatus(
+          id: json["id"],
+          totalPrice: json["totalPrice"].toDouble(),
+          onWayDriver: DateTime.parse(json["onWayDriver"]).toLocal(),
+          arrivedDriver: json["arrivedDriver"] == null
+              ? null
+              : DateTime.parse(json["arrivedDriver"]).toLocal(),
+          startTime: json["startTime"] == null
+              ? null
+              : DateTime.parse(json["startTime"]).toLocal(),
+          endTime: json["endTime"] == null
+              ? null
+              : DateTime.parse(json["endTime"]).toLocal(),
+          status: json["status"] ?? '',
+          reserveId: json["reserveId"],
+          startAddress: json["Reserve"]["startAddress"],
+          startAddressLat: json["Reserve"]["startAddressLat"],
+          startAddressLon: json["Reserve"]["startAddressLon"],
+          endAddress: json["Reserve"]["endAddress"],
+          endAddressLat: json["Reserve"]["endAddressLat"],
+          endAddressLon: json["Reserve"]["endAddressLon"],
+          stops: List<Stop>.from(
+              json["Stops"]?.map((x) => Stop.fromJson(x)) ?? []),
+          observations: List<Observations>.from(
+              json["Observations"]?.map((x) => Observations.fromJson(x)) ?? []),
+          parkings: List<Parking>.from(
+              json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
+          tolls: List<Toll>.from(
+              json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
+          userName: json["Reserve"]["User"]["name"],
+          userLastName: json["Reserve"]["User"]["lastName"],
+          tripType: json["Reserve"]["tripType"],
+          serviceType: json["Reserve"]["serviceType"],
+          silverPercent: json["Reserve"]["silverPercent"],
+          enterpriseName: json["Reserve"]["Enterprise"] != null
+              ? json["Reserve"]["Enterprise"]["name"]
+              : null,
+          reserveStartTime:
+              DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
+          waitingTimeExtra: json["waitingTimeExtra"] != null
+              ? json["waitingTimeExtra"].toDouble()
+              : null);
 
   Map<String, dynamic> toJson() => {
         "id": id,

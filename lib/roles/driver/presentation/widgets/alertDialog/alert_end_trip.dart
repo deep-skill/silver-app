@@ -97,6 +97,18 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           "totalPrice":
               totalPricePerHour(widget.arrivedDriver!) * widget.totalPrice
         });
+      } else if (calculateWaitingAmount(
+              widget.arrivedDriver, widget.startTime, widget.reserveStartTime) >
+          0) {
+        await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
+          "endTime": DateTime.now().toUtc().toIso8601String(),
+          "status": "COMPLETED",
+          "totalPrice": widget.totalPrice +
+              calculateWaitingAmount(widget.arrivedDriver, widget.startTime,
+                  widget.reserveStartTime),
+          "waitingAmount": calculateWaitingAmount(
+              widget.arrivedDriver, widget.startTime, widget.reserveStartTime)
+        });
       } else {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": DateTime.now().toUtc().toIso8601String(),

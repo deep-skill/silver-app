@@ -15,6 +15,7 @@ class TitleAdditionalInformation extends StatelessWidget {
     return Row(children: [
       Icon(
         icon,
+        color: const Color(0xFF23A5CD),
       ),
       const SizedBox(
         width: 8.0,

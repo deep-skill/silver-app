@@ -28,6 +28,7 @@ class AdminTripEnd {
   List<Toll> tolls;
   DateTime reserveStartTime;
   final String? driverImageUrl;
+  double? waitingTimeExtra;
 
   AdminTripEnd(
       {required this.id,
@@ -58,58 +59,56 @@ class AdminTripEnd {
       required this.parkings,
       required this.tolls,
       required this.reserveStartTime,
-      this.driverImageUrl});
+      this.driverImageUrl,
+      this.waitingTimeExtra});
 
   factory AdminTripEnd.fromJson(Map<String, dynamic> json) => AdminTripEnd(
-        id: json["id"],
-        reserveId: json["Reserve"]["id"],
-        status: json["status"],
-        totalPrice: json["totalPrice"].toDouble(),
-        onWayDriver: DateTime.parse(json["onWayDriver"]).toLocal(),
-        arrivedDriver: json["arrivedDriver"] == null
-            ? null
-            : DateTime.parse(json["arrivedDriver"]).toLocal(),
-        startTime: json["startTime"] == null
-            ? null
-            : DateTime.parse(json["startTime"]).toLocal(),
-        endTime: json["endTime"] == null
-            ? null
-            : DateTime.parse(json["endTime"]).toLocal(),
-        startAddress: json["Reserve"]["startAddress"],
-        endAddress: json["Reserve"]["endAddress"],
-        price: json["Reserve"]["price"].toDouble(),
-        silverPercent: json["Reserve"]["silverPercent"],
-        userName: json["Reserve"]["User"]["name"] ?? "no-name",
-        userLastName: json["Reserve"]["User"]["lastName"] ?? "no-lastName",
-        enterpriseName: json["Reserve"]["Enterprise"] == null
-            ? null
-            : json["Reserve"]["Enterprise"]["name"],
-        driverName: json["Reserve"]["Driver"] != null
-            ? json["Reserve"]["Driver"]["name"] ?? 'no-name'
-            : 'no-name',
-        driverLastName: json["Reserve"]["Driver"] != null
-            ? json["Reserve"]["Driver"]["lastName"] ?? 'no-lastName'
-            : 'no-lastName',
-        licensePlate: json["Reserve"]["Car"]["licensePlate"] ?? 'no-car-plate',
-        brand: json["Reserve"]["Car"]["brand"] ?? 'no-car-brand',
-        model: json["Reserve"]["Car"]["model"] ?? 'no-car-model',
-        color: json["Reserve"]["Car"]["color"] ?? 'no-car-color',
-        tripType: json["Reserve"]["tripType"],
-        serviceType: json["Reserve"]["serviceType"],
-        stops:
-            List<Stop>.from(json["Stops"]?.map((x) => Stop.fromJson(x)) ?? []),
-        observations: List<Observations>.from(
-            json["Observations"]?.map((x) => Observations.fromJson(x)) ?? []),
-        parkings: List<Parking>.from(
-            json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
-        tolls:
-            List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
-        reserveStartTime:
-            DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
-        driverImageUrl: json["Reserve"]["Driver"] != null
-            ? json["Reserve"]["Driver"]["imageUrl"]
-            : null,
-      );
+      id: json["id"],
+      reserveId: json["Reserve"]["id"],
+      status: json["status"],
+      totalPrice: json["totalPrice"].toDouble(),
+      onWayDriver: DateTime.parse(json["onWayDriver"]).toLocal(),
+      arrivedDriver: json["arrivedDriver"] == null
+          ? null
+          : DateTime.parse(json["arrivedDriver"]).toLocal(),
+      startTime: json["startTime"] == null
+          ? null
+          : DateTime.parse(json["startTime"]).toLocal(),
+      endTime: json["endTime"] == null
+          ? null
+          : DateTime.parse(json["endTime"]).toLocal(),
+      startAddress: json["Reserve"]["startAddress"],
+      endAddress: json["Reserve"]["endAddress"],
+      price: json["Reserve"]["price"].toDouble(),
+      silverPercent: json["Reserve"]["silverPercent"],
+      userName: json["Reserve"]["User"]["name"] ?? "no-name",
+      userLastName: json["Reserve"]["User"]["lastName"] ?? "no-lastName",
+      enterpriseName: json["Reserve"]["Enterprise"] == null
+          ? null
+          : json["Reserve"]["Enterprise"]["name"],
+      driverName: json["Reserve"]["Driver"] != null
+          ? json["Reserve"]["Driver"]["name"] ?? 'no-name'
+          : 'no-name',
+      driverLastName: json["Reserve"]["Driver"] != null
+          ? json["Reserve"]["Driver"]["lastName"] ?? 'no-lastName'
+          : 'no-lastName',
+      licensePlate: json["Reserve"]["Car"]["licensePlate"] ?? 'no-car-plate',
+      brand: json["Reserve"]["Car"]["brand"] ?? 'no-car-brand',
+      model: json["Reserve"]["Car"]["model"] ?? 'no-car-model',
+      color: json["Reserve"]["Car"]["color"] ?? 'no-car-color',
+      tripType: json["Reserve"]["tripType"],
+      serviceType: json["Reserve"]["serviceType"],
+      stops: List<Stop>.from(json["Stops"]?.map((x) => Stop.fromJson(x)) ?? []),
+      observations: List<Observations>.from(
+          json["Observations"]?.map((x) => Observations.fromJson(x)) ?? []),
+      parkings: List<Parking>.from(
+          json["Parkings"]?.map((x) => Parking.fromJson(x)) ?? []),
+      tolls: List<Toll>.from(json["Tolls"]?.map((x) => Toll.fromJson(x)) ?? []),
+      reserveStartTime: DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
+      driverImageUrl: json["Reserve"]["Driver"] != null
+          ? json["Reserve"]["Driver"]["imageUrl"]
+          : null,
+      waitingTimeExtra: json["waitingTimeExtra"]?.toDouble());
 }
 
 class Observations {

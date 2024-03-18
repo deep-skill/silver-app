@@ -24,19 +24,21 @@ class AdminAdditionalInformation extends StatefulWidget {
   final List<Observations> observations;
   final List<Parking> parkings;
   final List<Toll> tolls;
+  final double? waitingTimeExtra;
 
-  const AdminAdditionalInformation({
-    Key? key,
-    required this.credentials,
-    required this.tripId,
-    required this.startAddress,
-    required this.endAddress,
-    required this.reload,
-    required this.stops,
-    required this.observations,
-    required this.parkings,
-    required this.tolls,
-  }) : super(key: key);
+  const AdminAdditionalInformation(
+      {Key? key,
+      required this.credentials,
+      required this.tripId,
+      required this.startAddress,
+      required this.endAddress,
+      required this.reload,
+      required this.stops,
+      required this.observations,
+      required this.parkings,
+      required this.tolls,
+      required this.waitingTimeExtra})
+      : super(key: key);
 
   @override
   State<AdminAdditionalInformation> createState() =>
@@ -391,6 +393,15 @@ class _AdminAdditionalInformationState
                 "Modificar extras",
                 style: TextStyle(color: Color(0xff03132A), fontSize: 15),
               )),
+          widget.waitingTimeExtra != null
+              ? const TitleAdditionalInformation(
+                  icon: Icons.more_time_rounded,
+                  label: "Tiempo de espera",
+                )
+              : const SizedBox(),
+          widget.waitingTimeExtra != null
+              ? LabelExtraTripEnd(text: widget.waitingTimeExtra.toString())
+              : const SizedBox(),
         ],
       ),
     );

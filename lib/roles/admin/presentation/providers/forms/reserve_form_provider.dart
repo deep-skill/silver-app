@@ -366,8 +366,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         state.endAddressLat == null ||
         state.endAddressLon == null ||
         state.serviceCarType.value == 'Seleccione el tipo de vehículo' ||
-        state.startTime.value == '2023-09-26' ||
-        state.startDate.value == '00:00' ||
+        state.startDate.value == '2023-09-26' ||
+        state.startTime.value == '00:00' ||
         state.tripType.value == 'Seleccione el tipo de viaje' ||
         state.tripType.value == 'Por hora') {
       state = state.copyWith(

@@ -45,15 +45,15 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     DateTime calculateDifferenceTime = reserveStartTime;
 
     Duration driverDelay = reserveStartTime.difference(arrivedDriver!);
-
-    if (driverDelay.inMinutes > 0) {
+    if (driverDelay.inMinutes < 0) {
       calculateDifferenceTime = arrivedDriver;
     }
-
     Duration difference = startTime!.difference(calculateDifferenceTime);
+
     if (difference.inMinutes >= 15) {
       return (difference.inMinutes.toDouble() - 15) * 0.5;
     }
+    print(0.0);
     return 0.0;
   }
 
@@ -106,7 +106,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           "totalPrice": widget.totalPrice +
               calculateWaitingAmount(widget.arrivedDriver, widget.startTime,
                   widget.reserveStartTime),
-          "waitingAmount": calculateWaitingAmount(
+          "waitingTimeExtra": calculateWaitingAmount(
               widget.arrivedDriver, widget.startTime, widget.reserveStartTime)
         });
       } else {

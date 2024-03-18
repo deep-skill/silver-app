@@ -18,6 +18,7 @@ class AdditionalInformation extends StatefulWidget {
   final String credentials;
   final int reserveId;
   final String tripType;
+  final double? waitingTimeExtra;
   final VoidCallback reload;
   final List<Stop> stops;
   final List<Observations> observations;
@@ -36,6 +37,7 @@ class AdditionalInformation extends StatefulWidget {
     required this.parkings,
     required this.tolls,
     required this.credentials,
+    required this.waitingTimeExtra,
   }) : super(key: key);
 
   @override
@@ -359,6 +361,15 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
           const SizedBox(
             height: 15,
           ),
+          widget.waitingTimeExtra != null
+              ? const TitleAdditionalInformation(
+                  icon: Icons.more_time_rounded,
+                  label: "Tiempo de espera",
+                )
+              : const SizedBox(),
+          widget.waitingTimeExtra != null
+              ? LabelExtraTripEnd(text: widget.waitingTimeExtra.toString())
+              : const SizedBox(),
         ],
       ),
     );

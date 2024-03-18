@@ -177,10 +177,22 @@ class TripEndedInfo extends StatelessWidget {
                   observations: trip.observations,
                   icon: Icons.search),
           trip.waitingTimeExtra != null
-              ? const TitleAdditionalInformation(
-                  icon: Icons.more_time_rounded,
-                  label: "Tiempo de espera",
-                )
+              ? const Row(children: [
+                  Icon(
+                    Icons.more_time_rounded,
+                  ),
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                  Text(
+                    "Tiempo de espera",
+                    style: TextStyle(
+                      color: Color(0xFF23A5CD),
+                      fontFamily: "Montserrat-Medium",
+                      fontSize: 16,
+                    ),
+                  ),
+                ])
               : const SizedBox(),
           trip.waitingTimeExtra != null
               ? LabelExtraTripEnd(text: trip.waitingTimeExtra.toString())

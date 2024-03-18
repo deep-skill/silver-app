@@ -239,6 +239,7 @@ class TripInfo extends ConsumerWidget {
               tripType: trip.tripType,
               reserveId: trip.reserveId,
               credentials: credentials,
+              waitingTimeExtra: trip.waitingTimeExtra,
             ),
       trip.startTime != null && trip.endTime == null
           ? Container(
@@ -246,12 +247,15 @@ class TripInfo extends ConsumerWidget {
               child: TripButton(
                   buttonText: "Finalizar viaje",
                   alertWidget: AlertTripEnd(
-                      credentials: credentials,
-                      totalPrice: trip.totalPrice,
-                      tripId: trip.id,
-                      reload: reload,
-                      tripType: trip.tripType,
-                      arrivedDriver: trip.arrivedDriver)),
+                    credentials: credentials,
+                    totalPrice: trip.totalPrice,
+                    tripId: trip.id,
+                    reload: reload,
+                    tripType: trip.tripType,
+                    arrivedDriver: trip.arrivedDriver,
+                    reserveStartTime: trip.reserveStartTime,
+                    startTime: trip.startTime,
+                  )),
             )
           : const SizedBox(),
       trip.endTime != null

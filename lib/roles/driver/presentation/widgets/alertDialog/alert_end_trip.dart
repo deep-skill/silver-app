@@ -10,6 +10,8 @@ class AlertTripEnd extends StatefulWidget {
   final DateTime? arrivedDriver;
   final double totalPrice;
   final String credentials;
+  final DateTime? startTime;
+  final DateTime reserveStartTime;
 
   const AlertTripEnd({
     Key? key,
@@ -19,6 +21,8 @@ class AlertTripEnd extends StatefulWidget {
     required this.arrivedDriver,
     required this.totalPrice,
     required this.credentials,
+    required this.startTime,
+    required this.reserveStartTime,
   }) : super(key: key);
   @override
   State<AlertTripEnd> createState() => _AlertTripEndState();
@@ -35,6 +39,23 @@ String getDifferenceBetweenTimes(DateTime arrivedDriver, DateTime tripEnded) {
 
 class _AlertTripEndState extends State<AlertTripEnd> {
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+
+  double calculateWaitingAmount(
+      DateTime? arrivedDriver, DateTime? startTime, DateTime reserveStartTime) {
+    DateTime calculateDifferenceTime = reserveStartTime;
+
+    Duration driverDelay = reserveStartTime.difference(arrivedDriver!);
+    if (driverDelay.inMinutes < 0) {
+      calculateDifferenceTime = arrivedDriver;
+    }
+    Duration difference = startTime!.difference(calculateDifferenceTime);
+
+    if (difference.inMinutes >= 15) {
+      return (difference.inMinutes.toDouble() - 15) * 0.5;
+    }
+    return 0.0;
+  }
+
   double calculateFraction(int time) {
     double result = 0.0;
     int hourComplete = time ~/ 60;
@@ -74,6 +95,19 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           "status": "COMPLETED",
           "totalPrice":
               totalPricePerHour(widget.arrivedDriver!) * widget.totalPrice
+        });
+      } else if (calculateWaitingAmount(
+              widget.arrivedDriver, widget.startTime, widget.reserveStartTime) >
+          0) {
+        await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
+          "endTime": DateTime.now().toUtc().toIso8601String(),
+          "status": "COMPLETED",
+          "totalPrice": widget.totalPrice +
+              calculateWaitingAmount(widget.arrivedDriver, widget.startTime,
+                  widget.reserveStartTime),
+          "waitingTimeExtra": calculateWaitingAmount(widget.arrivedDriver,
+                  widget.startTime, widget.reserveStartTime)
+              .toDouble()
         });
       } else {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {

@@ -59,6 +59,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
       for (var element in trip.parkings) {
         result += element.amount;
       }
+      if (trip.waitingTimeExtra != null) {
+        result += trip.waitingTimeExtra!;
+      }
       return result;
     }
 
@@ -355,6 +358,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                       stops: trip.stops,
                                       reload: reload,
                                       credentials: credentials!.accessToken,
+                                      waitingTimeExtra: trip.waitingTimeExtra,
                                     ),
                                     const SizedBox(
                                       height: 5,
@@ -544,6 +548,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           stops: trip.stops,
                           reload: reload,
                           credentials: credentials!.accessToken,
+                          waitingTimeExtra: trip.waitingTimeExtra,
                         ),
                         const SizedBox(
                           height: 5,

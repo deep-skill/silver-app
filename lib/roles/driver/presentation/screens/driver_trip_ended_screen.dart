@@ -8,6 +8,8 @@ import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_address_
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_observation.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_parking.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_toll.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra_end.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/title_additional_information.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/title_reserve_detail.dart';
 
 class DriverTripEndedScreen extends ConsumerStatefulWidget {
@@ -174,6 +176,15 @@ class TripEndedInfo extends StatelessWidget {
                   label: "Observaciones",
                   observations: trip.observations,
                   icon: Icons.search),
+          trip.waitingTimeExtra != null
+              ? const TitleAdditionalInformation(
+                  icon: Icons.more_time_rounded,
+                  label: "Tiempo de espera",
+                )
+              : const SizedBox(),
+          trip.waitingTimeExtra != null
+              ? LabelExtraTripEnd(text: trip.waitingTimeExtra.toString())
+              : const SizedBox(),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: size.width * .01),
             child: Row(

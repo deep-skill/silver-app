@@ -25,35 +25,36 @@ class TripDriverStatus {
   String? enterpriseName;
   DateTime reserveStartTime;
   double? waitingTimeExtra;
+  String serviceCarType;
 
-  TripDriverStatus({
-    required this.id,
-    required this.totalPrice,
-    required this.onWayDriver,
-    required this.arrivedDriver,
-    required this.startTime,
-    required this.endTime,
-    required this.status,
-    required this.reserveId,
-    required this.stops,
-    required this.observations,
-    required this.parkings,
-    required this.tolls,
-    required this.startAddress,
-    required this.startAddressLat,
-    required this.startAddressLon,
-    required this.userName,
-    required this.userLastName,
-    required this.tripType,
-    required this.serviceType,
-    required this.silverPercent,
-    required this.reserveStartTime,
-    this.waitingTimeExtra,
-    this.enterpriseName,
-    this.endAddress,
-    this.endAddressLat,
-    this.endAddressLon,
-  });
+  TripDriverStatus(
+      {required this.id,
+      required this.totalPrice,
+      required this.onWayDriver,
+      required this.arrivedDriver,
+      required this.startTime,
+      required this.endTime,
+      required this.status,
+      required this.reserveId,
+      required this.stops,
+      required this.observations,
+      required this.parkings,
+      required this.tolls,
+      required this.startAddress,
+      required this.startAddressLat,
+      required this.startAddressLon,
+      required this.userName,
+      required this.userLastName,
+      required this.tripType,
+      required this.serviceType,
+      required this.silverPercent,
+      required this.reserveStartTime,
+      this.waitingTimeExtra,
+      this.enterpriseName,
+      this.endAddress,
+      this.endAddressLat,
+      this.endAddressLon,
+      required this.serviceCarType});
 
   factory TripDriverStatus.fromJson(Map<String, dynamic> json) =>
       TripDriverStatus(
@@ -97,7 +98,8 @@ class TripDriverStatus {
               DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
           waitingTimeExtra: json["waitingTimeExtra"] != null
               ? json["waitingTimeExtra"].toDouble()
-              : null);
+              : null,
+          serviceCarType: json["Reserve"]["serviceCarType"]);
 
   Map<String, dynamic> toJson() => {
         "id": id,

@@ -78,8 +78,14 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         parameters: <String, dynamic>{'trip_time_minutes': tripTimeMinutes});
   }
 
-  double totalPricePerHour(DateTime arrivedDriver) {
-    final diferencia = DateTime.now().difference(arrivedDriver);
+  double totalPricePerHour(DateTime arrivedDriver, DateTime reserveStartTime) {
+    DateTime calculateDifferenceTime = reserveStartTime;
+
+    Duration driverDelay = reserveStartTime.difference(arrivedDriver);
+    if (driverDelay.inMinutes < 0) {
+      calculateDifferenceTime = arrivedDriver;
+    }
+    final diferencia = DateTime.now().difference(calculateDifferenceTime);
     if (diferencia.inMinutes <= 60) {
       return 1;
     } else {
@@ -93,8 +99,9 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": DateTime.now().toUtc().toIso8601String(),
           "status": "COMPLETED",
-          "totalPrice":
-              totalPricePerHour(widget.arrivedDriver!) * widget.totalPrice
+          "totalPrice": totalPricePerHour(
+                  widget.arrivedDriver!, widget.reserveStartTime) *
+              widget.totalPrice
         });
       } else if (calculateWaitingAmount(
               widget.arrivedDriver, widget.startTime, widget.reserveStartTime) >

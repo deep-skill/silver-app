@@ -14,7 +14,16 @@ class ExpansionTripLabelAmout extends StatefulWidget {
 
 class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
   var _customIcon = false;
-
+  var styleTitle = const TextStyle(
+    color: Color(0xFF164772),
+    fontFamily: 'Montserrat-Medium',
+    fontSize: 20,
+  );
+  var styleText = const TextStyle(
+    color: Color(0xFF000000),
+    fontFamily: "Monserrat",
+    fontSize: 14,
+  );
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -32,9 +41,13 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Precio del viaje"),
+                  Text(
+                    "Precio del viaje",
+                    style: styleTitle,
+                  ),
                   Text(
                     " S/ ${widget.priceBase + (widget.waitingTimeExtra ?? 0)}",
+                    style: styleTitle,
                   )
                 ],
               ),
@@ -43,10 +56,16 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("Tarifa base"),
+                      Text(
+                        "Tarifa base",
+                        style: styleText,
+                      ),
                       Row(
                         children: [
-                          Text("S/ ${widget.priceBase}"),
+                          Text(
+                            "S/ ${widget.priceBase}",
+                            style: styleText,
+                          ),
                           const SizedBox(
                             width: 37,
                           )
@@ -60,10 +79,16 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("Tiempo de espera"),
+                            Text(
+                              "Tiempo de espera",
+                              style: styleText,
+                            ),
                             Row(
                               children: [
-                                Text("S/ ${widget.waitingTimeExtra}"),
+                                Text(
+                                  "S/ ${widget.waitingTimeExtra}",
+                                  style: styleText,
+                                ),
                                 const SizedBox(
                                   width: 37,
                                 )

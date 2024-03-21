@@ -18,6 +18,16 @@ class _ExpansionTripLabelTollParking
 
   @override
   Widget build(BuildContext context) {
+    var styleTitle = const TextStyle(
+      color: Color(0xFF164772),
+      fontFamily: 'Montserrat-Medium',
+      fontSize: 20,
+    );
+    var styleText = const TextStyle(
+      color: Color(0xFF000000),
+      fontFamily: "Monserrat",
+      fontSize: 14,
+    );
     return SizedBox(
       child: Column(
         children: [
@@ -33,9 +43,13 @@ class _ExpansionTripLabelTollParking
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Adicionales"),
+                  Text(
+                    "Adicionales",
+                    style: styleTitle,
+                  ),
                   Text(
                     " S/ ${(widget.priceToll ?? 0) + (widget.priceParking ?? 0)}",
+                    style: styleTitle,
                   )
                 ],
               ),
@@ -45,10 +59,16 @@ class _ExpansionTripLabelTollParking
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("Peajes"),
+                            Text(
+                              "Peajes",
+                              style: styleText,
+                            ),
                             Row(
                               children: [
-                                Text("S/ ${widget.priceToll}"),
+                                Text(
+                                  "S/ ${widget.priceToll}",
+                                  style: styleText,
+                                ),
                                 const SizedBox(
                                   width: 37,
                                 )
@@ -63,10 +83,16 @@ class _ExpansionTripLabelTollParking
                         title: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text("Estacionamiento"),
+                            Text(
+                              "Estacionamiento",
+                              style: styleText,
+                            ),
                             Row(
                               children: [
-                                Text("S/ ${widget.priceParking}"),
+                                Text(
+                                  "S/ ${widget.priceParking}",
+                                  style: styleText,
+                                ),
                                 const SizedBox(
                                   width: 37,
                                 )

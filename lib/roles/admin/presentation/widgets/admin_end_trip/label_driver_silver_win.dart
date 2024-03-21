@@ -11,6 +11,11 @@ class LabelDriverSilverWin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var styleTitle = const TextStyle(
+      color: Color(0xFF000000),
+      fontFamily: 'Montserrat-Medium',
+      fontSize: 20,
+    );
     return SizedBox(
       child: Column(
         children: [
@@ -28,12 +33,18 @@ class LabelDriverSilverWin extends StatelessWidget {
                         const SizedBox(
                           width: 15,
                         ),
-                        Text(description),
+                        Text(
+                          description,
+                          style: styleTitle,
+                        ),
                       ],
                     ),
                     Row(
                       children: [
-                        Text(priceText),
+                        Text(
+                          priceText,
+                          style: styleTitle,
+                        ),
                         const SizedBox(
                           width: 60,
                         )

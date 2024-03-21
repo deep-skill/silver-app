@@ -9,7 +9,6 @@ import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_wi
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_parking.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_toll.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/label_trip_extra_end.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/title_additional_information.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/title_reserve_detail.dart';
 
 class DriverTripEndedScreen extends ConsumerStatefulWidget {

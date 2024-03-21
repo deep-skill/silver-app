@@ -192,6 +192,7 @@ class TripInfo extends ConsumerWidget {
                   onPressed: () => showDialog(
                       context: context,
                       builder: (context) => AlertTripCanceled(
+                            serviceCarType: trip.serviceCarType,
                             tripId: trip.id,
                             reload: reload,
                             cancelReload: cancelReload,

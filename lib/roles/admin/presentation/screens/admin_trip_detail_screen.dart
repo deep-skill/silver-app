@@ -7,6 +7,7 @@ import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_additional_information.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expansion_trip_toll_parking.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_driver_silver_win.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expansion_trip_label_amout.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/trip_label_amount.dart';
@@ -77,6 +78,24 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
 
     double calculatePayConductor() {
       double result = calculateCustomerPrice() - calculatePaySilver();
+      return result;
+    }
+
+    double? calcualteToll() {
+      if (trip.tolls.isEmpty) return null;
+      double result = 0.0;
+      for (var element in trip.tolls) {
+        result += element.amount;
+      }
+      return result;
+    }
+
+    double? calculateParking() {
+      if (trip.parkings.isEmpty) return null;
+      double result = 0.0;
+      for (var element in trip.parkings) {
+        result += element.amount;
+      }
       return result;
     }
 
@@ -276,6 +295,12 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                           priceText:
                                               "S/ ${calculatePayConductor().toStringAsFixed(2)}",
                                         ),
+                                        if (calcualteToll() != null ||
+                                            calculateParking() != null)
+                                          ExpansionTripLabelTollParking(
+                                            priceParking: calculateParking(),
+                                            priceToll: calcualteToll(),
+                                          ),
                                         TripLabelAmout(
                                           textAmout:
                                               "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",

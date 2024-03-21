@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
-class NewTripLabelAmout extends StatefulWidget {
+class ExpansionTripLabelAmout extends StatefulWidget {
   final double priceBase;
   final double? waitingTimeExtra;
 
-  const NewTripLabelAmout(
+  const ExpansionTripLabelAmout(
       {super.key, required this.priceBase, required this.waitingTimeExtra});
 
   @override
-  State<NewTripLabelAmout> createState() => _NewTripLabelAmoutState();
+  State<ExpansionTripLabelAmout> createState() =>
+      _ExpansionTripLabelAmoutState();
 }
 
-class _NewTripLabelAmoutState extends State<NewTripLabelAmout> {
+class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
   var _customIcon = false;
 
   @override

@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/new_trip_label_amout.dart';
-
 import '../providers/auth0_provider.dart';
 
 class Auth0Screen extends ConsumerStatefulWidget {

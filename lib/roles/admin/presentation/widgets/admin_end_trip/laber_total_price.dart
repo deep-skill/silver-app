@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class LabelDriverSilverWin extends StatelessWidget {
+class LabelTotalPrice extends StatelessWidget {
   final String description;
   final String priceText;
-  const LabelDriverSilverWin({
+  const LabelTotalPrice({
     super.key,
     required this.description,
     required this.priceText,
@@ -12,8 +12,8 @@ class LabelDriverSilverWin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var styleTitle = const TextStyle(
-      color: Color(0xFF000000),
-      fontFamily: 'Raleway-Medium',
+      color: Color(0xFF164772),
+      fontFamily: 'Raleway-Bold',
       fontSize: 16,
     );
     return SizedBox(

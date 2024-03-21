@@ -10,6 +10,7 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_ad
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expansion_trip_toll_parking.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_driver_silver_win.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expansion_trip_label_amout.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/laber_total_price.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/trip_label_amount.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
@@ -56,6 +57,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
 
     double calculateCustomerPrice() {
       double result = trip.totalPrice;
+      if (trip.waitingTimeExtra != null) {
+        result += trip.waitingTimeExtra!;
+      }
       for (var element in trip.tolls) {
         result += element.amount;
       }
@@ -301,10 +305,10 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                             priceParking: calculateParking(),
                                             priceToll: calcualteToll(),
                                           ),
-                                        TripLabelAmout(
-                                          textAmout:
+                                        LabelTotalPrice(
+                                          description: "Precio total del viaje",
+                                          priceText:
                                               "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
-                                          textTipePrice: "Precio Total*",
                                         ),
                                         const SizedBox(
                                           height: 5,

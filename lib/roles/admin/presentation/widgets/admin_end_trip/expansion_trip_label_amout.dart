@@ -15,12 +15,12 @@ class ExpansionTripLabelAmout extends StatefulWidget {
 class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
   var styleTitle = const TextStyle(
     color: Color(0xFF164772),
-    fontFamily: 'Montserrat-Medium',
-    fontSize: 20,
+    fontFamily: 'Raleway-Bold',
+    fontSize: 16,
   );
   var styleText = const TextStyle(
     color: Color(0xFF000000),
-    fontFamily: "Monserrat",
+    fontFamily: "Raleway-Medium",
     fontSize: 14,
   );
   @override

@@ -18,12 +18,12 @@ class _ExpansionTripLabelTollParking
   Widget build(BuildContext context) {
     var styleTitle = const TextStyle(
       color: Color(0xFF164772),
-      fontFamily: 'Montserrat-Medium',
-      fontSize: 20,
+      fontFamily: "Raleway-Bold",
+      fontSize: 16,
     );
     var styleText = const TextStyle(
       color: Color(0xFF000000),
-      fontFamily: "Monserrat",
+      fontFamily: "Raleway-Bold",
       fontSize: 14,
     );
     return SizedBox(

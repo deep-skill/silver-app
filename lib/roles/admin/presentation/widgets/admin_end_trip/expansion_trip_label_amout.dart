@@ -13,7 +13,6 @@ class ExpansionTripLabelAmout extends StatefulWidget {
 }
 
 class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
-  var _customIcon = false;
   var styleTitle = const TextStyle(
     color: Color(0xFF164772),
     fontFamily: 'Montserrat-Medium',
@@ -99,8 +98,7 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
                       )
                     : const SizedBox(),
               ],
-              onExpansionChanged: (bool expanded) =>
-                  {setState(() => _customIcon = expanded)},
+              onExpansionChanged: (bool expanded) => {},
             ),
           )
         ],

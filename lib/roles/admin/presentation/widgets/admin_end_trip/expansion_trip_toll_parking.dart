@@ -14,8 +14,6 @@ class ExpansionTripLabelTollParking extends StatefulWidget {
 
 class _ExpansionTripLabelTollParking
     extends State<ExpansionTripLabelTollParking> {
-  var _customIcon = false;
-
   @override
   Widget build(BuildContext context) {
     var styleTitle = const TextStyle(
@@ -103,8 +101,7 @@ class _ExpansionTripLabelTollParking
                       )
                     : const SizedBox(),
               ],
-              onExpansionChanged: (bool expanded) =>
-                  {setState(() => _customIcon = expanded)},
+              onExpansionChanged: (bool expanded) => {},
             ),
           )
         ],

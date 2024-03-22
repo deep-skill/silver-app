@@ -73,7 +73,7 @@ class ShowInformation extends ConsumerWidget {
                                 'assets/images/app_logo_auth.png',
                               ),
                               title: Text(
-                                '¡Bienvenido ${credentials?.user.email} \na Silver Expresss!',
+                                '¡Bienvenido ${credentials?.user.email} \na Silver Express!',
                                 style: const TextStyle(fontSize: 36),
                                 textAlign: TextAlign.center,
                               ),

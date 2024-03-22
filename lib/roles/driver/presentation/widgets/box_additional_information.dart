@@ -368,7 +368,8 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
                 )
               : const SizedBox(),
           widget.waitingTimeExtra != null
-              ? LabelExtraTripEnd(text: widget.waitingTimeExtra.toString())
+              ? LabelExtraTripEnd(
+                  text: "Recargo espera S/ ${widget.waitingTimeExtra}")
               : const SizedBox(),
         ],
       ),

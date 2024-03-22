@@ -23,7 +23,6 @@ class AlertTripCanceled extends StatefulWidget {
 class _AlertTripEndState extends State<AlertTripCanceled> {
   double calculateNoSwow() {
     if (widget.serviceCarType == "TRUCK") return 25.0;
-    print(widget.serviceCarType);
     if (widget.serviceCarType == "VAN") return 50.0;
     return 20.0;
   }

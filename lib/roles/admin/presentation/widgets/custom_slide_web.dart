@@ -23,7 +23,6 @@ class SlideWeb extends StatelessWidget {
       'nov',
       'dec'
     ];
-    print(reserve.driverImageUrl);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Container(

@@ -92,25 +92,6 @@ class TripEndedInfo extends StatelessWidget {
       return result;
     }
 
-    double calculatTotalPrice() {
-      double result = 0;
-
-      result = trip.totalPrice + (trip.totalPrice * trip.silverPercent / 100);
-      if (trip.waitingTimeExtra != null) {
-        result = trip.totalPrice +
-            trip.waitingTimeExtra! +
-            (trip.totalPrice +
-                trip.waitingTimeExtra! * trip.silverPercent / 100);
-      }
-      for (var element in trip.tolls) {
-        result += element.amount;
-      }
-      for (var element in trip.parkings) {
-        result += element.amount;
-      }
-      return result;
-    }
-
     double? calcualteToll() {
       if (trip.tolls.isEmpty) return null;
       double result = 0.0;

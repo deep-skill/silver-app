@@ -8,7 +8,7 @@ import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.d
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_additional_information.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expansion_trip_toll_parking.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_driver_silver_win.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_driver_silver_earn.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expansion_trip_label_amout.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/laber_total_price.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
@@ -673,7 +673,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             priceToll: calcualteToll(),
                           ),
                         LabelTotalPrice(
-                          description: "Precio total del viaje",
+                          description: "Precio total",
                           priceText:
                               "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
                         ),

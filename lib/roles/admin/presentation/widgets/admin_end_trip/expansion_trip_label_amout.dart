@@ -25,43 +25,63 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
   );
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: const Color(0xffF2F3F7),
-              borderRadius: BorderRadius.circular(12.0),
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xffF2F3F7),
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      margin: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
+      child: ExpansionTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Precio del viaje",
+              style: styleTitle,
             ),
-            margin: const EdgeInsets.all(5.0),
-            padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
-            child: ExpansionTile(
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Precio del viaje",
-                    style: styleTitle,
-                  ),
-                  Text(
-                    " S/ ${widget.priceBase + (widget.waitingTimeExtra ?? 0)}",
-                    style: styleTitle,
-                  )
-                ],
-              ),
+            Text(
+              " S/ ${widget.priceBase + (widget.waitingTimeExtra ?? 0)}",
+              style: styleTitle,
+            )
+          ],
+        ),
+        children: [
+          ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ListTile(
+                Text(
+                  "Tarifa base",
+                  style: styleText,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "S/ ${widget.priceBase}",
+                      style: styleText,
+                    ),
+                    const SizedBox(
+                      width: 37,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          widget.waitingTimeExtra != null
+              ? ListTile(
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Tarifa base",
+                        "Tiempo de espera",
                         style: styleText,
                       ),
                       Row(
                         children: [
                           Text(
-                            "S/ ${widget.priceBase}",
+                            "S/ ${widget.waitingTimeExtra}",
                             style: styleText,
                           ),
                           const SizedBox(
@@ -71,36 +91,10 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
                       ),
                     ],
                   ),
-                ),
-                widget.waitingTimeExtra != null
-                    ? ListTile(
-                        title: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Tiempo de espera",
-                              style: styleText,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  "S/ ${widget.waitingTimeExtra}",
-                                  style: styleText,
-                                ),
-                                const SizedBox(
-                                  width: 37,
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      )
-                    : const SizedBox(),
-              ],
-              onExpansionChanged: (bool expanded) => {},
-            ),
-          )
+                )
+              : const SizedBox(),
         ],
+        onExpansionChanged: (bool expanded) => {},
       ),
     );
   }

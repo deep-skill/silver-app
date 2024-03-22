@@ -249,6 +249,13 @@ class TripEndedInfo extends StatelessWidget {
           trip.waitingTimeExtra != null
               ? LabelExtraTripEnd(text: trip.waitingTimeExtra.toString())
               : const SizedBox(),
+          const SizedBox(
+            height: 8,
+          ),
+          const TitleReserveDetail(text: "Precios"),
+          const SizedBox(
+            height: 8,
+          ),
           ExpansionTripLabelAmoutDriver(
             priceBase:
                 trip.totalPrice - (trip.totalPrice * trip.silverPercent / 100),

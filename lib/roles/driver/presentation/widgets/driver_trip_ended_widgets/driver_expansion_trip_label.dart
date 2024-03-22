@@ -41,7 +41,7 @@ class _ExpansionTripLabelAmoutDriverState
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Precio del viaje",
+                    "Ganancia",
                     style: styleTitle,
                   ),
                   Text(

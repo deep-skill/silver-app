@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class ExpansionTripLabelTollParking extends StatefulWidget {
+class ExpansionTripLabelTollParkingDriver extends StatefulWidget {
   final double? priceToll;
   final double? priceParking;
 
-  const ExpansionTripLabelTollParking(
+  const ExpansionTripLabelTollParkingDriver(
       {super.key, required this.priceToll, required this.priceParking});
 
   @override
-  State<ExpansionTripLabelTollParking> createState() =>
-      _ExpansionTripLabelTollParking();
+  State<ExpansionTripLabelTollParkingDriver> createState() =>
+      _ExpansionTripLabelTollParkingDriver();
 }
 
-class _ExpansionTripLabelTollParking
-    extends State<ExpansionTripLabelTollParking> {
+class _ExpansionTripLabelTollParkingDriver
+    extends State<ExpansionTripLabelTollParkingDriver> {
   @override
   Widget build(BuildContext context) {
     var styleTitle = const TextStyle(

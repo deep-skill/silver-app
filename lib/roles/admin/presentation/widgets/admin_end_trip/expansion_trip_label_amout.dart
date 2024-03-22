@@ -33,7 +33,6 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
               color: const Color(0xffF2F3F7),
               borderRadius: BorderRadius.circular(12.0),
             ),
-            width: MediaQuery.of(context).size.width * .6,
             margin: const EdgeInsets.all(5.0),
             padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
             child: ExpansionTile(

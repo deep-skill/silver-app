@@ -11,7 +11,6 @@ import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expans
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_driver_silver_win.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expansion_trip_label_amout.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/laber_total_price.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/trip_label_amount.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/title_trip_detail.dart';
@@ -653,24 +652,30 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const SizedBox(
                           height: 5,
                         ),
-                        TripLabelAmout(
-                          textAmout:
-                              "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
-                          textTipePrice: "Precio Total*",
+                        ExpansionTripLabelAmout(
+                          priceBase: trip.price,
+                          waitingTimeExtra: trip.waitingTimeExtra,
                         ),
-                        TripLabelAmout(
-                          textAmout:
-                              "S/ ${calculatePayConductor().toStringAsFixed(2)}",
-                          textTipePrice: "Pago conductor",
-                        ),
-                        TripLabelAmout(
-                          textAmout:
+                        LabelDriverSilverWin(
+                          description: 'Gana Silver (${trip.silverPercent}%)',
+                          priceText:
                               "S/ ${calculatePaySilver().toStringAsFixed(2)}",
-                          textTipePrice: "Pago Silver",
                         ),
-                        TripLabelAmout(
-                          textAmout: "${trip.silverPercent}%",
-                          textTipePrice: "Porcentaje Silver",
+                        LabelDriverSilverWin(
+                          description: 'Gana Conductor',
+                          priceText:
+                              "S/ ${calculatePayConductor().toStringAsFixed(2)}",
+                        ),
+                        if (calcualteToll() != null ||
+                            calculateParking() != null)
+                          ExpansionTripLabelTollParking(
+                            priceParking: calculateParking(),
+                            priceToll: calcualteToll(),
+                          ),
+                        LabelTotalPrice(
+                          description: "Precio total del viaje",
+                          priceText:
+                              "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
                         ),
                         const SizedBox(
                           height: 5,

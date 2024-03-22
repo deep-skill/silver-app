@@ -282,7 +282,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                         const SizedBox(
                                           height: 18,
                                         ),
-                                        const TitleTripDetail(text: "Precio"),
+                                        const TitleTripDetail(
+                                            text: "Detalle de pago"),
                                         const SizedBox(
                                           height: 18,
                                         ),
@@ -311,7 +312,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                             priceToll: calcualteToll(),
                                           ),
                                         LabelTotalPrice(
-                                          description: "Precio total del viaje",
+                                          description: "Precio total",
                                           priceText:
                                               "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
                                         ),
@@ -658,7 +659,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const SizedBox(
                           height: 5,
                         ),
-                        const TitleTripDetail(text: "Precio"),
+                        const TitleTripDetail(text: "Detalle de pago"),
                         const SizedBox(
                           height: 5,
                         ),

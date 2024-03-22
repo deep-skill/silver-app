@@ -252,7 +252,7 @@ class TripEndedInfo extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          const TitleReserveDetail(text: "Precios"),
+          const TitleReserveDetail(text: "Detalle de cobro"),
           const SizedBox(
             height: 8,
           ),

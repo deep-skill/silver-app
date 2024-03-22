@@ -282,6 +282,10 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                         const SizedBox(
                                           height: 18,
                                         ),
+                                        const TitleTripDetail(text: "Precio"),
+                                        const SizedBox(
+                                          height: 18,
+                                        ),
                                         ExpansionTripLabelAmout(
                                           priceBase: trip.price,
                                           waitingTimeExtra:
@@ -649,6 +653,10 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             ),
                           ],
                         ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        const TitleTripDetail(text: "Precio"),
                         const SizedBox(
                           height: 5,
                         ),

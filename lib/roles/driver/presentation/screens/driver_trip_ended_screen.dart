@@ -5,6 +5,9 @@ import 'package:silverapp/roles/driver/presentation/providers/driver_state_provi
 import 'package:silverapp/roles/driver/presentation/widgets/box_state_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_address_info_widget.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_expansion_toll_parking.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_expansion_trip_label.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_label_total_price.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_observation.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_parking.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_trip_ended_widgets/driver_trip_label_toll.dart';
@@ -71,11 +74,42 @@ class TripEndedInfo extends StatelessWidget {
 
     final Size size = MediaQuery.of(context).size;
     double calculateDriverPrice() {
-      double result =
-          trip.totalPrice - (trip.totalPrice * trip.silverPercent / 100);
+      double result = 0;
+
+      result = trip.totalPrice - (trip.totalPrice * trip.silverPercent / 100);
+      if (trip.waitingTimeExtra != null) {
+        result = trip.totalPrice +
+            trip.waitingTimeExtra! -
+            (trip.totalPrice +
+                trip.waitingTimeExtra! * trip.silverPercent / 100);
+      }
       for (var element in trip.tolls) {
         result += element.amount;
       }
+      for (var element in trip.parkings) {
+        result += element.amount;
+      }
+      return result;
+    }
+
+    double? calcualteToll() {
+      if (trip.tolls.isEmpty) return null;
+      double result = 0.0;
+      for (var element in trip.tolls) {
+        result += element.amount;
+      }
+      return result;
+    }
+
+    double? calculateWaitingTime() {
+      if (trip.waitingTimeExtra == null) return null;
+      return trip.waitingTimeExtra! -
+          (trip.waitingTimeExtra! * trip.silverPercent / 100);
+    }
+
+    double? calculateParking() {
+      if (trip.parkings.isEmpty) return null;
+      double result = 0.0;
       for (var element in trip.parkings) {
         result += element.amount;
       }
@@ -196,22 +230,26 @@ class TripEndedInfo extends StatelessWidget {
           trip.waitingTimeExtra != null
               ? LabelExtraTripEnd(text: trip.waitingTimeExtra.toString())
               : const SizedBox(),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: size.width * .01),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Pago Conductor',
-                  style: TextStyle(fontSize: 24.0, fontFamily: 'Raleway-Bold'),
-                ),
-                Text(
-                  'S/ ${calculateDriverPrice().toStringAsFixed(2)}',
-                  style: const TextStyle(
-                      fontSize: 24.0, fontFamily: 'Montserrat-Semi-Bold'),
-                )
-              ],
+          const SizedBox(
+            height: 8,
+          ),
+          const TitleReserveDetail(text: "Detalle de cobro"),
+          const SizedBox(
+            height: 8,
+          ),
+          ExpansionTripLabelAmoutDriver(
+            priceBase:
+                trip.totalPrice - (trip.totalPrice * trip.silverPercent / 100),
+            waitingTimeExtra: calculateWaitingTime(),
+          ),
+          if (calcualteToll() != null || calculateParking() != null)
+            ExpansionTripLabelTollParkingDriver(
+              priceParking: calculateParking(),
+              priceToll: calcualteToll(),
             ),
+          LabelTotalPriceDriver(
+            description: "Cobro total",
+            priceText: "S/${calculateDriverPrice()}",
           ),
           SizedBox(
             height: size.width * 0.03,

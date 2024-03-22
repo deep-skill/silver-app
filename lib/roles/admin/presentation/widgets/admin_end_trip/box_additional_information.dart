@@ -400,7 +400,8 @@ class _AdminAdditionalInformationState
                 )
               : const SizedBox(),
           widget.waitingTimeExtra != null
-              ? LabelExtraTripEnd(text: widget.waitingTimeExtra.toString())
+              ? LabelExtraTripEnd(
+                  text: "Recargo espera S/ ${widget.waitingTimeExtra}")
               : const SizedBox(),
         ],
       ),

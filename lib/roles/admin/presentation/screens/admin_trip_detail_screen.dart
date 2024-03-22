@@ -7,7 +7,10 @@ import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/box_additional_information.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/trip_label_amount.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expansion_trip_toll_parking.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/label_driver_silver_earn.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/expansion_trip_label_amout.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/admin_end_trip/laber_total_price.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/title_trip_detail.dart';
@@ -53,6 +56,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
 
     double calculateCustomerPrice() {
       double result = trip.totalPrice;
+      if (trip.waitingTimeExtra != null) {
+        result += trip.waitingTimeExtra!;
+      }
       for (var element in trip.tolls) {
         result += element.amount;
       }
@@ -66,12 +72,33 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
     }
 
     double calculatePaySilver() {
-      double result = trip.totalPrice * trip.silverPercent / 100;
+      if (trip.waitingTimeExtra != null) {
+        return (trip.price + trip.waitingTimeExtra!) * trip.silverPercent / 100;
+      }
+      double result = (trip.price) * trip.silverPercent / 100;
       return result;
     }
 
     double calculatePayConductor() {
       double result = calculateCustomerPrice() - calculatePaySilver();
+      return result;
+    }
+
+    double? calcualteToll() {
+      if (trip.tolls.isEmpty) return null;
+      double result = 0.0;
+      for (var element in trip.tolls) {
+        result += element.amount;
+      }
+      return result;
+    }
+
+    double? calculateParking() {
+      if (trip.parkings.isEmpty) return null;
+      double result = 0.0;
+      for (var element in trip.parkings) {
+        result += element.amount;
+      }
       return result;
     }
 
@@ -255,24 +282,39 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                         const SizedBox(
                                           height: 18,
                                         ),
-                                        TripLabelAmout(
-                                          textAmout:
-                                              "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
-                                          textTipePrice: "Precio Total*",
+                                        const TitleTripDetail(
+                                            text: "Detalle de pago"),
+                                        const SizedBox(
+                                          height: 18,
                                         ),
-                                        TripLabelAmout(
-                                          textAmout:
-                                              "S/ ${calculatePayConductor().toStringAsFixed(2)}",
-                                          textTipePrice: "Pago conductor",
+                                        ExpansionTripLabelAmout(
+                                          priceBase: trip.status == 'CANCELED'
+                                              ? trip.totalPrice
+                                              : trip.price,
+                                          waitingTimeExtra:
+                                              trip.waitingTimeExtra,
                                         ),
-                                        TripLabelAmout(
-                                          textAmout:
+                                        LabelDriverSilverWin(
+                                          description:
+                                              'Gana Silver (${trip.silverPercent}%)',
+                                          priceText:
                                               "S/ ${calculatePaySilver().toStringAsFixed(2)}",
-                                          textTipePrice: "Pago Silver",
                                         ),
-                                        TripLabelAmout(
-                                          textAmout: "${trip.silverPercent}%",
-                                          textTipePrice: "Porcentaje Silver",
+                                        LabelDriverSilverWin(
+                                          description: 'Gana Conductor',
+                                          priceText:
+                                              "S/ ${calculatePayConductor().toStringAsFixed(2)}",
+                                        ),
+                                        if (calcualteToll() != null ||
+                                            calculateParking() != null)
+                                          ExpansionTripLabelTollParking(
+                                            priceParking: calculateParking(),
+                                            priceToll: calcualteToll(),
+                                          ),
+                                        LabelTotalPrice(
+                                          description: "Precio total",
+                                          priceText:
+                                              "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
                                         ),
                                         const SizedBox(
                                           height: 5,
@@ -617,24 +659,36 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         const SizedBox(
                           height: 5,
                         ),
-                        TripLabelAmout(
-                          textAmout:
-                              "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
-                          textTipePrice: "Precio Total*",
+                        const TitleTripDetail(text: "Detalle de pago"),
+                        const SizedBox(
+                          height: 5,
                         ),
-                        TripLabelAmout(
-                          textAmout:
-                              "S/ ${calculatePayConductor().toStringAsFixed(2)}",
-                          textTipePrice: "Pago conductor",
+                        ExpansionTripLabelAmout(
+                          priceBase: trip.status == 'CANCELED'
+                              ? trip.totalPrice
+                              : trip.price,
+                          waitingTimeExtra: trip.waitingTimeExtra,
                         ),
-                        TripLabelAmout(
-                          textAmout:
+                        LabelDriverSilverWin(
+                          description: 'Gana Silver (${trip.silverPercent}%)',
+                          priceText:
                               "S/ ${calculatePaySilver().toStringAsFixed(2)}",
-                          textTipePrice: "Pago Silver",
                         ),
-                        TripLabelAmout(
-                          textAmout: "${trip.silverPercent}%",
-                          textTipePrice: "Porcentaje Silver",
+                        LabelDriverSilverWin(
+                          description: 'Gana Conductor',
+                          priceText:
+                              "S/ ${calculatePayConductor().toStringAsFixed(2)}",
+                        ),
+                        if (calcualteToll() != null ||
+                            calculateParking() != null)
+                          ExpansionTripLabelTollParking(
+                            priceParking: calculateParking(),
+                            priceToll: calcualteToll(),
+                          ),
+                        LabelTotalPrice(
+                          description: "Precio total",
+                          priceText:
+                              "S/ ${calculateCustomerPrice().toStringAsFixed(2)}",
                         ),
                         const SizedBox(
                           height: 5,

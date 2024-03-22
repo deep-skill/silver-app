@@ -96,9 +96,7 @@ class TripDriverStatus {
               : null,
           reserveStartTime:
               DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
-          waitingTimeExtra: json["waitingTimeExtra"] != null
-              ? json["waitingTimeExtra"].toDouble()
-              : null,
+          waitingTimeExtra: json["waitingTimeExtra"]?.toDouble(),
           serviceCarType: json["Reserve"]["serviceCarType"]);
 
   Map<String, dynamic> toJson() => {

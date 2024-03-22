@@ -287,7 +287,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                           height: 18,
                                         ),
                                         ExpansionTripLabelAmout(
-                                          priceBase: trip.price,
+                                          priceBase: trip.status == 'CANCELED'
+                                              ? trip.totalPrice
+                                              : trip.price,
                                           waitingTimeExtra:
                                               trip.waitingTimeExtra,
                                         ),
@@ -661,7 +663,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           height: 5,
                         ),
                         ExpansionTripLabelAmout(
-                          priceBase: trip.price,
+                          priceBase: trip.status == 'CANCELED'
+                              ? trip.totalPrice
+                              : trip.price,
                           waitingTimeExtra: trip.waitingTimeExtra,
                         ),
                         LabelDriverSilverWin(

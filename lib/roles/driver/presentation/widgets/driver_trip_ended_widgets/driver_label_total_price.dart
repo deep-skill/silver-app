@@ -16,43 +16,37 @@ class LabelTotalPriceDriver extends StatelessWidget {
       fontFamily: 'Raleway-Bold',
       fontSize: 16,
     );
-    return SizedBox(
+    return Container(
+      margin: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
       child: Column(
         children: [
-          Container(
-            margin: const EdgeInsets.all(5.0),
-            padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(
-                          width: 15,
-                        ),
-                        Text(
-                          description,
-                          style: styleTitle,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          priceText,
-                          style: styleTitle,
-                        ),
-                        const SizedBox(
-                          width: 60,
-                        )
-                      ],
-                    ),
-                  ],
-                )
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  Text(
+                    description,
+                    style: styleTitle,
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    priceText,
+                    style: styleTitle,
+                  ),
+                  const SizedBox(
+                    width: 60,
+                  )
+                ],
+              ),
+            ],
           )
         ],
       ),

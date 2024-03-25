@@ -18,7 +18,7 @@ class AdminAdditionalInformation extends StatefulWidget {
   final String credentials;
   final int tripId;
   final String startAddress;
-  final String endAddress;
+  final String? endAddress;
   final VoidCallback reload;
   final List<Stop> stops;
   final List<Observations> observations;
@@ -256,11 +256,13 @@ class _AdminAdditionalInformationState
                     return LabelStopTripEnd(text: stop.location);
                   }).toList(),
                 ),
-                BoxReserveDetail(
-                  icon: Icons.trip_origin,
-                  label: "Punto de destino",
-                  text: widget.endAddress,
-                ),
+                widget.endAddress != null
+                    ? BoxReserveDetail(
+                        icon: Icons.trip_origin,
+                        label: "Punto de destino",
+                        text: widget.endAddress,
+                      )
+                    : const SizedBox(),
                 const SizedBox(
                   height: 10.0,
                 ),

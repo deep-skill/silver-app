@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class BoxReserveDetail extends StatelessWidget {
   final IconData? icon;
   final String label;
-  final String text;
+  final String? text;
   final bool? row;
   final bool? rowTriple;
 
@@ -43,7 +43,7 @@ class BoxReserveDetail extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Text(text,
+                    Text(text.toString(),
                         maxLines: 2,
                         style: const TextStyle(
                           fontFamily: 'Montserrat-Medium',
@@ -75,7 +75,7 @@ class BoxReserveDetail extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
-                    Text(text,
+                    Text(text.toString(),
                         maxLines: 2,
                         style: const TextStyle(
                           fontFamily: 'Montserrat-Regular',

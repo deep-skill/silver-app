@@ -27,7 +27,7 @@ class BoxStatusReserveDetail extends StatelessWidget {
       iconStatus = Icons.track_changes;
     } else if (tripStatus == 'CANCELED') {
       textStatus = 'Cancelado';
-      colorStatus = Colors.blue;
+      colorStatus = Colors.red;
       iconStatus = Icons.cancel_outlined;
     } else if (tripStatus == 'COMPLETED') {
       textStatus = 'Completado';

@@ -81,7 +81,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
 
     double calculatePayConductor() {
       double result = trip.totalPrice - calculatePaySilver();
-
+      if (trip.waitingTimeExtra != null) {
+        result += trip.waitingTimeExtra!;
+      }
       return result;
     }
 

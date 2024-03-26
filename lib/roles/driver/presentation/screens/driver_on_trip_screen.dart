@@ -160,6 +160,8 @@ class TripInfo extends ConsumerWidget {
 
     return ListView(children: [
       SeeMap(
+        credentials: credentials,
+        reload: reload,
         startAddress: trip.startAddress,
         startAddressLat: trip.startAddressLat,
         startAddressLon: trip.startAddressLon,
@@ -169,6 +171,7 @@ class TripInfo extends ConsumerWidget {
         arrivedDriver: trip.arrivedDriver,
         startTime: trip.startTime,
         endTime: trip.endTime,
+        stops: trip.stops,
       ),
       AddressInfoWidget(
           startAddress: trip.startAddress, endAddress: trip.endAddress),

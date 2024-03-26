@@ -10,8 +10,6 @@ abstract class Env {
     static final String auth0ClientId = _Env.auth0ClientId;
     @EnviedField(varName: 'AUTH0_CUSTOM_SCHEME', obfuscate: true)
     static final String auth0CustomScheme = _Env.auth0CustomScheme;
-    @EnviedField(varName: 'ENVIRONMENT', obfuscate: true)
-    static final String environment = _Env.environment;
     @EnviedField(varName: 'FIREBASE_OPTIONS_WEB', obfuscate: true)
     static final String firebaseOptionsWeb = _Env.firebaseOptionsWeb;
     @EnviedField(varName: 'FIREBASE_OPTIONS_ANDROID', obfuscate: true)

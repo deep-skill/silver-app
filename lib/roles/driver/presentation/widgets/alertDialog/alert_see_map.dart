@@ -83,6 +83,9 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
                     color: stop.arrived == true ? Colors.red : Colors.black,
                     fontFamily: "Montserrat-Regular",
                     overflow: TextOverflow.ellipsis,
+                    decoration: TextDecoration.underline,
+                    decorationColor:
+                        stop.arrived == true ? Colors.red : Colors.black,
                   ),
                   maxLines: 2,
                 ),
@@ -90,7 +93,7 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
             }).toList(),
             const TitleAdditionalInformation(
               icon: Icons.trip_origin,
-              label: "Destino final",
+              label: "Punto de destino",
             ),
             TextButton(
               onPressed: () => {
@@ -104,6 +107,9 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
                 '- ${widget.endAddress}',
                 style: const TextStyle(
                   fontFamily: "Montserrat-Regular",
+                  color: Colors.black,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Colors.black,
                 ),
                 maxLines: 2,
               ),

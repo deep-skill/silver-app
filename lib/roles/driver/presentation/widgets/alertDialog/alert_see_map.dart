@@ -73,12 +73,16 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
                 onPressed: () => {
                   putStopStatusDriver(context, stop.id, widget.credentials),
                   showBubble(context, stop.lat.toString(), stop.lon.toString()),
+                  context.pop()
                 },
                 child: Text(
                   '- ${stop.location}',
                   style: TextStyle(
-                      color: stop.arrived == true ? Colors.red : Colors.black,
-                      fontFamily: "Montserrat-Regular"),
+                    color: stop.arrived == true ? Colors.red : Colors.black,
+                    fontFamily: "Montserrat-Regular",
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  maxLines: 2,
                 ),
               );
             }).toList(),
@@ -94,10 +98,13 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
                   widget.endAddressLon.toString(),
                 )
               },
-              child: Text('- ${widget.endAddress}',
-                  style: const TextStyle(
-                    fontFamily: "Montserrat-Regular",
-                  )),
+              child: Text(
+                '- ${widget.endAddress}',
+                style: const TextStyle(
+                  fontFamily: "Montserrat-Regular",
+                ),
+                maxLines: 2,
+              ),
             ),
           ],
         ),

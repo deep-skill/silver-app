@@ -26,6 +26,13 @@ class _ExpansionTripLabelAmoutDriverState
   );
   @override
   Widget build(BuildContext context) {
+    double calculateRevenue() {
+      if (widget.waitingTimeExtra != null) {
+        return widget.priceBase + (widget.waitingTimeExtra ?? 0);
+      }
+      return widget.priceBase;
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xffF2F3F7),
@@ -42,7 +49,7 @@ class _ExpansionTripLabelAmoutDriverState
               style: styleTitle,
             ),
             Text(
-              " S/ ${widget.priceBase + (widget.waitingTimeExtra ?? 0)}",
+              " S/ ${calculateRevenue().toStringAsFixed(2)}",
               style: styleTitle,
             )
           ],

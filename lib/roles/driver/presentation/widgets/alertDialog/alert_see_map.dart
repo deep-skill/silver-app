@@ -61,10 +61,12 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
         ],
       ),
       actions: <Widget>[
-        const TitleAdditionalInformation(
-          icon: Icons.add_location_alt_outlined,
-          label: "Paradas",
-        ),
+        widget.stops.isNotEmpty
+            ? const TitleAdditionalInformation(
+                icon: Icons.add_location_alt_outlined,
+                label: "Paradas",
+              )
+            : const SizedBox(),
         Column(
           children: [
             ...widget.stops.asMap().entries.map((e) {

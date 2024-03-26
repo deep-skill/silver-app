@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 
+import '../../../../admin/presentation/widgets/admin_end_trip/title_additional_information.dart';
 import '../../../helpers/see_map_bubble_helpers.dart';
 
 class AlertSeeMapDriver extends StatefulWidget {
@@ -27,11 +28,11 @@ class AlertSeeMapDriver extends StatefulWidget {
 }
 
 class _AlertSeeMapState extends State<AlertSeeMapDriver> {
-  void patchArrivedDriver(
-      BuildContext context, int tripId, String credentials) async {
+  void putStopStatusDriver(
+      BuildContext context, int stopId, String credentials) async {
     try {
-      await dio(credentials).patch('trips/driver-trip/$tripId',
-          data: {"arrivedDriver": DateTime.now().toUtc().toIso8601String()});
+      await dio(credentials)
+          .put('stops/driver/$stopId', data: {"arrived": true});
       widget.reload();
     } catch (e) {
       print(e);
@@ -41,25 +42,50 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Ver mapa"),
+      title: const Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.map),
+          Text("Ver mapa"),
+        ],
+      ),
       content: const Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("Que punto desear ver?"),
+          Text(
+            "¿Qué direccion deseas visualizar en el mapa?",
+            style: TextStyle(
+              fontFamily: "Montserrat-Regular",
+            ),
+          ),
         ],
       ),
       actions: <Widget>[
+        const TitleAdditionalInformation(
+          icon: Icons.add_location_alt_outlined,
+          label: "Paradas",
+        ),
         Column(
           children: [
             ...widget.stops.asMap().entries.map((e) {
               final stop = e.value;
               return TextButton(
                 onPressed: () => {
+                  putStopStatusDriver(context, stop.id, widget.credentials),
                   showBubble(context, stop.lat.toString(), stop.lon.toString()),
                 },
-                child: Text('ir a ${stop.location}'),
+                child: Text(
+                  '- ${stop.location}',
+                  style: TextStyle(
+                      color: stop.arrived == true ? Colors.red : Colors.black,
+                      fontFamily: "Montserrat-Regular"),
+                ),
               );
             }).toList(),
+            const TitleAdditionalInformation(
+              icon: Icons.trip_origin,
+              label: "Destino final",
+            ),
             TextButton(
               onPressed: () => {
                 showBubble(
@@ -68,7 +94,10 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
                   widget.endAddressLon.toString(),
                 )
               },
-              child: Text('ir a ${widget.endAddress}'),
+              child: Text('- ${widget.endAddress}',
+                  style: const TextStyle(
+                    fontFamily: "Montserrat-Regular",
+                  )),
             ),
           ],
         ),

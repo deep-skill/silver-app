@@ -159,20 +159,22 @@ class TripInfo extends ConsumerWidget {
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 
     return ListView(children: [
-      SeeMap(
-        credentials: credentials,
-        reload: reload,
-        startAddress: trip.startAddress,
-        startAddressLat: trip.startAddressLat,
-        startAddressLon: trip.startAddressLon,
-        endAddress: trip.endAddress,
-        endAddressLat: trip.endAddressLat,
-        endAddressLon: trip.endAddressLon,
-        arrivedDriver: trip.arrivedDriver,
-        startTime: trip.startTime,
-        endTime: trip.endTime,
-        stops: trip.stops,
-      ),
+      trip.endAddress == null && trip.arrivedDriver != null
+          ? const SizedBox()
+          : SeeMap(
+              credentials: credentials,
+              reload: reload,
+              startAddress: trip.startAddress,
+              startAddressLat: trip.startAddressLat,
+              startAddressLon: trip.startAddressLon,
+              endAddress: trip.endAddress,
+              endAddressLat: trip.endAddressLat,
+              endAddressLon: trip.endAddressLon,
+              arrivedDriver: trip.arrivedDriver,
+              startTime: trip.startTime,
+              endTime: trip.endTime,
+              stops: trip.stops,
+            ),
       AddressInfoWidget(
           startAddress: trip.startAddress, endAddress: trip.endAddress),
       TripStatus(

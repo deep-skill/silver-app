@@ -249,7 +249,7 @@ class TripEndedInfo extends StatelessWidget {
             ),
           LabelTotalPriceDriver(
             description: "Cobro total",
-            priceText: "S/${calculateDriverPrice()}",
+            priceText: "S/${calculateDriverPrice().toStringAsFixed(2)}",
           ),
           SizedBox(
             height: size.width * 0.03,

@@ -79,11 +79,13 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
       return result;
     }
 
+
     double calculatePayConductor() {
       double result = trip.totalPrice - calculatePaySilver();
       if (trip.waitingTimeExtra != null) {
         result += trip.waitingTimeExtra!;
       }
+
       return result;
     }
 
@@ -306,7 +308,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                         LabelDriverSilverWin(
                                           description: 'Gana Conductor',
                                           priceText:
-                                              "S/ ${calculatePayConductor().toStringAsFixed(2)}",
+                                              "S/ ${calculatePayDriver().toStringAsFixed(2)}",
                                         ),
                                         if (calcualteToll() != null ||
                                             calculateParking() != null)
@@ -680,7 +682,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         LabelDriverSilverWin(
                           description: 'Gana Conductor',
                           priceText:
-                              "S/ ${calculatePayConductor().toStringAsFixed(2)}",
+                              "S/ ${calculatePayDriver().toStringAsFixed(2)}",
                         ),
                         if (calcualteToll() != null ||
                             calculateParking() != null)

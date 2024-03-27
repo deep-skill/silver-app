@@ -159,17 +159,41 @@ class TripInfo extends ConsumerWidget {
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 
     return ListView(children: [
-      SeeMap(
-        startAddress: trip.startAddress,
-        startAddressLat: trip.startAddressLat,
-        startAddressLon: trip.startAddressLon,
-        endAddress: trip.endAddress,
-        endAddressLat: trip.endAddressLat,
-        endAddressLon: trip.endAddressLon,
-        arrivedDriver: trip.arrivedDriver,
-        startTime: trip.startTime,
-        endTime: trip.endTime,
-      ),
+      trip.arrivedDriver != null
+          ? const SizedBox()
+          : SeeMap(
+              credentials: credentials,
+              reload: reload,
+              startAddress: trip.startAddress,
+              startAddressLat: trip.startAddressLat,
+              startAddressLon: trip.startAddressLon,
+              endAddress: trip.endAddress,
+              endAddressLat: trip.endAddressLat,
+              endAddressLon: trip.endAddressLon,
+              arrivedDriver: trip.arrivedDriver,
+              startTime: trip.startTime,
+              endTime: trip.endTime,
+              stops: trip.stops,
+            ),
+      trip.endAddress == null && trip.arrivedDriver != null ||
+              trip.endTime != null
+          ? const SizedBox()
+          : trip.startTime != null
+              ? SeeMap(
+                  credentials: credentials,
+                  reload: reload,
+                  startAddress: trip.startAddress,
+                  startAddressLat: trip.startAddressLat,
+                  startAddressLon: trip.startAddressLon,
+                  endAddress: trip.endAddress,
+                  endAddressLat: trip.endAddressLat,
+                  endAddressLon: trip.endAddressLon,
+                  arrivedDriver: trip.arrivedDriver,
+                  startTime: trip.startTime,
+                  endTime: trip.endTime,
+                  stops: trip.stops,
+                )
+              : const SizedBox(),
       AddressInfoWidget(
           startAddress: trip.startAddress, endAddress: trip.endAddress),
       TripStatus(
@@ -256,6 +280,7 @@ class TripInfo extends ConsumerWidget {
                     arrivedDriver: trip.arrivedDriver,
                     reserveStartTime: trip.reserveStartTime,
                     startTime: trip.startTime,
+                    serviceCarType: trip.serviceCarType,
                   )),
             )
           : const SizedBox(),

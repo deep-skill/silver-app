@@ -143,7 +143,7 @@ Future<void> stopBubble(BuildContext context, bool isStartTrip) async {
   );
 
   if (isStartTrip) {
-    context.go('/driver/trip');
+    context.pop();
   }
 }
 

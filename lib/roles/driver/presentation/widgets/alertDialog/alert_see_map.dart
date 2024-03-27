@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
-
 import '../../../../admin/presentation/widgets/admin_end_trip/title_additional_information.dart';
-import '../../../helpers/see_map_bubble_helpers.dart';
+import '../../../helpers/see_map_bubble.dart';
 
 class AlertSeeMapDriver extends StatefulWidget {
   final String credentials;
@@ -74,8 +73,8 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
               return TextButton(
                 onPressed: () => {
                   putStopStatusDriver(context, stop.id, widget.credentials),
-                  showBubble(context, stop.lat.toString(), stop.lon.toString()),
-                  context.pop()
+                  showBubble(
+                      context, stop.lat.toString(), stop.lon.toString(), true),
                 },
                 child: Text(
                   '- ${stop.location}',
@@ -103,8 +102,8 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
                   context,
                   widget.endAddressLat.toString(),
                   widget.endAddressLon.toString(),
+                  true,
                 ),
-                context.pop()
               },
               child: Text(
                 '- ${widget.endAddress}',

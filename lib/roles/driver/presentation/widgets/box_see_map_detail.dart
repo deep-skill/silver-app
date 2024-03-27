@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/driver/helpers/see_map_bubble_helpers.dart';
+import 'package:silverapp/roles/driver/helpers/see_map_bubble.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_see_map.dart';
 import '../../infraestructure/entities/driver_trip_state.dart';
 
@@ -56,7 +56,7 @@ class SeeMap extends StatelessWidget {
             onPressed: () {
               if (arrivedDriver == null) {
                 showBubble(context, startAddressLat.toString(),
-                    startAddressLon.toString());
+                    startAddressLon.toString(), false);
               } else {
                 showDialog(
                   context: context,

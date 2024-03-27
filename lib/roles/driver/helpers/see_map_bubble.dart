@@ -1,7 +1,7 @@
 import 'dart:developer';
-
 import 'package:dash_bubble/dash_bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 launchCustomUrl(String url) async {
@@ -130,10 +130,11 @@ Future<void> startBubble(
   );
 }
 
-Future<void> stopBubble(BuildContext context) async {
+Future<void> stopBubble(BuildContext context, bool isStartTrip) async {
   await runMethod(
     context,
     () async {
+      try {} catch (e) {}
       final hasStopped = await DashBubble.instance.stopBubble();
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -141,9 +142,14 @@ Future<void> stopBubble(BuildContext context) async {
               Text(hasStopped ? 'Bubble Stopped' : 'Bubble has not Stopped')));
     },
   );
+
+  if (isStartTrip) {
+    context.go('/driver/trip');
+  }
 }
 
-Future<void> showBubble(BuildContext context, String lat, String lon) async {
+Future<void> showBubble(
+    BuildContext context, String lat, String lon, bool isStartTrip) async {
   await runMethod(
     context,
     () async {
@@ -180,7 +186,8 @@ Future<void> showBubble(BuildContext context, String lat, String lon) async {
             ),
             onTap: () => {
                   launchCustomUrl("backapp://backapp.com"),
-                  stopBubble(context)
+                  context.pop(),
+                  stopBubble(context, isStartTrip),
                 });
         launchCustomUrl("https://waze.com/ul?ll=$lat,$lon&navigate=yes");
       }

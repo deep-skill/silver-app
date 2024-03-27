@@ -80,12 +80,14 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
                 child: Text(
                   '- ${stop.location}',
                   style: TextStyle(
-                    color: stop.arrived == true ? Colors.red : Colors.black,
-                    fontFamily: "Montserrat-Regular",
+                    color: Colors.black,
+                    fontFamily: stop.arrived
+                        ? "Montserrat-Regular"
+                        : "Montserrat-Semibold",
                     overflow: TextOverflow.ellipsis,
+                    fontSize: 12,
                     decoration: TextDecoration.underline,
-                    decorationColor:
-                        stop.arrived == true ? Colors.red : Colors.black,
+                    decorationColor: Colors.black,
                   ),
                   maxLines: 2,
                 ),
@@ -101,15 +103,18 @@ class _AlertSeeMapState extends State<AlertSeeMapDriver> {
                   context,
                   widget.endAddressLat.toString(),
                   widget.endAddressLon.toString(),
-                )
+                ),
+                context.pop()
               },
               child: Text(
                 '- ${widget.endAddress}',
                 style: const TextStyle(
-                  fontFamily: "Montserrat-Regular",
+                  fontFamily: "Montserrat-Semibold",
                   color: Colors.black,
                   decoration: TextDecoration.underline,
                   decorationColor: Colors.black,
+                  fontSize: 12,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 maxLines: 2,
               ),

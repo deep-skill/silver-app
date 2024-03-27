@@ -259,6 +259,7 @@ class TripInfo extends ConsumerWidget {
                     arrivedDriver: trip.arrivedDriver,
                     reserveStartTime: trip.reserveStartTime,
                     startTime: trip.startTime,
+                    serviceCarType: trip.serviceCarType,
                   )),
             )
           : const SizedBox(),

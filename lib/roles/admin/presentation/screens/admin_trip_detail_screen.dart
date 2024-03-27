@@ -56,9 +56,6 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
 
     double calculateCustomerPrice() {
       double result = trip.totalPrice;
-      if (trip.waitingTimeExtra != null) {
-        result += trip.waitingTimeExtra!;
-      }
       for (var element in trip.tolls) {
         result += element.amount;
       }
@@ -72,6 +69,9 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
     }
 
     double calculatePaySilver() {
+      if (trip.status == "CANCELED") {
+        return (trip.totalPrice) * trip.silverPercent / 100;
+      }
       if (trip.waitingTimeExtra != null) {
         return (trip.price + trip.waitingTimeExtra!) * trip.silverPercent / 100;
       }
@@ -79,8 +79,13 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
       return result;
     }
 
-    double calculatePayDriver() {
-      double result = calculateCustomerPrice() - calculatePaySilver();
+
+    double calculatePayConductor() {
+      double result = trip.totalPrice - calculatePaySilver();
+      if (trip.waitingTimeExtra != null) {
+        result += trip.waitingTimeExtra!;
+      }
+
       return result;
     }
 

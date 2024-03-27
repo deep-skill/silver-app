@@ -8,7 +8,7 @@ class AdminTripEnd {
   DateTime? endTime;
   String status;
   String startAddress;
-  String endAddress;
+  String? endAddress;
   double price;
   int silverPercent;
   String userName;

@@ -1,0 +1,43 @@
+services:
+
+  silver-web:
+    container_name: silver-web
+    image: nginx:1.25.4-alpine
+    ports:
+      - "443:443"
+    volumes:
+      - ./../nginx/ssl:/etc/nginx/ssl
+      - ./../build/web:/usr/share/nginx/html/
+      - ./../nginx/nginx.conf-production:/etc/nginx/nginx.conf
+    depends_on:
+      - silver-api
+      - db
+
+  silver-api:
+    container_name: silver-api
+    image: "node:18-alpine"
+    working_dir: /home/node/app
+    volumes:
+      - ./../../silver-api:/home/node/app/
+    ports:
+      - "3001:3001"
+    command: "npm start"
+    env_file:
+      - .env.dockercompose
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    container_name: db
+    image: postgres:14.11-alpine3.19
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env.dockercompose
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+
+volumes:
+  db-data:
+    name: db-data

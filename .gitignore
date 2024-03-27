@@ -1,4 +1,5 @@
 .env
+.env.dockercompose
 /build
 generated_plugin_registrant.cc
 generated_plugin_registrant.h
@@ -39,7 +40,7 @@ migrate_working_dir/
 .packages
 .pub-cache/
 .pub/
-#/build/
+
 #^^^^ Commented to test build on deploy ^^^^
 # Symbolication related
 app.*.symbols

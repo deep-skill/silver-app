@@ -185,7 +185,6 @@ Future<void> showBubble(
             ),
             onTap: () => {
                   launchCustomUrl("backapp://backapp.com"),
-                  context.pop(),
                   stopBubble(context, isStartTrip),
                 });
         launchCustomUrl("https://waze.com/ul?ll=$lat,$lon&navigate=yes");

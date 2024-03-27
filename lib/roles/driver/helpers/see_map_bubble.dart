@@ -134,7 +134,6 @@ Future<void> stopBubble(BuildContext context, bool isStartTrip) async {
   await runMethod(
     context,
     () async {
-      try {} catch (e) {}
       final hasStopped = await DashBubble.instance.stopBubble();
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(

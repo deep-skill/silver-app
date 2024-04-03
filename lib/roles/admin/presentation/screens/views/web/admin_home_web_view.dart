@@ -33,7 +33,7 @@ class AdminHomeWebView extends StatelessWidget {
   Widget build(BuildContext context) {
     final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
       child: Column(
         children: [
           TripsSummaryViewWeb(
@@ -43,11 +43,11 @@ class AdminHomeWebView extends StatelessWidget {
             date: date,
           ),
           const SizedBox(
-            height: 10,
+            height: 8,
           ),
           Container(
             width: size.width * .8,
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(8),
             alignment: Alignment.centerLeft,
             child: Row(
               children: [
@@ -135,6 +135,7 @@ class AdminHomeWebView extends StatelessWidget {
           ),
           const SizedBox(height: 15),
           ReservesListHomeWeb(
+            size: size,
             reserves: reserves,
             loadNextPage: () {
               ref.read(reservesHomeProvider.notifier).loadNextPage();

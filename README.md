@@ -3,19 +3,41 @@
 
 Silver Express is a taxicab company.
 
-## Run the project
+## Technologies
 
-To run the project:
+- Flutter: Cross-platform development framework (Android and iOS)
+- Node.js: Runtime environment for backend development
+- PostgreSQL: Robust and scalable database
+- Nginx: Efficient and secure web server
+- Auth0: Secure and flexible authentication
+- Docker Compose: Tool for automating deploying applications in containers
 
-First, rename the file name ".env.example" to ".env". Then make sure you have the API working and fill in the data correctly in the ".env" file.
+## Getting started
 
-Then, to create env variables run the command:
+API:
+
+1- Navigate to the silver-api/docker directory.
+
+2- Rename the file .env.dockercompose.template to .env.dockercompose.
+
+3- Fill in the environment variables in the .env.dockercompose file.
+
+4- Run the command docker compose up to start the API in development mode.
+
+```sh
+docker compose up
+```
+
+APP:
+
+1- Complete the .env file at the root of the silver-app directory with the environment variables.
+
+2- Run the command to generate obfuscated environment variables.
 
 ```sh
 dart run build_runner build
 ```
-
-When modifying the .env file, the generator might not pick up the change due to dart-lang/build#967. If that happens simply clean the build cache and run the generator again.
+*-  When modifying the .env file, the generator might not pick up the change due to dart-lang/build#967. If that happens simply clean the build cache and run the generator again.
 
 ```sh
 dart run build_runner clean
@@ -24,99 +46,52 @@ dart run build_runner clean
 dart run build_runner build --delete-conflicting-outputs
 ```
 
+Running Options:
+
+
 
 ### 📱 Mobile
 
-Press F5 on main.dart or you can use the [Flutter CLI's](https://docs.flutter.dev/reference/flutter-cli) `run` command.
-
+With API running, execute press F5 on a .dart file or you can use the [Flutter CLI's](https://docs.flutter.dev/reference/flutter-cli) `run` command:
 ```sh
 flutter run
 ```
-
 Ensure you have at least one emulator running. If you have multiple running, the CLI will prompt you to select the one to run the app on.
 
 ### 🖥️ Web
 
+With API running, execute:
+
 ```sh
 flutter run -d chrome --web-port 3000 --web-renderer html
 ```
-### 🐳 Docker Web and API
 
-First open the terminal and build the web project build with flutter with the following command line on the silver-app folder.
+or if you want to use another browser:
+```sh
+flutter run -d web-server --web-port 3000 --web-renderer html
+```
+
+### 🐳 Docker Web and API without API running
+
+Open the terminal and build the web project build with flutter with the following command line on the silver-app folder. You must create the .env variables obfuscated as described above.
 
 ```sh
 flutter build web
 ```
 
-Then rename silver-app\build\web\assets\.env without a leading "."
+Finally, open a terminal in the "silver-app/docker" directory  and run:
 
-Next, in the top directory, copy the .env file (from the api or app folder) and the docker-compose.yml file.
-
-Finally, open a terminal in the main directory and run:
-
+- Local mode:
 ```sh
-docker compose up
+docker compose -f docker-compose.local.yml up
 ```
 
-## Completed Tasks
+- Production mode:
+```sh
+docker compose -f docker-compose.production.yml up
+```
+Considerations:
 
-### Installed dependencies
-  - animate_do
-  - auth0_flutter
-  - cupertino_icons
-  - dash_bubble
-  - dio: ^5.3.2
-  - envied: ^0.5.3
-  - firebase_analytics: ^10.7.4
-  - firebase_core: ^2.24.2
-  - firebase_crashlytics: ^3.4.8
-  - flutter: sdk: flutter
-  - flutter_riverpod: ^2.3.6
-  - formz: ^0.6.1
-  - geolocator: ^10.1.0
-  - go_router: ^10.0.0
-  - google_maps_flutter: ^2.5.2
-  - google_maps_flutter_web: ^0.5.4+3
-  - intl: ^0.18.1
-  - url_launcher: ^6.2.1
-
-### Installed dev dependencies
-  - build_runner: ^2.4.8
-  - envied_generator: ^0.5.3
-  - flutter_lints: ^2.0.0
-  - flutter_test: sdk: flutter
-
-### Auth0
-- app/build.gradle: Upgrade minSdkVersion to 21, and added manifestPlaceholders
-- web/index.html: added auth0Web script tag
-- API audience
-- Scopes: user, driver, admin
-
-### GoRouter
-- app_router: Redirects to routes
-- app_router_notifier: Notifies authProvider state
-- app_router scopes
-
-### Assets
-- Pubspect: Added
-- assets/images/
-- Logos
-
-### Dio Request:
-- .env your IP to call server
-- accessToken added to dio
-
-### Fonts:
-- Pubspect: Added
-- Primary: Raleway
-- Secondary: Montserrat
-
-### Providers:
-- ProviderScope on  MainApp()
-
-### Theme:
-- Darkblue: #031329
-- Blue: #164672
-- Lightblue: #23A5CD
-- Grey: #E7E7E7
-- White: #FFFFFF
+- Ensure you have the necessary tools installed (Flutter, Node.js, Docker, etc.).
+- Refer to the official documentation of each tool for more information.
+- This README is a general guide, you can adapt it to your specific needs.

@@ -146,6 +146,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                           child: Image.asset(
                         "assets/images/app_logo.png",
                         width: size.width * .2,
+                        color: Color(0xff03132a),
                       )),
                       SizedBox(
                         width: size.width * .04,

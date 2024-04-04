@@ -30,21 +30,19 @@ class Auth0ScreenState extends ConsumerState<Auth0Screen> {
                       child: Column(
                         children: [
                           Image.asset(
-                            'assets/images/app_logo.png',
-                            width: kIsWeb ? size.width * .10 : size.width * .30,
-                          ),
-                          Image.asset(
                             'assets/images/app_logo_letters.png',
-                            width: kIsWeb ? size.width * .30 : size.width * .70,
+                            width: kIsWeb ? size.width * .45 : size.width * .85,
                           ),
                         ],
                       )),
                   const SizedBox(
-                    height: 10,
+                    height: 30,
                   ),
-                  const CircularProgressIndicator(
-                    strokeWidth: 4,
-                    color: Colors.white,
+                  SizedBox(
+                    width: kIsWeb ? size.width * .30 : size.width * .70,
+                    child: const LinearProgressIndicator(
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),

@@ -156,13 +156,13 @@ class TripInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var route = calculateRouteAndStops(getDirectionsUrl(
+    calculateRouteAndStops(getDirectionsUrl(
         trip.startAddressLat,
         trip.startAddressLon,
         trip.endAddressLat,
         trip.endAddressLon,
         trip.stops));
-    print(route.toString());
+
     const TextStyle textStyleLastGoodbye = TextStyle(
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 
@@ -289,6 +289,11 @@ class TripInfo extends ConsumerWidget {
                     reserveStartTime: trip.reserveStartTime,
                     startTime: trip.startTime,
                     serviceCarType: trip.serviceCarType,
+                    startAddressLat: trip.startAddressLat,
+                    startAddressLon: trip.startAddressLon,
+                    endAddressLat: trip.endAddressLat,
+                    endAddressLon: trip.endAddressLon,
+                    stops: trip.stops,
                   )),
             )
           : const SizedBox(),
@@ -327,7 +332,7 @@ class TripInfo extends ConsumerWidget {
           ? const SizedBox()
           : Container(
               padding: const EdgeInsets.all(10),
-              child: const BackHomeButton(buttonText: "Ir al inicio"))
+              child: const BackHomeButton(buttonText: "Ir al inicio")),
     ]);
   }
 }

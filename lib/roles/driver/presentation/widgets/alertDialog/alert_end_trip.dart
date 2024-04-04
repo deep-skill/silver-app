@@ -2,6 +2,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
+import '../../../../../google_maps/google_post_routes.dart';
 
 class AlertTripEnd extends StatefulWidget {
   final int tripId;
@@ -13,6 +15,11 @@ class AlertTripEnd extends StatefulWidget {
   final DateTime? startTime;
   final DateTime reserveStartTime;
   final String serviceCarType;
+  final double startAddressLat;
+  final double startAddressLon;
+  final double? endAddressLat;
+  final double? endAddressLon;
+  final List<Stop> stops;
 
   const AlertTripEnd({
     Key? key,
@@ -25,6 +32,11 @@ class AlertTripEnd extends StatefulWidget {
     required this.startTime,
     required this.reserveStartTime,
     required this.serviceCarType,
+    required this.startAddressLat,
+    required this.startAddressLon,
+    required this.endAddressLat,
+    required this.endAddressLon,
+    required this.stops,
   }) : super(key: key);
   @override
   State<AlertTripEnd> createState() => _AlertTripEndState();
@@ -107,6 +119,24 @@ class _AlertTripEndState extends State<AlertTripEnd> {
   }
 
   void patchEndTripDrive(BuildContext context, int tripId) async {
+    var sugestedTotalPrice = 0;
+    var route = await calculateRouteAndStops(getDirectionsUrl(
+        widget.startAddressLat,
+        widget.startAddressLon,
+        widget.endAddressLat,
+        widget.endAddressLon,
+        widget.stops));
+    print("distancia: ${route.distance}. tiempo: ${route.time}");
+    sugestedTotalPrice = calculateBasePrice(
+        route.distance,
+        route.time,
+        widget.serviceCarType,
+        isInDesiredTimeRange(widget.startTime.toString()));
+
+    print("sugestedTotalPrice: $sugestedTotalPrice");
+    print("----------------------------------------------");
+    print("----------------------------------------------");
+    print("----------------------------------------------");
     try {
       if (widget.tripType == "POR HORA") {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {

@@ -103,12 +103,22 @@ String getDirectionsUrl(double originLat, double originLon,
   return 'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&waypoints=$waypointsString&key=$apiKey';
 }
 
-Future<String> calculateRouteAndStops(String url) async {
+Future<ResponseRoute> calculateRouteAndStops(String url) async {
   print(url);
   var response = await Dio().get(url);
   print(
       "distancia: ${response.data['routes'][0]['legs'][0]['distance']['text']}. tiempo: ${response.data['routes'][0]['legs'][0]['duration']['text']}");
   print(
       "distancia: ${response.data['routes'][0]['legs'][0]['distance']['value']}. tiempo: ${response.data['routes'][0]['legs'][0]['duration']['value']}");
-  return "distancia: ${response.data['routes'][0]['legs'][0]['distance']['value']}. tiempo: ${response.data['routes'][0]['legs'][0]['duration']['value']}";
+
+  ResponseRoute responseRoute = ResponseRoute(
+      distance: response.data['routes'][0]['legs'][0]['distance']['value'],
+      time: response.data['routes'][0]['legs'][0]['duration']['value']);
+  return responseRoute;
+}
+
+class ResponseRoute {
+  int distance;
+  int time;
+  ResponseRoute({required this.distance, required this.time});
 }

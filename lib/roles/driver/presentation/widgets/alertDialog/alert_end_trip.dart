@@ -119,18 +119,19 @@ class _AlertTripEndState extends State<AlertTripEnd> {
   }
 
   void patchEndTripDrive(BuildContext context, int tripId) async {
-    var sugestedTotalPrice = 0;
+    var suggestedTotalPrice = 0;
     var route = await calculateRouteAndStops(getDirectionsUrl(
         widget.startAddressLat,
         widget.startAddressLon,
         widget.endAddressLat,
         widget.endAddressLon,
         widget.stops));
-    print("distancia: ${route.distance}. tiempo: ${route.time}");
-    sugestedTotalPrice = calculateBasePrice(
+    print(
+        "distancia: ${route.distance}. tiempo: ${route.time}. polyline ${route.encodedPolyline}");
+    suggestedTotalPrice = calculateBasePrice(
         route.distance, route.time, widget.serviceCarType, false);
 
-    print("sugestedTotalPrice: $sugestedTotalPrice");
+    print("sugestedTotalPrice: $suggestedTotalPrice");
     print("----------------------------------------------");
     print("----------------------------------------------");
     print("----------------------------------------------");
@@ -149,18 +150,21 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": DateTime.now().toUtc().toIso8601String(),
           "status": "COMPLETED",
-          "totalPrice": sugestedTotalPrice +
+          "totalPrice": widget.totalPrice +
               calculateWaitingAmount(widget.arrivedDriver, widget.startTime,
                   widget.reserveStartTime),
           "waitingTimeExtra": calculateWaitingAmount(widget.arrivedDriver,
                   widget.startTime, widget.reserveStartTime)
-              .toDouble()
+              .toDouble(),
+          "suggestedTotalPrice": suggestedTotalPrice,
+          "polyline": route.encodedPolyline
         });
       } else {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": DateTime.now().toUtc().toIso8601String(),
           "status": "COMPLETED",
-          "totalPrice": sugestedTotalPrice
+          "suggestedTotalPrice": suggestedTotalPrice,
+          "polyline": route.encodedPolyline
         });
       }
       widget.reload();

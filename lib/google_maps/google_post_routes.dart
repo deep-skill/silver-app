@@ -112,13 +112,10 @@ Future<ResponseRoute> calculateRouteAndStops(String url) async {
       "distancia: ${response.data['routes'][0]['legs'][0]['distance']['value']}. tiempo: ${response.data['routes'][0]['legs'][0]['duration']['value']}");
 
   ResponseRoute responseRoute = ResponseRoute(
-      distance: response.data['routes'][0]['legs'][0]['distance']['value'],
-      time: response.data['routes'][0]['legs'][0]['duration']['value']);
-  return responseRoute;
-}
+    distance: response.data['routes'][0]['legs'][0]['distance']['value'],
+    time: response.data['routes'][0]['legs'][0]['duration']['value'],
+    encodedPolyline: response.data['routes'][0]['overview_polyline']['points'],
+  );
 
-class ResponseRoute {
-  int distance;
-  int time;
-  ResponseRoute({required this.distance, required this.time});
+  return responseRoute;
 }

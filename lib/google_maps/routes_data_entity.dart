@@ -64,3 +64,13 @@ class Polyline {
         "encodedPolyline": encodedPolyline,
       };
 }
+
+class ResponseRoute {
+  int distance;
+  int time;
+  String encodedPolyline;
+  ResponseRoute(
+      {required this.distance,
+      required this.time,
+      required this.encodedPolyline});
+}

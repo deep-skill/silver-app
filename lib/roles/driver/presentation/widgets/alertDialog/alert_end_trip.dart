@@ -128,10 +128,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         widget.stops));
     print("distancia: ${route.distance}. tiempo: ${route.time}");
     sugestedTotalPrice = calculateBasePrice(
-        route.distance,
-        route.time,
-        widget.serviceCarType,
-        isInDesiredTimeRange(widget.startTime.toString()));
+        route.distance, route.time, widget.serviceCarType, false);
 
     print("sugestedTotalPrice: $sugestedTotalPrice");
     print("----------------------------------------------");
@@ -152,7 +149,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": DateTime.now().toUtc().toIso8601String(),
           "status": "COMPLETED",
-          "totalPrice": widget.totalPrice +
+          "totalPrice": sugestedTotalPrice +
               calculateWaitingAmount(widget.arrivedDriver, widget.startTime,
                   widget.reserveStartTime),
           "waitingTimeExtra": calculateWaitingAmount(widget.arrivedDriver,
@@ -162,7 +159,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
       } else {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": DateTime.now().toUtc().toIso8601String(),
-          "status": "COMPLETED"
+          "status": "COMPLETED",
+          "totalPrice": sugestedTotalPrice
         });
       }
       widget.reload();

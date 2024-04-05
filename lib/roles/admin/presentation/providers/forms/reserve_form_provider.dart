@@ -68,82 +68,82 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
     this.onSubmitCallback,
     required CreateReserve reserve,
   }) : super(ReserveFormState(
-          userId: reserve.userId == 0
-              ? const UserId.pure()
-              : UserId.dirty(reserve.userId),
-          userName: reserve.userId == 0 ? 'Ejem. Carla' : reserve.userName,
-          userLastName:
-              reserve.userId == 0 ? 'Peña Ramirez' : reserve.userLastName,
-          startDate: reserve.startDate == ''
-              ? const StartDate.pure()
-              : StartDate.dirty(reserve.startDate),
-          startTime: reserve.startTime == ''
-              ? const StartTime.pure()
-              : StartTime.dirty(reserve.startTime),
-          tripType: reserve.tripType == ''
-              ? const TripType.pure()
-              : TripType.dirty(reserve.tripType[0].toUpperCase() +
-                  reserve.tripType.substring(1).toLowerCase()),
-          //serviceType: reserve.serviceType ==  ''  ? const ServiceType.pure() : ServiceType.dirty(reserve.serviceType[0].toUpperCase() + reserve.serviceType.substring(1).toLowerCase()),
-          serviceType: (reserve.serviceType == ''
-              ? const ServiceType.pure()
-              : reserve.serviceType == 'ENTERPRISE'
-                  ? const ServiceType.dirty('Empresarial')
-                  : const ServiceType.dirty('Personal')),
-          serviceCarType: (reserve.serviceCarType == ''
-              ? const ServiceCarType.pure()
-              : reserve.serviceCarType == 'CAR'
-                  ? const ServiceCarType.dirty('Auto')
-                  : reserve.serviceCarType == 'TRUCK'
-                      ? const ServiceCarType.dirty('Camioneta')
-                      : const ServiceCarType.dirty('Van')),
-          startAddress: reserve.startAddress == ''
-              ? const StartAddress.pure()
-              : StartAddress.dirty(reserve.startAddress),
-          startAddressLat: reserve.startAddressLat,
-          startAddressLon: reserve.startAddressLon,
-          endAddress: (reserve.endAddress == '' || reserve.endAddress == null)
-              ? const EndAddress.pure()
-              : EndAddress.dirty(reserve.endAddress!),
-          endAddressLat: reserve.endAddressLat,
-          endAddressLon: reserve.endAddressLon,
-          enterpriseId: reserve.enterpriseId == null
-              ? const EnterpriseId.pure()
-              : EnterpriseId.dirty(reserve.enterpriseId!),
-          driverId: reserve.driverId == null
-              ? const DriverId.pure()
-              : DriverId.dirty(reserve.driverId!),
-          driverName: (reserve.driverId == 0 || reserve.driverId == null)
-              ? 'Ejem. Luis'
-              : reserve.driverName!,
-          driverLastName: (reserve.driverId == 0 || reserve.driverId == null)
-              ? 'Perez'
-              : reserve.driverLastName!,
-          carId: (reserve.carId == 0 || reserve.carId == null)
-              ? const CarId.pure()
-              : CarId.dirty(reserve.carId!),
-          licensePlate: (reserve.carId == 0 || reserve.carId == null)
-              ? 'A1R610'
-              : reserve.licensePlate!,
-          brand: (reserve.carId == 0 || reserve.carId == null)
-              ? 'Ejem. Toyota'
-              : reserve.brand!,
-          model: (reserve.carId == 0 || reserve.carId == null)
-              ? 'Corolla'
-              : reserve.model!,
-          color: (reserve.carId == 0 || reserve.carId == null)
-              ? 'Gris'
-              : reserve.color!,
-          price: reserve.price == ''
-              ? const Price.pure()
-              : Price.dirty(reserve.price.toString()),
-          silverPercent: reserve.silverPercent == ''
-              ? const SilverPercent.pure()
-              : SilverPercent.dirty(reserve.silverPercent.toString()),
-          suggestedPrice: reserve.suggestedPrice == null
-              ? const SuggestedPrice.pure()
-              : SuggestedPrice.dirty(reserve.suggestedPrice.toString()),
-        ));
+            userId: reserve.userId == 0
+                ? const UserId.pure()
+                : UserId.dirty(reserve.userId),
+            userName: reserve.userId == 0 ? 'Ejem. Carla' : reserve.userName,
+            userLastName:
+                reserve.userId == 0 ? 'Peña Ramirez' : reserve.userLastName,
+            startDate: reserve.startDate == ''
+                ? const StartDate.pure()
+                : StartDate.dirty(reserve.startDate),
+            startTime: reserve.startTime == ''
+                ? const StartTime.pure()
+                : StartTime.dirty(reserve.startTime),
+            tripType: reserve.tripType == ''
+                ? const TripType.pure()
+                : TripType.dirty(reserve.tripType[0].toUpperCase() +
+                    reserve.tripType.substring(1).toLowerCase()),
+            //serviceType: reserve.serviceType ==  ''  ? const ServiceType.pure() : ServiceType.dirty(reserve.serviceType[0].toUpperCase() + reserve.serviceType.substring(1).toLowerCase()),
+            serviceType: (reserve.serviceType == ''
+                ? const ServiceType.pure()
+                : reserve.serviceType == 'ENTERPRISE'
+                    ? const ServiceType.dirty('Empresarial')
+                    : const ServiceType.dirty('Personal')),
+            serviceCarType: (reserve.serviceCarType == ''
+                ? const ServiceCarType.pure()
+                : reserve.serviceCarType == 'CAR'
+                    ? const ServiceCarType.dirty('Auto')
+                    : reserve.serviceCarType == 'TRUCK'
+                        ? const ServiceCarType.dirty('Camioneta')
+                        : const ServiceCarType.dirty('Van')),
+            startAddress: reserve.startAddress == ''
+                ? const StartAddress.pure()
+                : StartAddress.dirty(reserve.startAddress),
+            startAddressLat: reserve.startAddressLat,
+            startAddressLon: reserve.startAddressLon,
+            endAddress: (reserve.endAddress == '' || reserve.endAddress == null)
+                ? const EndAddress.pure()
+                : EndAddress.dirty(reserve.endAddress!),
+            endAddressLat: reserve.endAddressLat,
+            endAddressLon: reserve.endAddressLon,
+            enterpriseId: reserve.enterpriseId == null
+                ? const EnterpriseId.pure()
+                : EnterpriseId.dirty(reserve.enterpriseId!),
+            driverId: reserve.driverId == null
+                ? const DriverId.pure()
+                : DriverId.dirty(reserve.driverId!),
+            driverName: (reserve.driverId == 0 || reserve.driverId == null)
+                ? 'Ejem. Luis'
+                : reserve.driverName!,
+            driverLastName: (reserve.driverId == 0 || reserve.driverId == null)
+                ? 'Perez'
+                : reserve.driverLastName!,
+            carId: (reserve.carId == 0 || reserve.carId == null)
+                ? const CarId.pure()
+                : CarId.dirty(reserve.carId!),
+            licensePlate: (reserve.carId == 0 || reserve.carId == null)
+                ? 'A1R610'
+                : reserve.licensePlate!,
+            brand: (reserve.carId == 0 || reserve.carId == null)
+                ? 'Ejem. Toyota'
+                : reserve.brand!,
+            model: (reserve.carId == 0 || reserve.carId == null)
+                ? 'Corolla'
+                : reserve.model!,
+            color: (reserve.carId == 0 || reserve.carId == null)
+                ? 'Gris'
+                : reserve.color!,
+            price: reserve.price == ''
+                ? const Price.pure()
+                : Price.dirty(reserve.price.toString()),
+            silverPercent: reserve.silverPercent == ''
+                ? const SilverPercent.pure()
+                : SilverPercent.dirty(reserve.silverPercent.toString()),
+            suggestedPrice: reserve.suggestedPrice == null
+                ? const SuggestedPrice.pure()
+                : SuggestedPrice.dirty(reserve.suggestedPrice.toString()),
+            polyline: reserve.polyline));
 
   Future<bool> onFormSubmit(int id, [int? tripId]) async {
     _touchedEverything();
@@ -184,6 +184,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "price": state.price.value,
       "suggested_price":
           state.suggestedPrice.value == '' ? null : state.suggestedPrice.value,
+      "reserve_polyline": state.polyline == '' ? null : state.polyline,
       if (state.silverPercent.value != '')
         "silver_percent": state.silverPercent.value,
       if (id != 0) "id": id.toString(),
@@ -398,6 +399,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
           .toStringAsFixed(2);
       state = state.copyWith(
         suggestedPrice: SuggestedPrice.dirty(basePrice),
+        polyline: distance.routes[0].polyline,
       );
     } catch (e) {
       print("Error al calcular la ruta: $e");
@@ -545,6 +547,7 @@ class ReserveFormState {
   final Price price;
   final SuggestedPrice suggestedPrice;
   final SilverPercent silverPercent;
+  final String? polyline;
 
   ReserveFormState({
     this.isFormValid = false,
@@ -574,64 +577,65 @@ class ReserveFormState {
     this.price = const Price.pure(),
     this.suggestedPrice = const SuggestedPrice.pure(),
     this.silverPercent = const SilverPercent.pure(),
+    this.polyline = '',
   });
 
-  ReserveFormState copyWith({
-    final bool? isFormValid,
-    final UserId? userId,
-    final String? userName,
-    final String? userLastName,
-    final EnterpriseId? enterpriseId,
-    final CarId? carId,
-    final String? licensePlate,
-    final String? brand,
-    final String? model,
-    final String? color,
-    final DriverId? driverId,
-    final String? driverName,
-    final String? driverLastName,
-    final TripType? tripType,
-    final ServiceCarType? serviceCarType,
-    final ServiceType? serviceType,
-    final StartTime? startTime,
-    final StartDate? startDate,
-    final StartAddress? startAddress,
-    final double? startAddressLat,
-    final double? startAddressLon,
-    final EndAddress? endAddress,
-    final double? endAddressLat,
-    final double? endAddressLon,
-    final Price? price,
-    final SuggestedPrice? suggestedPrice,
-    final SilverPercent? silverPercent,
-  }) =>
+  ReserveFormState copyWith(
+          {final bool? isFormValid,
+          final UserId? userId,
+          final String? userName,
+          final String? userLastName,
+          final EnterpriseId? enterpriseId,
+          final CarId? carId,
+          final String? licensePlate,
+          final String? brand,
+          final String? model,
+          final String? color,
+          final DriverId? driverId,
+          final String? driverName,
+          final String? driverLastName,
+          final TripType? tripType,
+          final ServiceCarType? serviceCarType,
+          final ServiceType? serviceType,
+          final StartTime? startTime,
+          final StartDate? startDate,
+          final StartAddress? startAddress,
+          final double? startAddressLat,
+          final double? startAddressLon,
+          final EndAddress? endAddress,
+          final double? endAddressLat,
+          final double? endAddressLon,
+          final Price? price,
+          final SuggestedPrice? suggestedPrice,
+          final SilverPercent? silverPercent,
+          final String? polyline}) =>
       ReserveFormState(
-        isFormValid: isFormValid ?? this.isFormValid,
-        userId: userId ?? this.userId,
-        userName: userName ?? this.userName,
-        userLastName: userLastName ?? this.userLastName,
-        driverName: driverName ?? this.driverName,
-        driverLastName: driverLastName ?? this.driverLastName,
-        enterpriseId: enterpriseId ?? this.enterpriseId,
-        carId: carId ?? this.carId,
-        licensePlate: licensePlate ?? this.licensePlate,
-        brand: brand ?? this.brand,
-        model: model ?? this.model,
-        color: color ?? this.color,
-        driverId: driverId ?? this.driverId,
-        serviceType: serviceType ?? this.serviceType,
-        tripType: tripType ?? this.tripType,
-        serviceCarType: serviceCarType ?? this.serviceCarType,
-        startTime: startTime ?? this.startTime,
-        startDate: startDate ?? this.startDate,
-        startAddress: startAddress ?? this.startAddress,
-        startAddressLat: startAddressLat ?? this.startAddressLat,
-        startAddressLon: startAddressLon ?? this.startAddressLon,
-        endAddress: endAddress ?? this.endAddress,
-        endAddressLat: endAddressLat ?? this.endAddressLat,
-        endAddressLon: endAddressLon ?? this.endAddressLon,
-        price: price ?? this.price,
-        suggestedPrice: suggestedPrice ?? this.suggestedPrice,
-        silverPercent: silverPercent ?? this.silverPercent,
-      );
+          isFormValid: isFormValid ?? this.isFormValid,
+          userId: userId ?? this.userId,
+          userName: userName ?? this.userName,
+          userLastName: userLastName ?? this.userLastName,
+          driverName: driverName ?? this.driverName,
+          driverLastName: driverLastName ?? this.driverLastName,
+          enterpriseId: enterpriseId ?? this.enterpriseId,
+          carId: carId ?? this.carId,
+          licensePlate: licensePlate ?? this.licensePlate,
+          brand: brand ?? this.brand,
+          model: model ?? this.model,
+          color: color ?? this.color,
+          driverId: driverId ?? this.driverId,
+          serviceType: serviceType ?? this.serviceType,
+          tripType: tripType ?? this.tripType,
+          serviceCarType: serviceCarType ?? this.serviceCarType,
+          startTime: startTime ?? this.startTime,
+          startDate: startDate ?? this.startDate,
+          startAddress: startAddress ?? this.startAddress,
+          startAddressLat: startAddressLat ?? this.startAddressLat,
+          startAddressLon: startAddressLon ?? this.startAddressLon,
+          endAddress: endAddress ?? this.endAddress,
+          endAddressLat: endAddressLat ?? this.endAddressLat,
+          endAddressLon: endAddressLon ?? this.endAddressLon,
+          price: price ?? this.price,
+          suggestedPrice: suggestedPrice ?? this.suggestedPrice,
+          silverPercent: silverPercent ?? this.silverPercent,
+          polyline: polyline ?? this.polyline);
 }

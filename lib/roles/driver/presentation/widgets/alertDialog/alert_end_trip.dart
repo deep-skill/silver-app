@@ -164,7 +164,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           "endTime": DateTime.now().toUtc().toIso8601String(),
           "status": "COMPLETED",
           "suggestedTotalPrice": suggestedTotalPrice,
-          "polyline": route.encodedPolyline
+          "tripPolyline": route.encodedPolyline
         });
       }
       widget.reload();

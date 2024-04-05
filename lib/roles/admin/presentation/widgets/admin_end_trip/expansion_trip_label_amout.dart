@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class ExpansionTripLabelAmout extends StatefulWidget {
   final double priceBase;
   final double? waitingTimeExtra;
+  final int? suggestedTotalPrice;
 
   const ExpansionTripLabelAmout(
-      {super.key, required this.priceBase, required this.waitingTimeExtra});
+      {super.key,
+      required this.priceBase,
+      required this.waitingTimeExtra,
+      required this.suggestedTotalPrice});
 
   @override
   State<ExpansionTripLabelAmout> createState() =>
@@ -51,9 +55,29 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Tarifa base",
-                  style: styleText,
+                Row(
+                  children: [
+                    Text(
+                      "Tarifa base",
+                      style: styleText,
+                    ),
+                    widget.suggestedTotalPrice != null
+                        ? Tooltip(
+                            decoration: BoxDecoration(
+                              color: const Color(0xff031329),
+                              borderRadius: BorderRadius.circular(6.0),
+                            ),
+                            margin: EdgeInsets.all(4.0),
+                            message:
+                                "Tarifa base sugerida ${widget.suggestedTotalPrice ?? 0}",
+                            textStyle: TextStyle(color: Colors.white),
+                            child: IconButton(
+                              icon: const Icon(Icons.info_outline),
+                              onPressed: () {},
+                            ),
+                          )
+                        : const SizedBox()
+                  ],
                 ),
                 Row(
                   children: [

@@ -67,10 +67,10 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
                               color: const Color(0xff031329),
                               borderRadius: BorderRadius.circular(6.0),
                             ),
-                            margin: EdgeInsets.all(4.0),
+                            margin: const EdgeInsets.all(4.0),
                             message:
                                 "Tarifa base sugerida ${widget.suggestedTotalPrice ?? 0}",
-                            textStyle: TextStyle(color: Colors.white),
+                            textStyle: const TextStyle(color: Colors.white),
                             child: IconButton(
                               icon: const Icon(Icons.info_outline),
                               onPressed: () {},

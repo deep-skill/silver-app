@@ -281,6 +281,11 @@ class TripInfo extends ConsumerWidget {
                     reserveStartTime: trip.reserveStartTime,
                     startTime: trip.startTime,
                     serviceCarType: trip.serviceCarType,
+                    startAddressLat: trip.startAddressLat,
+                    startAddressLon: trip.startAddressLon,
+                    endAddressLat: trip.endAddressLat,
+                    endAddressLon: trip.endAddressLon,
+                    stops: trip.stops,
                   )),
             )
           : const SizedBox(),
@@ -319,7 +324,7 @@ class TripInfo extends ConsumerWidget {
           ? const SizedBox()
           : Container(
               padding: const EdgeInsets.all(10),
-              child: const BackHomeButton(buttonText: "Ir al inicio"))
+              child: const BackHomeButton(buttonText: "Ir al inicio")),
     ]);
   }
 }

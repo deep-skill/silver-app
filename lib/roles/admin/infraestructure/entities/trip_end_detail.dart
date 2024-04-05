@@ -29,6 +29,7 @@ class AdminTripEnd {
   DateTime reserveStartTime;
   final String? driverImageUrl;
   double? waitingTimeExtra;
+  int? suggestedTotalPrice;
 
   AdminTripEnd(
       {required this.id,
@@ -60,7 +61,8 @@ class AdminTripEnd {
       required this.tolls,
       required this.reserveStartTime,
       this.driverImageUrl,
-      this.waitingTimeExtra});
+      this.waitingTimeExtra,
+      this.suggestedTotalPrice});
 
   factory AdminTripEnd.fromJson(Map<String, dynamic> json) => AdminTripEnd(
       id: json["id"],
@@ -108,7 +110,8 @@ class AdminTripEnd {
       driverImageUrl: json["Reserve"]["Driver"] != null
           ? json["Reserve"]["Driver"]["imageUrl"]
           : null,
-      waitingTimeExtra: json["waitingTimeExtra"]?.toDouble());
+      waitingTimeExtra: json["waitingTimeExtra"]?.toDouble(),
+      suggestedTotalPrice: json["suggestedTotalPrice"]);
 }
 
 class Observations {

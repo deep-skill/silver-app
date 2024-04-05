@@ -24,7 +24,7 @@ class GoogleRoutes {
 class Route {
   int distanceMeters;
   String duration;
-  Polyline polyline;
+  String polyline;
 
   Route({
     required this.distanceMeters,
@@ -33,15 +33,14 @@ class Route {
   });
 
   factory Route.fromJson(Map<String, dynamic> json) => Route(
-        distanceMeters: json["distanceMeters"],
-        duration: json["duration"],
-        polyline: Polyline.fromJson(json["polyline"]),
-      );
+      distanceMeters: json["distanceMeters"],
+      duration: json["duration"],
+      polyline: json["polyline"]["encodedPolyline"]);
 
   Map<String, dynamic> toJson() => {
         "distanceMeters": distanceMeters,
         "duration": duration,
-        "polyline": polyline.toJson(),
+        "polyline": polyline,
       };
   int getDurationInSeconds() {
     final secondsString = RegExp(r'\d+').firstMatch(duration)?.group(0);
@@ -63,4 +62,14 @@ class Polyline {
   Map<String, dynamic> toJson() => {
         "encodedPolyline": encodedPolyline,
       };
+}
+
+class ResponseRoute {
+  int distance;
+  int time;
+  String encodedPolyline;
+  ResponseRoute(
+      {required this.distance,
+      required this.time,
+      required this.encodedPolyline});
 }

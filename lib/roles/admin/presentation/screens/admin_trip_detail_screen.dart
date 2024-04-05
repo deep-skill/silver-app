@@ -297,6 +297,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                               : trip.price,
                                           waitingTimeExtra:
                                               trip.waitingTimeExtra,
+                                          suggestedTotalPrice:
+                                              trip.suggestedTotalPrice,
                                         ),
                                         LabelDriverSilverWin(
                                           description:
@@ -672,6 +674,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                               ? trip.totalPrice
                               : trip.price,
                           waitingTimeExtra: trip.waitingTimeExtra,
+                          suggestedTotalPrice: trip.suggestedTotalPrice,
                         ),
                         LabelDriverSilverWin(
                           description: 'Gana Silver (${trip.silverPercent}%)',

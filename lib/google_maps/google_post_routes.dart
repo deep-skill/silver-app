@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:silverapp/env/env.dart';
 import 'package:silverapp/google_maps/routes_data_entity.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 
 Future<GoogleRoutes> getGoogleRoute(
     double startAddressLat,
@@ -88,4 +89,25 @@ int calculateBasePrice(
   double basePrice = 4 + 1.95 * distanceKilometers + 0.20 * timeMinutes;
   if (additional) return (basePrice * 1.1).round();
   return basePrice.round();
+}
+
+String getDirectionsUrl(double originLat, double originLon,
+    double? destinationLat, double? destinationLon, List<Stop> stops) {
+  final origin = '$originLat,$originLon';
+  final destination = '$destinationLat,$destinationLon';
+  final waypointsString =
+      stops.map((waypoint) => 'via:${waypoint.lat},${waypoint.lon}').join('|');
+  final apiKey = Env.googleRoutesApiKey;
+
+  return 'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&waypoints=$waypointsString&key=$apiKey';
+}
+
+Future<ResponseRoute> calculateRouteAndStops(String url) async {
+  var response = await Dio().get(url);
+  ResponseRoute responseRoute = ResponseRoute(
+    distance: response.data['routes'][0]['legs'][0]['distance']['value'],
+    time: response.data['routes'][0]['legs'][0]['duration']['value'],
+    encodedPolyline: response.data['routes'][0]['overview_polyline']['points'],
+  );
+  return responseRoute;
 }

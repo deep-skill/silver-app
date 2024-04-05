@@ -49,7 +49,7 @@ class MapGoogleState extends State<MapGoogle> {
           'https://maps.googleapis.com/maps/api/geocode/json',
           queryParameters: {
             'address': address,
-            'components': 'locality:buenos aires|country:AR',
+            'components': 'locality:Lima|country:PE',
             'key': Env.googleMapsKey,
           },
         );

@@ -2,8 +2,8 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/google_maps/google_post_routes.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
-import '../../../../../google_maps/google_post_routes.dart';
 
 class AlertTripEnd extends StatefulWidget {
   final int tripId;

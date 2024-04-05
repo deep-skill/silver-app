@@ -2,8 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 import 'package:silverapp/env/env.dart';
 import 'package:silverapp/google_maps/routes_data_entity.dart';
-
-import '../roles/driver/infraestructure/entities/driver_trip_state.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 
 Future<GoogleRoutes> getGoogleRoute(
     double startAddressLat,

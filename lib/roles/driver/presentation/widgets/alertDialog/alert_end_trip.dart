@@ -126,15 +126,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         widget.endAddressLat,
         widget.endAddressLon,
         widget.stops));
-    print(
-        "distancia: ${route.distance}. tiempo: ${route.time}. polyline ${route.encodedPolyline}");
     suggestedTotalPrice = calculateBasePrice(
         route.distance, route.time, widget.serviceCarType, false);
-
-    print("sugestedTotalPrice: $suggestedTotalPrice");
-    print("----------------------------------------------");
-    print("----------------------------------------------");
-    print("----------------------------------------------");
     try {
       if (widget.tripType == "POR HORA") {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {

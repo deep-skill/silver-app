@@ -156,13 +156,6 @@ class TripInfo extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    calculateRouteAndStops(getDirectionsUrl(
-        trip.startAddressLat,
-        trip.startAddressLon,
-        trip.endAddressLat,
-        trip.endAddressLon,
-        trip.stops));
-
     const TextStyle textStyleLastGoodbye = TextStyle(
         color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15);
 

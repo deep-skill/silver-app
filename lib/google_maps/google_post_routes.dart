@@ -104,18 +104,11 @@ String getDirectionsUrl(double originLat, double originLon,
 }
 
 Future<ResponseRoute> calculateRouteAndStops(String url) async {
-  print(url);
   var response = await Dio().get(url);
-  print(
-      "distancia: ${response.data['routes'][0]['legs'][0]['distance']['text']}. tiempo: ${response.data['routes'][0]['legs'][0]['duration']['text']}");
-  print(
-      "distancia: ${response.data['routes'][0]['legs'][0]['distance']['value']}. tiempo: ${response.data['routes'][0]['legs'][0]['duration']['value']}");
-
   ResponseRoute responseRoute = ResponseRoute(
     distance: response.data['routes'][0]['legs'][0]['distance']['value'],
     time: response.data['routes'][0]['legs'][0]['duration']['value'],
     encodedPolyline: response.data['routes'][0]['overview_polyline']['points'],
   );
-
   return responseRoute;
 }

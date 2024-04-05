@@ -4,7 +4,10 @@ import 'package:silverapp/roles/admin/infraestructure/entities/reserve_home.dart
 
 class ReservesListHomeWeb extends StatefulWidget {
   const ReservesListHomeWeb(
-      {super.key, required this.reserves, required this.loadNextPage, required this.size});
+      {super.key,
+      required this.reserves,
+      required this.loadNextPage,
+      required this.size});
 
   final List<ReserveHome> reserves;
   final VoidCallback? loadNextPage;
@@ -40,22 +43,21 @@ class _ReservesListHomeWebState extends State<ReservesListHomeWeb> {
   Widget build(BuildContext context) {
     return Expanded(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: widget.size.width * .1),
-          child: GridView.count(
-                mainAxisSpacing: 5,
-                crossAxisSpacing: 40,
-                childAspectRatio: 3.2,
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                controller: scrollController,
-                scrollDirection: Axis.vertical,
-                physics: const BouncingScrollPhysics(),
-                children: List.generate(widget.reserves.length, (index) {
+      padding: EdgeInsets.symmetric(horizontal: widget.size.width * .1),
+      child: GridView.count(
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 40,
+        childAspectRatio: 3.2,
+        shrinkWrap: true,
+        crossAxisCount: 2,
+        controller: scrollController,
+        scrollDirection: Axis.vertical,
+        physics: const BouncingScrollPhysics(),
+        children: List.generate(widget.reserves.length, (index) {
           return _Slide(reserve: widget.reserves[index]);
-                }),
-              ),
-        )
-    );
+        }),
+      ),
+    ));
   }
 }
 
@@ -82,19 +84,15 @@ class _Slide extends StatelessWidget {
     ];
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xffFFFFFF),
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade300,
-              blurRadius: 10,
-              offset: const Offset(0, 3),
-            )
-          ],
+      padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
         ),
+        onPressed: () => context.push('/admin/reserves/detail/${reserve.id}'),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -186,12 +184,9 @@ class _Slide extends StatelessWidget {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => context.push('/admin/reserves/detail/${reserve.id}'),
-              child: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 30,
-              ),
+            const Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 30,
             ),
           ],
         ),

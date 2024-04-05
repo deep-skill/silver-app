@@ -41,55 +41,69 @@ class ShowInformation extends ConsumerWidget {
     final bool isPhoneInWeb = size.width <= 500 ? true : false;
     return isPhoneInWeb
         ? Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.all(size.width * .08),
-              child: WelcomeMsgScreen(
-                mainImage: Image.asset(
-                  'assets/images/app_logo_auth.png',
-                ),
-                title: Text(
-                  'Hola, Conductor!',
-                  style: TextStyle(fontSize: size.width * .08),
-                  textAlign: TextAlign.center,
-                ),
-                subTitle: Text(
-                  '¿Deseas revisar o iniciar algun viaje?',
-                  style: TextStyle(fontSize: size.width * .05),
-                  textAlign: TextAlign.center,
-                ),
-                secSubTitle: Text(
-                  'Descarga la app de Silver Express.',
-                  style: TextStyle(fontSize: size.width * .03),
-                  textAlign: TextAlign.center,
-                ),
-                secondImage: Image.asset(
-                  'assets/images/apple_store.png',
-                  width: size.width * .35,
-                  height: size.height * .08,
-                ),
-                thirdImage: Image.asset(
-                  'assets/images/google_store.png',
-                  width: size.width * .35,
-                  height: size.height * .15,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(size.width * .08),
+                child: WelcomeMsgScreen(
+                  mainImage: Image.asset(
+                    'assets/images/app_logo_auth.png',
+                  ),
+                  title: Text(
+                    'Hola, Conductor!',
+                    style: TextStyle(fontSize: size.width * .08),
+                    textAlign: TextAlign.center,
+                  ),
+                  subTitle: Text(
+                    '¿Deseas revisar o iniciar algun viaje?',
+                    style: TextStyle(fontSize: size.width * .05),
+                    textAlign: TextAlign.center,
+                  ),
+                  secSubTitle: Text(
+                    'Descarga la app de Silver Express.',
+                    style: TextStyle(fontSize: size.width * .03),
+                    textAlign: TextAlign.center,
+                  ),
+                  secondImage: Image.asset(
+                    'assets/images/apple_store.png',
+                    width: size.width * .35,
+                    height: size.height * .08,
+                  ),
+                  thirdImage: Image.asset(
+                    'assets/images/google_store.png',
+                    width: size.width * .35,
+                    height: size.height * .15,
+                  ),
                 ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                launchUrlString('https://play.google.com/store/apps');
-              },
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(Colors.lightBlue),
+              ElevatedButton(
+                onPressed: () {
+                  launchUrlString('https://play.google.com/store/apps');
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.lightBlue),
+                ),
+                child: const Text(
+                  'Abrir en mi Store',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-              child: const Text(
-                'Abrir en mi Store',
-                style: TextStyle(color: Colors.white),
+              const SizedBox(
+                height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  ref.read(authProvider.notifier).logout();
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                ),
+                child: const Text(
+                  'Cerrar sesión',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
-            )
-          ],
-        )
+            ],
+          )
         : SizedBox(
             height: size.height,
             child: Row(
@@ -148,7 +162,23 @@ class ShowInformation extends ConsumerWidget {
                           'Abrir en mi Store',
                           style: TextStyle(color: Colors.white),
                         ),
-                      )
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          ref.read(authProvider.notifier).logout();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.red),
+                        ),
+                        child: const Text(
+                          'Cerrar sesión',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                     ],
                   ),
                 ),

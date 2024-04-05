@@ -131,8 +131,8 @@ class _ReserveItem extends StatelessWidget {
   final Function onReserveSelected;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return ElevatedButton(
+      onPressed: () {
         onReserveSelected(context, reserve);
         context.push('/admin/reserves/detail/${reserve.id}');
       },

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 
 class CustomSlide extends StatelessWidget {
@@ -177,13 +176,9 @@ class CustomSlide extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.only(right: size.width * .005),
-              child: GestureDetector(
-                onTap: () =>
-                    context.push('/admin/reserves/detail/${reserve.id}'),
-                child: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 30,
-                ),
+              child: const Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 30,
               ),
             ),
           ],

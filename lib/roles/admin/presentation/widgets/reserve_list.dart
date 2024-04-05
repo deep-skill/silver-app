@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/custom_slide_web.dart';
@@ -51,7 +52,9 @@ class _ReservesListState extends State<ReservesList> {
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             children: List.generate(widget.reserves.length, (index) {
-              return SlideWeb(reserve: widget.reserves[index]);
+              return ElevatedButton(
+                onPressed: () => context.push('/admin/reserves/detail/${widget.reserves[index].id}'), 
+                child: SlideWeb(reserve: widget.reserves[index]));
             }),
           ))
         : Expanded(
@@ -61,7 +64,9 @@ class _ReservesListState extends State<ReservesList> {
               scrollDirection: Axis.vertical,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (contex, index) {
-                return CustomSlide(reserve: widget.reserves[index]);
+                return ElevatedButton(
+                  onPressed: () => context.push('/admin/reserves/detail/${widget.reserves[index].id}'),
+                  child: CustomSlide(reserve: widget.reserves[index]));
               },
             ),
           );

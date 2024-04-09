@@ -67,9 +67,9 @@ class _ButtonCreateEditAppState extends State<ButtonCreateEditApp> {
     });
 
     var value = await widget.onPressedCreateEdit();
+    if (value != null) context.pop();
     setState(() {
       _isLoading = false;
     });
-    if (value != null) context.pop();
   }
 }

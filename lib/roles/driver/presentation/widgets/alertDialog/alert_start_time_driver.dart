@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/roles/driver/helpers/datatime_rouded_string.dart';
 
 class AlertStartTimeDriver extends StatefulWidget {
   final int tripId;
@@ -21,7 +22,7 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
   void patchStartTripDrive(BuildContext context, int tripId) async {
     try {
       await dio(widget.credentials).patch('trips/driver-trip/$tripId',
-          data: {"startTime": DateTime.now().toUtc().toIso8601String()});
+          data: {"startTime": roudedDateTimeToString()});
       widget.reload();
     } catch (e) {
       print(e);

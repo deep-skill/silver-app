@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/roles/driver/helpers/datatime_rouded_string.dart';
 
 class AlertArrivedDriver extends StatefulWidget {
   final int tripId;
@@ -20,9 +21,12 @@ class AlertArrivedDriver extends StatefulWidget {
 class _AlertTripStartState extends State<AlertArrivedDriver> {
   void patchArrivedDriver(
       BuildContext context, int tripId, String credentials) async {
+    String roundedTimeString = roudedDateTimeToString();
+
+    print(roundedTimeString);
     try {
       await dio(credentials).patch('trips/driver-trip/$tripId',
-          data: {"arrivedDriver": DateTime.now().toUtc().toIso8601String()});
+          data: {"arrivedDriver": roudedDateTimeToString()});
       widget.reload();
     } catch (e) {
       print(e);

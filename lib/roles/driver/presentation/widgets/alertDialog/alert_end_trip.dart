@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/google_maps/google_post_routes.dart';
+import 'package:silverapp/roles/driver/helpers/datatime_rouded_string.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 
 class AlertTripEnd extends StatefulWidget {
@@ -131,7 +132,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     try {
       if (widget.tripType == "POR HORA") {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": DateTime.now().toUtc().toIso8601String(),
+          "endTime": roudedDateTimeToString(),
           "status": "COMPLETED",
           "totalPrice": totalPricePerHour(widget.arrivedDriver!,
                   widget.reserveStartTime, widget.serviceCarType) *
@@ -141,11 +142,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
               widget.arrivedDriver, widget.startTime, widget.reserveStartTime) >
           0) {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": DateTime.now().toUtc().toIso8601String(),
+          "endTime": roudedDateTimeToString(),
           "status": "COMPLETED",
-          "totalPrice": widget.totalPrice +
-              calculateWaitingAmount(widget.arrivedDriver, widget.startTime,
-                  widget.reserveStartTime),
           "waitingTimeExtra": calculateWaitingAmount(widget.arrivedDriver,
                   widget.startTime, widget.reserveStartTime)
               .toDouble(),
@@ -154,7 +152,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         });
       } else {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": DateTime.now().toUtc().toIso8601String(),
+          "endTime": roudedDateTimeToString(),
           "status": "COMPLETED",
           "suggestedTotalPrice": suggestedTotalPrice,
           "tripPolyline": route.encodedPolyline

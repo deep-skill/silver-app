@@ -53,6 +53,12 @@ class _ReservesListState extends State<ReservesList> {
             physics: const BouncingScrollPhysics(),
             children: List.generate(widget.reserves.length, (index) {
               return ElevatedButton(
+                style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.black,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+        ),
                 onPressed: () => context.push('/admin/reserves/detail/${widget.reserves[index].id}'), 
                 child: SlideWeb(reserve: widget.reserves[index]));
             }),

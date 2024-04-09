@@ -40,6 +40,8 @@ class _ButtonCreateEditWebState extends State<ButtonCreateEditWeb> {
             borderRadius: BorderRadius.circular(15),
           ),
         ),
+        fixedSize: MaterialStateProperty.all(
+            Size(widget.size.width * .20, widget.size.height * .05)),
         backgroundColor: MaterialStateProperty.all(
           _isLoading ? Colors.grey : const Color(0xFF03132A),
         ),

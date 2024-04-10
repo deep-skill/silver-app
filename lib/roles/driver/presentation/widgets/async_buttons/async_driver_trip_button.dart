@@ -40,9 +40,13 @@ class _ButtonAsyncDriverTripState extends State<ButtonAsyncDriverTrip> {
         ),
       ),
       child: _isLoading
-          ? const CircularProgressIndicator(
-              strokeWidth: 1,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          ? const SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(
+                strokeWidth: 1,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
             )
           : const Text(
               "Confirmar",

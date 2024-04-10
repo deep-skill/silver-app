@@ -47,9 +47,12 @@ class _ButtonCreateEditAppState extends State<ButtonCreateEditApp> {
         ),
       ),
       child: _isLoading
-          ? const CircularProgressIndicator(
-              strokeWidth: 3,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          ? const SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
             )
           : Text(
               widget.reserve.id == 0 ? "Crear" : "Guardar cambios",

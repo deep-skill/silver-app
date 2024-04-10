@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
+import 'package:silverapp/roles/driver/helpers/datatime_rouded_string.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_reserve_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_home_provider.dart';
@@ -114,7 +115,7 @@ class HomeViewState extends ConsumerState<HomeView> {
       try {
         final trip = await dio(credentials!.accessToken).post('/trips', data: {
           "reserve_id": id,
-          "on_way_driver": date.toIso8601String(),
+          "on_way_driver": roudedDateTimeToString(),
           "totalPrice": price
         });
         return trip.data['id'];

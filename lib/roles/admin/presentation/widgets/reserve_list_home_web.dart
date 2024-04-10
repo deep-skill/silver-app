@@ -87,6 +87,7 @@ class _Slide extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
+           padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
           foregroundColor: Colors.black,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(12)),

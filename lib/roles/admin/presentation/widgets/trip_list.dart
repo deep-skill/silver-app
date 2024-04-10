@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trip_slide.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trip_slide_web.dart';
@@ -50,7 +51,18 @@ class _TripsListState extends State<TripsList> {
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             children: List.generate(widget.trips.length, (index) {
-              return TripSlideWeb(trip: widget.trips[index]);
+              return ElevatedButton(
+                  onPressed: () => context
+                      .push('/admin/trips/detail/${widget.trips[index].id}'),
+                  style: ElevatedButton.styleFrom(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                    foregroundColor: Colors.black,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                  ),
+                  child: TripSlideWeb(trip: widget.trips[index]));
             }),
           ))
         : Expanded(

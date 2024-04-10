@@ -23,7 +23,7 @@ class SlideWeb extends StatelessWidget {
       'dec'
     ];
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
             width: size.width * .12,
@@ -31,7 +31,7 @@ class SlideWeb extends StatelessWidget {
               color: reserve.driverName != ''
                   ? const Color(0xff020B19)
                   : Colors.grey.shade200,
-              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
             child: reserve.driverName != ''
                 ? Column(

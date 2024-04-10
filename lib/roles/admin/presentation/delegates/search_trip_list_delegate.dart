@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trip_slide.dart';
 
@@ -129,13 +130,22 @@ class _TripItem extends StatelessWidget {
   final Function onTripSelected;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onTripSelected(context, trip);
-        //falta hacer endpoint de single trip
-        // context.push('/admin/reserves/detail/${trip.id}');
-      },
-       child: TripSlide(trip: trip),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ElevatedButton(
+        onPressed: () {
+          onTripSelected(context, trip);
+          context.push('/admin/reserves/detail/${trip.id}');
+        },
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          foregroundColor: Colors.black,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
+        ),
+        child: TripSlide(trip: trip),
+      ),
     );
   }
 }

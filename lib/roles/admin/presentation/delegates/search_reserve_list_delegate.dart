@@ -131,12 +131,22 @@ class _ReserveItem extends StatelessWidget {
   final Function onReserveSelected;
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
-        onReserveSelected(context, reserve);
-        context.push('/admin/reserves/detail/${reserve.id}');
-      },
-      child: CustomSlide(reserve: reserve),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical:8.0),
+      child: ElevatedButton(
+        onPressed: () {
+          onReserveSelected(context, reserve);
+          context.push('/admin/reserves/detail/${reserve.id}');
+        },
+          style: ElevatedButton.styleFrom(
+             padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+            foregroundColor: Colors.black,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+          ),
+        child: CustomSlide(reserve: reserve),
+      ),
     );
   }
 }

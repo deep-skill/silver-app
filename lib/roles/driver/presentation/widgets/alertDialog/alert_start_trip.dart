@@ -19,11 +19,16 @@ class AlertStartTrip extends StatelessWidget {
   final int id;
   final double price;
 
-  Future<bool> createAndStartTrip() async {
-    final tripId = await createTrip(id, price);
-    ref.invalidate(driverInfoProvider);
-    nav(tripId);
-    return true;
+  Future<bool?> createAndStartTrip() async {
+    try {
+      final tripId = await createTrip(id, price);
+      ref.invalidate(driverInfoProvider);
+      nav(tripId);
+      return true;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   @override

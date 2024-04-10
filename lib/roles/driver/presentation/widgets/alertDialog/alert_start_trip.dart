@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_info_provider.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/async_buttons/start_trip_button.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/async_buttons/async_driver_trip_button.dart';
 
 class AlertStartTrip extends StatelessWidget {
   const AlertStartTrip({
@@ -44,7 +44,7 @@ class AlertStartTrip extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: ButtonStartTrip(
+              child: ButtonAsyncDriverTrip(
                 onPressed: createAndStartTrip,
               ),
             ),

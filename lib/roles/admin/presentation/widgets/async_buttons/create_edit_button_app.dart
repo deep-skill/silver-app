@@ -48,6 +48,7 @@ class _ButtonCreateEditAppState extends State<ButtonCreateEditApp> {
       ),
       child: _isLoading
           ? const CircularProgressIndicator(
+              strokeWidth: 3,
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             )
           : Text(

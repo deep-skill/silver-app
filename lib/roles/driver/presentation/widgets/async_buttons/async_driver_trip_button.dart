@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class ButtonStartTrip extends StatefulWidget {
-  const ButtonStartTrip({
+class ButtonAsyncDriverTrip extends StatefulWidget {
+  const ButtonAsyncDriverTrip({
     Key? key,
     required this.onPressed,
   }) : super(key: key);
@@ -10,10 +10,10 @@ class ButtonStartTrip extends StatefulWidget {
   final Future<bool?> Function() onPressed;
 
   @override
-  State<ButtonStartTrip> createState() => _ButtonStartTripState();
+  State<ButtonAsyncDriverTrip> createState() => _ButtonAsyncDriverTripState();
 }
 
-class _ButtonStartTripState extends State<ButtonStartTrip> {
+class _ButtonAsyncDriverTripState extends State<ButtonAsyncDriverTrip> {
   bool _isLoading = false;
 
   @override
@@ -41,6 +41,7 @@ class _ButtonStartTripState extends State<ButtonStartTrip> {
       ),
       child: _isLoading
           ? const CircularProgressIndicator(
+              strokeWidth: 1,
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             )
           : const Text(

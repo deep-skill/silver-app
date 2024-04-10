@@ -65,13 +65,12 @@ class _ButtonCreateEditWebState extends State<ButtonCreateEditWeb> {
     setState(() {
       _isLoading = true;
     });
-
     print("_isLoading ${_isLoading}");
     var value = await widget.onPressedCreateEdit();
     print(value);
-    if (value != null) context.pop();
     setState(() {
       _isLoading = false;
     });
+    if (value != null) context.pop();
   }
 }

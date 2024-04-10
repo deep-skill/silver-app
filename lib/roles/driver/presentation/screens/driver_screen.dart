@@ -11,6 +11,7 @@ import 'package:silverapp/roles/driver/presentation/providers/driver_nearest_res
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_list_home_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driver_provider.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_web_deny_screen.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_start_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/custom_driver_name.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_reserve_list_home.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_side_menu.dart';
@@ -109,7 +110,7 @@ class HomeViewState extends ConsumerState<HomeView> {
 
     final date = DateTime.now().toUtc();
     final reserves = ref.watch(driverReservesHomeProvider);
-    Future createTrip(id, price) async {
+    Future createTrip(int id, double price) async {
       try {
         final trip = await dio(credentials!.accessToken).post('/trips', data: {
           "reserve_id": id,
@@ -146,7 +147,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                           child: Image.asset(
                         "assets/images/app_logo.png",
                         width: size.width * .2,
-                        color: Color(0xff03132a),
+                        color: const Color(0xff03132a),
                       )),
                       SizedBox(
                         width: size.width * .04,
@@ -231,56 +232,12 @@ class HomeViewState extends ConsumerState<HomeView> {
                                     showDialog<void>(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: const Text(
-                                              '¿Listo para ir al punto de recojo?',
-                                              textAlign: TextAlign.center),
-                                          content: const Text(
-                                            'Selecciona solo si vas en camino al punto de recojo',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              style: ButtonStyle(
-                                                foregroundColor:
-                                                    MaterialStateProperty.all<
-                                                        Color>(Colors.white),
-                                                backgroundColor:
-                                                    MaterialStateProperty
-                                                        .all<Color>(const Color(
-                                                            0xff23A5CD)),
-                                                shape:
-                                                    MaterialStateProperty.all<
-                                                        RoundedRectangleBorder>(
-                                                  RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                ),
-                                              ),
-                                              child: const Text('Confirmar'),
-                                              onPressed: () async {
-                                                final tripId = await createTrip(
-                                                    nearestReserve.id,
-                                                    nearestReserve.price);
-                                                ref.invalidate(
-                                                    driverInfoProvider);
-                                                nav(tripId);
-                                              },
-                                            ),
-                                            TextButton(
-                                              style: TextButton.styleFrom(
-                                                textStyle: Theme.of(context)
-                                                    .textTheme
-                                                    .labelLarge,
-                                              ),
-                                              child: const Text('Cancelar'),
-                                              onPressed: () {
-                                                context.pop();
-                                              },
-                                            ),
-                                          ],
+                                        return AlertStartTrip(
+                                          ref: ref,
+                                          createTrip: createTrip,
+                                          nav: nav,
+                                          id: nearestReserve.id,
+                                          price: nearestReserve.price,
                                         );
                                       },
                                     );

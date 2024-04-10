@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 
-class SlideWeb extends StatelessWidget {
+class AdminReservesSlideWeb extends StatelessWidget {
   final ReserveList reserve;
-  const SlideWeb({super.key, required this.reserve});
+  const AdminReservesSlideWeb({super.key, required this.reserve});
 
   @override
   Widget build(BuildContext context) {

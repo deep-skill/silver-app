@@ -2,91 +2,92 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
-import 'package:silverapp/roles/admin/presentation/delegates/search_reserve_list_delegate.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
-import 'package:silverapp/roles/admin/presentation/providers/search_reserve_provider.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/reserve_list.dart';
+import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
+import 'package:silverapp/roles/admin/presentation/providers/search_trip_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/trip_list_provider.dart';
+import 'package:silverapp/roles/admin/presentation/delegates/search_trip_list_delegate.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/lists/trip_list_trip_screen.dart';
 
-class ReserveListScreen extends StatelessWidget {
-  const ReserveListScreen({super.key});
-  static const name = 'reserves';
+class TripsScreen extends StatelessWidget {
+  const TripsScreen({super.key});
+  static const name = 'trips';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffF2F3F7),
-        title: const Text('Lista de reservas'),
+        title: const Text('Historial de viajes'),
         scrolledUnderElevation: 0,
       ),
-      body: const ReserveListView(),
+      body: const TripListView(),
       backgroundColor: const Color(0xffF2F3F7),
     );
   }
 }
 
-class ReserveListView extends ConsumerStatefulWidget {
-  const ReserveListView({super.key});
+class TripListView extends ConsumerStatefulWidget {
+  const TripListView({super.key});
 
   @override
-  ReserveListViewState createState() => ReserveListViewState();
+  TripListViewState createState() => TripListViewState();
 }
 
-class ReserveListViewState extends ConsumerState<ReserveListView> {
+class TripListViewState extends ConsumerState<TripListView> {
   @override
   void initState() {
     super.initState();
-    ref.read(reservesListProvider.notifier).reloadData();
+    ref.read(tripsListProvider.notifier).reloadData();
   }
 
-  void sendEventAdminSearchReservesList(
-      String querySearched, int amountReservesReturned) {
+  void sendEventAdminSearchTripsList(
+      String querySearched, int amountTripsReturned) {
     FirebaseAnalytics.instance.logEvent(
-        name: 'admin_search_reserves_list',
+        name: 'admin_search_trips_list',
         parameters: <String, dynamic>{
           'query_searched': querySearched,
-          'amount_reserves_returned': amountReservesReturned
+          'amount_reserves_returned': amountTripsReturned
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    final reserves = ref.watch(reservesListProvider);
+    final trips = ref.watch(tripsListProvider);
     final size = MediaQuery.of(context).size;
+
     return kIsWeb
         ? Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: size.width >= 1200 ? 220 : size.width * .07),
             child: RefreshIndicator(
               onRefresh: () =>
-                  ref.read(reservesListProvider.notifier).reloadData(),
+                  ref.read(tripsListProvider.notifier).reloadData(),
               child: Column(
                 children: [
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
-                      final searchedReserves =
-                          ref.read(searchedReservesProvider);
-                      final searchQuery = ref.read(searchReservesProvider);
+                      final searchedTrips = ref.read(searchedTripsProvider);
+                      final searchQuery = ref.read(searchTripsProvider);
 
-                      showSearch<ReserveList?>(
+                      showSearch<TripList?>(
                               query: searchQuery,
                               context: context,
-                              delegate: SearchReserveDelegate(
-                                  initialReserves: searchedReserves,
-                                  searchReserves: ref
-                                      .read(searchedReservesProvider.notifier)
-                                      .searchReservesByQuery))
-                          .then((reserve) {});
-                      sendEventAdminSearchReservesList(
-                          searchQuery, searchedReserves.length);
+                              delegate: SearchTripDelegate(
+                                  initialTrips: searchedTrips,
+                                  searchTrips: ref
+                                      .read(searchedTripsProvider.notifier)
+                                      .searchTripsByQuery))
+                          .then((trip) {});
+
+                      sendEventAdminSearchTripsList(
+                          searchQuery, searchedTrips.length);
                     },
                     child: SizedBox(
                         height: size.height * .07,
                         child: const DecoratedBox(
                           decoration: BoxDecoration(
-                            color: Color(0xffFFFFFF),
+                            color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
                           child: Row(
@@ -95,12 +96,11 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                               Padding(
                                 padding: EdgeInsets.only(left: 20),
                                 child: Text(
-                                  'Búsqueda de reservas',
+                                  'Búsqueda de viajes',
                                   style: TextStyle(
-                                    fontFamily: 'Raleway-Semi-Bold',
-                                    color: Color(0xFF636d77),
-                                    fontSize: 15,
-                                  ),
+                                      color: Color(0xFF636D77),
+                                      fontSize: 15,
+                                      fontFamily: 'Raleway-Semi-Bold'),
                                 ),
                               ),
                               Padding(
@@ -141,18 +141,16 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                         IconButton(
                           icon: const Icon(Icons.refresh_outlined),
                           onPressed: () {
-                            ref
-                                .read(reservesListProvider.notifier)
-                                .reloadData();
+                            ref.read(tripsListProvider.notifier).reloadData();
                           },
                         ),
                       ],
                     ),
                   ),
-                  ReservesList(
-                    reserves: reserves,
+                  TripsListTripScreen(
+                    trips: trips,
                     loadNextPage: () {
-                      ref.read(reservesListProvider.notifier).loadNextPage();
+                      ref.read(tripsListProvider.notifier).loadNextPage();
                     },
                   ),
                 ],
@@ -163,33 +161,32 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: RefreshIndicator(
               onRefresh: () =>
-                  ref.read(reservesListProvider.notifier).reloadData(),
+                  ref.read(tripsListProvider.notifier).reloadData(),
               child: Column(
                 children: [
                   const SizedBox(height: 15),
                   GestureDetector(
                     onTap: () {
-                      final searchedReserves =
-                          ref.read(searchedReservesProvider);
-                      final searchQuery = ref.read(searchReservesProvider);
+                      final searchedTrips = ref.read(searchedTripsProvider);
+                      final searchQuery = ref.read(searchTripsProvider);
 
-                      showSearch<ReserveList?>(
+                      showSearch<TripList?>(
                               query: searchQuery,
                               context: context,
-                              delegate: SearchReserveDelegate(
-                                  initialReserves: searchedReserves,
-                                  searchReserves: ref
-                                      .read(searchedReservesProvider.notifier)
-                                      .searchReservesByQuery))
-                          .then((reserve) {});
-                      sendEventAdminSearchReservesList(
-                          searchQuery, searchedReserves.length);
+                              delegate: SearchTripDelegate(
+                                  initialTrips: searchedTrips,
+                                  searchTrips: ref
+                                      .read(searchedTripsProvider.notifier)
+                                      .searchTripsByQuery))
+                          .then((trip) {});
+                      sendEventAdminSearchTripsList(
+                          searchQuery, searchedTrips.length);
                     },
                     child: SizedBox(
                         height: size.height * .07,
                         child: const DecoratedBox(
                           decoration: BoxDecoration(
-                            color: Color(0xffFFFFFF),
+                            color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(12)),
                           ),
                           child: Row(
@@ -198,12 +195,11 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                               Padding(
                                 padding: EdgeInsets.only(left: 20),
                                 child: Text(
-                                  'Búsqueda de reservas',
+                                  'Búsqueda de viajes',
                                   style: TextStyle(
-                                    color: Color(0xFF636D77),
-                                    fontFamily: 'Montserrat-Regular',
-                                    fontSize: 16,
-                                  ),
+                                      color: Color(0xFF636D77),
+                                      fontSize: 15,
+                                      fontFamily: 'Raleway-Semi-Bold'),
                                 ),
                               ),
                               Padding(
@@ -213,7 +209,7 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                                   width: 45,
                                   child: DecoratedBox(
                                     decoration: BoxDecoration(
-                                      color: Color(0xff03132A),
+                                      color: Color(0xff031329),
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(12)),
                                     ),
@@ -229,10 +225,10 @@ class ReserveListViewState extends ConsumerState<ReserveListView> {
                         )),
                   ),
                   const SizedBox(height: 15),
-                  ReservesList(
-                    reserves: reserves,
+                  TripsListTripScreen(
+                    trips: trips,
                     loadNextPage: () {
-                      ref.read(reservesListProvider.notifier).loadNextPage();
+                      ref.read(tripsListProvider.notifier).loadNextPage();
                     },
                   ),
                 ],

@@ -8,7 +8,7 @@ import 'package:silverapp/roles/admin/presentation/delegates/search_reserve_list
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_reserve_no_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home_web.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/lists/reserve_list_home_web.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view_web.dart';
 
 class AdminHomeWebView extends StatelessWidget {

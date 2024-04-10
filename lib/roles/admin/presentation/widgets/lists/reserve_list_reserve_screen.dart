@@ -2,21 +2,21 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/custom_slide_web.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_reserves_slide_app.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_reserves_slide_web.dart';
 
-class ReservesList extends StatefulWidget {
-  const ReservesList(
+class ReservesListReserveScreen extends StatefulWidget {
+  const ReservesListReserveScreen(
       {super.key, required this.reserves, required this.loadNextPage});
 
   final List<ReserveList> reserves;
   final VoidCallback? loadNextPage;
 
   @override
-  State<ReservesList> createState() => _ReservesListState();
+  State<ReservesListReserveScreen> createState() => _ReservesListState();
 }
 
-class _ReservesListState extends State<ReservesList> {
+class _ReservesListState extends State<ReservesListReserveScreen> {
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -63,7 +63,8 @@ class _ReservesListState extends State<ReservesList> {
                   ),
                   onPressed: () => context.push(
                       '/admin/reserves/detail/${widget.reserves[index].id}'),
-                  child: SlideWeb(reserve: widget.reserves[index]));
+                  child:
+                      AdminReservesSlideWeb(reserve: widget.reserves[index]));
             }),
           ))
         : Expanded(
@@ -73,10 +74,10 @@ class _ReservesListState extends State<ReservesList> {
               scrollDirection: Axis.vertical,
               physics: const BouncingScrollPhysics(),
               itemBuilder: (contex, index) {
-                return ElevatedButton(
-                    onPressed: () => context.push(
-                        '/admin/reserves/detail/${widget.reserves[index].id}'),
-                    child: CustomSlide(reserve: widget.reserves[index]));
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: AdminReservesSlideApp(reserve: widget.reserves[index]),
+                );
               },
             ),
           );

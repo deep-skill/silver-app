@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_reserves_slide_app.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_reserves_slide_web.dart';
 
 typedef SearchReservesCallback = Future<List<ReserveList>> Function(
     String query);
@@ -132,21 +134,22 @@ class _ReserveItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical:8.0),
+      padding: const EdgeInsets.all(8),
       child: ElevatedButton(
-        onPressed: () {
-          onReserveSelected(context, reserve);
-          context.push('/admin/reserves/detail/${reserve.id}');
-        },
+          onPressed: () {
+            onReserveSelected(context, reserve);
+            context.push('/admin/reserves/detail/${reserve.id}');
+          },
           style: ElevatedButton.styleFrom(
-             padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
             foregroundColor: Colors.black,
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
           ),
-        child: CustomSlide(reserve: reserve),
-      ),
+          child: kIsWeb
+              ? AdminReservesSlideWeb(reserve: reserve)
+              : AdminReservesSlideApp(reserve: reserve)),
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart
 import 'package:silverapp/roles/admin/presentation/delegates/search_reserve_list_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_reserve_provider.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/reserve_list.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/lists/reserve_list_reserve_screen.dart';
 
 class DriverTripListScreen extends StatelessWidget {
   const DriverTripListScreen({super.key});
@@ -105,7 +105,7 @@ class DriverTripListViewState extends ConsumerState<DriverTripListView> {
                   )),
             ),
             const SizedBox(height: 15),
-            ReservesList(
+            ReservesListReserveScreen(
               reserves: reserves,
               loadNextPage: () {
                 ref.read(reservesListProvider.notifier).loadNextPage();

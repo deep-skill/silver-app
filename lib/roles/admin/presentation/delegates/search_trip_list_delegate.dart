@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/trip_slide.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_trip_slide_app.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_trip_slide_web.dart';
 
 typedef SearchTripsCallback = Future<List<TripList>> Function(String query);
 
@@ -131,21 +132,10 @@ class _TripItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: ElevatedButton(
-        onPressed: () {
-          onTripSelected(context, trip);
-          context.push('/admin/reserves/detail/${trip.id}');
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-          foregroundColor: Colors.black,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
-        ),
-        child: TripSlide(trip: trip),
-      ),
+      padding: const EdgeInsets.all(8),
+      child: kIsWeb
+          ? AdminTripSlideWeb(trip: trip)
+          : AdminTripSlideApp(trip: trip),
     );
   }
 }

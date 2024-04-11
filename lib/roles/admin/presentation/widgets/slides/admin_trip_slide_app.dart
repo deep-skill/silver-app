@@ -97,7 +97,7 @@ class AdminTripSlideApp extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: Colors.white,
-                                  width: 3,
+                                  width: 0,
                                 ),
                               ),
                               child: SizedBox(

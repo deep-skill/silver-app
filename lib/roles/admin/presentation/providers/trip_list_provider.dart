@@ -54,6 +54,7 @@ class TripsNotifier extends StateNotifier<List<TripList>> {
   }
 
   Future<void> reloadData() async {
+    lastPage = false;
     if (isLoading) return;
     //print('Loading new pages');
     currentPage = 0;

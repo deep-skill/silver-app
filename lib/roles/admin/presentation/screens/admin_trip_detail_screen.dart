@@ -70,12 +70,14 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
 
     double calculatePaySilver() {
       if (trip.status == "CANCELED") {
-        return (trip.totalPrice) * trip.silverPercent / 100;
+        return trip.totalPrice * trip.silverPercent / 100;
       }
       if (trip.waitingTimeExtra != null) {
-        return (trip.price + trip.waitingTimeExtra!) * trip.silverPercent / 100;
+        return (trip.totalPrice + trip.waitingTimeExtra!) *
+            trip.silverPercent /
+            100;
       }
-      double result = (trip.price) * trip.silverPercent / 100;
+      double result = trip.totalPrice * trip.silverPercent / 100;
       return result;
     }
 

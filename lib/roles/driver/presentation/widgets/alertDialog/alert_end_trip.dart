@@ -78,15 +78,10 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     int minuteComplete = (time % 60).toInt();
     if (minuteComplete <= 15) {
       result = hourComplete.toDouble();
-      return result;
-    }
-    if (minuteComplete > 15 && minuteComplete > 44) {
-      result = hourComplete.toDouble() + 0.5;
-      return result;
-    }
-    if (minuteComplete >= 45) {
+    } else if (minuteComplete >= 45) {
       result = hourComplete.toDouble() + 1.0;
-      return result;
+    } else {
+      result = hourComplete.toDouble() + 0.5;
     }
     return result;
   }
@@ -148,14 +143,16 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           "waitingTimeExtra": calculateWaitingAmount(widget.arrivedDriver,
                   widget.startTime, widget.reserveStartTime)
               .toDouble(),
-          "suggestedTotalPrice": suggestedTotalPrice,
+          "totalPrice": suggestedTotalPrice,
+          "suggestedTotalPrice": widget.totalPrice,
           "polyline": route.encodedPolyline
         });
       } else {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": roudedDateTimeToString(),
           "status": "COMPLETED",
-          "suggestedTotalPrice": suggestedTotalPrice,
+          "totalPrice": suggestedTotalPrice,
+          "suggestedTotalPrice": widget.totalPrice,
           "tripPolyline": route.encodedPolyline
         });
       }

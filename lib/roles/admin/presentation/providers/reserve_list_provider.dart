@@ -55,7 +55,7 @@ class ReservesNotifier extends StateNotifier<List<ReserveList>> {
   }
 
   Future<void> reloadData() async {
-    lastPage = true;
+    lastPage = false;
     if (isLoading) return;
     //print('Loading new pages');
     currentPage = 0;

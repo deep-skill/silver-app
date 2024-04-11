@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/google_maps/google_post_routes.dart';
+import 'package:silverapp/roles/driver/helpers/datatime_rouded_string.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/async_buttons/async_driver_in_trip_button.dart';
 
 class AlertTripEnd extends StatefulWidget {
   final int tripId;
@@ -118,7 +120,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     }
   }
 
-  void patchEndTripDrive(BuildContext context, int tripId) async {
+  void patchEndTripDrive(int tripId) async {
     var suggestedTotalPrice = 0;
     var route = await calculateRouteAndStops(getDirectionsUrl(
         widget.startAddressLat,
@@ -131,7 +133,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     try {
       if (widget.tripType == "POR HORA") {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": DateTime.now().toUtc().toIso8601String(),
+          "endTime": roudedDateTimeToString(),
           "status": "COMPLETED",
           "totalPrice": totalPricePerHour(widget.arrivedDriver!,
                   widget.reserveStartTime, widget.serviceCarType) *
@@ -141,11 +143,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
               widget.arrivedDriver, widget.startTime, widget.reserveStartTime) >
           0) {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": DateTime.now().toUtc().toIso8601String(),
+          "endTime": roudedDateTimeToString(),
           "status": "COMPLETED",
-          "totalPrice": widget.totalPrice +
-              calculateWaitingAmount(widget.arrivedDriver, widget.startTime,
-                  widget.reserveStartTime),
           "waitingTimeExtra": calculateWaitingAmount(widget.arrivedDriver,
                   widget.startTime, widget.reserveStartTime)
               .toDouble(),
@@ -154,7 +153,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         });
       } else {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": DateTime.now().toUtc().toIso8601String(),
+          "endTime": roudedDateTimeToString(),
           "status": "COMPLETED",
           "suggestedTotalPrice": suggestedTotalPrice,
           "tripPolyline": route.encodedPolyline
@@ -164,6 +163,15 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+    }
+  }
+
+  Future<bool?> onPressed() async {
+    try {
+      patchEndTripDrive(widget.tripId);
+      return true;
+    } catch (e) {
+      return null;
     }
   }
 
@@ -180,37 +188,9 @@ class _AlertTripEndState extends State<AlertTripEnd> {
       actions: <Widget>[
         Row(children: [
           Expanded(
-            child: TextButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      const EdgeInsets.all(5)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFF23A5CD)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  patchEndTripDrive(context, widget.tripId);
-                  final DateTime? startTime = widget.arrivedDriver;
-
-                  if (startTime != null) {
-                    final String minutes =
-                        getDifferenceBetweenTimes(startTime, DateTime.now());
-                    sendEventTripEnded(minutes);
-                  }
-
-                  context.pop();
-                },
-                child: const Text(
-                  "Confirmar",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: "Monserrat"),
-                )),
+            child: ButtonAsyncDriverInTrip(
+              onPressed: onPressed,
+            ),
           ),
           const SizedBox(
             width: 10,

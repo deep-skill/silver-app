@@ -42,7 +42,7 @@ class _ExpansionTripLabelTollParkingDriver
               style: styleTitle,
             ),
             Text(
-              " S/ ${(widget.priceToll ?? 0) + (widget.priceParking ?? 0)}",
+              " S/ ${((widget.priceToll ?? 0) + (widget.priceParking ?? 0)).toStringAsFixed(2)}",
               style: styleTitle,
             )
           ],

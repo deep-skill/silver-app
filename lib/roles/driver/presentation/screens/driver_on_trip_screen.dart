@@ -1,6 +1,7 @@
 import 'package:auth0_flutter/auth0_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
@@ -52,6 +53,7 @@ class DriverOnTripScreenState extends ConsumerState<DriverOnTripScreen> {
     void cancelReload() {
       ref.invalidate(nearestReserveProvider);
       ref.invalidate(tripsSummaryDriverProvider);
+      context.go("/driver");
     }
 
     if (trip == null) {

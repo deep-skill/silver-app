@@ -3,7 +3,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:silverapp/google_maps/google_maps_screen.dart';
 import 'package:silverapp/google_maps/location_data.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
@@ -23,6 +22,8 @@ import 'package:silverapp/roles/admin/presentation/providers/search_car_provider
 import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/async_buttons/create_edit_button_app.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/async_buttons/create_edit_button_web.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/custom_form_field.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/full_screen_loader.dart';
 
@@ -113,6 +114,44 @@ class CreateReserveView extends ConsumerWidget {
           'silver_percent': silverPercent == '' ? 20 : silverPercent
         },
       );
+    }
+
+    Future<bool?> onPressedCreateEdit() async {
+      final value = await ref
+          .read(reserveFormProvider(reserve).notifier)
+          .onFormSubmit(reserve.id!, reserve.tripId);
+
+      if (!value) return null;
+      if (reserve.id! != 0) {
+        ref
+            .read(reserveDetailProvider.notifier)
+            .updateReserveDetail(reserve.id!.toString());
+        if (reserve.tripId != null) {
+          ref
+              .read(tripAdminStatusProvider.notifier)
+              .updateTripStatus(reserve.tripId!.toString());
+        }
+        return false;
+      } else {
+        final String time =
+            getDifferenceBetweenTimes(screenLoadTime, DateTime.now());
+        sendEventCreatedReserve(
+            adminEmail: adminEmail,
+            amountMinutesCreating: time,
+            driverId: reserveForm.driverId?.value ?? 0,
+            serviceType: reserveForm.serviceType.value,
+            tripType: reserveForm.tripType.value,
+            userId: reserveForm.userId.value,
+            reservePrice: reserveForm.price.value,
+            silverPercent: reserveForm.silverPercent.value == ''
+                ? '20'
+                : reserveForm.silverPercent.value);
+      }
+
+      showSnackbar(context, reserve.id!);
+      ref.read(reservesHomeProvider.notifier).reloadData();
+      ref.read(reservesListProvider.notifier).reloadData();
+      return false;
     }
 
     return kIsWeb
@@ -976,72 +1015,10 @@ class CreateReserveView extends ConsumerWidget {
                           ]),
                         const SizedBox(height: 30),
                         Center(
-                          child: TextButton(
-                            onPressed: () async {
-                              ref
-                                  .read(reserveFormProvider(reserve).notifier)
-                                  .onFormSubmit(reserve.id!, reserve.tripId)
-                                  .then((value) {
-                                if (!value) return;
-                                if (reserve.id! != 0) {
-                                  ref
-                                      .read(reserveDetailProvider.notifier)
-                                      .updateReserveDetail(
-                                          reserve.id!.toString());
-                                  if (reserve.tripId != null) {
-                                    ref
-                                        .read(tripAdminStatusProvider.notifier)
-                                        .updateTripStatus(
-                                            reserve.tripId!.toString());
-                                  }
-                                } else {
-                                  final String time = getDifferenceBetweenTimes(
-                                      screenLoadTime, DateTime.now());
-                                  sendEventCreatedReserve(
-                                      adminEmail: adminEmail,
-                                      amountMinutesCreating: time,
-                                      driverId:
-                                          reserveForm.driverId?.value ?? 0,
-                                      serviceType:
-                                          reserveForm.serviceType.value,
-                                      tripType: reserveForm.tripType.value,
-                                      userId: reserveForm.userId.value,
-                                      reservePrice: reserveForm.price.value,
-                                      silverPercent:
-                                          reserveForm.silverPercent.value == ''
-                                              ? '20'
-                                              : reserveForm
-                                                  .silverPercent.value);
-                                }
-                                showSnackbar(context, reserve.id!);
-
-                                ref
-                                    .read(reservesHomeProvider.notifier)
-                                    .reloadData();
-                                ref
-                                    .read(reservesListProvider.notifier)
-                                    .reloadData();
-
-                                context.pop();
-                              });
-                            },
-                            style: ButtonStyle(
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              )),
-                              fixedSize: MaterialStateProperty.all(
-                                  Size(size.width * .20, size.height * .05)),
-                              backgroundColor: MaterialStateProperty.all(
-                                  const Color(0xFF03132A)),
-                            ),
-                            child: Text(
-                                reserve.id == 0 ? "Crear" : "Guardar cambios",
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'Raleway-Semi-Bold',
-                                    fontSize: 16)),
+                          child: ButtonCreateEditWeb(
+                            size: size,
+                            reserve: reserve,
+                            onPressedCreateEdit: onPressedCreateEdit,
                           ),
                         ),
                       ]),
@@ -1813,70 +1790,11 @@ class CreateReserveView extends ConsumerWidget {
                         ]),
                       const SizedBox(height: 30),
                       Center(
-                        child: TextButton(
-                          onPressed: () async {
-                            ref
-                                .read(reserveFormProvider(reserve).notifier)
-                                .onFormSubmit(reserve.id!, reserve.tripId)
-                                .then((value) {
-                              if (!value) return;
-                              if (reserve.id! != 0) {
-                                ref
-                                    .read(reserveDetailProvider.notifier)
-                                    .updateReserveDetail(
-                                        reserve.id!.toString());
-                                if (reserve.tripId != null) {
-                                  ref
-                                      .read(tripAdminStatusProvider.notifier)
-                                      .updateTripStatus(
-                                          reserve.tripId!.toString());
-                                }
-                              } else {
-                                final String time = getDifferenceBetweenTimes(
-                                    screenLoadTime, DateTime.now());
-                                sendEventCreatedReserve(
-                                    adminEmail: adminEmail,
-                                    amountMinutesCreating: time,
-                                    driverId: reserveForm.driverId?.value ?? 0,
-                                    serviceType: reserveForm.serviceType.value,
-                                    tripType: reserveForm.tripType.value,
-                                    userId: reserveForm.userId.value,
-                                    reservePrice: reserveForm.price.value,
-                                    silverPercent:
-                                        reserveForm.silverPercent.value == ''
-                                            ? '20'
-                                            : reserveForm.silverPercent.value);
-                              }
-                              showSnackbar(context, reserve.id!);
-
-                              ref
-                                  .read(reservesHomeProvider.notifier)
-                                  .reloadData();
-                              ref
-                                  .read(reservesListProvider.notifier)
-                                  .reloadData();
-
-                              context.pop();
-                            });
-                          },
-                          style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            )),
-                            fixedSize: MaterialStateProperty.all(
-                                Size(size.width * .8, size.height * .07)),
-                            backgroundColor: MaterialStateProperty.all(
-                                const Color(0xFF23A5CD)),
-                          ),
-                          child: Text(
-                              reserve.id == 0 ? "Crear" : "Guardar cambios",
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'Montserrat-Bold',
-                                  fontSize: 16)),
-                        ),
-                      ),
+                          child: ButtonCreateEditApp(
+                        size: size,
+                        reserve: reserve,
+                        onPressedCreateEdit: onPressedCreateEdit,
+                      )),
                     ]),
               ),
             ),

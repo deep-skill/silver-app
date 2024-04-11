@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/async_buttons/async_driver_in_trip_button.dart';
 
 class AlertTripCanceled extends StatefulWidget {
   final int tripId;
@@ -38,6 +39,15 @@ class _AlertTripEndState extends State<AlertTripCanceled> {
     }
   }
 
+  Future<bool?> onPressed() async {
+    try {
+      canceledTripDriver(widget.tripId, widget.credentials);
+      return true;
+    } catch (e) {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -51,29 +61,9 @@ class _AlertTripEndState extends State<AlertTripCanceled> {
       actions: <Widget>[
         Row(children: [
           Expanded(
-            child: TextButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      const EdgeInsets.all(5)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFF23A5CD)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  canceledTripDriver(widget.tripId, widget.credentials);
-                  context.go("/driver");
-                },
-                child: const Text(
-                  "Confirmar",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: "Monserrat"),
-                )),
+            child: ButtonAsyncDriverInTrip(
+              onPressed: onPressed,
+            ),
           ),
           const SizedBox(
             width: 10,

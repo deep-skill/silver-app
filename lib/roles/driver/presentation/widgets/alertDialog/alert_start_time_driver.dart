@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/roles/driver/helpers/datatime_rouded_string.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/async_buttons/async_driver_in_trip_button.dart';
 
 class AlertStartTimeDriver extends StatefulWidget {
   final int tripId;
@@ -18,13 +20,22 @@ class AlertStartTimeDriver extends StatefulWidget {
 }
 
 class _AlertTripStartState extends State<AlertStartTimeDriver> {
-  void patchStartTripDrive(BuildContext context, int tripId) async {
+  void patchStartTripDrive(int tripId) async {
     try {
       await dio(widget.credentials).patch('trips/driver-trip/$tripId',
-          data: {"startTime": DateTime.now().toUtc().toIso8601String()});
+          data: {"startTime": roudedDateTimeToString()});
       widget.reload();
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<bool?> onPressed() async {
+    try {
+      patchStartTripDrive(widget.tripId);
+      return true;
+    } catch (e) {
+      return null;
     }
   }
 
@@ -41,30 +52,9 @@ class _AlertTripStartState extends State<AlertStartTimeDriver> {
       actions: <Widget>[
         Row(children: [
           Expanded(
-            child: TextButton(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                      const EdgeInsets.all(5)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFF23A5CD)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  patchStartTripDrive(context, widget.tripId);
-                  context.pop();
-                },
-                child: const Text(
-                  "Confirmar",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontFamily: "Monserrat"),
-                )),
-          ),
+              child: ButtonAsyncDriverInTrip(
+            onPressed: onPressed,
+          )),
           const SizedBox(
             width: 10,
           ),

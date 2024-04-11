@@ -42,7 +42,7 @@ class _ExpansionTripLabelTollParking
               style: styleTitle,
             ),
             Text(
-              " S/ ${(widget.priceToll ?? 0) + (widget.priceParking ?? 0)}",
+              " S/ ${((widget.priceToll ?? 0) + (widget.priceParking ?? 0)).toStringAsFixed(2)}",
               style: styleTitle,
             )
           ],
@@ -60,7 +60,7 @@ class _ExpansionTripLabelTollParking
                       Row(
                         children: [
                           Text(
-                            "S/ ${widget.priceToll}",
+                            "S/ ${widget.priceToll!.toStringAsFixed(2)}",
                             style: styleText,
                           ),
                           const SizedBox(
@@ -84,7 +84,7 @@ class _ExpansionTripLabelTollParking
                       Row(
                         children: [
                           Text(
-                            "S/ ${widget.priceParking}",
+                            "S/ ${widget.priceParking!.toStringAsFixed(2)}",
                             style: styleText,
                           ),
                           const SizedBox(

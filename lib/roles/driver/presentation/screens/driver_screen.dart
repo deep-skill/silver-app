@@ -125,7 +125,6 @@ class HomeViewState extends ConsumerState<HomeView> {
     }
 
     void nav(id) {
-      context.pop();
       context.push('/driver/trips/on-trip/$id');
     }
 

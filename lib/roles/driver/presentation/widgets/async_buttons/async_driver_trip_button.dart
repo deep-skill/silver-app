@@ -20,14 +20,9 @@ class _ButtonAsyncDriverTripState extends State<ButtonAsyncDriverTrip> {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        print("aprete el boton");
         if (!_isLoading) {
           _onPressedHandler();
-          print('onPressedHandler');
-          print('-----------------');
-          print('-----------------');
         }
-        print("_isLoading ${_isLoading}");
       },
       style: ButtonStyle(
         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),

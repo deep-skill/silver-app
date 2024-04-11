@@ -3,8 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/search_car.dart';
 
-typedef SearchCarsCallback = Future<List<SearchCar>> Function(
-    String query);
+typedef SearchCarsCallback = Future<List<SearchCar>> Function(String query);
 
 class SearchCarDelegate extends SearchDelegate<SearchCar?> {
   final SearchCarsCallback searchCars;
@@ -125,22 +124,35 @@ class SearchCarDelegate extends SearchDelegate<SearchCar?> {
 
 class _CarItem extends StatelessWidget {
   const _CarItem(
-      {required this.car,
-      required this.onCarSelected,
-      required this.callback});
+      {required this.car, required this.onCarSelected, required this.callback});
   final SearchCar car;
   final Function onCarSelected;
   final Function callback;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return ElevatedButton(
+      onPressed: () {
         onCarSelected(context, car);
-        callback(car.id, car.brand, car.model, car.color, car.licensePlate,);
+        callback(
+          car.id,
+          car.brand,
+          car.model,
+          car.color,
+          car.licensePlate,
+        );
       },
+      style: ElevatedButton.styleFrom(
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        foregroundColor: Colors.black,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Text('${car.licensePlate} ${car.brand} ${car.model} ${car.color}'),
+        child:
+            Text('${car.licensePlate} ${car.brand} ${car.model} ${car.color}'),
       ),
     );
   }

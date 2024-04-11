@@ -51,184 +51,181 @@ class AdminTripSlideWeb extends StatelessWidget {
             color: Colors.red, fontSize: 10, fontFamily: 'Montserrat-Bold'),
       );
     }
-    return SizedBox(
-      height: size.height * .15,
-      child: ElevatedButton(
-        onPressed: () => context.push('/admin/trips/detail/${trip.id}'),
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-          foregroundColor: Colors.black,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
+    return ElevatedButton(
+      onPressed: () => context.push('/admin/trips/detail/${trip.id}'),
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        foregroundColor: Colors.black,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-                width: size.width * .11,
-                decoration: const BoxDecoration(
-                  color: Color(0xff03132A),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(8),
-                      topLeft: Radius.circular(8)),
-                ),
-                child: trip.driverName != '' || trip.driverName != null
-                    ? Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4),
-                            child: Text(
-                              '${trip.driverName} ${trip.driverLastName}',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Bold',
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Stack(children: [
-                            SizedBox(
-                              width: 80,
-                              height: 80,
-                              child: ClipOval(
-                                child: Container(
-                                  child: trip.driverImageUrl != null
-                                      ? Image.network(
-                                          trip.driverImageUrl!,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Image.asset(
-                                          fit: BoxFit.cover,
-                                          'assets/images/driver_img_example.png'),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                                bottom: -12,
-                                left: -12,
-                                child: Image.asset(
-                                  'assets/images/vehiculo_home_admin.png',
-                                  scale: 0.9,
-                                ))
-                          ]),
-                        ],
-                      )
-                    : const Center(
-                        child: Text(
-                        'Sin conductor',
-                        style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ))),
-            Padding(
-              padding: const EdgeInsets.all(4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.hail,
-                        size: 20,
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        '${trip.userName} ${trip.userLastName}',
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontFamily: 'Montserrat-Bold',
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    width: size.width * .1,
-                    child: Row(
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+              width: size.width * .11,
+              decoration: const BoxDecoration(
+                color: Color(0xff03132A),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(8),
+                    topLeft: Radius.circular(8)),
+              ),
+              child: trip.driverName != '' || trip.driverName != null
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(
-                          Icons.account_balance_outlined,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 9),
-                        Expanded(
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
                           child: Text(
-                            trip.enterpriseName != null
-                                ? ' ${trip.enterpriseName}'
-                                : 'Viaje Personal',
-                            style: const TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Medium',
-                                fontWeight: FontWeight.w700),
+                            '${trip.driverName} ${trip.driverLastName}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Bold',
+                              color: Colors.white,
+                            ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Stack(children: [
+                          SizedBox(
+                            width: 80,
+                            height: 80,
+                            child: ClipOval(
+                              child: Container(
+                                child: trip.driverImageUrl != null
+                                    ? Image.network(
+                                        trip.driverImageUrl!,
+                                        fit: BoxFit.cover,
+                                      )
+                                    : Image.asset(
+                                        fit: BoxFit.cover,
+                                        'assets/images/driver_img_example.png'),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                              bottom: -12,
+                              left: -12,
+                              child: Image.asset(
+                                'assets/images/vehiculo_home_admin.png',
+                                scale: 0.9,
+                              ))
+                        ]),
                       ],
+                    )
+                  : const Center(
+                      child: Text(
+                      'Sin conductor',
+                      style: TextStyle(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ))),
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.hail,
+                      size: 20,
                     ),
-                  ),
-                  Row(
+                    const SizedBox(width: 10),
+                    Text(
+                      '${trip.userName} ${trip.userLastName}',
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontFamily: 'Montserrat-Bold',
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: size.width * .1,
+                  child: Row(
                     children: [
                       const Icon(
-                        Icons.event_available_outlined,
+                        Icons.account_balance_outlined,
                         size: 20,
                       ),
                       const SizedBox(width: 9),
-                      Text(
-                        ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Medium',
-                            fontWeight: FontWeight.w700),
+                      Expanded(
+                        child: Text(
+                          trip.enterpriseName != null
+                              ? ' ${trip.enterpriseName}'
+                              : 'Viaje Personal',
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Medium',
+                              fontWeight: FontWeight.w700),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      const Text(
-                        'Tarifa Total',
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Bold',
-                            color: Color(0xff03132A)),
-                      ),
-                      SizedBox(
-                        width: size.width * .02,
-                      ),
-                      Text(
-                        'S/${trip.totalPrice}',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Bold',
-                            color: Color(0xff03132A)),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [tripStatus],
-                  )
-                ],
-              ),
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.event_available_outlined,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 9),
+                    Text(
+                      ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
+                      style: const TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Montserrat-Medium',
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text(
+                      'Tarifa Total',
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Montserrat-Bold',
+                          color: Color(0xff03132A)),
+                    ),
+                    SizedBox(
+                      width: size.width * .02,
+                    ),
+                    Text(
+                      'S/${trip.totalPrice}',
+                      style: const TextStyle(
+                          fontSize: 12,
+                          fontFamily: 'Montserrat-Bold',
+                          color: Color(0xff03132A)),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [tripStatus],
+                )
+              ],
             ),
-            const Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 30,
-            ),
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.arrow_forward_ios_rounded,
+            size: 30,
+          ),
+        ],
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_reserves_slide_app.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_reserves_slide_web.dart';
@@ -52,19 +51,7 @@ class _ReservesListState extends State<ReservesListReserveScreen> {
             scrollDirection: Axis.vertical,
             physics: const BouncingScrollPhysics(),
             children: List.generate(widget.reserves.length, (index) {
-              return ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                    foregroundColor: Colors.black,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                    ),
-                  ),
-                  onPressed: () => context.push(
-                      '/admin/reserves/detail/${widget.reserves[index].id}'),
-                  child:
-                      AdminReservesSlideWeb(reserve: widget.reserves[index]));
+              return AdminReservesSlideWeb(reserve: widget.reserves[index]);
             }),
           ))
         : Expanded(

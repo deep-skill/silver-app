@@ -36,22 +36,20 @@ class AdminHomeSlideWeb extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox.square(
-            dimension: size.width * .10,
-            child: Container(
-                decoration: const BoxDecoration(
-                  color: Color(0xffF2F3F7),
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
+          Container(
+              width: size.width * .12,
+              decoration: const BoxDecoration(
+                color: Color(0xffF2F3F7),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              child: const Center(
+                  child: Text(
+                'Sin conductor',
+                style: TextStyle(
+                  fontFamily: 'Montserrat-Regular',
+                  fontSize: 12,
                 ),
-                child: const Center(
-                    child: Text(
-                  'Sin conductor',
-                  style: TextStyle(
-                    fontFamily: 'Montserrat-Regular',
-                    fontSize: 12,
-                  ),
-                ))),
-          ),
+              ))),
           Padding(
             padding: const EdgeInsets.all(4),
             child: Column(

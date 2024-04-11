@@ -133,12 +133,20 @@ class _PassengerItem extends StatelessWidget {
   final Function callback;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
+    return ElevatedButton(
+      onPressed: () {
         onPassengerSelected(context, passenger);
         callback(passenger.id, passenger.name, passenger.lastName,
             passenger.enterpriseId);
       },
+      style: ElevatedButton.styleFrom(
+        alignment: Alignment.centerLeft,
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        foregroundColor: Colors.black,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        ),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Text('${passenger.name} ${passenger.lastName}'),

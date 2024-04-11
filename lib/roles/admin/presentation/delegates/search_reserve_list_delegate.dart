@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/custom_slide.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_reserves_slide_app.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_reserves_slide_web.dart';
 
 typedef SearchReservesCallback = Future<List<ReserveList>> Function(
     String query);
@@ -131,12 +132,11 @@ class _ReserveItem extends StatelessWidget {
   final Function onReserveSelected;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onReserveSelected(context, reserve);
-        context.push('/admin/reserves/detail/${reserve.id}');
-      },
-      child: CustomSlide(reserve: reserve),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: kIsWeb
+          ? AdminReservesSlideWeb(reserve: reserve)
+          : AdminReservesSlideApp(reserve: reserve),
     );
   }
 }

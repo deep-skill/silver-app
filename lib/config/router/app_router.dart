@@ -7,9 +7,9 @@ import 'package:silverapp/roles/admin/presentation/screens/admin_trip_detail_scr
 import 'package:silverapp/roles/admin/presentation/screens/admin_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/create_reserve_screen.dart';
 import 'package:silverapp/roles/admin/presentation/screens/reserve_detail_screen.dart';
-import 'package:silverapp/roles/admin/presentation/screens/reserve_list_screen.dart';
+import 'package:silverapp/roles/admin/presentation/screens/reserves_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_on_trip_screen.dart';
-import 'package:silverapp/roles/admin/presentation/screens/trips_list_screen.dart';
+import 'package:silverapp/roles/admin/presentation/screens/trips_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_detail_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_list_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_screen.dart';
@@ -40,7 +40,7 @@ final goRouterProvider = Provider((ref) {
           routes: [
             GoRoute(
                 path: 'reserves',
-                builder: (context, state) => const ReserveListScreen(),
+                builder: (context, state) => const ReservesScreen(),
                 routes: [
                   GoRoute(
                     path: 'create/:id',
@@ -60,7 +60,7 @@ final goRouterProvider = Provider((ref) {
                 ]),
             GoRoute(
                 path: 'trips',
-                builder: (context, state) => const TripsListScreen(),
+                builder: (context, state) => const TripsScreen(),
                 routes: [
                   GoRoute(
                     path: 'detail/:id',

@@ -8,7 +8,7 @@ import 'package:silverapp/roles/admin/presentation/delegates/search_reserve_list
 import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_reserve_no_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/reserve_list_home.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/lists/reserve_list_home_app.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/trips_summary_view.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
@@ -53,7 +53,7 @@ class AdminHomeAppView extends StatelessWidget {
                           child: Image.asset(
                         "assets/images/app_logo.png",
                         width: size.width * .2,
-                        color: Color(0xff03132a),
+                        color: const Color(0xff03132a),
                       )),
                       SizedBox(
                         width: size.width * .04,
@@ -165,7 +165,7 @@ class AdminHomeAppView extends StatelessWidget {
                       ),
                     )),
               ),
-              ReservesListHome(
+              ReservesListHomeApp(
                 reserves: reserves,
                 loadNextPage: () {
                   ref.read(reservesHomeProvider.notifier).loadNextPage();

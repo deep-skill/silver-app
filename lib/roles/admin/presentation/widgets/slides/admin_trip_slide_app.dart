@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
 
-class TripSlideWeb extends StatelessWidget {
+class AdminTripSlideApp extends StatelessWidget {
   final TripList trip;
-  const TripSlideWeb({super.key, required this.trip});
+  const AdminTripSlideApp({super.key, required this.trip});
 
   @override
   Widget build(BuildContext context) {
@@ -51,31 +51,25 @@ class TripSlideWeb extends StatelessWidget {
             color: Colors.red, fontSize: 10, fontFamily: 'Montserrat-Bold'),
       );
     }
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        height: size.height * .18,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.25),
-              blurRadius: 4,
-              offset: Offset(0, 4),
-            )
-          ],
+    return SizedBox(
+      height: size.height * .15,
+      child: ElevatedButton(
+        onPressed: () => context.push('/admin/trips/detail/${trip.id}'),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          foregroundColor: Colors.black,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: size.width * .11,
+                width: size.width * .30,
                 decoration: const BoxDecoration(
                   color: Color(0xff03132A),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(8),
-                      topLeft: Radius.circular(8)),
+                  borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
                 child: trip.driverName != '' || trip.driverName != null
                     ? Column(
@@ -95,31 +89,38 @@ class TripSlideWeb extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(
-                            height: 10,
+                            height: 8,
                           ),
                           Stack(children: [
-                            SizedBox(
-                              width: 80,
-                              height: 80,
-                              child: ClipOval(
-                                child: Container(
-                                  child: trip.driverImageUrl != null
-                                      ? Image.network(
-                                          trip.driverImageUrl!,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : Image.asset(
-                                          fit: BoxFit.cover,
-                                          'assets/images/driver_img_example.png'),
+                            Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 0,
                                 ),
+                              ),
+                              child: SizedBox(
+                                width: size.width * .20,
+                                height: size.width * .20,
+                                child: ClipOval(
+                                    child: trip.driverImageUrl != null
+                                        ? Image.network(
+                                            trip.driverImageUrl!,
+                                            fit: BoxFit.cover,
+                                          )
+                                        : Image.asset(
+                                            'assets/images/driver_img_example.png',
+                                            fit: BoxFit.cover,
+                                          )),
                               ),
                             ),
                             Positioned(
-                                bottom: -12,
+                                bottom: -4,
                                 left: -12,
                                 child: Image.asset(
                                   'assets/images/vehiculo_home_admin.png',
-                                  scale: 0.9,
+                                  scale: 1,
                                 ))
                           ]),
                         ],
@@ -136,10 +137,10 @@ class TripSlideWeb extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ))),
             Padding(
-              padding: const EdgeInsets.all(4),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     children: [
@@ -147,27 +148,31 @@ class TripSlideWeb extends StatelessWidget {
                         Icons.hail,
                         size: 20,
                       ),
-                      const SizedBox(width: 10),
-                      Text(
-                        '${trip.userName} ${trip.userLastName}',
-                        style: const TextStyle(
-                          fontSize: 17,
-                          fontFamily: 'Montserrat-Bold',
+                      SizedBox(
+                        width: size.width * .4,
+                        child: Text(
+                          '${trip.userName} ${trip.userLastName}',
+                          style: const TextStyle(
+                            fontSize: 17,
+                            fontFamily: 'Montserrat-Bold',
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
+                  const SizedBox(
+                    height: 4,
+                  ),
                   SizedBox(
-                    width: size.width * .1,
+                    width: size.width * .4,
                     child: Row(
                       children: [
                         const Icon(
                           Icons.account_balance_outlined,
                           size: 20,
                         ),
-                        const SizedBox(width: 9),
                         Expanded(
                           child: Text(
                             trip.enterpriseName != null
@@ -184,43 +189,54 @@ class TripSlideWeb extends StatelessWidget {
                       ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 4,
+                  ),
                   Row(
                     children: [
                       const Icon(
                         Icons.event_available_outlined,
                         size: 20,
                       ),
-                      const SizedBox(width: 9),
-                      Text(
-                        ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Medium',
-                            fontWeight: FontWeight.w700),
+                      SizedBox(
+                        width: size.width * .4,
+                        child: Text(
+                          ' ${trip.onWayDriver.day} ${months[trip.onWayDriver.month - 1]} ${trip.onWayDriver.year} | ${trip.onWayDriver.hour.toString().padLeft(2, '0')}:${trip.onWayDriver.minute.toString().padLeft(2, '0')}',
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Medium',
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      const Text(
-                        'Tarifa Total',
-                        style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Bold',
-                            color: Color(0xff03132A)),
-                      ),
-                      SizedBox(
-                        width: size.width * .02,
-                      ),
-                      Text(
-                        'S/${trip.totalPrice}',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Bold',
-                            color: Color(0xff03132A)),
-                      ),
-                    ],
+                  const SizedBox(
+                    height: 4,
+                  ),
+                  SizedBox(
+                    width: size.width * .4,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Tarifa Total',
+                          style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Bold',
+                              color: Color(0xff03132A)),
+                        ),
+                        Text(
+                          'S/${trip.totalPrice}',
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Bold',
+                              color: Color(0xff03132A)),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 4,
                   ),
                   Row(
                     children: [tripStatus],
@@ -228,12 +244,9 @@ class TripSlideWeb extends StatelessWidget {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () => context.push('/admin/trips/detail/${trip.id}'),
-              child: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 30,
-              ),
+            const Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 30,
             ),
           ],
         ),

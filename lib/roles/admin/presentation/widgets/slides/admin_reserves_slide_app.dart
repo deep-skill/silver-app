@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 
-class CustomSlide extends StatelessWidget {
+class AdminReservesSlideApp extends StatelessWidget {
   final ReserveList reserve;
-  const CustomSlide({super.key, required this.reserve});
+  const AdminReservesSlideApp({super.key, required this.reserve});
 
   @override
   Widget build(BuildContext context) {
@@ -23,54 +23,56 @@ class CustomSlide extends StatelessWidget {
       'nov',
       'dec'
     ];
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        height: size.height * .17,
-        decoration: BoxDecoration(
-          color: const Color(0xffFFFFFF),
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.shade400,
-              blurRadius: 10,
-              offset: const Offset(0, 3),
-            )
-          ],
+    return SizedBox(
+      height: size.height * .15,
+      child: ElevatedButton(
+        onPressed: () => context.push('/admin/reserves/detail/${reserve.id}'),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          foregroundColor: Colors.black,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                width: size.width * .33,
+                width: size.width * .30,
                 decoration: BoxDecoration(
                   color: reserve.driverName != ''
                       ? const Color(0xff020B19)
                       : const Color(0xFFF2F3F7),
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
                 ),
                 child: reserve.driverName != ''
                     ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 4),
                             child: Text(
                               '${reserve.driverName} ${reserve.driverLastName}',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 11,
+                                fontSize: 12,
                                 fontFamily: 'Montserrat-Bold',
                                 color: Colors.white,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          Stack(children: [
-                            SizedBox(
-                              width: 80,
-                              height: 80,
+                          Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 0,
+                              ),
+                            ),
+                            child: SizedBox(
+                              width: size.width * .20,
+                              height: size.width * .20,
                               child: ClipOval(
                                   child: reserve.driverImageUrl != null
                                       ? Image.network(
@@ -81,7 +83,7 @@ class CustomSlide extends StatelessWidget {
                                           fit: BoxFit.cover,
                                           'assets/images/driver_img_example.png')),
                             ),
-                          ]),
+                          ),
                         ],
                       )
                     : const Center(
@@ -94,9 +96,10 @@ class CustomSlide extends StatelessWidget {
                         ),
                       ))),
             Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     children: [
@@ -105,7 +108,7 @@ class CustomSlide extends StatelessWidget {
                         size: 20,
                       ),
                       SizedBox(
-                        width: size.width * .37,
+                        width: size.width * .4,
                         child: Text(
                           '${reserve.name} ${reserve.lastName}',
                           style: const TextStyle(
@@ -117,74 +120,71 @@ class CustomSlide extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 7),
-                  SizedBox(
-                    width: size.width * .4,
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.account_balance_outlined,
-                          size: 20,
+                  const SizedBox(height: 5),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.account_balance_outlined,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: size.width * .4,
+                        child: Text(
+                          ' ${reserve.entrepriseName}',
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Medium',
+                              fontWeight: FontWeight.w700),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        Expanded(
-                          child: Text(
-                            ' ${reserve.entrepriseName}',
-                            style: const TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'Montserrat-Medium',
-                                fontWeight: FontWeight.w700),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 5),
                   Row(
                     children: [
                       const Icon(
                         Icons.event_available_outlined,
                         size: 20,
                       ),
-                      Text(
-                        ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Medium',
-                            fontWeight: FontWeight.w700),
+                      SizedBox(
+                        width: size.width * .4,
+                        child: Text(
+                          ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Medium',
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
+                  const SizedBox(height: 5),
                   Row(
                     children: [
                       const Icon(
                         Icons.timeline,
                         size: 20,
                       ),
-                      Text(
-                        ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Montserrat-Medium',
-                            fontWeight: FontWeight.w700),
+                      SizedBox(
+                        width: size.width * .4,
+                        child: Text(
+                          ' ${reserve.tripType[0].toUpperCase()}${reserve.tripType.substring(1).toLowerCase()}',
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Medium',
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(right: size.width * .005),
-              child: GestureDetector(
-                onTap: () =>
-                    context.push('/admin/reserves/detail/${reserve.id}'),
-                child: const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 30,
-                ),
-              ),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: size.width * .1,
             ),
           ],
         ),

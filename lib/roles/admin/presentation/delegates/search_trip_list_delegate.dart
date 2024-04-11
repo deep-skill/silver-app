@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_list.dart';
-import 'package:silverapp/roles/admin/presentation/widgets/trip_slide.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_trip_slide_app.dart';
+import 'package:silverapp/roles/admin/presentation/widgets/slides/admin_trip_slide_web.dart';
 
 typedef SearchTripsCallback = Future<List<TripList>> Function(String query);
 
@@ -129,13 +131,11 @@ class _TripItem extends StatelessWidget {
   final Function onTripSelected;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        onTripSelected(context, trip);
-        //falta hacer endpoint de single trip
-        // context.push('/admin/reserves/detail/${trip.id}');
-      },
-       child: TripSlide(trip: trip),
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: kIsWeb
+          ? AdminTripSlideWeb(trip: trip)
+          : AdminTripSlideApp(trip: trip),
     );
   }
 }

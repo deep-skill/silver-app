@@ -117,13 +117,11 @@ class CreateReserveView extends ConsumerWidget {
     }
 
     Future<bool?> onPressedCreateEdit() async {
-      print("en funcion");
       final value = await ref
           .read(reserveFormProvider(reserve).notifier)
           .onFormSubmit(reserve.id!, reserve.tripId);
 
       if (!value) return null;
-      print("en funcion2");
       if (reserve.id! != 0) {
         ref
             .read(reserveDetailProvider.notifier)
@@ -133,7 +131,6 @@ class CreateReserveView extends ConsumerWidget {
               .read(tripAdminStatusProvider.notifier)
               .updateTripStatus(reserve.tripId!.toString());
         }
-        print("en funcion3");
         return false;
       } else {
         final String time =
@@ -154,7 +151,6 @@ class CreateReserveView extends ConsumerWidget {
       showSnackbar(context, reserve.id!);
       ref.read(reservesHomeProvider.notifier).reloadData();
       ref.read(reservesListProvider.notifier).reloadData();
-      print("en funcion4");
       return false;
     }
 

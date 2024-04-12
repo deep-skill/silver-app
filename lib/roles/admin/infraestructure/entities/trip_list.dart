@@ -6,19 +6,21 @@ class TripList {
   final int reserveId;
   final String startAddress;
   final int userId;
+  final String serviceType;
   final String userName;
   final String userLastName;
   final int? driverId;
   final String? driverName;
   final String? driverLastName;
   final int? enterpriseId;
-  final String? enterpriseName;
+  final String enterpriseName;
   final DateTime? startTime;
   final String? driverImageUrl;
   TripList({
     required this.id,
     this.totalPrice,
     required this.onWayDriver,
+    required this.serviceType,
     required this.status,
     required this.reserveId,
     required this.startAddress,
@@ -26,11 +28,11 @@ class TripList {
     required this.userName,
     required this.userLastName,
     required this.startTime,
+    required this.enterpriseName,
     this.driverId,
     this.driverName,
     this.driverLastName,
     this.enterpriseId,
-    this.enterpriseName,
     this.driverImageUrl,
   });
   factory TripList.fromJson(Map<String, dynamic> json) => TripList(
@@ -39,6 +41,7 @@ class TripList {
         totalPrice: json['totalPrice'].toDouble(),
         status: json['status'],
         reserveId: json['Reserve']['id'],
+        serviceType: json['Reserve']['serviceType'],
         startAddress: json['Reserve']['startAddress'],
         userId: json['Reserve']['User']['id'],
         userName: json['Reserve']['User']['name'],
@@ -56,7 +59,7 @@ class TripList {
             ? null
             : json['Reserve']['Enterprise']['id'],
         enterpriseName: json['Reserve']['Enterprise'] == null
-            ? null
+            ? 'Viaje personal'
             : json['Reserve']['Enterprise']['name'],
         startTime: json['Reserve']['startTime'] == null
             ? null

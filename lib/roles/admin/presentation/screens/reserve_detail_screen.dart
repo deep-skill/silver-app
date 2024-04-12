@@ -7,7 +7,7 @@ import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/lists/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_payment.dart';

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/presentation/delegates/search_reserve_list_delegate.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/lists/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_reserve_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/lists/reserve_list_reserve_screen.dart';
 

@@ -79,7 +79,9 @@ class AdminHomeSlideWeb extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          ' ${reserve.entrepriseName}',
+                          reserve.serviceType == 'PERSONAL'
+                          ? 'Viaje personal'
+                          :reserve.entrepriseName,
                           style: const TextStyle(
                               fontFamily: 'Montserrat-Medium',
                               fontSize: 12,

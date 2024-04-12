@@ -130,7 +130,9 @@ class AdminReservesSlideApp extends StatelessWidget {
                       SizedBox(
                         width: size.width * .4,
                         child: Text(
-                          ' ${reserve.entrepriseName}',
+                          reserve.serviceType == 'PERSONAL'
+                          ? 'Viaje personal'
+                          :reserve.entrepriseName,
                           style: const TextStyle(
                               fontSize: 12,
                               fontFamily: 'Montserrat-Medium',

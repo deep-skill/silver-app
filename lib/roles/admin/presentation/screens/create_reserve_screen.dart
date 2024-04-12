@@ -14,10 +14,11 @@ import 'package:silverapp/roles/admin/presentation/delegates/search_car_delegate
 import 'package:silverapp/roles/admin/presentation/delegates/search_driver_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/delegates/search_passenger_delegate.dart';
 import 'package:silverapp/roles/admin/presentation/providers/forms/reserve_form_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/lists/trip_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_create_update_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/lists/reserve_list_home_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/lists/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_car_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_passenger_provider.dart';
@@ -122,6 +123,8 @@ class CreateReserveView extends ConsumerWidget {
           .onFormSubmit(reserve.id!, reserve.tripId);
 
       if (!value) return null;
+      ref.read(reservesHomeProvider.notifier).reloadData();
+      ref.read(reservesListProvider.notifier).reloadData();
       if (reserve.id! != 0) {
         ref
             .read(reserveDetailProvider.notifier)
@@ -130,6 +133,7 @@ class CreateReserveView extends ConsumerWidget {
           ref
               .read(tripAdminStatusProvider.notifier)
               .updateTripStatus(reserve.tripId!.toString());
+          ref.read(tripsListProvider.notifier).reloadData();
         }
         return false;
       } else {
@@ -147,10 +151,7 @@ class CreateReserveView extends ConsumerWidget {
                 ? '20'
                 : reserveForm.silverPercent.value);
       }
-
       showSnackbar(context, reserve.id!);
-      ref.read(reservesHomeProvider.notifier).reloadData();
-      ref.read(reservesListProvider.notifier).reloadData();
       return false;
     }
 
@@ -525,7 +526,7 @@ class CreateReserveView extends ConsumerWidget {
                                                 reserveForm.startTime.value,
                                                 style: reserveForm
                                                             .startTime.value ==
-                                                        '00:00'
+                                                        '00 : 00'
                                                     ? const TextStyle(
                                                         color:
                                                             Color(0xffB5B9C2),
@@ -1368,7 +1369,7 @@ class CreateReserveView extends ConsumerWidget {
                                               reserveForm.startTime.value,
                                               style: reserveForm
                                                           .startTime.value ==
-                                                      '00:00'
+                                                      '00 : 00'
                                                   ? const TextStyle(
                                                       color: Color(0xffB5B9C2),
                                                       fontSize: 16,

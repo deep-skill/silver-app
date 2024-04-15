@@ -151,10 +151,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
 
     if (onSubmitCallback == null) return false;
     final Map<String, dynamic> reserveLike = {
-      "enterprise_id": state.enterpriseId?.value == 0 ||
-              state.serviceType.value != 'Empresarial'
-          ? null
-          : state.enterpriseId?.value,
+      "enterprise_id":
+          state.enterpriseId?.value == 0 ? null : state.enterpriseId?.value,
       "user_id": state.userId.value,
       "trip_type": state.tripType.value.toUpperCase(),
       "service_type": state.serviceType.value == 'Empresarial'
@@ -368,7 +366,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         state.endAddressLon == null ||
         state.serviceCarType.value == 'Seleccione el tipo de vehículo' ||
         state.startDate.value == '2023-09-26' ||
-        state.startTime.value == '00:00' ||
+        state.startTime.value == '00 : 00' ||
         state.tripType.value == 'Seleccione el tipo de viaje' ||
         state.tripType.value == 'Por hora') {
       state = state.copyWith(

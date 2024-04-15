@@ -7,7 +7,7 @@ import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/lists/reserve_list_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_status_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/box_reserve_payment.dart';
@@ -315,7 +315,7 @@ class ReserveInfo extends StatelessWidget {
                                       child: BoxReserveDetail(
                                         label: 'Hora de reserva',
                                         text:
-                                            '${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
+                                            '${reserve.startTime.hour.toString().padLeft(2, '0')}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
                                         row: true,
                                       ),
                                     )
@@ -549,7 +549,7 @@ class ReserveInfo extends StatelessWidget {
                             child: BoxReserveDetail(
                                 label: 'Hora de reserva',
                                 text:
-                                    '${reserve.startTime.hour}:${reserve.startTime.minute.toString().padLeft(2, '0')}'),
+                                    '${reserve.startTime.hour.toString().padLeft(2, '0')}:${reserve.startTime.minute.toString().padLeft(2, '0')}'),
                           )
                         ],
                       ),

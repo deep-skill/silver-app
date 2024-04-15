@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/lists/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
 import 'package:silverapp/roles/admin/presentation/screens/views/mobile/admin_home_app_view.dart';
 import 'package:silverapp/roles/admin/presentation/screens/views/web/admin_home_web_view.dart';

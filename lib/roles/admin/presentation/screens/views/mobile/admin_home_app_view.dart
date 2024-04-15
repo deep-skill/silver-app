@@ -5,7 +5,7 @@ import 'package:silverapp/roles/admin/infraestructure/entities/reserve_home.dart
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_list.dart';
 import 'package:silverapp/roles/admin/infraestructure/models/trip_summary_response.dart';
 import 'package:silverapp/roles/admin/presentation/delegates/search_reserve_list_delegate.dart';
-import 'package:silverapp/roles/admin/presentation/providers/reserve_list_home_provider.dart';
+import 'package:silverapp/roles/admin/presentation/providers/lists/reserve_list_home_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/search_reserve_no_driver_provider.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_summary_provider.dart';
 import 'package:silverapp/roles/admin/presentation/widgets/lists/reserve_list_home_app.dart';

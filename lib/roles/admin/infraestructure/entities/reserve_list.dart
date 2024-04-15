@@ -1,6 +1,7 @@
 class ReserveList {
   final int id;
   final String tripType;
+  final String serviceType;
   final DateTime startTime;
   final String name;
   final String lastName;
@@ -14,6 +15,7 @@ class ReserveList {
   ReserveList({
     required this.id,
     required this.tripType,
+    required this.serviceType,
     required this.startTime,
     required this.name,
     required this.lastName,
@@ -27,6 +29,7 @@ class ReserveList {
   factory ReserveList.fromJson(Map<String, dynamic> json) => ReserveList(
         id: json['id'],
         tripType: json['tripType'],
+        serviceType: json['serviceType'],
         startTime: DateTime.parse(json['startTime']).toLocal(),
         name: json['User'] == null ? '' : json['User']['name'],
         lastName: json['User']['lastName'],

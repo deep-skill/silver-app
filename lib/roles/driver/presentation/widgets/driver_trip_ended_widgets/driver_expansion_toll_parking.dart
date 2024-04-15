@@ -21,6 +21,11 @@ class _ExpansionTripLabelTollParkingDriver
       fontFamily: "Raleway-Bold",
       fontSize: 16,
     );
+    var stylePrice = const TextStyle(
+      color: Color(0xFF164772),
+      fontFamily: 'Raleway-Bold',
+      fontSize: 24,
+    );
     var styleText = const TextStyle(
       color: Color(0xFF000000),
       fontFamily: "Raleway-Medium",
@@ -31,9 +36,8 @@ class _ExpansionTripLabelTollParkingDriver
         color: const Color(0xffF2F3F7),
         borderRadius: BorderRadius.circular(12.0),
       ),
-      margin: const EdgeInsets.all(5.0),
-      padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
       child: ExpansionTile(
+        shape: const Border(),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -43,7 +47,7 @@ class _ExpansionTripLabelTollParkingDriver
             ),
             Text(
               " S/ ${((widget.priceToll ?? 0) + (widget.priceParking ?? 0)).toStringAsFixed(2)}",
-              style: styleTitle,
+              style: stylePrice,
             )
           ],
         ),

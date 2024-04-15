@@ -116,9 +116,6 @@ class TripEndedInfo extends StatelessWidget {
       return result;
     }
 
-    final String reserveStartTimeMinute =
-        trip.reserveStartTime.minute.toString().padLeft(2, '0');
-
     return ListView(shrinkWrap: true, children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
@@ -165,7 +162,7 @@ class TripEndedInfo extends StatelessWidget {
                     icon: Icons.alarm,
                     label: "Hora de reserva",
                     text:
-                        '${trip.reserveStartTime.hour}:$reserveStartTimeMinute',
+                        '${trip.reserveStartTime.hour.toString().padLeft(2, '0')}:${trip.reserveStartTime.minute.toString().padLeft(2, '0')}',
                     row: true),
               ),
             ],

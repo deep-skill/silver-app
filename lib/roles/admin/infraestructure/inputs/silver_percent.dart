@@ -1,7 +1,7 @@
 import 'package:formz/formz.dart';
 
 // Define input validation errors
-enum SilverPercentError { empty, value, format }
+enum SilverPercentError { minValue, maxValue, format }
 
 // Extend FormzInput and provide the input type and error type.
 class SilverPercent extends FormzInput<String, SilverPercentError> {
@@ -16,7 +16,8 @@ class SilverPercent extends FormzInput<String, SilverPercentError> {
 
     if (displayError == SilverPercentError.format) return 'El campo debe ser un nro.';
 
-    if (displayError == SilverPercentError.value) return 'El campo no puede ser menor a 0';
+    if (displayError == SilverPercentError.minValue) return 'El campo no puede ser menor a 0';
+    if (displayError == SilverPercentError.maxValue) return 'El campo no puede ser mayor a 100';
 
     return null;
   }
@@ -27,7 +28,10 @@ class SilverPercent extends FormzInput<String, SilverPercentError> {
     if (int.tryParse(value) == null && value != '') return SilverPercentError.format;
     if (int.tryParse(value) != null) {
       if (int.tryParse(value)! < 0) {
-        return SilverPercentError.value;
+        return SilverPercentError.minValue;
+      }
+      if (int.tryParse(value)! > 100) {
+        return SilverPercentError.maxValue;
       }
     }
     return null;

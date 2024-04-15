@@ -79,7 +79,9 @@ class AdminHomeSlideWeb extends StatelessWidget {
                       ),
                       Expanded(
                         child: Text(
-                          ' ${reserve.entrepriseName}',
+                          reserve.serviceType == 'PERSONAL'
+                          ? 'Viaje personal'
+                          :reserve.entrepriseName,
                           style: const TextStyle(
                               fontFamily: 'Montserrat-Medium',
                               fontSize: 12,
@@ -98,7 +100,7 @@ class AdminHomeSlideWeb extends StatelessWidget {
                       size: 20,
                     ),
                     Text(
-                      ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour}:${reserve.startTime.minute}',
+                      ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour.toString().padLeft(2, '0')}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
                       style: const TextStyle(
                           fontFamily: 'Montserrat-Medium',
                           fontSize: 12,

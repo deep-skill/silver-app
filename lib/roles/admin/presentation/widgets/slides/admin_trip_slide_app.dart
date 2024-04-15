@@ -175,9 +175,9 @@ class AdminTripSlideApp extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            trip.enterpriseName != null
-                                ? ' ${trip.enterpriseName}'
-                                : 'Viaje Personal',
+                            trip.serviceType == 'PERSONAL'
+                          ? 'Viaje personal'
+                          : trip.enterpriseName,
                             style: const TextStyle(
                                 fontSize: 12,
                                 fontFamily: 'Montserrat-Medium',

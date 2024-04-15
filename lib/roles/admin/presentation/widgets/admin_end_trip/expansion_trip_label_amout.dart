@@ -22,6 +22,11 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
     fontFamily: 'Raleway-Bold',
     fontSize: 16,
   );
+  var stylePrice = const TextStyle(
+    color: Color(0xFF164772),
+    fontFamily: 'Raleway-Bold',
+    fontSize: 24,
+  );
   var styleText = const TextStyle(
     color: Color(0xFF000000),
     fontFamily: "Raleway-Medium",
@@ -45,8 +50,8 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
               style: styleTitle,
             ),
             Text(
-              " S/ ${widget.priceBase + (widget.waitingTimeExtra ?? 0)}",
-              style: styleTitle,
+              " S/ ${(widget.priceBase + (widget.waitingTimeExtra ?? 0)).toStringAsFixed(2)}",
+              style: stylePrice,
             )
           ],
         ),
@@ -69,7 +74,7 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
                             ),
                             margin: const EdgeInsets.all(4.0),
                             message:
-                                "Tarifa base sugerida ${widget.suggestedTotalPrice ?? 0}",
+                                "Tarifa base sugerida ${(widget.suggestedTotalPrice ?? 0).toStringAsFixed(2)}",
                             textStyle: const TextStyle(color: Colors.white),
                             child: IconButton(
                               icon: const Icon(Icons.info_outline),
@@ -82,7 +87,7 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
                 Row(
                   children: [
                     Text(
-                      "S/ ${widget.priceBase}",
+                      "S/ ${widget.priceBase.toStringAsFixed(2)}",
                       style: styleText,
                     ),
                     const SizedBox(
@@ -105,7 +110,7 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
                       Row(
                         children: [
                           Text(
-                            "S/ ${widget.waitingTimeExtra}",
+                            "S/ ${widget.waitingTimeExtra!.toStringAsFixed(2)}",
                             style: styleText,
                           ),
                           const SizedBox(

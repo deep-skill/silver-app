@@ -21,6 +21,11 @@ class _ExpansionTripLabelTollParking
       fontFamily: "Raleway-Bold",
       fontSize: 16,
     );
+    var stylePrice = const TextStyle(
+      color: Color(0xFF164772),
+      fontFamily: 'Raleway-Bold',
+      fontSize: 24,
+    );
     var styleText = const TextStyle(
       color: Color(0xFF000000),
       fontFamily: "Raleway-Medium",
@@ -43,7 +48,7 @@ class _ExpansionTripLabelTollParking
             ),
             Text(
               " S/ ${((widget.priceToll ?? 0) + (widget.priceParking ?? 0)).toStringAsFixed(2)}",
-              style: styleTitle,
+              style: stylePrice,
             )
           ],
         ),

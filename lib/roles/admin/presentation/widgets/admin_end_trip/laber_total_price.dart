@@ -16,6 +16,12 @@ class LabelTotalPrice extends StatelessWidget {
       fontFamily: 'Raleway-Bold',
       fontSize: 16,
     );
+
+    var stylePrice = const TextStyle(
+      color: Color(0xFF164772),
+      fontFamily: 'Raleway-Bold',
+      fontSize: 24,
+    );
     return Container(
       margin: const EdgeInsets.all(5.0),
       padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
@@ -39,7 +45,7 @@ class LabelTotalPrice extends StatelessWidget {
                 children: [
                   Text(
                     priceText,
-                    style: styleTitle,
+                    style: stylePrice,
                   ),
                   const SizedBox(
                     width: 60,

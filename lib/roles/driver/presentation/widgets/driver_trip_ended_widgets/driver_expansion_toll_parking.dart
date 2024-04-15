@@ -36,9 +36,8 @@ class _ExpansionTripLabelTollParkingDriver
         color: const Color(0xffF2F3F7),
         borderRadius: BorderRadius.circular(12.0),
       ),
-      margin: const EdgeInsets.all(5.0),
-      padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
       child: ExpansionTile(
+        shape: const Border(),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

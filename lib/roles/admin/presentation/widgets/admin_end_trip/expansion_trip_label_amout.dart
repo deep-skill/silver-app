@@ -39,9 +39,9 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
         color: const Color(0xffF2F3F7),
         borderRadius: BorderRadius.circular(12.0),
       ),
-      margin: const EdgeInsets.all(5.0),
-      padding: const EdgeInsets.fromLTRB(18, 6, 18, 6),
       child: ExpansionTile(
+        tilePadding: const EdgeInsets.symmetric(horizontal: 15),
+        shape: const Border(),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -84,16 +84,9 @@ class _ExpansionTripLabelAmoutState extends State<ExpansionTripLabelAmout> {
                         : const SizedBox()
                   ],
                 ),
-                Row(
-                  children: [
-                    Text(
-                      "S/ ${widget.priceBase.toStringAsFixed(2)}",
-                      style: styleText,
-                    ),
-                    const SizedBox(
-                      width: 37,
-                    )
-                  ],
+                Text(
+                  "S/ ${widget.priceBase.toStringAsFixed(2)}",
+                  style: styleText,
                 ),
               ],
             ),

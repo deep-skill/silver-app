@@ -94,7 +94,7 @@ class CreateReserve {
         driverPercent: 0,
         silverPercent: json['silverPercent'].toString(),
         startTime:
-            '${DateTime.parse(json['startTime']).toLocal().hour.toString()}:${DateTime.parse(json['startTime']).toLocal().minute.toString().padLeft(2, '0')}',
+            '${DateTime.parse(json['startTime']).toLocal().hour.toString().padLeft(2, '0')}:${DateTime.parse(json['startTime']).toLocal().minute.toString().padLeft(2, '0')}',
         startDate:
             '${DateTime.parse(json['startTime']).toLocal().year.toString()}-${DateTime.parse(json['startTime']).toLocal().month.toString().padLeft(2, '0')}-${DateTime.parse(json['startTime']).toLocal().day.toString().padLeft(2, '0')}',
         polyline: json['polyline'],

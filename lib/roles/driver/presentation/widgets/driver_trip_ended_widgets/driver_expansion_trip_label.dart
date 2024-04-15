@@ -19,6 +19,11 @@ class _ExpansionTripLabelAmoutDriverState
     fontFamily: 'Raleway-Bold',
     fontSize: 16,
   );
+  var stylePrice = const TextStyle(
+    color: Color(0xFF164772),
+    fontFamily: 'Raleway-Bold',
+    fontSize: 24,
+  );
   var styleText = const TextStyle(
     color: Color(0xFF000000),
     fontFamily: "Raleway-Medium",
@@ -50,7 +55,7 @@ class _ExpansionTripLabelAmoutDriverState
             ),
             Text(
               " S/ ${calculateRevenue().toStringAsFixed(2)}",
-              style: styleTitle,
+              style: stylePrice,
             )
           ],
         ),
@@ -66,7 +71,7 @@ class _ExpansionTripLabelAmoutDriverState
                 Row(
                   children: [
                     Text(
-                      "S/ ${widget.priceBase}",
+                      "S/ ${widget.priceBase.toStringAsFixed(2)}",
                       style: styleText,
                     ),
                     const SizedBox(

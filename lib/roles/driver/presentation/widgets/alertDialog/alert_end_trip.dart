@@ -69,17 +69,16 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         return;
       }
       //case: "by point without stops", state and endTime are edited
+      final waitingAmout = calculateWaitingAmount(
+          widget.arrivedDriver, widget.startTime, widget.reserveStartTime);
+
       if (widget.stops.isEmpty) {
-        if (calculateWaitingAmount(widget.arrivedDriver, widget.startTime,
-                widget.reserveStartTime) >
-            0) {
+        if (waitingAmout > 0) {
           await dio(widget.credentials)
               .patch('trips/driver-trip/$tripId', data: {
             "endTime": roudedDateTimeToString(),
             "status": "COMPLETED",
-            "waitingTimeExtra": calculateWaitingAmount(widget.arrivedDriver,
-                    widget.startTime, widget.reserveStartTime)
-                .toDouble(),
+            "waitingTimeExtra": waitingAmout.toDouble(),
           });
           widget.reload();
           return;
@@ -108,15 +107,11 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           widget.serviceCarType,
           isInDesiredTimeRange(widget.startTime.toString()));
 
-      if (calculateWaitingAmount(
-              widget.arrivedDriver, widget.startTime, widget.reserveStartTime) >
-          0) {
+      if (waitingAmout > 0) {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": roudedDateTimeToString(),
           "status": "COMPLETED",
-          "waitingTimeExtra": calculateWaitingAmount(widget.arrivedDriver,
-                  widget.startTime, widget.reserveStartTime)
-              .toDouble(),
+          "waitingTimeExtra": waitingAmout.toDouble(),
           "totalPrice": suggestedTotalPrice,
           "suggestedTotalPrice": widget.totalPrice,
           "polyline": route.encodedPolyline

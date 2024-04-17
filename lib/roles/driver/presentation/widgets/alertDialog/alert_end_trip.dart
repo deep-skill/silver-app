@@ -101,7 +101,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           widget.endAddressLon,
           widget.stops));
 
-      suggestedTotalPrice = calculateBasePrice(
+      suggestedTotalPrice = calculateBasePriceDriver(
           route.distance,
           route.time,
           widget.serviceCarType,

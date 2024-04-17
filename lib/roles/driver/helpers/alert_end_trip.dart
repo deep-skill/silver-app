@@ -14,15 +14,6 @@ double calculateWaitingAmount(
   return 0.0;
 }
 
-String getDifferenceBetweenTimes(DateTime arrivedDriver, DateTime tripEnded) {
-  Duration difference = tripEnded.difference(arrivedDriver);
-  int minutes = difference.inMinutes;
-  int seconds = difference.inSeconds % 60;
-  String formattedMinutes = minutes.toString().padLeft(2, '0');
-  String formattedSeconds = seconds.toString().padLeft(2, '0');
-  return '$formattedMinutes:$formattedSeconds';
-}
-
 double calculateFraction(int time) {
   double result = 0.0;
   int hourComplete = time ~/ 60;
@@ -63,4 +54,31 @@ double totalPricePerHour(
   } else {
     return calculateFraction(diferencia.inMinutes);
   }
+}
+
+double calculateDistance(int distanceMeters) {
+  return distanceMeters / 1000;
+}
+
+double calculateTime(int durationSeconds) {
+  return durationSeconds / 60;
+}
+
+int calculateBasePriceDriver(
+  int distanceMeters,
+  int durationSeconds,
+  String type,
+  bool additional,
+) {
+  double distanceKilometers = calculateDistance(distanceMeters);
+  double timeMinutes = calculateTime(durationSeconds);
+
+  if (type == 'TRUCK' || type == 'VAN') {
+    double truckBasePrice = 5 + 3.32 * distanceKilometers + 0.20 * timeMinutes;
+    if (additional) return (truckBasePrice * 1.1).round();
+    return truckBasePrice.round();
+  }
+  double basePrice = 4 + 1.95 * distanceKilometers + 0.14 * timeMinutes;
+  if (additional) return (basePrice * 1.1).round();
+  return basePrice.round();
 }

@@ -82,7 +82,7 @@ int calculateBasePrice(
   double distanceKilometers = calculateDistance(distanceMeters);
   double timeMinutes = calculateTime(durationSeconds);
 
-  if (type == 'TRUCK' || type == 'VAN') {
+  if (type == 'Camioneta' || type == 'Van') {
     double truckBasePrice = 5 + 3.32 * distanceKilometers + 0.20 * timeMinutes;
     if (additional) return (truckBasePrice * 1.1).round();
     return truckBasePrice.round();

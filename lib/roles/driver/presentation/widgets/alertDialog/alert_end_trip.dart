@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/google_maps/google_post_routes.dart';
+import 'package:silverapp/roles/driver/helpers/alert_end_trip.dart';
 import 'package:silverapp/roles/driver/helpers/datatime_rouded_string.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/async_buttons/async_driver_in_trip_button.dart';
@@ -44,47 +45,8 @@ class AlertTripEnd extends StatefulWidget {
   State<AlertTripEnd> createState() => _AlertTripEndState();
 }
 
-String getDifferenceBetweenTimes(DateTime arrivedDriver, DateTime tripEnded) {
-  Duration difference = tripEnded.difference(arrivedDriver);
-  int minutes = difference.inMinutes;
-  int seconds = difference.inSeconds % 60;
-  String formattedMinutes = minutes.toString().padLeft(2, '0');
-  String formattedSeconds = seconds.toString().padLeft(2, '0');
-  return '$formattedMinutes:$formattedSeconds';
-}
-
 class _AlertTripEndState extends State<AlertTripEnd> {
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-
-  double calculateWaitingAmount(
-      DateTime? arrivedDriver, DateTime? startTime, DateTime reserveStartTime) {
-    DateTime calculateDifferenceTime = reserveStartTime;
-
-    Duration driverDelay = reserveStartTime.difference(arrivedDriver!);
-    if (driverDelay.inMinutes < 0) {
-      calculateDifferenceTime = arrivedDriver;
-    }
-    Duration difference = startTime!.difference(calculateDifferenceTime);
-
-    if (difference.inMinutes >= 15) {
-      return (difference.inMinutes.toDouble() - 15) * 0.5;
-    }
-    return 0.0;
-  }
-
-  double calculateFraction(int time) {
-    double result = 0.0;
-    int hourComplete = time ~/ 60;
-    int minuteComplete = (time % 60).toInt();
-    if (minuteComplete <= 15) {
-      result = hourComplete.toDouble();
-    } else if (minuteComplete >= 45) {
-      result = hourComplete.toDouble() + 1.0;
-    } else {
-      result = hourComplete.toDouble() + 0.5;
-    }
-    return result;
-  }
 
   void sendEventTripEnded(String tripTimeMinutes) {
     analytics.logEvent(
@@ -92,71 +54,97 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         parameters: <String, dynamic>{'trip_time_minutes': tripTimeMinutes});
   }
 
-  double totalPricePerHour(DateTime arrivedDriver, DateTime reserveStartTime,
-      String serviceCarType) {
-    DateTime calculateDifferenceTime = reserveStartTime;
-
-    Duration driverDelay = reserveStartTime.difference(arrivedDriver);
-    if (driverDelay.inMinutes < 0) {
-      calculateDifferenceTime = arrivedDriver;
-    }
-    final diferencia = DateTime.now().difference(calculateDifferenceTime);
-    if (serviceCarType == "VAN") {
-      if (diferencia.inMinutes <= 240) {
-        return 4;
-      } else {
-        return calculateFraction(diferencia.inMinutes);
-      }
-    }
-    if (diferencia.inMinutes <= 120) {
-      return 2;
-    } else {
-      return calculateFraction(diferencia.inMinutes);
-    }
-  }
-
   void patchEndTripDrive(int tripId) async {
-    var suggestedTotalPrice = 0;
-    var route = await calculateRouteAndStops(getDirectionsUrl(
-        widget.startAddressLat,
-        widget.startAddressLon,
-        widget.endAddressLat,
-        widget.endAddressLon,
-        widget.stops));
-    suggestedTotalPrice = calculateBasePrice(
-        route.distance, route.time, widget.serviceCarType, false);
     try {
+      final endTime = roudedDateTimeToString();
+      //case: "trip per hour" edits endTime, trip status and total price
       if (widget.tripType == "POR HORA") {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": roudedDateTimeToString(),
+          "endTime": endTime,
           "status": "COMPLETED",
           "totalPrice": totalPricePerHour(widget.arrivedDriver!,
                   widget.reserveStartTime, widget.serviceCarType) *
               widget.totalPrice
         });
-      } else if (calculateWaitingAmount(
-              widget.arrivedDriver, widget.startTime, widget.reserveStartTime) >
-          0) {
+        widget.reload();
+        return;
+      }
+      //case: "by point without stops", state and endTime are edited
+      final waitingAmout = calculateWaitingAmount(
+          widget.arrivedDriver, widget.startTime, widget.reserveStartTime);
+
+      if (widget.stops.isEmpty) {
+        if (waitingAmout > 0) {
+          await dio(widget.credentials)
+              .patch('trips/driver-trip/$tripId', data: {
+            "endTime": endTime,
+            "status": "COMPLETED",
+            "waitingTimeExtra": waitingAmout.toDouble(),
+          });
+          widget.reload();
+          return;
+        }
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": roudedDateTimeToString(),
+          "endTime": endTime,
           "status": "COMPLETED",
-          "waitingTimeExtra": calculateWaitingAmount(widget.arrivedDriver,
-                  widget.startTime, widget.reserveStartTime)
-              .toDouble(),
-          "totalPrice": suggestedTotalPrice,
-          "suggestedTotalPrice": widget.totalPrice,
-          "polyline": route.encodedPolyline
         });
-      } else {
+        widget.reload();
+        return;
+      }
+
+      //case: "point to point with stops
+      var route = await calculateRouteAndStops(getDirectionsUrl(
+          widget.startAddressLat,
+          widget.startAddressLon,
+          widget.endAddressLat,
+          widget.endAddressLon,
+          widget.stops));
+
+      if (route == null) {
+        if (waitingAmout > 0) {
+          await dio(widget.credentials)
+              .patch('trips/driver-trip/$tripId', data: {
+            "endTime": endTime,
+            "status": "COMPLETED",
+            "waitingTimeExtra": waitingAmout.toDouble(),
+          });
+          widget.reload();
+          return;
+        }
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": roudedDateTimeToString(),
+          "endTime": endTime,
           "status": "COMPLETED",
+        });
+        widget.reload();
+        return;
+      }
+
+      var suggestedTotalPrice = calculateBasePriceDriver(
+          route.distance,
+          route.time,
+          widget.serviceCarType,
+          isInDesiredTimeRangeDriver(widget.startTime));
+
+      if (waitingAmout > 0) {
+        await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
+          "endTime": endTime,
+          "status": "COMPLETED",
+          "waitingTimeExtra": waitingAmout.toDouble(),
           "totalPrice": suggestedTotalPrice,
           "suggestedTotalPrice": widget.totalPrice,
           "tripPolyline": route.encodedPolyline
         });
       }
+      await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
+        "endTime": endTime,
+        "status": "COMPLETED",
+        "totalPrice": suggestedTotalPrice,
+        "suggestedTotalPrice": widget.totalPrice,
+        "tripPolyline": route.encodedPolyline
+      });
+
       widget.reload();
+      return;
     } catch (e) {
       // ignore: avoid_print
       print(e);

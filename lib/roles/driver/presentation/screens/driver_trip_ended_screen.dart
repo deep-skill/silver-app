@@ -75,20 +75,24 @@ class TripEndedInfo extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     double calculateDriverPrice() {
       double result = 0;
+      double discount = trip.totalPrice * trip.silverPercent / 100;
+      double totalPriceWithExtra = trip.totalPrice;
 
-      result = trip.totalPrice - (trip.totalPrice * trip.silverPercent / 100);
       if (trip.waitingTimeExtra != null) {
-        result = trip.totalPrice +
-            trip.waitingTimeExtra! -
-            (trip.totalPrice +
-                trip.waitingTimeExtra! * trip.silverPercent / 100);
+        totalPriceWithExtra += trip.waitingTimeExtra!;
+        discount = totalPriceWithExtra * trip.silverPercent / 100;
       }
+
+      result = totalPriceWithExtra - discount;
+
       for (var element in trip.tolls) {
         result += element.amount;
       }
+
       for (var element in trip.parkings) {
         result += element.amount;
       }
+
       return result;
     }
 

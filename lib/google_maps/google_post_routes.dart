@@ -81,12 +81,13 @@ int calculateBasePrice(
 ) {
   double distanceKilometers = calculateDistance(distanceMeters);
   double timeMinutes = calculateTime(durationSeconds);
-  if (type != 'Auto') {
-    double truckBasePrice = 5 + 3.32 * distanceKilometers + 0.14 * timeMinutes;
+
+  if (type == 'Camioneta' || type == 'Van') {
+    double truckBasePrice = 5 + 3.32 * distanceKilometers + 0.20 * timeMinutes;
     if (additional) return (truckBasePrice * 1.1).round();
     return truckBasePrice.round();
   }
-  double basePrice = 4 + 1.95 * distanceKilometers + 0.20 * timeMinutes;
+  double basePrice = 4 + 1.95 * distanceKilometers + 0.14 * timeMinutes;
   if (additional) return (basePrice * 1.1).round();
   return basePrice.round();
 }
@@ -102,8 +103,10 @@ String getDirectionsUrl(double originLat, double originLon,
   return 'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&waypoints=$waypointsString&key=$apiKey';
 }
 
-Future<ResponseRoute> calculateRouteAndStops(String url) async {
+Future<ResponseRoute?> calculateRouteAndStops(String url) async {
   var response = await Dio().get(url);
+  if (response.data['status'] == "ZERO_RESULTS") return null;
+
   ResponseRoute responseRoute = ResponseRoute(
     distance: response.data['routes'][0]['legs'][0]['distance']['value'],
     time: response.data['routes'][0]['legs'][0]['duration']['value'],

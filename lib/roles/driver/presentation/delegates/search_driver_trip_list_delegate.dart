@@ -132,10 +132,12 @@ class _TripItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         onTripSelected(context, trip);
-        //context.push('/admin/reserves/detail/${trip.id}');
       },
-      child: CustomTripSlide(
-        trip: trip,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: CustomTripSlide(
+          trip: trip,
+        ),
       ),
     );
   }

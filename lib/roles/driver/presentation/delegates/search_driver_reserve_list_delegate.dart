@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_list.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/slides/driver_custom_slide.dart';
 
@@ -134,9 +133,14 @@ class _ReserveItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         onReserveSelected(context, reserve);
-        context.push('/admin/reserves/detail/${reserve.id}');
       },
-      child: DriverCustomSlide(reserve: reserve, isNearest: false,),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: DriverCustomSlide(
+          reserve: reserve,
+          isNearest: false,
+        ),
+      ),
     );
   }
 }

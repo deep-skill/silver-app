@@ -41,6 +41,7 @@ typedef ReserveCallback = Future<List<DriverReserveHome>> Function({int page});
 
 class ReservesNotifier extends StateNotifier<List<DriverReserveHome>> {
   int currentPage = 0;
+  bool lastPage = false;
   bool isLoading = false;
   ReserveCallback fetchMoreReserves;
 
@@ -50,11 +51,15 @@ class ReservesNotifier extends StateNotifier<List<DriverReserveHome>> {
 
   Future<void> loadNextPage() async {
     if (isLoading || !mounted) return;
+    if (lastPage) return;
     isLoading = true;
     try {
       final List<DriverReserveHome> reserves = await fetchMoreReserves(
         page: currentPage,
       );
+      if (reserves.isEmpty) {
+        lastPage = true;
+      }
       currentPage++;
       state = [...state, ...reserves];
       await Future.delayed(const Duration(milliseconds: 400));
@@ -68,6 +73,7 @@ class ReservesNotifier extends StateNotifier<List<DriverReserveHome>> {
   }
 
   Future<void> reloadData() async {
+    lastPage = false;
     if (isLoading || !mounted) return;
     currentPage = 0;
     isLoading = true;

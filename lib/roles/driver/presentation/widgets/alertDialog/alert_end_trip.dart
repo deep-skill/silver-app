@@ -132,7 +132,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           "waitingTimeExtra": waitingAmout.toDouble(),
           "totalPrice": suggestedTotalPrice,
           "suggestedTotalPrice": widget.totalPrice,
-          "polyline": route.encodedPolyline
+          "tripPolyline": route.encodedPolyline
         });
       }
       await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {

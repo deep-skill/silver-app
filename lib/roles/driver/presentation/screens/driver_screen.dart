@@ -14,10 +14,10 @@ import 'package:silverapp/roles/driver/presentation/providers/trips_summary_driv
 import 'package:silverapp/roles/driver/presentation/screens/driver_web_deny_screen.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/alertDialog/alert_start_trip.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/custom_driver_name.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/driver_reserve_list_home.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/lists/driver_reserve_list_home.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/driver_side_menu.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/trips_summary_driver_view.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/driver_custom_slide.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/slides/driver_custom_slide.dart';
 
 class DriverScreen extends ConsumerWidget {
   static const name = 'admin';
@@ -313,7 +313,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                 },
               ),
               const SizedBox(
-                height: 25,
+                height: 5,
               ),
               Container(
                 alignment: Alignment.centerLeft,
@@ -321,7 +321,7 @@ class HomeViewState extends ConsumerState<HomeView> {
                     style: TextStyle(fontSize: 20, color: Color(0xff364356))),
               ),
               const SizedBox(
-                height: 15,
+                height: 5,
               ),
               DriverReservesListHome(
                 reserves: reserves,

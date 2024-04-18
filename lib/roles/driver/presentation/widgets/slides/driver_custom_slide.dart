@@ -1,61 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_home.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_list.dart';
 
-class DriverReservesListHome extends StatefulWidget {
-  const DriverReservesListHome(
-      {super.key, required this.reserves, required this.loadNextPage});
-
-  final List<DriverReserveHome> reserves;
-  final VoidCallback? loadNextPage;
-
-  @override
-  State<DriverReservesListHome> createState() => _DriverReservesListHomeState();
-}
-
-class _DriverReservesListHomeState extends State<DriverReservesListHome> {
-  final ScrollController scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    scrollController.addListener(() {
-      if (widget.loadNextPage == null) return;
-      if (scrollController.position.pixels + 1 >=
-          scrollController.position.maxScrollExtent) {
-        widget.loadNextPage!();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    // isMounted = false;
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: widget.reserves.isEmpty
-          ? const Text('No hay reservas del día')
-          : ListView.builder(
-              controller: scrollController,
-              itemCount: widget.reserves.length,
-              scrollDirection: Axis.vertical,
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (contex, index) {
-                return _Slide(reserve: widget.reserves[index]);
-              },
-            ),
-    );
-  }
-}
-
-class _Slide extends StatelessWidget {
-  final DriverReserveHome reserve;
-  const _Slide({required this.reserve});
+class DriverCustomSlide extends StatelessWidget {
+  final DriverReserveList reserve;
+  final bool isNearest;
+  const DriverCustomSlide(
+      {super.key, required this.reserve, required this.isNearest});
 
   @override
   Widget build(BuildContext context) {
@@ -74,31 +25,27 @@ class _Slide extends StatelessWidget {
       'nov',
       'dec'
     ];
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        height: size.height * .13,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-          boxShadow: [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.25),
-              blurRadius: 4,
-              offset: Offset(0, 4),
-            )
-          ],
+    return SizedBox(
+      height: size.height * .12,
+      child: ElevatedButton(
+        onPressed: () => context.push('/driver/reserves/detail/${reserve.id}'),
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          foregroundColor: Colors.black,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
                 width: size.width * .30,
                 decoration: const BoxDecoration(
                   color: Color(0xff031329),
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
                   ),
                   image: DecorationImage(
                     opacity: 50,
@@ -106,11 +53,11 @@ class _Slide extends StatelessWidget {
                     image: AssetImage('assets/images/enterprise_logo.png'),
                   ),
                 ),
-                child: reserve.entrepriseName != 'Viaje Personal'
+                child: reserve.entrepriseName != ''
                     ? Center(
-                        child: reserve.entrepriseName != 'Viaje Personal'
+                        child: reserve.entrepriseName != null
                             ? Text(
-                                reserve.entrepriseName,
+                                reserve.entrepriseName!,
                                 maxLines: 2,
                                 textAlign: TextAlign.center,
                                 overflow: TextOverflow.ellipsis,
@@ -153,11 +100,11 @@ class _Slide extends StatelessWidget {
                           Icons.hail,
                           size: 20,
                         ),
-                        Text(
-                          '${reserve.name} ${reserve.lastName}',
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontFamily: 'Montserrat-Bold',
+                        Expanded(
+                          child: Text(
+                            '${reserve.name} ${reserve.lastName}',
+                            style: const TextStyle(
+                                fontSize: 15, fontFamily: 'Montserrat-Bold'),
                           ),
                         ),
                       ],
@@ -171,10 +118,15 @@ class _Slide extends StatelessWidget {
                           Icons.event_available_outlined,
                           size: 20,
                         ),
-                        Text(
-                          ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour.toString().padLeft(2, '0')}:${reserve.startTime.minute.toString().padLeft(2, '0')}',
-                          style: const TextStyle(
-                              fontSize: 12, fontFamily: 'Montserrat-Medium'),
+                        Expanded(
+                          child: Text(
+                            ' ${reserve.startTime.day} ${months[reserve.startTime.month - 1]} ${reserve.startTime.year} | ${reserve.startTime.hour.toString().padLeft(2, '0')}:${reserve.startTime.minute.toString().padLeft(2, '0')} hs.',
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Montserrat-Medium',
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -202,14 +154,11 @@ class _Slide extends StatelessWidget {
                 ],
               ),
             ),
-            GestureDetector(
-              onTap: () =>
-                  context.push('/driver/reserves/detail/${reserve.id}'),
-              child: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 30,
-              ),
+            const Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 30,
             ),
+            const SizedBox(width: 1)
           ],
         ),
       ),

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/driver_trips_list/driver_custom_trip_slide.dart';
+import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_list.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/slides/driver_custom_slide.dart';
 
-class DriverTripsList extends StatefulWidget {
-  const DriverTripsList(
-      {super.key, required this.trips, required this.loadNextPage});
+class DriverReservesList extends StatefulWidget {
+  const DriverReservesList(
+      {super.key, required this.reserves, required this.loadNextPage});
 
-  final List<DriverTripList> trips;
+  final List<DriverReserveList> reserves;
   final VoidCallback? loadNextPage;
+
   @override
-  State<DriverTripsList> createState() => _TripsListState();
+  State<DriverReservesList> createState() => _ReservesListState();
 }
 
-class _TripsListState extends State<DriverTripsList> {
+class _ReservesListState extends State<DriverReservesList> {
   final ScrollController scrollController = ScrollController();
 
   @override
@@ -36,17 +37,16 @@ class _TripsListState extends State<DriverTripsList> {
 
   @override
   Widget build(BuildContext context) {
-    final trip = widget.trips;
-
     return Expanded(
       child: ListView.builder(
         controller: scrollController,
-        itemCount: widget.trips.length,
+        itemCount: widget.reserves.length,
         scrollDirection: Axis.vertical,
         physics: const BouncingScrollPhysics(),
         itemBuilder: (contex, index) {
-          return CustomTripSlide(
-            trip: trip[index],
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: DriverCustomSlide(reserve: widget.reserves[index], isNearest: false,),
           );
         },
       ),

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/driver_trips_list/driver_custom_trip_slide.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/slides/driver_custom_trip_slide.dart';
 
 typedef SearchTripsCallback = Future<List<DriverTripList>> Function(
     String query);
@@ -132,10 +132,12 @@ class _TripItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         onTripSelected(context, trip);
-        //context.push('/admin/reserves/detail/${trip.id}');
       },
-      child: CustomTripSlide(
-        trip: trip,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: CustomTripSlide(
+          trip: trip,
+        ),
       ),
     );
   }

@@ -5,7 +5,7 @@ import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_list
 import 'package:silverapp/roles/driver/presentation/delegates/search_driver_trip_list_delegate.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_trip_list_provider.dart';
 import 'package:silverapp/roles/driver/presentation/providers/search_driver_trip_provider.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/driver_trips_list/driver_trips_list.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/lists/driver_trips_list.dart';
 
 class DriverTripListScreen extends StatelessWidget {
   const DriverTripListScreen({super.key});

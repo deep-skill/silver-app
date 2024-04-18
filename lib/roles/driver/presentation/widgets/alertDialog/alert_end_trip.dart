@@ -56,10 +56,11 @@ class _AlertTripEndState extends State<AlertTripEnd> {
 
   void patchEndTripDrive(int tripId) async {
     try {
+      final endTime = roudedDateTimeToString();
       //case: "trip per hour" edits endTime, trip status and total price
       if (widget.tripType == "POR HORA") {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": roudedDateTimeToString(),
+          "endTime": endTime,
           "status": "COMPLETED",
           "totalPrice": totalPricePerHour(widget.arrivedDriver!,
                   widget.reserveStartTime, widget.serviceCarType) *
@@ -76,7 +77,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         if (waitingAmout > 0) {
           await dio(widget.credentials)
               .patch('trips/driver-trip/$tripId', data: {
-            "endTime": roudedDateTimeToString(),
+            "endTime": endTime,
             "status": "COMPLETED",
             "waitingTimeExtra": waitingAmout.toDouble(),
           });
@@ -84,7 +85,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           return;
         }
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": roudedDateTimeToString(),
+          "endTime": endTime,
           "status": "COMPLETED",
         });
         widget.reload();
@@ -92,7 +93,6 @@ class _AlertTripEndState extends State<AlertTripEnd> {
       }
 
       //case: "point to point with stops"
-      var suggestedTotalPrice = 0;
 
       var route = await calculateRouteAndStops(getDirectionsUrl(
           widget.startAddressLat,
@@ -101,31 +101,32 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           widget.endAddressLon,
           widget.stops));
 
-      suggestedTotalPrice = calculateBasePriceDriver(
+      var suggestedTotalPrice = calculateBasePriceDriver(
           route.distance,
           route.time,
           widget.serviceCarType,
-          isInDesiredTimeRange(widget.startTime.toString()));
+          isInDesiredTimeRangeDriver(widget.startTime));
 
       if (waitingAmout > 0) {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": roudedDateTimeToString(),
+          "endTime": endTime,
           "status": "COMPLETED",
           "waitingTimeExtra": waitingAmout.toDouble(),
           "totalPrice": suggestedTotalPrice,
           "suggestedTotalPrice": widget.totalPrice,
           "polyline": route.encodedPolyline
         });
-      } else {
-        await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
-          "endTime": roudedDateTimeToString(),
-          "status": "COMPLETED",
-          "totalPrice": suggestedTotalPrice,
-          "suggestedTotalPrice": widget.totalPrice,
-          "tripPolyline": route.encodedPolyline
-        });
       }
+      await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
+        "endTime": endTime,
+        "status": "COMPLETED",
+        "totalPrice": suggestedTotalPrice,
+        "suggestedTotalPrice": widget.totalPrice,
+        "tripPolyline": route.encodedPolyline
+      });
+
       widget.reload();
+      return;
     } catch (e) {
       // ignore: avoid_print
       print(e);

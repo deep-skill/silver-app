@@ -75,10 +75,19 @@ int calculateBasePriceDriver(
 
   if (type == 'TRUCK' || type == 'VAN') {
     double truckBasePrice = 5 + 3.32 * distanceKilometers + 0.20 * timeMinutes;
+
     if (additional) return (truckBasePrice * 1.1).round();
     return truckBasePrice.round();
   }
   double basePrice = 4 + 1.95 * distanceKilometers + 0.14 * timeMinutes;
   if (additional) return (basePrice * 1.1).round();
   return basePrice.round();
+}
+
+bool isInDesiredTimeRangeDriver(DateTime? stringTime) {
+  if (stringTime != null) {
+    int hour = stringTime.hour;
+    return (hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 20);
+  }
+  return false;
 }

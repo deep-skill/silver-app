@@ -92,14 +92,32 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         return;
       }
 
-      //case: "point to point with stops"
-
+      //case: "point to point with stops
       var route = await calculateRouteAndStops(getDirectionsUrl(
           widget.startAddressLat,
           widget.startAddressLon,
           widget.endAddressLat,
           widget.endAddressLon,
           widget.stops));
+
+      if (route == null) {
+        if (waitingAmout > 0) {
+          await dio(widget.credentials)
+              .patch('trips/driver-trip/$tripId', data: {
+            "endTime": endTime,
+            "status": "COMPLETED",
+            "waitingTimeExtra": waitingAmout.toDouble(),
+          });
+          widget.reload();
+          return;
+        }
+        await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
+          "endTime": endTime,
+          "status": "COMPLETED",
+        });
+        widget.reload();
+        return;
+      }
 
       var suggestedTotalPrice = calculateBasePriceDriver(
           route.distance,

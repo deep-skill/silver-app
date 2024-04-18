@@ -103,8 +103,10 @@ String getDirectionsUrl(double originLat, double originLon,
   return 'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&waypoints=$waypointsString&key=$apiKey';
 }
 
-Future<ResponseRoute> calculateRouteAndStops(String url) async {
+Future<ResponseRoute?> calculateRouteAndStops(String url) async {
   var response = await Dio().get(url);
+  if (response.data['status'] == "ZERO_RESULTS") return null;
+
   ResponseRoute responseRoute = ResponseRoute(
     distance: response.data['routes'][0]['legs'][0]['distance']['value'],
     time: response.data['routes'][0]['legs'][0]['duration']['value'],

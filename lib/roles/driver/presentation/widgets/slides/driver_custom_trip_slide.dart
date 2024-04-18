@@ -73,20 +73,20 @@ class CustomTripSlide extends StatelessWidget {
       }
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Container(
-        height: size.height * .15,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.25),
-              blurRadius: 4,
-              offset: Offset(0, 4),
-            ),
-          ],
-          color: Colors.white,
+    return SizedBox(
+      height: size.height * .12,
+      child: ElevatedButton(
+        onPressed: () => {
+          trip.status == 'INPROGRESS'
+              ? context.push('/driver/trips/on-trip/${trip.id}')
+              : context.push('/driver/trips/detail/${trip.id}')
+        },
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+          foregroundColor: Colors.black,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(12)),
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,13 +218,7 @@ class CustomTripSlide extends StatelessWidget {
                     const SizedBox(height: 6),
                   ]),
             ),
-            IconButton(
-                onPressed: () => {
-                      trip.status == 'INPROGRESS'
-                          ? context.push('/driver/trips/on-trip/${trip.id}')
-                          : context.push('/driver/trips/detail/${trip.id}')
-                    },
-                icon: const Icon(Icons.arrow_forward_ios_rounded, size: 30))
+            const Icon(Icons.arrow_forward_ios_rounded, size: 30)
           ],
         ),
       ),

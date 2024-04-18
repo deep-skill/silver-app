@@ -3,7 +3,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_list.dart';
-import 'package:silverapp/roles/driver/presentation/widgets/driver_custom_slide.dart';
+import 'package:silverapp/roles/driver/presentation/widgets/slides/driver_custom_slide.dart';
 
 typedef SearchReservesCallback = Future<List<DriverReserveList>> Function(
     String query);

@@ -148,7 +148,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
-      context.go("/driver/error-server");
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 

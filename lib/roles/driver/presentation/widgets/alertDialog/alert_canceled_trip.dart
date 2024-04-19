@@ -36,7 +36,7 @@ class _AlertTripEndState extends State<AlertTripCanceled> {
       widget.reload();
     } catch (e) {
       print(e);
-      context.go("/driver/error-server");
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 

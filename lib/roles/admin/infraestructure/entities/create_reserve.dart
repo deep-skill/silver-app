@@ -29,6 +29,7 @@ class CreateReserve {
   int driverPercent;
   String silverPercent;
   String? polyline;
+  String? tripTotalPrice;
 
   CreateReserve({
     required this.id,
@@ -61,6 +62,7 @@ class CreateReserve {
     required this.driverPercent,
     required this.silverPercent,
     this.polyline,
+    this.tripTotalPrice,
   });
 
   factory CreateReserve.fromJson(Map<String, dynamic> json) => CreateReserve(
@@ -98,5 +100,7 @@ class CreateReserve {
         startDate:
             '${DateTime.parse(json['startTime']).toLocal().year.toString()}-${DateTime.parse(json['startTime']).toLocal().month.toString().padLeft(2, '0')}-${DateTime.parse(json['startTime']).toLocal().day.toString().padLeft(2, '0')}',
         polyline: json['polyline'],
+        tripTotalPrice:
+            json['Trip'] == null ? null : json['Trip']['totalPrice'].toString(),
       );
 }

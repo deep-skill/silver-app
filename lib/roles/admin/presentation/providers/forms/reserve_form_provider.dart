@@ -136,7 +136,9 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
                 : reserve.color!,
             price: reserve.price == ''
                 ? const Price.pure()
-                : Price.dirty(reserve.price.toString()),
+                : Price.dirty(reserve.tripId == null
+                  ? reserve.price.toString()
+                : reserve.tripTotalPrice.toString()),
             silverPercent: reserve.silverPercent == ''
                 ? const SilverPercent.pure()
                 : SilverPercent.dirty(reserve.silverPercent.toString()),
@@ -168,13 +170,18 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "start_address": state.startAddress.value,
       "start_address_lat": state.startAddressLat,
       "start_address_lon": state.startAddressLon,
-      "end_address": state.tripType.value != 'Punto a punto'
-          ? null
-          : state.endAddress?.value,
-      "end_address_lat":
-          state.tripType.value != 'Punto a punto' ? null : state.endAddressLat,
-      "end_address_lon":
-          state.tripType.value != 'Punto a punto' ? null : state.endAddressLon,
+      if (tripId == null) "end_address": state.tripType.value != 'Punto a punto'
+        ? null
+        : state.endAddress?.value,
+      if (tripId == null) "end_address_lat": state.tripType.value != 'Punto a punto'
+        ? null
+        : state.endAddressLat,
+      if (tripId == null) "end_address_lon": state.tripType.value != 'Punto a punto'
+        ? null
+        : state.endAddressLon,
+      if (tripId != null) "end_address": state.endAddress?.value,
+      if (tripId != null) "end_address_lat": state.endAddressLat,
+      if (tripId != null) "end_address_lon": state.endAddressLon,
       "driver_id": state.driverId?.value == 0 || state.driverId?.value == null
           ? null
           : state.driverId?.value,

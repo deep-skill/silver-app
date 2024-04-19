@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/no_role/welcome_msg_screen.dart';
 
 class InternalErrorScreen extends StatelessWidget {
-  const InternalErrorScreen({super.key});
+  final String? pathParameter;
+  const InternalErrorScreen({super.key, required this.pathParameter});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class InternalErrorScreen extends StatelessWidget {
                   left: size.height * .015,
                   right: size.height * .015,
                   bottom: size.height * .015),
-              child: const InternalErrorInfo(),
+              child: InternalErrorInfo(pathParameter: pathParameter),
             ),
             backgroundColor: const Color(0xffF2F3F7),
           )
@@ -28,14 +30,17 @@ class InternalErrorScreen extends StatelessWidget {
                   left: size.height * .015,
                   right: size.height * .015,
                   bottom: size.height * .015),
-              child: const InternalErrorInfo(),
+              child: InternalErrorInfo(
+                pathParameter: pathParameter,
+              ),
             ),
           );
   }
 }
 
 class InternalErrorInfo extends StatelessWidget {
-  const InternalErrorInfo({super.key});
+  final String? pathParameter;
+  const InternalErrorInfo({super.key, this.pathParameter});
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +74,17 @@ class InternalErrorInfo extends StatelessWidget {
                       ),
                       mainImage:
                           Image.asset('assets/images/internal_error.png')),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    pathParameter ?? '',
+                    style: const TextStyle(color: Colors.black),
+                  ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.go('/driver');
+                    },
                     style: ButtonStyle(
                       fixedSize: MaterialStateProperty.all<Size>(
                           Size(size.width * .25, size.height * .02)),
@@ -114,8 +128,17 @@ class InternalErrorInfo extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     mainImage: Image.asset('assets/images/internal_error.png')),
+                const SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  pathParameter ?? '',
+                  style: const TextStyle(color: Colors.black),
+                ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.go('/driver');
+                  },
                   style: ButtonStyle(
                     fixedSize: MaterialStateProperty.all<Size>(
                         Size(size.width * .8, size.width * .1)),

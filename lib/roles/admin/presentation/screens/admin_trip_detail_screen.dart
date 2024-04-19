@@ -28,7 +28,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(tripAdminStatusProvider.notifier).loadTripState(widget.tripId);
+    ref.read(tripAdminStatusProvider.notifier).updateTripStatus(widget.tripId);
   }
 
   @override

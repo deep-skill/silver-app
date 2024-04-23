@@ -46,25 +46,64 @@ class SearchTripDelegate extends SearchDelegate<TripList?> {
       stream: debouncedTrips.stream,
       builder: (context, snapshot) {
         final trips = snapshot.data ?? [];
-        return ListView.builder(
-          itemCount: trips.length,
-          itemBuilder: (context, index) {
-            final trip = trips[index];
-            return _TripItem(
-              trip: trip,
-              onTripSelected: (context, trip) {
-                clearStreams();
-                close(context, trip);
-              },
-            );
-          },
-        );
+        return kIsWeb
+            ? Container(
+                height: 1000,
+                decoration: const BoxDecoration(
+                  color: Color(0xffF2F3F7),
+                ),
+                child: GridView.count(
+                    mainAxisSpacing: 5,
+                    crossAxisSpacing: 40,
+                    childAspectRatio: 3.2,
+                    shrinkWrap: true,
+                    crossAxisCount: 3,
+                    scrollDirection: Axis.vertical,
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80, vertical: 20),
+                    children: List.generate(trips.length, (index) {
+                      return _TripItem(
+                        trip: trips[index],
+                        onTripSelected: (context, trip) {
+                          clearStreams();
+                          close(context, trip);
+                        },
+                      );
+                    })),
+              )
+            : ListView.builder(
+                itemCount: trips.length,
+                itemBuilder: (context, index) {
+                  final trip = trips[index];
+                  return _TripItem(
+                    trip: trip,
+                    onTripSelected: (context, trip) {
+                      clearStreams();
+                      close(context, trip);
+                    },
+                  );
+                },
+              );
       },
     );
   }
 
   @override
   String get searchFieldLabel => 'Buscar Viaje';
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    return theme.copyWith(
+      inputDecorationTheme: InputDecorationTheme(
+        contentPadding: const EdgeInsets.all(12.0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ),
+    );
+  }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -95,6 +134,10 @@ class SearchTripDelegate extends SearchDelegate<TripList?> {
             ),
           );
         },
+      ),
+      Image.asset(
+        'assets/images/silver-logo_white_font-color.png',
+        color: const Color(0xFF03132A),
       ),
     ];
   }

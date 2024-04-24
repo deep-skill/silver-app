@@ -192,14 +192,14 @@ class TripEndedInfo extends StatelessWidget {
                         label: "Hora de inicio",
                         text:
                             '${trip.startTime!.hour.toString().padLeft(2, '0')}:${trip.startTime!.minute.toString().padLeft(2, '0')}',
-                        icon: Icons.car_rental_outlined,
+                        icon: Icons.airport_shuttle_outlined,
                         row: true)
                     : trip.endTime != null
                         ? BoxReserveDetail(
                             label: "Hora de fin",
                             text:
                                 '${trip.endTime!.hour.toString().padLeft(2, '0')}:${trip.endTime!.minute.toString().padLeft(2, '0')}',
-                            icon: Icons.expand_more_sharp,
+                            icon: Icons.av_timer_outlined,
                             row: true)
                         : const SizedBox(),
               ),
@@ -210,7 +210,7 @@ class TripEndedInfo extends StatelessWidget {
                   label: "Hora de fin",
                   text:
                       '${trip.endTime!.hour.toString().padLeft(2, '0')}:${trip.endTime!.minute.toString().padLeft(2, '0')}',
-                  icon: Icons.expand_more_sharp,
+                  icon: Icons.av_timer_outlined,
                   row: true)
               : const SizedBox(),
           const SizedBox(

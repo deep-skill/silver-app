@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/roles/driver/helpers/datatime_rouded_string.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/async_buttons/async_driver_in_trip_button.dart';
 
 class AlertTripCanceled extends StatefulWidget {
@@ -30,8 +31,11 @@ class _AlertTripEndState extends State<AlertTripCanceled> {
 
   void canceledTripDriver(int tripId, String credentials) async {
     try {
-      await dio(credentials).patch('trips/driver-trip/$tripId',
-          data: {"status": "CANCELED", "totalPrice": calculateNoSwow()});
+      await dio(credentials).patch('trips/driver-trip/$tripId', data: {
+        "status": "CANCELED",
+        "totalPrice": calculateNoSwow(),
+        "endTime": roudedDateTimeToString()
+      });
       widget.cancelReload();
       widget.reload();
     } catch (e) {

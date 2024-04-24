@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:silverapp/env/env.dart';
 import 'package:silverapp/google_maps/location_data.dart';
+import 'package:silverapp/position/determine_position_helper.dart';
 
 class MapGoogle extends StatefulWidget {
   const MapGoogle({super.key});
@@ -21,6 +23,7 @@ class MapGoogleState extends State<MapGoogle> {
   List<dynamic> searchResults = [];
   String? selectedLocation;
   bool showSearchResults = false;
+  bool loading = true;
 
   @override
   void initState() {
@@ -35,6 +38,7 @@ class MapGoogleState extends State<MapGoogle> {
       }
       _searchAndNavigate(_searchController.text);
     });
+    _initMapLocation();
   }
 
   static const CameraPosition _kGooglePlex = CameraPosition(
@@ -68,6 +72,32 @@ class MapGoogleState extends State<MapGoogle> {
         showSearchResults = false;
       });
     }
+  }
+
+  void _initMapLocation() async {
+    Position initialPosition = await determinePosition();
+    LatLng location =
+        LatLng(initialPosition.latitude, initialPosition.longitude);
+
+    setState(() {
+      showSearchResults = true;
+      selectedLocation =
+          '${initialPosition.latitude}, ${initialPosition.longitude}, Ubicacion actual';
+      _markers.clear();
+      _markers.add(
+        Marker(
+          markerId: MarkerId(location.toString()),
+          position: location,
+          infoWindow: const InfoWindow(
+            title: 'Ubicación Seleccionada',
+            snippet: 'Ubicación actual',
+          ),
+        ),
+      );
+      loading = false;
+    });
+    _controller.future.then((controller) =>
+        controller.animateCamera(CameraUpdate.newLatLng(location)));
   }
 
   void _updateMapLocation(LatLng location, String addressName) {
@@ -238,6 +268,24 @@ class MapGoogleState extends State<MapGoogle> {
                   const SizedBox(),
               ],
             ),
+            loading
+                ? Positioned(
+                    top: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xffFFFFFF).withOpacity(0.6),
+                      ),
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF031329),
+                          strokeWidth: 3,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),

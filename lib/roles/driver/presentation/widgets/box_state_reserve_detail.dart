@@ -54,9 +54,8 @@ class BoxStateReserveDetail extends StatelessWidget {
                 label,
                 style: const TextStyle(
                   color: Color(0xFF23A5CD),
-                  fontFamily: "Monserrat",
+                  fontFamily: "Monserrat-Medium",
                   fontSize: 12,
-                  fontWeight: FontWeight.bold,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
@@ -65,9 +64,8 @@ class BoxStateReserveDetail extends StatelessWidget {
                 textState(),
                 style: TextStyle(
                   color: color(),
-                  fontFamily: "Monserrat",
+                  fontFamily: "Monserrat-Medium",
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,

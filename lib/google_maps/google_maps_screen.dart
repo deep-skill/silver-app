@@ -23,6 +23,7 @@ class MapGoogleState extends State<MapGoogle> {
   List<dynamic> searchResults = [];
   String? selectedLocation;
   bool showSearchResults = false;
+  bool loading = true;
 
   @override
   void initState() {
@@ -93,6 +94,7 @@ class MapGoogleState extends State<MapGoogle> {
           ),
         ),
       );
+      loading = false;
     });
     _controller.future.then((controller) =>
         controller.animateCamera(CameraUpdate.newLatLng(location)));
@@ -266,6 +268,24 @@ class MapGoogleState extends State<MapGoogle> {
                   const SizedBox(),
               ],
             ),
+            loading
+                ? Positioned(
+                    top: 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: const Color(0xffFFFFFF).withOpacity(0.6),
+                      ),
+                      height: MediaQuery.of(context).size.height,
+                      width: MediaQuery.of(context).size.width,
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          color: Color(0xFF031329),
+                          strokeWidth: 3,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
           ],
         ),
       ),

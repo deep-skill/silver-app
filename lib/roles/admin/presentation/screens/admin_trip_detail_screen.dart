@@ -406,6 +406,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                         ),
                                       ],
                                     ),
+                                    if (trip.arrivedDriver != null)
+                                      const SizedBox(height: 10),
                                     trip.endTime !=
                                                 null &&
                                             trip.startTime != null
@@ -615,7 +617,6 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           height: 10,
                         ),
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Expanded(
                               child: trip.arrivedDriver != null
@@ -646,6 +647,8 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                             ),
                           ],
                         ),
+                        if (trip.arrivedDriver != null)
+                          const SizedBox(height: 10),
                         trip.endTime != null && trip.startTime != null
                             ? BoxReserveDetail(
                                 label: "Hora de fin",

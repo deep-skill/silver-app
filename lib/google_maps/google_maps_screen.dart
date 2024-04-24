@@ -2,9 +2,11 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:silverapp/env/env.dart';
 import 'package:silverapp/google_maps/location_data.dart';
+import 'package:silverapp/position/determine_position_helper.dart';
 
 class MapGoogle extends StatefulWidget {
   const MapGoogle({super.key});
@@ -35,6 +37,7 @@ class MapGoogleState extends State<MapGoogle> {
       }
       _searchAndNavigate(_searchController.text);
     });
+    _initMapLocation();
   }
 
   static const CameraPosition _kGooglePlex = CameraPosition(
@@ -68,6 +71,31 @@ class MapGoogleState extends State<MapGoogle> {
         showSearchResults = false;
       });
     }
+  }
+
+  void _initMapLocation() async {
+    Position initialPosition = await determinePosition();
+    LatLng location =
+        LatLng(initialPosition.latitude, initialPosition.longitude);
+
+    setState(() {
+      showSearchResults = true;
+      selectedLocation =
+          '${initialPosition.latitude}, ${initialPosition.longitude}, Ubicacion actual';
+      _markers.clear();
+      _markers.add(
+        Marker(
+          markerId: MarkerId(location.toString()),
+          position: location,
+          infoWindow: const InfoWindow(
+            title: 'Ubicación Seleccionada',
+            snippet: 'Ubicación actual',
+          ),
+        ),
+      );
+    });
+    _controller.future.then((controller) =>
+        controller.animateCamera(CameraUpdate.newLatLng(location)));
   }
 
   void _updateMapLocation(LatLng location, String addressName) {

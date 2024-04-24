@@ -375,8 +375,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                         Expanded(
                                           child: trip.arrivedDriver != null
                                               ? BoxReserveDetail(
-                                                  label:
-                                                      "Hora de llegada a punto",
+                                                  label: "Hora de llegada",
                                                   text:
                                                       '${trip.arrivedDriver!.hour.toString().padLeft(2, '0')}:${trip.arrivedDriver!.minute.toString().padLeft(2, '0')}',
                                                   icon: Icons.pin_drop_outlined,
@@ -389,8 +388,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                         Expanded(
                                           child: trip.startTime != null
                                               ? BoxReserveDetail(
-                                                  label:
-                                                      "Hora de inicio de viaje",
+                                                  label: "Hora de inicio",
                                                   text:
                                                       '${trip.startTime!.hour.toString().padLeft(2, '0')}:${trip.startTime!.minute.toString().padLeft(2, '0')}',
                                                   icon:
@@ -398,8 +396,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                   row: true)
                                               : trip.endTime != null
                                                   ? BoxReserveDetail(
-                                                      label:
-                                                          "Hora fin de viaje",
+                                                      label: "Hora de fin",
                                                       text:
                                                           '${trip.endTime!.hour.toString().padLeft(2, '0')}:${trip.endTime!.minute.toString().padLeft(2, '0')}',
                                                       icon: Icons
@@ -413,7 +410,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                                 null &&
                                             trip.startTime != null
                                         ? BoxReserveDetail(
-                                            label: "Hora fin de viaje",
+                                            label: "Hora de fin",
                                             text:
                                                 '${trip.endTime!.hour.toString().padLeft(2, '0')}:${trip.endTime!.minute.toString().padLeft(2, '0')}',
                                             icon: Icons.expand_more_sharp,
@@ -441,9 +438,6 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                               label: "Estado"),
                                         ),
                                       ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
                                     ),
                                     const SizedBox(
                                       height: 10,

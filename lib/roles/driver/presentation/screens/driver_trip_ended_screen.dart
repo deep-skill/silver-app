@@ -171,6 +171,51 @@ class TripEndedInfo extends StatelessWidget {
               ),
             ],
           ),
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: trip.arrivedDriver != null
+                    ? BoxReserveDetail(
+                        label: "Hora de llegada",
+                        text:
+                            '${trip.arrivedDriver!.hour.toString().padLeft(2, '0')}:${trip.arrivedDriver!.minute.toString().padLeft(2, '0')}',
+                        icon: Icons.pin_drop_outlined,
+                        row: true)
+                    : const SizedBox(),
+              ),
+              Expanded(
+                child: trip.startTime != null
+                    ? BoxReserveDetail(
+                        label: "Hora de inicio",
+                        text:
+                            '${trip.startTime!.hour.toString().padLeft(2, '0')}:${trip.startTime!.minute.toString().padLeft(2, '0')}',
+                        icon: Icons.car_rental_outlined,
+                        row: true)
+                    : trip.endTime != null
+                        ? BoxReserveDetail(
+                            label: "Hora de fin",
+                            text:
+                                '${trip.endTime!.hour.toString().padLeft(2, '0')}:${trip.endTime!.minute.toString().padLeft(2, '0')}',
+                            icon: Icons.expand_more_sharp,
+                            row: true)
+                        : const SizedBox(),
+              ),
+            ],
+          ),
+          trip.endTime != null && trip.startTime != null
+              ? BoxReserveDetail(
+                  label: "Hora de fin",
+                  text:
+                      '${trip.endTime!.hour.toString().padLeft(2, '0')}:${trip.endTime!.minute.toString().padLeft(2, '0')}',
+                  icon: Icons.expand_more_sharp,
+                  row: true)
+              : const SizedBox(),
+          const SizedBox(
+            height: 10,
+          ),
           Row(children: [
             Expanded(
               child: BoxReserveDetail(

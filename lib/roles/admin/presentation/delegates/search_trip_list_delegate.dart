@@ -55,9 +55,12 @@ class SearchTripDelegate extends SearchDelegate<TripList?> {
                 child: GridView.count(
                     mainAxisSpacing: 5,
                     crossAxisSpacing: 40,
-                    childAspectRatio: 3.2,
+                    childAspectRatio: MediaQuery.of(context).size.width < 1400
+                        ? (400 / 150)
+                        : (500 / 200),
                     shrinkWrap: true,
-                    crossAxisCount: 3,
+                    crossAxisCount:
+                        MediaQuery.of(context).size.width < 1400 ? 2 : 3,
                     scrollDirection: Axis.vertical,
                     physics: const BouncingScrollPhysics(),
                     padding: const EdgeInsets.symmetric(

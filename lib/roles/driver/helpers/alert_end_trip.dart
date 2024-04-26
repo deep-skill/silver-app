@@ -14,10 +14,10 @@ double calculateWaitingAmount(
   return 0.0;
 }
 
-double calculateFraction(int time) {
+double calculateFraction(int timeInMinutes) {
   double result = 0.0;
-  int hourComplete = time ~/ 60;
-  int minuteComplete = (time % 60).toInt();
+  int hourComplete = timeInMinutes ~/ 60;
+  int minuteComplete = (timeInMinutes % 60).toInt();
   if (minuteComplete <= 15) {
     result = hourComplete.toDouble();
   } else if (minuteComplete >= 45) {

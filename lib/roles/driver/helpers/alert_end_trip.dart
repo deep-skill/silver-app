@@ -86,10 +86,28 @@ int calculateBasePriceDriver(
   return basePrice.round();
 }
 
-bool isInDesiredTimeRangeDriver(DateTime? stringTime) {
+bool calculateInRushHour(DateTime? stringTime) {
   if (stringTime != null) {
     int hour = stringTime.hour;
     return (hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 20);
   }
   return false;
+}
+
+double calculateBasePriceCustomer(
+    double totalPrice, String serviceCarType, DateTime reserveStartTime) {
+  switch (serviceCarType) {
+    case "VAN":
+      if (totalPrice < 90.0) return 90.0;
+      if (calculateInRushHour(reserveStartTime)) return totalPrice * 1.1;
+      return totalPrice;
+    case "TRUCK":
+      if (totalPrice < 25.0) return 25.0;
+      if (calculateInRushHour(reserveStartTime)) return totalPrice * 1.1;
+      return totalPrice;
+    default:
+      if (totalPrice < 20.0) return 20.0;
+      if (calculateInRushHour(reserveStartTime)) return totalPrice * 1.1;
+      return totalPrice;
+  }
 }

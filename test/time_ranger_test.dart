@@ -34,7 +34,7 @@ void main() {
 
     for (var element in values) {
       test(
-          'The function receives many test index: ${values.indexOf(element)}, value: ${element['value']}, "result": ${element['result']}, with this format.',
+          'Function index: ${values.indexOf(element)}, value: ${element['value']}, result: ${element['result']}.',
           () {
         expect(function(element['value']), element['result']);
         expect(function(element['value']), isA<bool>());

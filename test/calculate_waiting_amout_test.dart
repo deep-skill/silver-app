@@ -116,7 +116,7 @@ void main() {
 
     for (var element in values) {
       test(
-          'The function receives many test cases index: ${values.indexOf(element)} {"arrivedDriver": ${element['arrivedDriver']}, /n startTime: ${element['startTime']}, reserveStartTime: ${element['reserveStartTime']} ,"result": ${element['result']}} with this format.',
+          'Function index: ${values.indexOf(element)}, arrivedDriver: ${element['arrivedDriver']}, startTime: ${element['startTime']}, reserveStartTime: ${element['reserveStartTime']} , result: ${element['result']}}',
           () {
         expect(
             function(element['arrivedDriver'], element['startTime'],

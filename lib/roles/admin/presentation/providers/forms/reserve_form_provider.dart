@@ -137,8 +137,8 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
             price: reserve.price == ''
                 ? const Price.pure()
                 : Price.dirty(reserve.tripId == null
-                  ? reserve.price.toString()
-                : reserve.tripTotalPrice.toString()),
+                    ? reserve.price.toString()
+                    : reserve.tripTotalPrice.toString()),
             silverPercent: reserve.silverPercent == ''
                 ? const SilverPercent.pure()
                 : SilverPercent.dirty(reserve.silverPercent.toString()),
@@ -170,15 +170,18 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "start_address": state.startAddress.value,
       "start_address_lat": state.startAddressLat,
       "start_address_lon": state.startAddressLon,
-      if (tripId == null) "end_address": state.tripType.value != 'Punto a punto'
-        ? null
-        : state.endAddress?.value,
-      if (tripId == null) "end_address_lat": state.tripType.value != 'Punto a punto'
-        ? null
-        : state.endAddressLat,
-      if (tripId == null) "end_address_lon": state.tripType.value != 'Punto a punto'
-        ? null
-        : state.endAddressLon,
+      if (tripId == null)
+        "end_address": state.tripType.value != 'Punto a punto'
+            ? null
+            : state.endAddress?.value,
+      if (tripId == null)
+        "end_address_lat": state.tripType.value != 'Punto a punto'
+            ? null
+            : state.endAddressLat,
+      if (tripId == null)
+        "end_address_lon": state.tripType.value != 'Punto a punto'
+            ? null
+            : state.endAddressLon,
       if (tripId != null) "end_address": state.endAddress?.value,
       if (tripId != null) "end_address_lat": state.endAddressLat,
       if (tripId != null) "end_address_lon": state.endAddressLon,
@@ -396,18 +399,40 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         state.endAddressLon,
         "${formattedDateTime}Z",
       );
+
       var basePrice = calculateBasePrice(
               distance.routes[0].distanceMeters,
               distance.routes[0].getDurationInSeconds(),
               state.serviceCarType.value,
               isInDesiredTimeRange(state.startTime.value))
           .toStringAsFixed(2);
-      state = state.copyWith(
-        suggestedPrice: SuggestedPrice.dirty(basePrice),
-        polyline: distance.routes[0].polyline,
-      );
+
+      if (state.serviceCarType.value == 'Van') {
+        state = state.copyWith(
+            polyline: distance.routes[0].polyline,
+            suggestedPrice: const SuggestedPrice.pure());
+      } else {
+        state = state.copyWith(
+          suggestedPrice: SuggestedPrice.dirty(basePrice),
+          polyline: distance.routes[0].polyline,
+        );
+      }
     } catch (e) {
-      print("Error al calcular la ruta: $e");
+      var basePrice = calculateBasePrice(10, 10, state.serviceCarType.value,
+              isInDesiredTimeRange(state.startTime.value))
+          .toStringAsFixed(2);
+
+      if (state.serviceCarType.value == 'Van') {
+        state = state.copyWith(
+            polyline: "error google maps, no polyline",
+            suggestedPrice: const SuggestedPrice.pure());
+      } else {
+        state = state.copyWith(polyline: "error google maps, no polyline");
+        state = state.copyWith(
+          suggestedPrice: SuggestedPrice.dirty(basePrice),
+          polyline: "error google maps, no polyline",
+        );
+      }
     }
   }
 

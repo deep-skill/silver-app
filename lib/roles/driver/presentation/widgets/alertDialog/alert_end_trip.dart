@@ -80,7 +80,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
             "endTime": endTime,
             "status": "COMPLETED",
             "waitingTimeExtra": waitingAmout.toDouble(),
-            "totalPrice": calculateBasePriceCustomer(
+            "totalPrice": calculateMinBasePrice(
               widget.totalPrice,
               widget.serviceCarType,
               widget.reserveStartTime,
@@ -92,7 +92,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": endTime,
           "status": "COMPLETED",
-          "totalPrice": calculateBasePriceCustomer(
+          "totalPrice": calculateMinBasePrice(
             widget.totalPrice,
             widget.serviceCarType,
             widget.reserveStartTime,
@@ -117,7 +117,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
             "endTime": endTime,
             "status": "COMPLETED",
             "waitingTimeExtra": waitingAmout.toDouble(),
-            "totalPrice": calculateBasePriceCustomer(
+            "totalPrice": calculateMinBasePrice(
               widget.totalPrice,
               widget.serviceCarType,
               widget.reserveStartTime,
@@ -129,7 +129,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": endTime,
           "status": "COMPLETED",
-          "totalPrice": calculateBasePriceCustomer(
+          "totalPrice": calculateMinBasePrice(
             widget.totalPrice,
             widget.serviceCarType,
             widget.reserveStartTime,

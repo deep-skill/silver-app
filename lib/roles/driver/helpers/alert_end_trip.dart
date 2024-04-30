@@ -94,7 +94,7 @@ bool calculateInRushHour(DateTime? stringTime) {
   return false;
 }
 
-double calculateBasePriceCustomer(
+double calculateMinBasePrice(
     double totalPrice, String serviceCarType, DateTime reserveStartTime) {
   switch (serviceCarType) {
     case "VAN":

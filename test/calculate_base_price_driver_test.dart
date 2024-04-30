@@ -6,7 +6,6 @@ void main() {
     Function function = calculateBasePriceDriver;
 
     List<Map<String, dynamic>> values = [
-      //case minimum price
       {
         "distanceMeters": 1000,
         "durationSeconds": 3600,

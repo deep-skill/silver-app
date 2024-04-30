@@ -6,7 +6,6 @@ void main() {
     Function function = totalPricePerHour;
 
     List<Map<String, dynamic>> values = [
-      //case: CAR / TRUCK
       {
         "arrivedDriver": DateTime.now().subtract(const Duration(minutes: 100)),
         "reserveStartTime":
@@ -28,7 +27,6 @@ void main() {
         "serviceCarType": 'CAR',
         "result": 2.0
       },
-      //driver arrives early
       {
         "arrivedDriver": DateTime.now().subtract(const Duration(minutes: 240)),
         "reserveStartTime":

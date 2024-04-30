@@ -98,16 +98,27 @@ double calculateBasePriceCustomer(
     double totalPrice, String serviceCarType, DateTime reserveStartTime) {
   switch (serviceCarType) {
     case "VAN":
+      if (calculateInRushHour(reserveStartTime)) {
+        if (totalPrice < 99.0) return 99.0;
+        return totalPrice;
+      }
       if (totalPrice < 90.0) return 90.0;
-      if (calculateInRushHour(reserveStartTime)) return totalPrice * 1.1;
       return totalPrice;
+
     case "TRUCK":
+      if (calculateInRushHour(reserveStartTime)) {
+        if (totalPrice < 27.5) return 27.5;
+        return totalPrice;
+      }
       if (totalPrice < 25.0) return 25.0;
-      if (calculateInRushHour(reserveStartTime)) return totalPrice * 1.1;
       return totalPrice;
+
     default:
+      if (calculateInRushHour(reserveStartTime)) {
+        if (totalPrice < 22.0) return 22.0;
+        return totalPrice;
+      }
       if (totalPrice < 20.0) return 20.0;
-      if (calculateInRushHour(reserveStartTime)) return totalPrice * 1.1;
       return totalPrice;
   }
 }

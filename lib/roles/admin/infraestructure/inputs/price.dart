@@ -18,7 +18,7 @@ class Price extends FormzInput<String, PriceError> {
     if (displayError == PriceError.format) return 'El campo debe ser un nro.';
     if (displayError == PriceError.value) {
       if (double.tryParse(value)! == 0) return 'El campo no puede ser 0';
-      if (double.tryParse(value)! < 0) return 'El campo no puede ser negativo';
+      if (double.tryParse(value)! < 0) return 'El campo debe ser positivo';
     }
 
     return null;

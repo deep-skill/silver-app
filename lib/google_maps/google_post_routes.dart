@@ -83,16 +83,16 @@ int calculateBasePrice(
   if (type == 'Camioneta' || type == 'Van') {
     double truckBasePrice = 5 + 3.32 * distanceKilometers + 0.20 * timeMinutes;
     if (additional) {
-      if (truckBasePrice > 27) return 28;
+      if (truckBasePrice < 27.0) return 28;
       return (truckBasePrice * 1.1).round();
     } else {
-      if (truckBasePrice < 25) return 25;
+      if (truckBasePrice < 25.0) return 25;
       return truckBasePrice.round();
     }
   }
   double basePrice = 4 + 1.95 * distanceKilometers + 0.14 * timeMinutes;
   if (additional) {
-    if (basePrice > 22) return 22;
+    if (basePrice < 22) return 22;
     return (basePrice * 1.1).round();
   } else {
     if (basePrice < 20) return 20;

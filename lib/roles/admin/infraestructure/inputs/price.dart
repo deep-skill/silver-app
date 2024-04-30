@@ -16,7 +16,10 @@ class Price extends FormzInput<String, PriceError> {
 
     if (displayError == PriceError.empty) return 'El campo es requerido';
     if (displayError == PriceError.format) return 'El campo debe ser un nro.';
-    if (displayError == PriceError.value) return 'El campo no puede ser menor a 0';
+    if (displayError == PriceError.value) {
+      if (double.tryParse(value)! == 0) return 'El campo no puede ser 0';
+      if (double.tryParse(value)! < 0) return 'El campo debe ser positivo';
+    }
 
     return null;
   }
@@ -25,8 +28,8 @@ class Price extends FormzInput<String, PriceError> {
   @override
   PriceError? validator(String value) {
     if (value.isEmpty || value.trim().isEmpty) return PriceError.empty;
-    if (double.tryParse(value) == null ) return PriceError.format;
-    if (double.tryParse(value)! <= 0 ) return PriceError.value;
+    if (double.tryParse(value) == null) return PriceError.format;
+    if (double.tryParse(value)! <= 0) return PriceError.value;
 
     return null;
   }

@@ -304,7 +304,7 @@ class TripInfo extends ConsumerWidget {
               )),
               Expanded(
                   child: Text(
-                      "S/  ${calculateCustomerPrice().toStringAsFixed(2)}",
+                      "S/  ${trip.waitingTimeExtra == null ? calculateCustomerPrice().toStringAsFixed(2) : (calculateCustomerPrice() + trip.waitingTimeExtra!.toDouble()).toStringAsFixed(2)}",
                       style: const TextStyle(
                           fontSize: 32.0, color: Color(0xff03132A)))),
             ])

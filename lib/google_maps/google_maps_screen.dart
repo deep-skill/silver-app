@@ -38,7 +38,8 @@ class MapGoogleState extends State<MapGoogle> {
       }
       _searchAndNavigate(_searchController.text);
     });
-    _initMapLocation();
+    if (!kIsWeb) _initMapLocation();
+    if (kIsWeb) setState(() => loading = false);
   }
 
   static const CameraPosition _kGooglePlex = CameraPosition(
@@ -78,11 +79,29 @@ class MapGoogleState extends State<MapGoogle> {
     Position initialPosition = await determinePosition();
     LatLng location =
         LatLng(initialPosition.latitude, initialPosition.longitude);
+    String? addressName;
+    try {
+      var response = await Dio().get(
+        'https://maps.googleapis.com/maps/api/geocode/json',
+        queryParameters: {
+          'latlng': '${location.latitude}, ${location.longitude}',
+          'key': Env.googleMapsKey,
+        },
+      );
+
+      if (response.statusCode == 200 && response.data['results'].length > 0) {
+        addressName = response.data['results'][0]['formatted_address'];
+      } else {
+        addressName = 'Ubicación tomada por defecto';
+      }
+    } catch (e) {
+      print(e);
+    }
 
     setState(() {
       showSearchResults = true;
       selectedLocation =
-          '${initialPosition.latitude}, ${initialPosition.longitude}, Ubicacion actual';
+          '${initialPosition.latitude}, ${initialPosition.longitude}, $addressName';
       _markers.clear();
       _markers.add(
         Marker(

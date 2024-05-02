@@ -68,6 +68,9 @@ bool calculateInRushHourAdmin(String stringTime) {
   DateFormat format = DateFormat.Hm();
   DateTime dateTime = format.parse(stringTime);
   int hour = dateTime.hour;
+  if (hour == 10 || hour == 20) {
+    if (dateTime.minute == 0) return true;
+  }
   return (hour >= 7 && hour <= 9) || (hour >= 17 && hour <= 19);
 }
 

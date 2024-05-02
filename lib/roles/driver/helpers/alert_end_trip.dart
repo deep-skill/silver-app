@@ -89,6 +89,10 @@ int calculateBasePriceDriver(
 bool calculateInRushHour(DateTime? stringTime) {
   if (stringTime != null) {
     int hour = stringTime.hour;
+    if (hour == 10 || hour == 20) {
+      if (stringTime.minute == 0) return true;
+    }
+
     return (hour >= 7 && hour <= 9) || (hour >= 17 && hour <= 19);
   }
   return false;

@@ -64,7 +64,7 @@ double calculateTime(int durationSeconds) {
   return durationSeconds / 60;
 }
 
-bool calculateInRushHour(String stringTime) {
+bool calculateInRushHourAdmin(String stringTime) {
   DateFormat format = DateFormat.Hm();
   DateTime dateTime = format.parse(stringTime);
   int hour = dateTime.hour;

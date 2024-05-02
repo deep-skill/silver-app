@@ -404,7 +404,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
               distance.routes[0].distanceMeters,
               distance.routes[0].getDurationInSeconds(),
               state.serviceCarType.value,
-              calculateInRushHour(state.startTime.value))
+              calculateInRushHourAdmin(state.startTime.value))
           .toStringAsFixed(2);
 
       if (state.serviceCarType.value == 'Van') {
@@ -422,7 +422,7 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
               10,
               10,
               state.serviceCarType.value,
-              calculateInRushHour(state.startTime.value))
+              calculateInRushHourAdmin(state.startTime.value))
           .toStringAsFixed(2);
 
       if (state.serviceCarType.value == 'Van') {

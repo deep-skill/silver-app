@@ -3,7 +3,7 @@ import 'package:silverapp/roles/driver/helpers/alert_end_trip.dart';
 
 void main() {
   group('Function isInDesiredTimeRangeDriver', () {
-    Function function = isInDesiredTimeRangeDriver;
+    Function function = calculateInRushHour;
 
     List<Map<String, dynamic>> values = [
       {"value": DateTime(2024, 4, 29, 0, 0), "result": false},
@@ -17,6 +17,7 @@ void main() {
       {"value": DateTime(2024, 4, 29, 8, 40), "result": true},
       {"value": DateTime(2024, 4, 29, 9, 45), "result": true},
       {"value": DateTime(2024, 4, 29, 10, 0), "result": true},
+      {"value": DateTime(2024, 4, 29, 10, 1), "result": false},
       {"value": DateTime(2024, 4, 29, 11, 5), "result": false},
       {"value": DateTime(2024, 4, 29, 12, 10), "result": false},
       {"value": DateTime(2024, 4, 29, 13, 15), "result": false},
@@ -27,6 +28,7 @@ void main() {
       {"value": DateTime(2024, 4, 29, 18, 40), "result": true},
       {"value": DateTime(2024, 4, 29, 19, 45), "result": true},
       {"value": DateTime(2024, 4, 29, 20, 0), "result": true},
+      {"value": DateTime(2024, 4, 29, 20, 1), "result": false},
       {"value": DateTime(2024, 4, 29, 21, 5), "result": false},
       {"value": DateTime(2024, 4, 29, 22, 10), "result": false},
       {"value": DateTime(2024, 4, 29, 23, 15), "result": false},

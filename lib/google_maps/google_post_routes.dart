@@ -52,9 +52,7 @@ Future<GoogleRoutes> getGoogleRoute(
     final googleRoutes = GoogleRoutes.fromJson(response.data);
     return googleRoutes;
   } catch (e) {
-    throw Exception(
-      'Error al obtener la ruta desde Google Maps. ${e.toString()}',
-    );
+    return GoogleRoutes(routes: []);
   }
 }
 
@@ -66,11 +64,14 @@ double calculateTime(int durationSeconds) {
   return durationSeconds / 60;
 }
 
-bool isInDesiredTimeRange(String stringTime) {
+bool calculateInRushHourAdmin(String stringTime) {
   DateFormat format = DateFormat.Hm();
   DateTime dateTime = format.parse(stringTime);
   int hour = dateTime.hour;
-  return (hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 20);
+  if (hour == 10 || hour == 20) {
+    if (dateTime.minute == 0) return true;
+  }
+  return (hour >= 7 && hour <= 9) || (hour >= 17 && hour <= 19);
 }
 
 int calculateBasePrice(
@@ -84,12 +85,22 @@ int calculateBasePrice(
 
   if (type == 'Camioneta' || type == 'Van') {
     double truckBasePrice = 5 + 3.32 * distanceKilometers + 0.20 * timeMinutes;
-    if (additional) return (truckBasePrice * 1.1).round();
-    return truckBasePrice.round();
+    if (additional) {
+      if (truckBasePrice < 27.0) return 28;
+      return (truckBasePrice * 1.1).round();
+    } else {
+      if (truckBasePrice < 25.0) return 25;
+      return truckBasePrice.round();
+    }
   }
   double basePrice = 4 + 1.95 * distanceKilometers + 0.14 * timeMinutes;
-  if (additional) return (basePrice * 1.1).round();
-  return basePrice.round();
+  if (additional) {
+    if (basePrice < 22) return 22;
+    return (basePrice * 1.1).round();
+  } else {
+    if (basePrice < 20) return 20;
+    return basePrice.round();
+  }
 }
 
 String getDirectionsUrl(double originLat, double originLon,

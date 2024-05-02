@@ -400,17 +400,17 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         "${formattedDateTime}Z",
       );
 
-      var basePrice = calculateBasePrice(
+      final String basePrice = calculateBasePrice(
               distance.routes[0].distanceMeters,
               distance.routes[0].getDurationInSeconds(),
               state.serviceCarType.value,
-              isInDesiredTimeRange(state.startTime.value))
+              calculateInRushHour(state.startTime.value))
           .toStringAsFixed(2);
 
       if (state.serviceCarType.value == 'Van') {
         state = state.copyWith(
-            polyline: distance.routes[0].polyline,
-            suggestedPrice: const SuggestedPrice.pure());
+            suggestedPrice: const SuggestedPrice.pure(),
+            polyline: distance.routes[0].polyline);
       } else {
         state = state.copyWith(
           suggestedPrice: SuggestedPrice.dirty(basePrice),
@@ -418,14 +418,18 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         );
       }
     } catch (e) {
-      var basePrice = calculateBasePrice(10, 10, state.serviceCarType.value,
-              isInDesiredTimeRange(state.startTime.value))
+      final String basePrice = calculateBasePrice(
+              10,
+              10,
+              state.serviceCarType.value,
+              calculateInRushHour(state.startTime.value))
           .toStringAsFixed(2);
 
       if (state.serviceCarType.value == 'Van') {
         state = state.copyWith(
-            polyline: "error google maps, no polyline",
-            suggestedPrice: const SuggestedPrice.pure());
+          suggestedPrice: const SuggestedPrice.pure(),
+          polyline: "error google maps, no polyline",
+        );
       } else {
         state = state.copyWith(polyline: "error google maps, no polyline");
         state = state.copyWith(

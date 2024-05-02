@@ -64,11 +64,11 @@ double calculateTime(int durationSeconds) {
   return durationSeconds / 60;
 }
 
-bool isInDesiredTimeRange(String stringTime) {
+bool calculateInRushHour(String stringTime) {
   DateFormat format = DateFormat.Hm();
   DateTime dateTime = format.parse(stringTime);
   int hour = dateTime.hour;
-  return (hour >= 7 && hour <= 10) || (hour >= 17 && hour <= 20);
+  return (hour >= 7 && hour <= 9) || (hour >= 17 && hour <= 19);
 }
 
 int calculateBasePrice(

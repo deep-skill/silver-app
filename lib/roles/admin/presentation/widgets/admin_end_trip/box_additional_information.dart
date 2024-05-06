@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, curly_braces_in_flow_control_structures
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:go_router/go_router.dart';
@@ -108,11 +110,9 @@ class _AdminAdditionalInformationState
       });
       widget.reload();
     } on DioException catch (e) {
-      if (e.response!.data == null)
-        context.go("/admin/error-server/${e.message.toString()}");
-      else
-        context.go(
-            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      context.go(
+          "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -123,11 +123,9 @@ class _AdminAdditionalInformationState
       );
       widget.reload();
     } on DioException catch (e) {
-      if (e.response!.data == null)
-        context.go("/admin/error-server/${e.message.toString()}");
-      else
-        context.go(
-            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      context.go(
+          "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -137,11 +135,9 @@ class _AdminAdditionalInformationState
           data: {"observation": observation, "tripId": widget.tripId});
       widget.reload();
     } on DioException catch (e) {
-      if (e.response!.data == null)
-        context.go("/admin/error-server/${e.message.toString()}");
-      else
-        context.go(
-            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      context.go(
+          "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -152,11 +148,9 @@ class _AdminAdditionalInformationState
       );
       widget.reload();
     } on DioException catch (e) {
-      if (e.response!.data == null)
-        context.go("/admin/error-server/${e.message.toString()}");
-      else
-        context.go(
-            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      context.go(
+          "/admin/error-server/${e.response!.data['message'].toString()} - uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -166,11 +160,9 @@ class _AdminAdditionalInformationState
           data: {"name": parking, "tripId": widget.tripId, "amount": amount});
       widget.reload();
     } on DioException catch (e) {
-      if (e.response!.data == null)
-        context.go("/admin/error-server/${e.message.toString()}");
-      else
-        context.go(
-            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      context.go(
+          "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -179,11 +171,9 @@ class _AdminAdditionalInformationState
       await dio(widget.credentials).delete('parkings/$parkingId');
       widget.reload();
     } on DioException catch (e) {
-      if (e.response!.data == null)
-        context.go("/admin/error-server/${e.message.toString()}");
-      else
-        context.go(
-            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      context.go(
+          "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -198,11 +188,9 @@ class _AdminAdditionalInformationState
       });
       widget.reload();
     } on DioException catch (e) {
-      if (e.response!.data == null)
-        context.go("/admin/error-server/${e.message.toString()}");
-      else
-        context.go(
-            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      context.go(
+          "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -211,11 +199,9 @@ class _AdminAdditionalInformationState
       await dio(widget.credentials).delete('tolls/$tollId');
       widget.reload();
     } on DioException catch (e) {
-      if (e.response!.data == null)
-        context.go("/admin/error-server/${e.message.toString()}");
-      else
-        context.go(
-            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      context.go(
+          "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 

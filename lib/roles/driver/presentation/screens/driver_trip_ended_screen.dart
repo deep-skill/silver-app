@@ -281,7 +281,16 @@ class TripEndedInfo extends StatelessWidget {
           ),
           const TitleReserveDetail(text: "Detalle de cobro"),
           const SizedBox(
-            height: 8,
+            height: 5,
+          ),
+          trip.tripPolyline == 'error google'
+              ? const Text(
+                  'Error al calcular la tarifa. Avisar al administrador',
+                  style: TextStyle(color: Colors.red, fontSize: 12),
+                )
+              : const SizedBox(),
+          const SizedBox(
+            height: 5,
           ),
           ExpansionTripLabelAmoutDriver(
             priceBase:

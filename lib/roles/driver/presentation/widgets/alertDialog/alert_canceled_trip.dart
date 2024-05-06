@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
@@ -38,9 +39,10 @@ class _AlertTripEndState extends State<AlertTripCanceled> {
       });
       widget.cancelReload();
       widget.reload();
-    } catch (e) {
-      print(e);
-      context.go("/driver/error-server/${e.toString()}");
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 

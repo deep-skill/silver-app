@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/google_maps/google_maps_screen.dart';
 import 'package:silverapp/google_maps/location_data.dart';
@@ -90,6 +93,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
       setState(() {
         dropdownItems = ["Selecciona el peaje", "Error al obtener datos"];
       });
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 
@@ -112,9 +116,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
         });
       }
       widget.reload();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -124,9 +129,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
         'stops/driver/$stopId',
       );
       widget.reload();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -135,9 +141,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
       await dio(widget.credentials).post('observations/driver',
           data: {"observation": observation, "tripId": widget.tripId});
       widget.reload();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -147,9 +154,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
         'observations/driver/$observationId',
       );
       widget.reload();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -158,9 +166,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
       await dio(widget.credentials).post('parkings/driver',
           data: {"name": parking, "tripId": widget.tripId, "amount": amount});
       widget.reload();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -168,9 +177,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     try {
       await dio(widget.credentials).delete('parkings/driver/$parkingId');
       widget.reload();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -184,9 +194,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
         "lon": lon
       });
       widget.reload();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 
@@ -194,9 +205,10 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     try {
       await dio(widget.credentials).delete('tolls/driver/$tollId');
       widget.reload();
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 

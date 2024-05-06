@@ -121,6 +121,7 @@ class HomeViewState extends ConsumerState<HomeView> {
         return trip.data['id'];
       } catch (e) {
         print(e);
+        context.go("/driver/error-server/${e.toString()}");
       }
     }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/google_maps/google_maps_screen.dart';
 import 'package:silverapp/google_maps/location_data.dart';
@@ -93,6 +94,7 @@ class _AdminAdditionalInformationState
       setState(() {
         dropdownItems = ["Selecciona el peaje", "Error al obtener datos"];
       });
+      context.go("/admin/error-server/${e.toString()}");
     }
   }
 
@@ -106,6 +108,7 @@ class _AdminAdditionalInformationState
       });
       widget.reload();
     } catch (e) {
+      context.go("/admin/error-server/${e.toString()}");
       throw Exception(e);
     }
   }
@@ -126,7 +129,8 @@ class _AdminAdditionalInformationState
       await dio(widget.credentials).post('observations',
           data: {"observation": observation, "tripId": widget.tripId});
       widget.reload();
-    } catch (e) {
+    } on DioException catch (e) {
+      context.go("/admin/error-server/${e.response.toString()}");
       throw Exception(e);
     }
   }
@@ -148,6 +152,7 @@ class _AdminAdditionalInformationState
           data: {"name": parking, "tripId": widget.tripId, "amount": amount});
       widget.reload();
     } catch (e) {
+      context.go("/admin/error-server/${e.toString()}");
       throw Exception(e);
     }
   }
@@ -157,6 +162,7 @@ class _AdminAdditionalInformationState
       await dio(widget.credentials).delete('parkings/$parkingId');
       widget.reload();
     } catch (e) {
+      context.go("/admin/error-server/${e.toString()}");
       throw Exception(e);
     }
   }
@@ -172,6 +178,7 @@ class _AdminAdditionalInformationState
       });
       widget.reload();
     } catch (e) {
+      context.go("/admin/error-server/${e.toString()}");
       throw Exception(e);
     }
   }

@@ -15,10 +15,10 @@ class AdminInternalErrorScreen extends StatelessWidget {
         ? Scaffold(
             body: Padding(
               padding: EdgeInsets.only(
-                  top: size.height * .07,
+                  top: size.height * .05,
                   left: size.height * .015,
                   right: size.height * .015,
-                  bottom: size.height * .015),
+                  bottom: size.height * .01),
               child: InternalErrorInfo(pathParameter: pathParameter),
             ),
             backgroundColor: const Color(0xffF2F3F7),

@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/roles/no_role/welcome_msg_screen.dart';
 
-class InternalErrorScreen extends StatelessWidget {
+class AdminInternalErrorScreen extends StatelessWidget {
   final String? pathParameter;
-  const InternalErrorScreen({super.key, required this.pathParameter});
+  const AdminInternalErrorScreen({super.key, required this.pathParameter});
 
   @override
   Widget build(BuildContext context) {

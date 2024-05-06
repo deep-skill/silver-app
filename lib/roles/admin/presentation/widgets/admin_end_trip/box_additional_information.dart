@@ -107,9 +107,12 @@ class _AdminAdditionalInformationState
         "tripId": widget.tripId
       });
       widget.reload();
-    } catch (e) {
-      context.go("/admin/error-server/${e.toString()}");
-      throw Exception(e);
+    } on DioException catch (e) {
+      if (e.response!.data == null)
+        context.go("/admin/error-server/${e.message.toString()}");
+      else
+        context.go(
+            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
     }
   }
 
@@ -119,8 +122,12 @@ class _AdminAdditionalInformationState
         'stops/$stopId',
       );
       widget.reload();
-    } catch (e) {
-      throw Exception(e);
+    } on DioException catch (e) {
+      if (e.response!.data == null)
+        context.go("/admin/error-server/${e.message.toString()}");
+      else
+        context.go(
+            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
     }
   }
 
@@ -130,8 +137,11 @@ class _AdminAdditionalInformationState
           data: {"observation": observation, "tripId": widget.tripId});
       widget.reload();
     } on DioException catch (e) {
-      context.go("/admin/error-server/${e.response.toString()}");
-      throw Exception(e);
+      if (e.response!.data == null)
+        context.go("/admin/error-server/${e.message.toString()}");
+      else
+        context.go(
+            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
     }
   }
 
@@ -141,8 +151,12 @@ class _AdminAdditionalInformationState
         'observations/$observationId',
       );
       widget.reload();
-    } catch (e) {
-      throw Exception(e);
+    } on DioException catch (e) {
+      if (e.response!.data == null)
+        context.go("/admin/error-server/${e.message.toString()}");
+      else
+        context.go(
+            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
     }
   }
 
@@ -151,9 +165,12 @@ class _AdminAdditionalInformationState
       await dio(widget.credentials).post('parkings',
           data: {"name": parking, "tripId": widget.tripId, "amount": amount});
       widget.reload();
-    } catch (e) {
-      context.go("/admin/error-server/${e.toString()}");
-      throw Exception(e);
+    } on DioException catch (e) {
+      if (e.response!.data == null)
+        context.go("/admin/error-server/${e.message.toString()}");
+      else
+        context.go(
+            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
     }
   }
 
@@ -161,9 +178,12 @@ class _AdminAdditionalInformationState
     try {
       await dio(widget.credentials).delete('parkings/$parkingId');
       widget.reload();
-    } catch (e) {
-      context.go("/admin/error-server/${e.toString()}");
-      throw Exception(e);
+    } on DioException catch (e) {
+      if (e.response!.data == null)
+        context.go("/admin/error-server/${e.message.toString()}");
+      else
+        context.go(
+            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
     }
   }
 
@@ -177,9 +197,12 @@ class _AdminAdditionalInformationState
         "lon": lon
       });
       widget.reload();
-    } catch (e) {
-      context.go("/admin/error-server/${e.toString()}");
-      throw Exception(e);
+    } on DioException catch (e) {
+      if (e.response!.data == null)
+        context.go("/admin/error-server/${e.message.toString()}");
+      else
+        context.go(
+            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
     }
   }
 
@@ -187,8 +210,12 @@ class _AdminAdditionalInformationState
     try {
       await dio(widget.credentials).delete('tolls/$tollId');
       widget.reload();
-    } catch (e) {
-      throw Exception(e);
+    } on DioException catch (e) {
+      if (e.response!.data == null)
+        context.go("/admin/error-server/${e.message.toString()}");
+      else
+        context.go(
+            "/admin/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
     }
   }
 

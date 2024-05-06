@@ -15,7 +15,8 @@ import 'package:silverapp/roles/driver/presentation/screens/driver_reserve_list_
 import 'package:silverapp/roles/driver/presentation/screens/driver_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_trip_ended_screen.dart';
 import 'package:silverapp/roles/driver/presentation/screens/driver_trip_list_screen.dart';
-import 'package:silverapp/roles/error_screens/internal_error.dart';
+import 'package:silverapp/roles/error_screens/admin_internal_error.dart';
+import 'package:silverapp/roles/error_screens/driver_internal_error.dart';
 import 'package:silverapp/roles/no_role/no_role_screen.dart';
 import 'package:silverapp/roles/user/presentation/screens/user_screen.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -72,6 +73,14 @@ final goRouterProvider = Provider((ref) {
                     },
                   ),
                 ]),
+            GoRoute(
+              path: 'error-server/:error',
+              builder: (context, state) {
+                return AdminInternalErrorScreen(
+                  pathParameter: state.pathParameters['error'],
+                );
+              },
+            ),
           ],
         ),
         GoRoute(
@@ -115,7 +124,7 @@ final goRouterProvider = Provider((ref) {
               GoRoute(
                 path: 'error-server/:error',
                 builder: (context, state) {
-                  return InternalErrorScreen(
+                  return DriverInternalErrorScreen(
                     pathParameter: state.pathParameters['error'],
                   );
                 },

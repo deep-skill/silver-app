@@ -311,6 +311,12 @@ class TripInfo extends ConsumerWidget {
           : const SizedBox(
               height: 5,
             ),
+      trip.endTime != null && trip.tripPolyline == "error google"
+          ? const Text(
+              'Error al calcular la tarifa. Avisar al administrador',
+              style: TextStyle(color: Colors.red, fontSize: 12),
+            )
+          : const SizedBox(),
       trip.endTime != null
           ? const Column(
               children: [

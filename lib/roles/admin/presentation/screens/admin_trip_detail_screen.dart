@@ -291,7 +291,18 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                         const TitleTripDetail(
                                             text: "Detalle de pago"),
                                         const SizedBox(
-                                          height: 18,
+                                          height: 9,
+                                        ),
+                                        trip.tripPolyline == 'error google'
+                                            ? const Text(
+                                                'Error en el calculo. Recalcular',
+                                                style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 12),
+                                              )
+                                            : const SizedBox(),
+                                        const SizedBox(
+                                          height: 9,
                                         ),
                                         ExpansionTripLabelAmout(
                                           priceBase: trip.totalPrice,
@@ -757,6 +768,16 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           height: 5,
                         ),
                         const TitleTripDetail(text: "Detalle de pago"),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        trip.tripPolyline == 'error google'
+                            ? const Text(
+                                'Error en el calculo. Recalcular',
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 12),
+                              )
+                            : const SizedBox(),
                         const SizedBox(
                           height: 5,
                         ),

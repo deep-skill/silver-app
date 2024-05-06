@@ -773,7 +773,7 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                         ),
                         trip.tripPolyline == 'error google'
                             ? const Text(
-                                'Error en el calculo recalcular',
+                                'Error en el calculo. Recalcular',
                                 style:
                                     TextStyle(color: Colors.red, fontSize: 12),
                               )

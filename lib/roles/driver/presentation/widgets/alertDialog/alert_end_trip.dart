@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -165,10 +166,10 @@ class _AlertTripEndState extends State<AlertTripEnd> {
 
       widget.reload();
       return;
-    } catch (e) {
-      // ignore: avoid_print
-      print(e);
-      context.go("/driver/error-server/${e.toString()}");
+    } on DioException catch (e) {
+      context.go(
+          "/driver/error-server/${e.response!.data['message'].toString()}- uuid error: ${e.response!.data['error'].toString()}");
+      widget.reload();
     }
   }
 

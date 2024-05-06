@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
 import 'package:silverapp/google_maps/google_maps_screen.dart';
 import 'package:silverapp/google_maps/location_data.dart';
@@ -90,6 +93,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
       setState(() {
         dropdownItems = ["Selecciona el peaje", "Error al obtener datos"];
       });
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 
@@ -115,6 +119,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 
@@ -127,6 +132,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 
@@ -138,6 +144,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 
@@ -150,6 +157,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 
@@ -161,6 +169,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 
@@ -171,6 +180,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 
@@ -187,6 +197,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 
@@ -197,6 +208,7 @@ class _AdditionalInformationState extends State<AdditionalInformation> {
     } catch (e) {
       // ignore: avoid_print
       print(e);
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 

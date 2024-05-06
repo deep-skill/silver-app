@@ -27,6 +27,7 @@ class _AlertTripStartState extends State<AlertArrivedDriver> {
       widget.reload();
     } catch (e) {
       print(e);
+      context.go("/driver/error-server/${e.toString()}");
     }
   }
 

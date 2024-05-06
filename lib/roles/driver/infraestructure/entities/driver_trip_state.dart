@@ -26,6 +26,7 @@ class TripDriverStatus {
   DateTime reserveStartTime;
   double? waitingTimeExtra;
   String serviceCarType;
+  String? tripPolyline;
 
   TripDriverStatus(
       {required this.id,
@@ -54,7 +55,9 @@ class TripDriverStatus {
       this.endAddress,
       this.endAddressLat,
       this.endAddressLon,
-      required this.serviceCarType});
+      required this.serviceCarType,
+      this.tripPolyline
+      });
 
   factory TripDriverStatus.fromJson(Map<String, dynamic> json) => TripDriverStatus(
       id: json["id"],
@@ -93,7 +96,9 @@ class TripDriverStatus {
           : null,
       reserveStartTime: DateTime.parse(json["Reserve"]["startTime"]).toLocal(),
       waitingTimeExtra: json["waitingTimeExtra"]?.toDouble(),
-      serviceCarType: json["Reserve"]["serviceCarType"]);
+      serviceCarType: json["Reserve"]["serviceCarType"],
+      tripPolyline: json["tripPolyline"]
+      );
 
   Map<String, dynamic> toJson() => {
         "id": id,

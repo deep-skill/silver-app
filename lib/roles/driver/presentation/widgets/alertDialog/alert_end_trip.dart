@@ -122,7 +122,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
               widget.totalPrice,
               widget.serviceCarType,
               widget.reserveStartTime,
-            )
+            ),
+            "tripPolyline": 'error google'
           });
           widget.reload();
           return;
@@ -134,7 +135,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
             widget.totalPrice,
             widget.serviceCarType,
             widget.reserveStartTime,
-          )
+          ),
+          "tripPolyline": 'error google'
         });
         widget.reload();
         return;

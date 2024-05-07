@@ -60,7 +60,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        manifestPlaceholders += [auth0Domain: "dev-jnyecsm3rq2plckz.us.auth0.com", auth0Scheme: "com.auth0.silverapp"]
+        manifestPlaceholders += [auth0Domain: "silver-app-prod.us.auth0.com", auth0Scheme: "com.auth0.silverapp"]
     }
 
     signingConfigs {

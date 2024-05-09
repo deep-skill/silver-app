@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:silverapp/env/env.dart';
 import 'package:silverapp/google_maps/routes_data_entity.dart';
@@ -13,9 +14,7 @@ Future<GoogleRoutes> getGoogleRoute(
   try {
     final response = await Dio().post(
       "https://routes.googleapis.com/directions/v2:computeRoutes",
-      queryParameters: {
-        'key': Env.googleRoutesApiKey,
-      },
+      queryParameters: {'key': kIsWeb ? Env.webApi : Env.androidApi},
       data: {
         "origin": {
           "location": {
@@ -109,7 +108,7 @@ String getDirectionsUrl(double originLat, double originLon,
   final destination = '$destinationLat,$destinationLon';
   final waypointsString =
       stops.map((waypoint) => 'via:${waypoint.lat},${waypoint.lon}').join('|');
-  final apiKey = Env.googleRoutesApiKey;
+  final apiKey = kIsWeb ? Env.webApi : Env.androidApi;
 
   return 'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&waypoints=$waypointsString&key=$apiKey';
 }

@@ -55,7 +55,7 @@ class MapGoogleState extends State<MapGoogle> {
           queryParameters: {
             'address': address,
             'components': 'locality:Lima|country:PE',
-            'key': Env.googleMapsKey,
+            'key': kIsWeb ? Env.webApi : Env.androidApi,
           },
         );
         if (response.statusCode == 200 && response.data['results'].length > 0) {
@@ -85,7 +85,7 @@ class MapGoogleState extends State<MapGoogle> {
         'https://maps.googleapis.com/maps/api/geocode/json',
         queryParameters: {
           'latlng': '${location.latitude}, ${location.longitude}',
-          'key': Env.googleMapsKey,
+          'key': kIsWeb ? Env.webApi : Env.androidApi,
         },
       );
 

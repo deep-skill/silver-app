@@ -66,7 +66,7 @@ class BoxReservePayment extends StatelessWidget {
                     Text(
                       text,
                       style: TextStyle(
-                          fontSize: size.width * .045,
+                          fontSize: size.width * .035,
                           fontFamily: 'Montserrat-Bold'),
                     ),
                   ],

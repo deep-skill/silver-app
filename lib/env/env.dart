@@ -24,12 +24,8 @@ abstract class Env {
   static final String appAudience = _Env.appAudience;
   @EnviedField(varName: 'APP_REDIRECT_URL', obfuscate: true)
   static final String appRedirectUrl = _Env.appRedirectUrl;
-  @EnviedField(varName: 'GOOGLE_MAPS_KEY', obfuscate: true)
-  static final String googleMapsKey = _Env.googleMapsKey;
   @EnviedField(varName: 'HTTP_REQUEST', obfuscate: true)
   static final String httpRequest = _Env.httpRequest;
-  @EnviedField(varName: 'GOOGLE_ROUTES_API_KEY', obfuscate: true)
-  static final String googleRoutesApiKey = _Env.googleRoutesApiKey;
   @EnviedField(varName: 'WEB_API', obfuscate: true)
   static final String webApi = _Env.webApi;
   @EnviedField(varName: 'ANDROID_API', obfuscate: true)

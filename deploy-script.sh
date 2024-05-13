@@ -37,10 +37,11 @@ rm node_modules.tgz
 cd ../silver-app
 rm web.tgz
 echo "--------Cleaning APP build--------"
-flutter clean
+rm -rf build/web
 echo "--------Cleaning APP obfuscated environment variables--------"
 dart run build_runner clean
 echo "--------Cleaning completed--------"
+echo "--------App bundle is still on your PC, run "flutter clean to delete it--------"
 echo "
 ----------------------------------------------------------------
 -----------Successful deployment. Greetings, go rest!-----------

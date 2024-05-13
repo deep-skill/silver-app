@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/google_maps/google_post_routes.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_trip_state.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_state_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_state_reserve_detail.dart';
@@ -232,6 +233,17 @@ class TripEndedInfo extends StatelessWidget {
               ),
             )
           ]),
+          SizedBox(
+            height: size.width * 0.03,
+          ),
+          BoxReserveDetail(
+              label: "Distancia recorrida",
+              text: (calculateStringDistance(trip.tripDistanceMeters)),
+              icon: Icons.social_distance,
+              row: false),
+          SizedBox(
+            height: size.width * 0.03,
+          ),
           DriverTripAddressInfoWidget(
               startAddress: trip.startAddress,
               endAddress: trip.endAddress,

@@ -118,6 +118,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
             "endTime": endTime,
             "status": "COMPLETED",
             "waitingTimeExtra": waitingAmout.toDouble(),
+            "tripDistanceMeters": 'error google',
             "totalPrice": calculateMinBasePrice(
               widget.totalPrice,
               widget.serviceCarType,
@@ -131,6 +132,7 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
           "endTime": endTime,
           "status": "COMPLETED",
+          "tripDistanceMeters": 'error google',
           "totalPrice": calculateMinBasePrice(
             widget.totalPrice,
             widget.serviceCarType,
@@ -155,7 +157,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
           "waitingTimeExtra": waitingAmout.toDouble(),
           "totalPrice": suggestedTotalPrice,
           "suggestedTotalPrice": widget.totalPrice,
-          "tripPolyline": route.encodedPolyline
+          "tripPolyline": route.encodedPolyline,
+          "tripDistanceMeters": route.distance,
         });
       }
       await dio(widget.credentials).patch('trips/driver-trip/$tripId', data: {
@@ -163,7 +166,8 @@ class _AlertTripEndState extends State<AlertTripEnd> {
         "status": "COMPLETED",
         "totalPrice": suggestedTotalPrice,
         "suggestedTotalPrice": widget.totalPrice,
-        "tripPolyline": route.encodedPolyline
+        "tripPolyline": route.encodedPolyline,
+        "tripDistanceMeters": route.distance,
       });
 
       widget.reload();

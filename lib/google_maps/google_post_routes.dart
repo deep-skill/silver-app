@@ -60,7 +60,7 @@ double calculateDistance(int distanceMeters) {
 }
 
 String calculateStringDistance(String? distanceMeters) {
-  if (distanceMeters == null) return 'no km';
+  if (distanceMeters == null) return 'error km';
   if (distanceMeters == 'error google') return 'error google';
   double distanceMetersDouble = double.parse(distanceMeters);
   distanceMetersDouble = distanceMetersDouble / 1000;

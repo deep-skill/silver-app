@@ -30,40 +30,41 @@ class CreateReserve {
   String silverPercent;
   String? polyline;
   String? tripTotalPrice;
+  String? distanceMeters;
 
-  CreateReserve({
-    required this.id,
-    this.tripId,
-    required this.userId,
-    required this.userName,
-    required this.userLastName,
-    required this.enterpriseId,
-    this.driverId,
-    this.driverName,
-    this.driverLastName,
-    this.carId,
-    this.licensePlate,
-    this.brand,
-    this.model,
-    this.color,
-    required this.tripType,
-    required this.serviceCarType,
-    required this.serviceType,
-    required this.startTime,
-    required this.startDate,
-    required this.startAddress,
-    required this.startAddressLat,
-    required this.startAddressLon,
-    this.endAddress,
-    this.endAddressLat,
-    this.endAddressLon,
-    required this.price,
-    this.suggestedPrice,
-    required this.driverPercent,
-    required this.silverPercent,
-    this.polyline,
-    this.tripTotalPrice,
-  });
+  CreateReserve(
+      {required this.id,
+      this.tripId,
+      required this.userId,
+      required this.userName,
+      required this.userLastName,
+      required this.enterpriseId,
+      this.driverId,
+      this.driverName,
+      this.driverLastName,
+      this.carId,
+      this.licensePlate,
+      this.brand,
+      this.model,
+      this.color,
+      required this.tripType,
+      required this.serviceCarType,
+      required this.serviceType,
+      required this.startTime,
+      required this.startDate,
+      required this.startAddress,
+      required this.startAddressLat,
+      required this.startAddressLon,
+      this.endAddress,
+      this.endAddressLat,
+      this.endAddressLon,
+      required this.price,
+      this.suggestedPrice,
+      required this.driverPercent,
+      required this.silverPercent,
+      this.polyline,
+      this.tripTotalPrice,
+      this.distanceMeters});
 
   factory CreateReserve.fromJson(Map<String, dynamic> json) => CreateReserve(
         id: json['id'],
@@ -102,5 +103,6 @@ class CreateReserve {
         polyline: json['polyline'],
         tripTotalPrice:
             json['Trip'] == null ? null : json['Trip']['totalPrice'].toString(),
+        distanceMeters: json['distanceKm'],
       );
 }

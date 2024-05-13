@@ -83,9 +83,6 @@ class BoxReserveDetail extends StatelessWidget {
                           // fontWeight: FontWeight.bold,
                           overflow: TextOverflow.ellipsis,
                         )),
-                    Container(
-                      height: 0.0,
-                    ),
                   ],
                 ),
               ),

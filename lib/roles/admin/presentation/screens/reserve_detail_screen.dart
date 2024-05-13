@@ -341,6 +341,12 @@ class ReserveInfo extends StatelessWidget {
                                   ],
                                 ),
                                 SizedBox(height: size.height * .03),
+                                BoxReserveDetail(
+                                  label: "Distancia recorrida",
+                                  text: '${reserve.reserveDistanceMeters} km',
+                                  icon: Icons.social_distance,
+                                ),
+                                SizedBox(height: size.height * .03),
                                 Column(
                                   children: [
                                     BoxReserveDetail(

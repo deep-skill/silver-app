@@ -30,7 +30,7 @@ class CreateReserve {
   String silverPercent;
   String? polyline;
   String? tripTotalPrice;
-  String? distanceMeters;
+  String? reserveDistanceMeters;
 
   CreateReserve(
       {required this.id,
@@ -64,7 +64,7 @@ class CreateReserve {
       required this.silverPercent,
       this.polyline,
       this.tripTotalPrice,
-      this.distanceMeters});
+      this.reserveDistanceMeters});
 
   factory CreateReserve.fromJson(Map<String, dynamic> json) => CreateReserve(
         id: json['id'],
@@ -103,6 +103,6 @@ class CreateReserve {
         polyline: json['polyline'],
         tripTotalPrice:
             json['Trip'] == null ? null : json['Trip']['totalPrice'].toString(),
-        distanceMeters: json['distanceKm'],
+        reserveDistanceMeters: json['reserveDistanceMeters'],
       );
 }

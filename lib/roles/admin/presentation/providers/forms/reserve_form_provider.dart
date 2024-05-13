@@ -193,7 +193,9 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "suggested_price":
           state.suggestedPrice.value == '' ? null : state.suggestedPrice.value,
       "reserve_polyline": state.polyline == '' ? null : state.polyline,
-      "distance_meters": state.distanceMeters,
+      "reserve_distance_meters": state.reserveDistanceMeters == ''
+          ? null
+          : state.reserveDistanceMeters,
       if (state.silverPercent.value != '')
         "silver_percent": state.silverPercent.value,
       if (id != 0) "id": id.toString(),
@@ -400,10 +402,6 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         state.endAddressLon,
         "${formattedDateTime}Z",
       );
-      print(distance.routes[0].distanceMeters);
-      print('-----------------------');
-      print('-----------------------');
-      print('-----------------------');
 
       final String basePrice = calculateBasePrice(
               distance.routes[0].distanceMeters,
@@ -416,13 +414,13 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         state = state.copyWith(
           suggestedPrice: const SuggestedPrice.pure(),
           polyline: distance.routes[0].polyline,
-          distanceMeters: distance.routes[0].distanceMeters.toString(),
+          reserveDistanceMeters: distance.routes[0].distanceMeters.toString(),
         );
       } else {
         state = state.copyWith(
           suggestedPrice: SuggestedPrice.dirty(basePrice),
           polyline: distance.routes[0].polyline,
-          distanceMeters: distance.routes[0].distanceMeters.toString(),
+          reserveDistanceMeters: distance.routes[0].distanceMeters.toString(),
         );
       }
     } catch (e) {
@@ -437,14 +435,14 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         state = state.copyWith(
           suggestedPrice: const SuggestedPrice.pure(),
           polyline: "error google maps, no polyline",
-          distanceMeters: 'error google',
+          reserveDistanceMeters: 'error google',
         );
       } else {
         state = state.copyWith(polyline: "error google maps, no polyline");
         state = state.copyWith(
           suggestedPrice: SuggestedPrice.dirty(basePrice),
           polyline: "error google maps, no polyline",
-          distanceMeters: 'error google',
+          reserveDistanceMeters: 'error google',
         );
       }
     }
@@ -592,7 +590,7 @@ class ReserveFormState {
   final SuggestedPrice suggestedPrice;
   final SilverPercent silverPercent;
   final String? polyline;
-  final String? distanceMeters;
+  final String? reserveDistanceMeters;
 
   ReserveFormState(
       {this.isFormValid = false,
@@ -623,7 +621,7 @@ class ReserveFormState {
       this.suggestedPrice = const SuggestedPrice.pure(),
       this.silverPercent = const SilverPercent.pure(),
       this.polyline = '',
-      this.distanceMeters});
+      this.reserveDistanceMeters});
 
   ReserveFormState copyWith(
           {final bool? isFormValid,
@@ -654,7 +652,7 @@ class ReserveFormState {
           final SuggestedPrice? suggestedPrice,
           final SilverPercent? silverPercent,
           final String? polyline,
-          final String? distanceMeters}) =>
+          final String? reserveDistanceMeters}) =>
       ReserveFormState(
           isFormValid: isFormValid ?? this.isFormValid,
           userId: userId ?? this.userId,
@@ -684,5 +682,6 @@ class ReserveFormState {
           suggestedPrice: suggestedPrice ?? this.suggestedPrice,
           silverPercent: silverPercent ?? this.silverPercent,
           polyline: polyline ?? this.polyline,
-          distanceMeters: distanceMeters ?? this.distanceMeters);
+          reserveDistanceMeters:
+              reserveDistanceMeters ?? this.reserveDistanceMeters);
 }

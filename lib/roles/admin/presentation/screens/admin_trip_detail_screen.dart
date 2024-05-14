@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:silverapp/google_maps/google_post_routes.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/trip_end_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/trip_detail_provider.dart';
@@ -455,6 +456,19 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                                     const SizedBox(
                                       height: 10,
                                     ),
+                                    trip.tripDistanceMeters == null ? const SizedBox() : BoxReserveDetail(
+                                      label: "Distancia recorrida",
+                                      text: (calculateStringDistance(trip.tripDistanceMeters)),
+                                      icon: Icons.social_distance,
+                                      row: false),
+                                      trip.tripDistanceMeters == null ? BoxReserveDetail(
+                                      label: "Distancia recorrida",
+                                      text: (calculateStringDistance(trip.reserveDistanceMeters)),
+                                      icon: Icons.social_distance,
+                                      row: false) :  const SizedBox(),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
                                     AdminAdditionalInformation(
                                       tripId: trip.id,
                                       startAddress: trip.startAddress,
@@ -688,6 +702,19 @@ class AdminTripDetailScreenState extends ConsumerState<AdminTripDetailScreen> {
                           ],
                         ),
                         const SizedBox(height: 12),
+                        trip.tripDistanceMeters == null ? const SizedBox() : BoxReserveDetail(
+                          label: "Distancia recorrida",
+                          text: (calculateStringDistance(trip.tripDistanceMeters)),
+                          icon: Icons.social_distance,
+                          row: false),
+                        trip.tripDistanceMeters == null ? BoxReserveDetail(
+                          label: "Distancia recorrida",
+                          text: (calculateStringDistance(trip.reserveDistanceMeters)),
+                          icon: Icons.social_distance,
+                          row: false) :  const SizedBox(),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         AdminAdditionalInformation(
                           tripId: trip.id,
                           startAddress: trip.startAddress,

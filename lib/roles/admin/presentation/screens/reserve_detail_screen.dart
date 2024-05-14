@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:silverapp/config/dio/dio_request.dart';
+import 'package:silverapp/google_maps/google_post_routes.dart';
 import 'package:silverapp/providers/auth0_provider.dart';
 import 'package:silverapp/roles/admin/infraestructure/entities/reserve_detail.dart';
 import 'package:silverapp/roles/admin/presentation/providers/reserve_detail_provider.dart';
@@ -341,6 +342,15 @@ class ReserveInfo extends StatelessWidget {
                                   ],
                                 ),
                                 SizedBox(height: size.height * .03),
+                                reserve.reserveDistanceMeters == null
+                                    ? const SizedBox()
+                                    : BoxReserveDetail(
+                                        label: "Distancia recorrida",
+                                        text: (calculateStringDistance(
+                                            reserve.reserveDistanceMeters)),
+                                        icon: Icons.social_distance,
+                                      ),
+                                SizedBox(height: size.height * .03),
                                 Column(
                                   children: [
                                     BoxReserveDetail(
@@ -569,6 +579,15 @@ class ReserveInfo extends StatelessWidget {
                           ),
                         ],
                       ),
+                      reserve.reserveDistanceMeters == null
+                          ? const SizedBox()
+                          : BoxReserveDetail(
+                              label: "Distancia recorrida",
+                              text: (calculateStringDistance(
+                                  reserve.reserveDistanceMeters)),
+                              icon: Icons.social_distance,
+                            ),
+                      const SizedBox(height: 8),
                       BoxReserveDetail(
                           icon: Icons.location_on,
                           label: 'Punto de recojo',

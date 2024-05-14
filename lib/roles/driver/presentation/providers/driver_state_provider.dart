@@ -11,6 +11,7 @@ final tripDriverStatusProvider = StateNotifierProvider<TripDriverStatusNotifier,
   Future<TripDriverStatus> getTripDriverStatus(id) async {
     final response =
         await dio(credentials!.accessToken).get('trips/driver-trip/$id');
+        print(response.data);
     return TripDriverStatus.fromJson(response.data);
   }
 

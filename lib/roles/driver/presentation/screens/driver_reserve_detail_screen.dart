@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:silverapp/google_maps/google_post_routes.dart';
 import 'package:silverapp/roles/driver/infraestructure/entities/driver_reserve_detail.dart';
 import 'package:silverapp/roles/driver/presentation/providers/driver_reserve_detail_provider.dart';
 import 'package:silverapp/roles/driver/presentation/widgets/box_state_reserve_detail.dart';
@@ -149,6 +150,20 @@ class ReserveInfo extends StatelessWidget {
               )
             ]),
             const SizedBox(height: 8),
+            reserve.reserveDistanceMeters == null
+                ? const SizedBox()
+                : BoxReserveDetail(
+                    label: "Distancia recorrida",
+                    text: (calculateStringDistance(
+                        reserve.reserveDistanceMeters)),
+                    icon: Icons.social_distance,
+                    row: false,
+                  ),
+            reserve.reserveDistanceMeters == null
+                ? const SizedBox()
+                : const SizedBox(
+                    height: 8,
+                  ),
             BoxReserveDetail(
                 icon: Icons.location_on_outlined,
                 label: "Punto de origen",
@@ -157,19 +172,6 @@ class ReserveInfo extends StatelessWidget {
             reserve.endAddress != null
                 ? Column(
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 9.0,
-                          ),
-                          Container(
-                            width: 2.0,
-                            height: 25.0,
-                            color: Colors.black,
-                            padding: const EdgeInsets.all(2.0),
-                          ),
-                        ],
-                      ),
                       BoxReserveDetail(
                           icon: Icons.trip_origin,
                           label: "Punto de destino",
@@ -179,7 +181,7 @@ class ReserveInfo extends StatelessWidget {
                   )
                 : const SizedBox(),
             Container(
-              height: 40.0,
+              height: 20.0,
             ),
             Row(children: [
               const Expanded(

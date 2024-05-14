@@ -193,6 +193,9 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
       "suggested_price":
           state.suggestedPrice.value == '' ? null : state.suggestedPrice.value,
       "reserve_polyline": state.polyline == '' ? null : state.polyline,
+      "reserve_distance_meters": state.reserveDistanceMeters == ''
+          ? null
+          : state.reserveDistanceMeters,
       if (state.silverPercent.value != '')
         "silver_percent": state.silverPercent.value,
       if (id != 0) "id": id.toString(),
@@ -409,12 +412,15 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
 
       if (state.serviceCarType.value == 'Van') {
         state = state.copyWith(
-            suggestedPrice: const SuggestedPrice.pure(),
-            polyline: distance.routes[0].polyline);
+          suggestedPrice: const SuggestedPrice.pure(),
+          polyline: distance.routes[0].polyline,
+          reserveDistanceMeters: distance.routes[0].distanceMeters.toString(),
+        );
       } else {
         state = state.copyWith(
           suggestedPrice: SuggestedPrice.dirty(basePrice),
           polyline: distance.routes[0].polyline,
+          reserveDistanceMeters: distance.routes[0].distanceMeters.toString(),
         );
       }
     } catch (e) {
@@ -429,12 +435,14 @@ class ReserveFormNotifier extends StateNotifier<ReserveFormState> {
         state = state.copyWith(
           suggestedPrice: const SuggestedPrice.pure(),
           polyline: "error google maps, no polyline",
+          reserveDistanceMeters: 'error google',
         );
       } else {
         state = state.copyWith(polyline: "error google maps, no polyline");
         state = state.copyWith(
           suggestedPrice: SuggestedPrice.dirty(basePrice),
           polyline: "error google maps, no polyline",
+          reserveDistanceMeters: 'error google',
         );
       }
     }
@@ -582,37 +590,38 @@ class ReserveFormState {
   final SuggestedPrice suggestedPrice;
   final SilverPercent silverPercent;
   final String? polyline;
+  final String? reserveDistanceMeters;
 
-  ReserveFormState({
-    this.isFormValid = false,
-    this.userId = const UserId.pure(),
-    this.serviceType = const ServiceType.pure(),
-    this.userName = 'Ejem. Carla',
-    this.userLastName = 'Peña Ramirez',
-    this.driverName = 'Ejem. Luis',
-    this.driverLastName = 'Perez',
-    this.startDate = const StartDate.pure(),
-    this.startTime = const StartTime.pure(),
-    this.tripType = const TripType.pure(),
-    this.serviceCarType = const ServiceCarType.pure(),
-    this.startAddress = const StartAddress.pure(),
-    this.startAddressLat = 0,
-    this.startAddressLon = 0,
-    this.endAddress = const EndAddress.pure(),
-    this.endAddressLat,
-    this.endAddressLon,
-    this.enterpriseId = const EnterpriseId.dirty(0),
-    this.carId = const CarId.dirty(0),
-    this.licensePlate = 'A1R610',
-    this.brand = 'Ejem. Toyota',
-    this.model = 'Corolla',
-    this.color = 'Gris',
-    this.driverId = const DriverId.pure(),
-    this.price = const Price.pure(),
-    this.suggestedPrice = const SuggestedPrice.pure(),
-    this.silverPercent = const SilverPercent.pure(),
-    this.polyline = '',
-  });
+  ReserveFormState(
+      {this.isFormValid = false,
+      this.userId = const UserId.pure(),
+      this.serviceType = const ServiceType.pure(),
+      this.userName = 'Ejem. Carla',
+      this.userLastName = 'Peña Ramirez',
+      this.driverName = 'Ejem. Luis',
+      this.driverLastName = 'Perez',
+      this.startDate = const StartDate.pure(),
+      this.startTime = const StartTime.pure(),
+      this.tripType = const TripType.pure(),
+      this.serviceCarType = const ServiceCarType.pure(),
+      this.startAddress = const StartAddress.pure(),
+      this.startAddressLat = 0,
+      this.startAddressLon = 0,
+      this.endAddress = const EndAddress.pure(),
+      this.endAddressLat,
+      this.endAddressLon,
+      this.enterpriseId = const EnterpriseId.dirty(0),
+      this.carId = const CarId.dirty(0),
+      this.licensePlate = 'A1R610',
+      this.brand = 'Ejem. Toyota',
+      this.model = 'Corolla',
+      this.color = 'Gris',
+      this.driverId = const DriverId.pure(),
+      this.price = const Price.pure(),
+      this.suggestedPrice = const SuggestedPrice.pure(),
+      this.silverPercent = const SilverPercent.pure(),
+      this.polyline = '',
+      this.reserveDistanceMeters});
 
   ReserveFormState copyWith(
           {final bool? isFormValid,
@@ -642,7 +651,8 @@ class ReserveFormState {
           final Price? price,
           final SuggestedPrice? suggestedPrice,
           final SilverPercent? silverPercent,
-          final String? polyline}) =>
+          final String? polyline,
+          final String? reserveDistanceMeters}) =>
       ReserveFormState(
           isFormValid: isFormValid ?? this.isFormValid,
           userId: userId ?? this.userId,
@@ -671,5 +681,7 @@ class ReserveFormState {
           price: price ?? this.price,
           suggestedPrice: suggestedPrice ?? this.suggestedPrice,
           silverPercent: silverPercent ?? this.silverPercent,
-          polyline: polyline ?? this.polyline);
+          polyline: polyline ?? this.polyline,
+          reserveDistanceMeters:
+              reserveDistanceMeters ?? this.reserveDistanceMeters);
 }

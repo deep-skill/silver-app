@@ -59,6 +59,14 @@ double calculateDistance(int distanceMeters) {
   return distanceMeters / 1000;
 }
 
+String calculateStringDistance(String? distanceMeters) {
+  if (distanceMeters == null) return 'error km';
+  if (distanceMeters == 'error google') return 'error google';
+  double distanceMetersDouble = double.parse(distanceMeters);
+  distanceMetersDouble = distanceMetersDouble / 1000;
+  return '${distanceMetersDouble.toStringAsFixed(2)} km';
+}
+
 double calculateTime(int durationSeconds) {
   return durationSeconds / 60;
 }

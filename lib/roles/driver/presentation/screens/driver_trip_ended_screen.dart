@@ -241,7 +241,7 @@ class TripEndedInfo extends StatelessWidget {
               text: (calculateStringDistance(trip.tripDistanceMeters)),
               icon: Icons.social_distance,
               row: false),
-              trip.tripDistanceMeters == null ? BoxReserveDetail(
+              trip.tripDistanceMeters == null && trip.reserveDistanceMeters != null ? BoxReserveDetail(
               label: "Distancia recorrida",
               text: (calculateStringDistance(trip.reserveDistanceMeters)),
               icon: Icons.social_distance,

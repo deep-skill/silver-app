@@ -236,11 +236,16 @@ class TripEndedInfo extends StatelessWidget {
           SizedBox(
             height: size.width * 0.03,
           ),
-          BoxReserveDetail(
+          trip.tripDistanceMeters == null ? const SizedBox() : BoxReserveDetail(
               label: "Distancia recorrida",
               text: (calculateStringDistance(trip.tripDistanceMeters)),
               icon: Icons.social_distance,
               row: false),
+              trip.tripDistanceMeters == null ? BoxReserveDetail(
+              label: "Distancia recorrida",
+              text: (calculateStringDistance(trip.reserveDistanceMeters)),
+              icon: Icons.social_distance,
+              row: false) :  const SizedBox(),
           SizedBox(
             height: size.width * 0.03,
           ),

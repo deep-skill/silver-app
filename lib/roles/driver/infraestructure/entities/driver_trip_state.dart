@@ -28,6 +28,7 @@ class TripDriverStatus {
   String serviceCarType;
   String? tripPolyline;
   String? tripDistanceMeters;
+  String? reserveDistanceMeters;
 
   TripDriverStatus(
       {required this.id,
@@ -58,7 +59,8 @@ class TripDriverStatus {
       this.endAddressLon,
       required this.serviceCarType,
       this.tripPolyline,
-      this.tripDistanceMeters
+      this.tripDistanceMeters,
+      this.reserveDistanceMeters
       });
 
   factory TripDriverStatus.fromJson(Map<String, dynamic> json) => TripDriverStatus(
@@ -100,7 +102,8 @@ class TripDriverStatus {
       waitingTimeExtra: json["waitingTimeExtra"]?.toDouble(),
       serviceCarType: json["Reserve"]["serviceCarType"],
       tripPolyline: json["tripPolyline"],
-      tripDistanceMeters: json["tripDistanceMeters"]
+      tripDistanceMeters: json["tripDistanceMeters"],
+      reserveDistanceMeters: json["Reserve"]["reserveDistanceMeters"]
       );
 
   Map<String, dynamic> toJson() => {

@@ -297,7 +297,7 @@ class TripInfo extends ConsumerWidget {
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Precio \nconductor",
+                  Text("Precio \nCliente",
                       style:
                           TextStyle(fontSize: 20.0, color: Color(0xff03132A)))
                 ],
